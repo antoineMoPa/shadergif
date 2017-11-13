@@ -1,0 +1,20 @@
+1.0.3:
+
+Manually merge shadersound into master, providing GPU sound
+Allow multiple passes (render to texture)
+
+1.0.2:
+
+Begin work on server + vuify image list
+
+1.0.1:
+
+Update gifjs, add settings (dither, quality), create nice foldable ui thing
+
+1.0.0:
+
+ShaderGif Watermark, codemirror search.
+
+Before 1.0.0:
+
+A lot

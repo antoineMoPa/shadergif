@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Shadergif</title>
+		<%= csrf_meta_tags %>
+		
+		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		
+	</head>
+	
+	<body>
+		<header class="navbar">
+			<div class="container">
+				<div class="navbar-brand">
+				</div>
+				<div class="navbar-menu">
+					<div class="navbar-end">
+						<a class="navbar-item is-active" href="/">
+							Home
+						</a>
+						<span class="navbar-item">
+							<a class="button is-success is-inverted"
+							   href="/shader-editor/">
+								Shader Editor
+							</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</header>
+		<%= yield %>
+	</body>
+</html>
