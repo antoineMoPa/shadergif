@@ -19,6 +19,11 @@
 						<a class="navbar-item is-active" href="/">
 							Home
 						</a>
+						<% if user_signed_in? %>
+						<%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "navbar-item"  %>
+						<% else %>
+						<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
+						<% end %>
 						<span class="navbar-item">
 							<a class="button is-success is-inverted"
 							   href="/shader-editor/">
@@ -29,14 +34,14 @@
 				</div>
 			</div>
 		</header>
-		<section class="section">
+		<div>
 			<% if notice %>
 			<p class="alert alert-success"><%= notice %></p>
 			<% end %>
 			<% if alert %>
 			<p class="alert alert-danger"><%= alert %></p>
 			<% end %>
-		</section>
+		</div>
 		<%= yield %>
 	</body>
 </html>
