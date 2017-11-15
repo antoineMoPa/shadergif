@@ -1,6 +1,11 @@
+
 day 2:
-	integrate shadergif editor better
+	integrate shadergif editor better, work on gif form
 day 1:
 	create user and start using bulma, add old shadergif code
 day 0:
 	create rails app
+
+months/years before:
+	work on shadergif as a static html app, add vue.js, play around,
+	make gifs, post on tumblr, etc
