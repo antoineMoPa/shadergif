@@ -139,12 +139,43 @@
 		</div>
 		
 		<div class="result-images">
-			<div v-for="image in images">
-				<img v-bind:src="image.src">
-				<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
+			<div v-for="image in images"
+				 class="container is-fluid">
+				<div class="result-image">
+					<input type="hidden"
+						   name="image"
+						   v-bind:value="image.src">
+					<img v-bind:src="image.src">
+					<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
+					<% if user_signed_in? %>
+					<%= form_tag("/gifs/new", method: "post") do %>
+					<div class="field">
+						<label class="label">Title</label>
+						<div class="control">
+							<input type="text" name="title">
+						</div>
+					</div>
+					<div class="field">
+						<label class="label">Description</label>
+						<div class="control">
+							<textarea name="description" class="textarea">
+							</textarea>
+						</div>
+					</div>
+					<div class="has-text-right">
+						<%= submit_tag "Save", :class => "button is-primary" %>
+					</div>
+					<% end %>
+					<% else %>
+					<div class="text-center">
+						Create an account or login to submit gifs
+					</div>
+					<% end %>
+				</div>
 			</div>
 		</div>
 		
+		<br>
 		
 		<div class="text-left">
 			<p>
