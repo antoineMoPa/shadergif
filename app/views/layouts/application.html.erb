@@ -2,10 +2,22 @@
 <html>
 	<head>
 		<title>Shadergif</title>
+
+		<meta charset="utf-8">
+		
 		<%= csrf_meta_tags %>
 		
 		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+		<% if request.path.ends_with? 'shader-editor' %>
+		<link rel="stylesheet" href="css/bulma.css?version=1.0.3">
+		<link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css?version=1.0.3">
+		<link rel="stylesheet" href="js/lib/codemirror/addon/dialog/dialog.css?version=1.0.3">
+		<link rel="stylesheet" href="js/lib/codemirror/addon/search/matchesonscrollbar.css?version=1.0.3">
+		<link rel="stylesheet" href="css/base.css?version=1.0.3">
+		<link rel="stylesheet" href="css/style.css?version=1.0.3">
+		<% end %>
 		
 	</head>
 	
@@ -24,12 +36,20 @@
 						<% else %>
 						<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
 						<% end %>
+						<% if request.path.ends_with? 'shader-editor' %>
+						<a class="navbar-item is-active"
+						   href="examples"
+						   target="_blank">
+							Examples
+						</a>
+						<% else %>
 						<span class="navbar-item">
 							<a class="button is-success is-inverted"
 							   href="/shader-editor/">
 								Shader Editor
 							</a>
 						</span>
+						<% end %>
 					</div>
 				</div>
 			</div>

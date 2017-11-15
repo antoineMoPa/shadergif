@@ -1,0 +1,287 @@
+<div id="shadergif-app" class="page-content vertical-scroll-parent">
+	<col-md-6 class="vertical-clip">
+		<textarea name='fragment' v-model="code">
+		</textarea>
+	</col-md-6>
+	<col-md-6 class="vertical-scroll">
+		<div class="text-center">
+			<h3>Gif preview</h3>
+		</div>
+		<canvas class="gif-canvas" v-on:mousemove="canvas_mousemove"></canvas>
+		<p class="text-center">
+			time: {{ time }}, mouse: {{ mouse[0].toFixed(4) }}, {{ mouse[1].toFixed(4) }}
+		</p>
+        <pre class="fragment-error-pre error-pre">
+		</pre>
+		<pre class="vertex-error-pre error-pre">
+		</pre>
+		
+		<div class="foldable">
+			<div class="foldable-header">
+				Gif tools
+			</div>
+			<div class="foldable-content">
+				
+				<div class="text-center">
+					<p>
+						<button name="send-to-server" class="inline-block"
+								v-if="has_sg_api"
+								v-on:click="send_to_server">
+							Send to server {{ send_status }}
+						</button>
+						<button name="make-gif" class="inline-block">
+							Create gif
+						</button>
+						<button name="make-png" class="inline-block">
+							Create stacked png
+						</button>
+					</p>
+					<p>
+						<label for="autocompile">
+							Automatically recompile while typing
+						</label>
+						<input id="autocompile" type="checkbox" v-model="autocompile">
+					</p>
+					<p>
+						<button name="recompile"
+								v-if="!autocompile"
+								v-on:click="recompile">
+							Compile and run
+						</button>
+					</p>
+				</div>
+				<div class="text-center">
+					<div class="settings inline-block">
+						<p>
+							w:<input type="number" v-model="width">
+							h:<input type="number" v-model="height">
+							frames:<input type="number"
+										  v-if="!frames_defined_in_code"
+										  v-model.lazy="frames">
+							<span v-if="frames_defined_in_code"
+								  title="(defined in code)">
+								{{ frames }}
+							</span>
+							
+							passes: <input
+										 v-if="!passes_defined_in_code"
+										 type="number"
+										 min="1"
+										 max="6"
+										 v-model.lazy="passes">
+							<span v-if="passes_defined_in_code"
+								  title="(defined in code)">
+								{{ passes }}
+							</span>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="foldable foldable-hidden">
+			<div class="foldable-header">
+				gif.js settings
+			</div>
+			<div class="foldable-content">
+				<div class="settings">
+					<p>
+						Quality:<input type="number" v-model="gifjs.quality">
+						<br>
+						Dithering:
+						<select v-model="gifjs.dithering">
+							<option value="false">none</option>
+							<option value="FloydSteinberg">FloydSteinberg</option>
+							<option value="FalseFloydSteinberg">FalseFloydSteinberg</option>
+							<option value="Stucki">Stucki</option>
+							<option value="Atkinson">Atkinson</option>
+						</select>
+					</p>
+				</div>
+			</div>
+		</div>
+		<div class="foldable foldable-hidden">
+			<div class="foldable-header">
+				GPU sound tools
+			</div>
+			<div class="foldable-content">
+				<div class="text-center">
+					<button class="inline-block"
+							v-if="!sound_mode"
+							v-on:click="enable_sound_mode">
+						Sound mode
+					</button>
+					<div v-if="sound_mode">
+						<button name="play-sound" class="inline-block"
+								v-on:click="play_sound">
+							Play sound
+						</button>
+						<button name="stop-sound" class="inline-block"
+								v-on:click="stop_sound">
+							Stop
+						</button>
+						<br><br>
+						<button class="inline-block"
+								v-on:click="load_default_sound_shader">
+							Load default sound shader
+						</button>
+						<button class="inline-block"
+								v-on:click="disable_sound_mode">
+							Disable sound mode
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>				
+		<hr>
+		
+		<div class="text-center">
+			<h3>Gifs results</h3>
+		</div>
+		
+		<div class="result-images">
+			<div v-for="image in images">
+				<img v-bind:src="image.src">
+				<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
+			</div>
+		</div>
+		
+		
+		<div class="text-left">
+			<p>
+				For pngs, on Linux, you can split the result like this:
+				<pre>convert image.png -crop {{width}}x{{height}} +repage image-%04d.png</pre>
+			</p>
+			<p>
+				And then make gifs:
+			</p>
+			<pre>convert image-*.png anim.gif</pre>
+		</div>
+	</col-md-6>
+</div>
+<script name="default-fragment-shader" type="text/plain">// Fragment shader
+precision highp float;
+				
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+varying vec2 UV;
+uniform float time;
+uniform float ratio;
+
+void main(void){
+	float x = UV.x * ratio - 0.5;
+	float y = UV.y - 0.5;
+	vec2 pos = vec2(x, y); 
+	
+	vec4 col = vec4(0.0);
+	
+	col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
+	col *= cos(30.0 * x);
+	col.a = 1.0;
+	
+	gl_FragColor = col;
+}
+</script>
+<script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
+precision highp float;
+
+varying vec2 UV;
+uniform float soundTime;
+uniform int pass;
+
+uniform sampler2D lastPass;
+
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+vec4 pass2(){
+    vec4 col = vec4(0.0);
+	
+	col += texture2D(lastPass, UV.xy);
+    	
+    return col;
+}
+
+/* 
+   Write your sound code in this function
+   t : time for current (sub)pixel
+ */
+float val(float t){
+	float note = 440.0;
+
+	float signal =  
+    	0.25 * cos(2.0 * PI * 1.0 * note * t);
+    
+    return signal;
+}
+
+vec4 pass1(){
+    vec4 col = vec4(0.0);
+	
+    float sr = 48000.0;
+    float dt = 1.0/sr;
+
+    // Calculate time from position
+    float t = 
+    	(UV.x) * 3.0 * 256.0 + (UV.y) * 3.0 * 256.0 * 256.0;
+	
+    t /= sr;
+	t += soundTime;
+
+	// Encode sound in rgb values
+    col.r += val(t + 0.0 * dt);
+    col.g += val(t + 1.0 * dt);
+    col.b += val(t + 2.0 * dt);
+    col.a += 1.0;
+    
+    col.rgb /= 2.0;
+    col.rgb += 0.5;
+    
+    return col;
+}
+
+
+void main(){
+    vec4 col = vec4(0.0);
+	
+	if(pass == 1){
+		col += pass1();
+        
+	} else if(pass == 2){
+		col += pass2();
+	}
+
+    gl_FragColor = col;
+}
+</script>
+<script name="vertex-shader" type="text/plain">// Vertex Shader
+attribute vec3 position;
+varying vec2 UV;
+varying vec2 lastUV;
+varying vec3 v_position;
+uniform vec2 renderBufferRatio;
+			
+void main(){
+	v_position = position;
+	UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+	lastUV = UV / renderBufferRatio;
+	gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+}
+</script>
+
+
+<script src="js/lib/codemirror/lib/codemirror.js?version=1.0.3"></script>
+<script src="js/lib/codemirror/addon/dialog/dialog.js?version=1.0.3"></script>
+<script src="js/lib/codemirror/addon/search/searchcursor.js?version=1.0.3"></script>
+<script src="js/lib/codemirror/addon/search/search.js?version=1.0.3"></script>
+<script src="js/lib/codemirror/addon/scroll/annotatescrollbar.js?version=1.0.3"></script>
+<script src="js/lib/codemirror/addon/search/matchesonscrollbar.js?version=1.0.3"></script>
+
+<script src="js/lib/codemirror-webgl-clike.js?version=1.0.3"></script>
+
+<script src="js/lib/vue.min.js?version=1.0.3"></script>
+<script src="js/lib/base.js?version=1.0.3"></script>
+<script src="gif-export/lib/gifjs/gif.js?version=1.0.3"></script>
+<script src="js/shadergif.js?version=1.0.3"></script>
