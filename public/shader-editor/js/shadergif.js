@@ -684,6 +684,8 @@ function export_gif(to_export){
     }
     
     function convert(){
+		var code = f_editor.getValue();
+		
         for(var i = 0; i < images.length; i++){    
             gif.addFrame(images[i],{delay: to_export.delay});
         }
@@ -694,7 +696,14 @@ function export_gif(to_export){
             // Create image
 			var size =  (blob.size / 1000).toFixed(2);
 
-			app.images.unshift({size: size, src: URL.createObjectURL(blob)});
+			// Create base64 version
+			// PERF: TODO: generate image on submit only
+			var reader = new window.FileReader();
+			reader.readAsDataURL(blob);
+			reader.onloadend = function() {
+				// reader.result = base64 data
+				app.images.unshift({size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
+			}
         })
     }
 }

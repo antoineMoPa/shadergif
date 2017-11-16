@@ -141,14 +141,17 @@
 		<div class="result-images">
 			<div v-for="image in images"
 				 class="container is-fluid">
-				<div class="result-image">
-					<input type="hidden"
-						   name="image"
-						   v-bind:value="image.src">
-					<img v-bind:src="image.src">
+				<div class="result-image">					
 					<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
 					<% if user_signed_in? %>
 					<%= form_tag("/gifs/new", method: "post") do %>
+					<input type="hidden"
+						   name="image"
+						   v-bind:value="image.blob">
+					<img v-bind:src="image.src">
+					<input type="hidden"
+						   name="code"
+						   v-bind:value="image.code">
 					<div class="field">
 						<label class="label">Title</label>
 						<div class="control">
