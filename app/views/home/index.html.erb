@@ -1,11 +1,12 @@
 <section class="section">
 	<div class="container">
-		<h1 class="title">Shadergif</h1>
-		<p>Welcome to Shadergif</p>
-	</div>
-</section>
-<section class="section">
-	<div class="container">
-		<h1 class="title">Some picture</h1>
+		<h2 class="title has-text-centered">Last uploaded gifs</h2>
+		<% for gif in @gifs %>
+			<div class="content has-text-centered">
+				<strong class="subtitle"><%= gif.title %></strong>
+				<p><%= gif.description %></p>
+				<img src="/gifs/<%= gif.image_filename%>">
+			</div>
+		<% end %>
 	</div>
 </section>
