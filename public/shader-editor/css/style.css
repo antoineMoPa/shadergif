@@ -4,8 +4,11 @@ body{
     max-width:100%;
     overflow-x:hidden;
     font-family:sans-serif;
-    max-height:100%;
-    overflow:hidden;
+}
+
+html,body,window{
+	overflow-y:hidden;
+	max-height:100%;
 }
 
 header{
@@ -117,6 +120,7 @@ hr{
 
 .vertical-scroll-parent{
     max-height:100%;
+	overflow:hidden;
     height:100px;
 }
 

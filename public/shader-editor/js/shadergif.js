@@ -158,7 +158,7 @@ app.manage_passes();
 function resize(){
     var parent = qsa(".vertical-scroll-parent")[0];
     if(window.innerWidth > 768){
-        parent.style.height = window.innerHeight + "px";
+        parent.style.height = (window.innerHeight - 40) + "px";
     } else {
         parent.style.height = "auto";
     }
