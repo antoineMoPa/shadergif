@@ -21,7 +21,7 @@
 		
 	</head>
 	
-	<body>
+	<body <%= 'data-turbolinks="false"'.html_safe if request.path.ends_with? 'shader-editor' %> >
 		<header class="navbar">
 			<div class="container">
 				<div class="navbar-brand">
