@@ -54,14 +54,17 @@
 				</div>
 			</div>
 		</header>
-		<div>
-			<% if notice %>
-			<p class="notification is-success"><%= notice %></p>
-			<% end %>
-			<% if alert %>
-			<p class="notification is-danger"><%= alert %></p>
-			<% end %>
-		</div>
+
+		<% if notice or alert %>
+			<div class="container">
+				<% if notice %>
+					<p class="notification is-success"><%= notice %></p>
+				<% end %>
+				<% if alert %>
+					<p class="notification is-danger"><%= alert %></p>
+				<% end %>
+			</div>
+		<% end %>
 		<%= yield %>
 	</body>
 </html>

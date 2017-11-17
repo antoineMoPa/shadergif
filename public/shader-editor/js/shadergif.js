@@ -9,6 +9,7 @@
 
   */
 
+// Legacy bash API to send gifs
 var sg_api = window.location.protocol + "//" + window.location.host + ":4002/api";
 
 var is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.glsl)/);
@@ -647,7 +648,7 @@ function make_png(){
             // Final step
             var image_data = canvas.toDataURL();
             rendering_gif = false;
-			app.images.unshift({size: false, src: image_data});
+			app.images.unshift({type: "png", size: false, src: image_data});
         }
         i++;
     }
@@ -702,7 +703,7 @@ function export_gif(to_export){
 			reader.readAsDataURL(blob);
 			reader.onloadend = function() {
 				// reader.result = base64 data
-				app.images.unshift({size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
+				app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
 			}
         })
     }

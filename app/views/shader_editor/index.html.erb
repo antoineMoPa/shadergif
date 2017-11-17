@@ -143,37 +143,44 @@
 				 class="container is-fluid">
 				<div class="result-image">					
 					<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
-					<% if user_signed_in? %>
-					<%= form_tag("/gifs/new", method: "post") do %>
-					<input type="hidden"
-						   name="image"
-						   v-bind:value="image.blob">
 					<img v-bind:src="image.src">
-					<input type="hidden"
-						   name="code"
-						   v-bind:value="image.code">
-					<div class="field">
-						<label class="label">Title</label>
-						<div class="control">
-							<input type="text" name="title">
+					<template v-if="image.type == 'gif'">
+						<% if user_signed_in? %>
+						<p class="has-text-weight-bold">Submit to front page</p>
+						<p>Please include licensing information in
+							the code if needed.</p>
+						
+						<%= form_tag("/gifs/new", method: "post") do %>
+						<input type="hidden"
+							   name="image"
+							   v-bind:value="image.blob">
+						<input type="hidden"
+							   name="code"
+							   v-bind:value="image.code">
+						<div class="field">
+							<label class="label">Title</label>
+							<div class="control">
+								<input type="text" name="title">
+							</div>
 						</div>
-					</div>
-					<div class="field">
-						<label class="label">Description</label>
-						<div class="control">
-							<textarea name="description" class="textarea">
-							</textarea>
+						<div class="field">
+							<label class="label">Description</label>
+							<div class="control">
+								<textarea name="description" class="textarea">
+								</textarea>
+							</div>
 						</div>
-					</div>
-					<div class="has-text-right">
-						<%= submit_tag "Publish", :class => "button is-primary" %>
-					</div>
-					<% end %>
-					<% else %>
-					<div class="text-center">
-						Create an account or login to submit gifs
-					</div>
-					<% end %>
+						
+						<div class="has-text-right">
+							<%= submit_tag "Publish", :class => "button is-primary" %>
+						</div>
+						<% end %>
+						<% else %>
+						<div class="text-center">
+							Create an account or login to submit gifs
+						</div>
+						<% end %>
+					</template>
 				</div>
 			</div>
 		</div>
