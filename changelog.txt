@@ -1,4 +1,6 @@
 
+day 3:
+	generate thumbnails vid
 day 2:
 	integrate shadergif editor better, work on gif form
 day 1:
