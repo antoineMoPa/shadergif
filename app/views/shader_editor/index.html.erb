@@ -1,9 +1,9 @@
-<div id="shadergif-app" class="page-content vertical-scroll-parent">
-	<col-md-6 class="vertical-clip">
+<div id="shadergif-app" class="page-content vertical-scroll-parent columns">
+	<div class="column vertical-clip">
 		<textarea name='fragment' v-model="code">
 		</textarea>
-	</col-md-6>
-	<col-md-6 class="vertical-scroll">
+	</div>
+	<div class="column vertical-scroll">
 		<div class="text-center">
 			<h3>Gif preview</h3>
 		</div>
@@ -197,7 +197,7 @@
 			</p>
 			<pre>convert image-*.png anim.gif</pre>
 		</div>
-	</col-md-6>
+	</div>
 </div>
 <script name="default-fragment-shader" type="text/plain">// Fragment shader
 precision highp float;

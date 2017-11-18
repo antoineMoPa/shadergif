@@ -10,6 +10,8 @@
 		<%= stylesheet_link_tag    'application', media: 'all' %>
 		<%= javascript_include_tag 'application' %>
 
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		
 		<% if request.path.ends_with? 'shader-editor' %>
 			<link rel="stylesheet" href="css/bulma.css?version=1.0.3">
 			<link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css?version=1.0.3">
@@ -27,8 +29,17 @@
 		<header class="navbar">
 			<div class="container">
 				<div class="navbar-brand">
+					<a class="navbar-item" href="/">
+						<img class="logo" src="/images/logo-shadergif.png" alt="ShaderGif">
+					</a>
+					
+					<button class="button navbar-burger" data-target="main-mobile-menu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
 				</div>
-				<div class="navbar-menu">
+				<div class="navbar-menu" id="main-mobile-menu">
 					<div class="navbar-end">
 						<a class="navbar-item is-active" href="/">
 							Home
@@ -57,7 +68,7 @@
 				</div>
 			</div>
 		</header>
-
+				
 		<% if notice or alert %>
 			<div class="container">
 				<% if notice %>
