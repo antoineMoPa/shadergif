@@ -14,7 +14,7 @@ window.onload = function(){
 		home_app.gifs = gifs;
 		
 	}
-
+	
 	if(document.getElementById("profile-app") != null){
 		var profile_app = new Vue({
 			el: "#profile-app",

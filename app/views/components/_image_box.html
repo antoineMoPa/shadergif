@@ -3,14 +3,21 @@
 		<strong class="subtitle">{{ gif.title }}</strong>
 		<div>
 			By <a v-bind:href="'/user/' + gif.username">
-				{{ gif.username }}
+			{{ gif.username }}
 			</a>
 		</div>
 		<p>{{ gif.description }}</p>
 		<img
-			 v-if="!show_actual_gif"
-			 v-on:click="show_actual_gif = true"
-			 v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
+			v-if="!show_actual_gif"
+			v-on:click="show_actual_gif = true"
+				  v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
 		<img v-if="show_actual_gif" v-bind:src="'/gifs/' + gif.image_filename">
+		<!--
+			@TODO
+			<div class="links">
+				<a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Edit</a>
+				<a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Fork</a>
+			</div>
+			-->
 	</div>
 </script>

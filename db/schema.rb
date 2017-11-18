@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171118002110) do
+ActiveRecord::Schema.define(version: 20171118030837) do
 
   create_table "gifs", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
     t.string "title"
@@ -20,6 +20,9 @@ ActiveRecord::Schema.define(version: 20171118002110) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.text "code"
+    t.bigint "forked_from"
+    t.boolean "is_public"
+    t.index ["forked_from"], name: "fk_rails_99e24f4b85"
     t.index ["user_id"], name: "index_gifs_on_user_id"
   end
 
@@ -42,5 +45,6 @@ ActiveRecord::Schema.define(version: 20171118002110) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "gifs", "gifs", column: "forked_from"
   add_foreign_key "gifs", "users"
 end

@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   post 'gifs/new' => 'gif#new'
 
   get 'gifs/list' => 'gif#list'
+  get 'gifs/:id/fork' => 'gif#fork'
+  get 'gifs/:id/edit' => 'gif#edit'
   
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
