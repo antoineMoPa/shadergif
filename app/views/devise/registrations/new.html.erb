@@ -12,6 +12,15 @@
 					:class => "input is-large" %>
 			</div>
 		</div>
+
+		<div class="field">
+			<%= f.label :username, :class => "label" %>
+			<div class="control">
+				<%= f.text_field :username, autofocus: true,
+					:class => "input", :pattern => "[a-zA-Z0-9\_]{3,20}" %>
+				<em>(3 to 20 characters max, only letters, numbers and underscores (_))</em>
+			</div>
+		</div>
 		
 		<div class="field">
 			<%= f.label :password, :class => "label"%>
