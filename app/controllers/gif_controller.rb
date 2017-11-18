@@ -45,11 +45,20 @@ class GifController < ApplicationController
       `timeout 10 avconv -y -i public/gifs/generated/#{filename}-temp-%04d.png public/gifs/generated/#{filename}-vid.mp4`
       
       # Save first frame as preview
-      `mv public/gifs/generated/#{filename}-temp-0001.png public/gifs/generated/#{filename}-preview.gif.png`
+      `mv public/gifs/generated/#{filename}-temp-0001.png public/gifs/generated/#{filename}-preview.png`
       # remove generated pngs
       `rm public/gifs/generated/#{filename}-temp-*.png`
       
       redirect_to "/shader-editor/"
-  else
+  end
+  
+  def list
+    @gifs = Gif
+           .order(created_at: :desc)
+           .joins(:user)
+           .select("gifs.*, users.username")
+           .take(10)
+    
+    render :json => @gifs
   end
 end

@@ -1,10 +1,11 @@
-<script type="application/json" id="home-gifs-json">
+
+<script type="application/json" id="profile-gifs-json">
 	<%= raw(@gifs) %> 
 </script>
-<div id="home-app">
+<div id="profile-app">
 	<section class="section">
 		<div class="container">
-			<h1 class="title has-text-centered">Last uploaded gifs</h1>
+			<h1 class="title has-text-centered"><%= @user.username %></h1>
 			<image-box-list v-bind:gifs="gifs"></image-box-list>
 		</div>
 	</section>

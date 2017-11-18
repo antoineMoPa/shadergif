@@ -7,21 +7,23 @@
 		
 		<%= csrf_meta_tags %>
 		
-		<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-		<%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+		<%= stylesheet_link_tag    'application', media: 'all' %>
+		<%= javascript_include_tag 'application' %>
 
 		<% if request.path.ends_with? 'shader-editor' %>
-		<link rel="stylesheet" href="css/bulma.css?version=1.0.3">
-		<link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css?version=1.0.3">
-		<link rel="stylesheet" href="js/lib/codemirror/addon/dialog/dialog.css?version=1.0.3">
-		<link rel="stylesheet" href="js/lib/codemirror/addon/search/matchesonscrollbar.css?version=1.0.3">
-		<link rel="stylesheet" href="css/base.css?version=1.0.3">
-		<link rel="stylesheet" href="css/style.css?version=1.0.3">
+			<link rel="stylesheet" href="css/bulma.css?version=1.0.3">
+			<link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css?version=1.0.3">
+			<link rel="stylesheet" href="js/lib/codemirror/addon/dialog/dialog.css?version=1.0.3">
+			<link rel="stylesheet" href="js/lib/codemirror/addon/search/matchesonscrollbar.css?version=1.0.3">
+			<link rel="stylesheet" href="css/base.css?version=1.0.3">
+			<link rel="stylesheet" href="css/style.css?version=1.0.3">
 		<% end %>
-		
 	</head>
-	
-	<body <%= 'data-turbolinks="false"'.html_safe if request.path.ends_with? 'shader-editor' %> >
+	<body>
+		<%= render :partial => 'components/image_box_list' %>
+		<%= render :partial => 'components/image_box' %>
+		
+		<%= javascript_include_tag 'components' %>
 		<header class="navbar">
 			<div class="container">
 				<div class="navbar-brand">
