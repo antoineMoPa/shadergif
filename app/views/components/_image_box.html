@@ -1,12 +1,5 @@
 <script type="text/html" id="image-box-template">
 	<div class="content has-text-centered">
-		<strong class="subtitle">{{ gif.title }}</strong>
-		<div>
-			By <a v-bind:href="'/user/' + gif.username">
-			{{ gif.username }}
-			</a>
-		</div>
-		<p>{{ gif.description }}</p>
 		<div v-on:click="show_actual_gif = true"
 			 class="image-container">
 			<transition name="view-gif">
@@ -20,16 +13,44 @@
 			</transition>
 			<img
 				v-if="!show_actual_gif"
-					  
+				
 					  v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
 			<img v-if="show_actual_gif" v-bind:src="'/gifs/' + gif.image_filename">
 		</div>
+		<strong class="subtitle">{{ gif.title }}</strong>
+		<div>
+			By <a v-bind:href="'/user/' + gif.username">
+			{{ gif.username }}
+			</a>
+		</div>
+		<p>{{ gif.description }}</p>
+		<button
+			v-if="!code_is_visible"
+			v-on:click="show_code"
+			class="button"
+		>
+			View code
+		</button>
+
 		<!--
-			@TODO
-			<div class="links">
-				<a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Edit</a>
-				<a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Fork</a>
-			</div>
-			-->
+			 Note the ugly tag closing design to avoid whitespace
+			 before and after the code in the <pre>
+		-->
+		<pre
+			v-if="code_is_visible"
+				  class="image-code has-text-left"
+		><button class="button close-image-code"
+			   v-on:click="code_is_visible = !code_is_visible"
+		 >Close</button
+		  ><code class="language-glsl" data-manual
+		   >{{ gif.code }}</code></pre>
+		<!--
+			 @TODO
+			 <div class="links">
+			 <a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Edit</a>
+			 <a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Fork</a>
+			 </div>
+		-->
+		<br>
 	</div>
 </script>
