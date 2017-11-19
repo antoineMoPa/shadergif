@@ -158,11 +158,6 @@ app.manage_passes();
 
 function resize(){
     var parent = qsa(".vertical-scroll-parent")[0];
-    if(window.innerWidth > 768){
-        parent.style.height = (window.innerHeight - 20) + "px";
-    } else {
-        parent.style.height = "auto";
-    }
 }
 
 resize();
@@ -796,4 +791,5 @@ function detect_sg_api(){
 	}
 }
 
-detect_sg_api();
+// Legacy bash server
+// detect_sg_api();
