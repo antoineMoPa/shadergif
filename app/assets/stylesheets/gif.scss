@@ -1,3 +1,47 @@
 // Place all the styles related to the gif controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.image-container{
+	position:relative;
+	max-width:540px;
+	margin:auto;
+	cursor:pointer;
+}
+
+.view-gif-button{
+	position:absolute;
+	width:80px;
+	height:80px;
+	color:#fff;
+	border-radius: 50%;
+	background:#555;
+	top:50%;
+	left:50%;
+	top:calc( 50% - 40px);
+	left:calc( 50% - 40px);
+	opacity:0.4;
+	transition:all 0.1s;
+}
+
+.image-container:hover .view-gif-button{
+	transform: rotate(360deg) scale(1.02);
+}
+
+.image-container:active .view-gif-button{
+	transform: rotate(360deg) scale(0.8);
+	opacity:0.9;
+	font-size:170%;
+}
+
+.view-gif-button-inside{
+	position:absolute;
+	top:2.5px;
+	left:2.5px;
+	width:75px;
+	height:75px;
+	background:#555;
+	border-radius:50%;
+	border:3px dashed #fff;
+	line-height:65px;
+}

@@ -1,6 +1,7 @@
 
 //= require ./bulma/css/bulma.css
 //= require ./devise.scss
+//= require ./gif.scss
 
 .navbar{
 	box-shadow: 0 0 3px rgba(0,0,0,0.3);

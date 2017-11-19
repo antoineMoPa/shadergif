@@ -7,11 +7,23 @@
 			</a>
 		</div>
 		<p>{{ gif.description }}</p>
-		<img
-			v-if="!show_actual_gif"
-			v-on:click="show_actual_gif = true"
-				  v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
-		<img v-if="show_actual_gif" v-bind:src="'/gifs/' + gif.image_filename">
+		<div v-on:click="show_actual_gif = true"
+			 class="image-container">
+			<transition name="view-gif">
+				<div
+					v-if="!show_actual_gif"
+					class="view-gif-button">
+					<div class="view-gif-button-inside">
+						GIF
+					</div>
+				</div>
+			</transition>
+			<img
+				v-if="!show_actual_gif"
+					  
+					  v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
+			<img v-if="show_actual_gif" v-bind:src="'/gifs/' + gif.image_filename">
+		</div>
 		<!--
 			@TODO
 			<div class="links">
