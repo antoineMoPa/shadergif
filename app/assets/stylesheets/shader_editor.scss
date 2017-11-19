@@ -1,3 +1,237 @@
-// Place all the styles related to the shader-editor controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+//= require ./application.css
+
+body{
+    padding:0;
+    margin:0;
+    max-width:100%;
+    overflow-x:hidden;
+    font-family:sans-serif;
+}
+
+html, body, window{
+	overflow-y:hidden;
+	max-height:100%;
+	height:100%;
+}
+
+.navbar-burger{
+	margin-right:0;
+}
+
+header{
+    background: #35a;
+    margin:0;
+    width:100%;
+    height:40px;
+	position:absolute;
+	z-index:1000;
+}
+
+.examples-page header{
+    position:static;
+}
+
+.examples-page p,
+.examples-page h2{
+    margin-left:20px;
+}
+
+h1,h2,h3{
+    margin-top:20px;
+    margin-bottom:20px;
+    font-weight:300;
+}    
+
+h1{
+    font-size:20px;
+    font-weight:300;
+    display:inline-block;
+    padding:0;
+    margin:0;
+    margin-left:10px;
+    margin-right:20px;
+    color:#fff;
+    line-height:40px;
+}
+
+header a{
+    color:#fff;
+    text-decoration:none;
+}
+
+p,pre,ul{
+    margin-left:10px;
+}
+
+.inline-block{
+    display:inline-block;
+    vertical-align:top;
+    margin:0;
+}
+
+textarea{
+    height:auto;
+    font-size:15px;
+}
+
+.fragment-error-pre{
+    margin:0;
+    padding:0px;
+    font-size:15px;
+    color:red;
+    position:absolute;
+    top:0;
+    right:0;
+    max-width:50%;
+    z-index:2000;
+    background:#eee;
+    width:50%;
+}
+
+.gif-canvas{
+    display:block;
+    margin:auto;
+    margin-bottom:20px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+button{
+    display:block;
+    margin:auto;
+    border:none;
+    background:#3af;
+    color:#fff;
+    padding:10px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+.result-images img{
+    display: block;
+    margin: auto;
+    margin-top:20px;
+    margin-bottom:20px;
+    max-height:600px;
+    background:#f3f3f3;
+}
+
+hr{
+    margin-top:20px;
+    color:#eee;
+    width:60%;
+}
+
+.vertical-scroll-parent{
+    max-height:100%;
+	overflow:hidden;
+	height:100%;
+}
+
+.vertical-scroll{
+	padding-left:0;
+	padding-right:0;
+	min-height:100%;
+    max-height:100%;
+    overflow-y:scroll;
+}
+
+.vertical-scroll-spacer{
+    height:40px;
+    clear:both;
+}
+
+@media all and (max-width:768px){
+    body{
+        overflow-y:scroll;
+    }
+    canvas,img{
+        max-width:100%;
+    }
+	.vertical-scroll{
+        max-height:none;
+        overflow-y:scroll;
+    }
+    .vertical-scroll-parent{
+        max-height:none;
+		height:auto;
+		overflow-y:scroll;
+    }
+}
+
+.settings{
+    margin-left:10px;
+    font-size:12px;
+    line-height:44px;
+}
+
+.settings input{
+    width:50px;
+    font-size:12px;
+    margin-left:3px;
+}
+
+/* CODEMIRROR */
+
+.CodeMirror{
+    height:100%;
+    height:calc(100% - 30px);
+    font-size:15px;
+}
+
+.errorline{
+    background:#fdd;
+    color:#f00;
+}
+
+/* END CODEMIRROR */
+
+/* UI */
+
+.foldable{
+	margin:20px;
+	box-shadow:0 0 2px rgba(0,0,0,0.2);
+}
+
+.foldable-header{
+	background:#3af;
+	padding: 10px;
+	color:#fff;
+	position:relative;
+}
+
+/* icon */
+
+.foldable-header:after{
+	content:" ";
+	width:16px;
+	height:16px;
+	border: 1px solid #fff;
+	position:absolute;
+	top:10px;
+	right:10px;
+	transition:all 0.3s;
+}
+
+.foldable-hidden .foldable-header:after{
+	transform: rotateZ(45deg);
+}
+
+.foldable-hidden .foldable-content{
+	display:none;
+}
+
+.foldable-content{
+	padding-top:10px;
+	padding-bottom:10px;
+}
+
+.result-image{
+	box-shadow:0 0 3px rgba(0, 0, 0, 0.3);
+	padding:20px;
+}
+
+.result-images form{
+    margin:10px; 
+}
+
+/* END UI*/

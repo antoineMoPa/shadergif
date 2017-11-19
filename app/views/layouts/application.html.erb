@@ -7,18 +7,18 @@
 		
 		<%= csrf_meta_tags %>
 		
-		<%= stylesheet_link_tag    'application', media: 'all' %>
 		<%= javascript_include_tag 'application' %>
-
-		<meta name="viewport" content="width=device-width, user-scalable=no">
 		
+		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<% if request.path.ends_with? 'shader-editor' %>
-			<link rel="stylesheet" href="css/bulma.css?version=1.0.3">
 			<link rel="stylesheet" href="js/lib/codemirror/lib/codemirror.css?version=1.0.3">
 			<link rel="stylesheet" href="js/lib/codemirror/addon/dialog/dialog.css?version=1.0.3">
 			<link rel="stylesheet" href="js/lib/codemirror/addon/search/matchesonscrollbar.css?version=1.0.3">
 			<link rel="stylesheet" href="css/base.css?version=1.0.3">
-			<link rel="stylesheet" href="css/style.css?version=1.0.3">
+			
+			<%= stylesheet_link_tag    'shader_editor', media: 'all' %>
+		<% else %>
+			<%= stylesheet_link_tag    'application', media: 'all' %>
 		<% end %>
 	</head>
 	<body>
