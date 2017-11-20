@@ -22,6 +22,8 @@
 			By <a v-bind:href="'/user/' + gif.username">
 			{{ gif.username }}
 			</a>
+			-
+			{{ (new Date(gif.created_at)).toDateString() }}
 		</div>
 		<p>{{ gif.description }}</p>
 		<button
