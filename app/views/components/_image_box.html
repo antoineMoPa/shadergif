@@ -23,7 +23,7 @@
 			{{ gif.username }}
 			</a>
 			-
-			{{ (new Date(gif.created_at)).toDateString() }}
+			Uploaded on {{ (new Date(gif.created_at)).toDateString() }}
 		</div>
 		<p>{{ gif.description }}</p>
 		<button
