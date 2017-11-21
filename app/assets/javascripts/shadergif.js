@@ -657,7 +657,7 @@ function export_gif(to_export){
         workers: 2,
         quality: app.gifjs.quality,
 		dither: app.gifjs.dithering,
-        workerScript: "gif-export/lib/gifjs/gif.worker.js"
+        workerScript: "/workers/gif.worker.js"
     });
     
     data = to_export.data;
