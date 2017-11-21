@@ -45,11 +45,12 @@ class GifController < ApplicationController
   end
 
   def list
+    
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
            .select("gifs.*, users.username")
-           .take(10)
+           .limit(params[:take]).offset(params[:skip])
     
     render :json => @gifs
   end

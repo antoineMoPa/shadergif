@@ -1,3 +1,7 @@
+0.0.1:                                                (November 20 2017)
+	new: version numbers, view more button, merge shader editor assets
+	     in a rails asset
+	
 some days later:
 	domain name bought, application uploaded
 	view code

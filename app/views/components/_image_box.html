@@ -12,10 +12,16 @@
 				</div>
 			</transition>
 			<img
+				width="540"
+				height="540"
 				v-if="!show_actual_gif"
-				
-					  v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'">
-			<img v-if="show_actual_gif" v-bind:src="'/gifs/' + gif.image_filename">
+				v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'"
+			>
+			<img v-if="show_actual_gif"
+				 v-bind:src="'/gifs/' + gif.image_filename"
+				 width="540"
+				 height="540"
+			>
 		</div>
 		<strong class="subtitle">{{ gif.title }}</strong>
 		<div>
