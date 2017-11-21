@@ -15,3 +15,4 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 
 Rails.application.config.assets.precompile += %w( shader_editor.scss )
 Rails.application.config.assets.precompile += %w( components.js )
+Rails.application.config.assets.precompile += %w( shader_editor.js )

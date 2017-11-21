@@ -230,101 +230,90 @@ void main(void){
 }
 </script>
 <script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
-precision highp float;
+ precision highp float;
 
-varying vec2 UV;
-uniform float soundTime;
-uniform int pass;
+ varying vec2 UV;
+ uniform float soundTime;
+ uniform int pass;
 
-uniform sampler2D lastPass;
+ uniform sampler2D lastPass;
 
-#define PI 3.14159265359
-#define PI2 6.28318530718
+ #define PI 3.14159265359
+ #define PI2 6.28318530718
 
-vec4 pass2(){
-    vec4 col = vec4(0.0);
-	
-	col += texture2D(lastPass, UV.xy);
-    	
-    return col;
-}
+ vec4 pass2(){
+     vec4 col = vec4(0.0);
+	 
+	 col += texture2D(lastPass, UV.xy);
+     
+     return col;
+ }
 
-/* 
-   Write your sound code in this function
-   t : time for current (sub)pixel
- */
-float val(float t){
-	float note = 440.0;
+ /* 
+	Write your sound code in this function
+	t : time for current (sub)pixel
+  */
+ float val(float t){
+	 float note = 440.0;
 
-	float signal =  
-    	0.25 * cos(2.0 * PI * 1.0 * note * t);
-    
-    return signal;
-}
+	 float signal =  
+    	 0.25 * cos(2.0 * PI * 1.0 * note * t);
+     
+     return signal;
+ }
 
-vec4 pass1(){
-    vec4 col = vec4(0.0);
-	
-    float sr = 48000.0;
-    float dt = 1.0/sr;
+ vec4 pass1(){
+     vec4 col = vec4(0.0);
+	 
+     float sr = 48000.0;
+     float dt = 1.0/sr;
 
-    // Calculate time from position
-    float t = 
-    	(UV.x) * 3.0 * 256.0 + (UV.y) * 3.0 * 256.0 * 256.0;
-	
-    t /= sr;
-	t += soundTime;
+     // Calculate time from position
+     float t = 
+    	 (UV.x) * 3.0 * 256.0 + (UV.y) * 3.0 * 256.0 * 256.0;
+	 
+     t /= sr;
+	 t += soundTime;
 
-	// Encode sound in rgb values
-    col.r += val(t + 0.0 * dt);
-    col.g += val(t + 1.0 * dt);
-    col.b += val(t + 2.0 * dt);
-    col.a += 1.0;
-    
-    col.rgb /= 2.0;
-    col.rgb += 0.5;
-    
-    return col;
-}
+	 // Encode sound in rgb values
+     col.r += val(t + 0.0 * dt);
+     col.g += val(t + 1.0 * dt);
+     col.b += val(t + 2.0 * dt);
+     col.a += 1.0;
+     
+     col.rgb /= 2.0;
+     col.rgb += 0.5;
+     
+     return col;
+ }
 
 
-void main(){
-    vec4 col = vec4(0.0);
-	
-	if(pass == 1){
-		col += pass1();
-        
-	} else if(pass == 2){
-		col += pass2();
-	}
+ void main(){
+     vec4 col = vec4(0.0);
+	 
+	 if(pass == 1){
+		 col += pass1();
+         
+	 } else if(pass == 2){
+		 col += pass2();
+	 }
 
-    gl_FragColor = col;
-}
+     gl_FragColor = col;
+ }
 </script>
 <script name="vertex-shader" type="text/plain">// Vertex Shader
-attribute vec3 position;
-varying vec2 UV;
-varying vec2 lastUV;
-varying vec3 v_position;
-uniform vec2 renderBufferRatio;
-			
-void main(){
-	v_position = position;
-	UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
-	lastUV = UV / renderBufferRatio;
-	gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
-}
+ attribute vec3 position;
+ varying vec2 UV;
+ varying vec2 lastUV;
+ varying vec3 v_position;
+ uniform vec2 renderBufferRatio;
+ 
+ void main(){
+	 v_position = position;
+	 UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+	 lastUV = UV / renderBufferRatio;
+	 gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+ }
 </script>
 
-
-<script src="js/lib/codemirror/lib/codemirror.js?version=1.0.3"></script>
-<script src="js/lib/codemirror/addon/dialog/dialog.js?version=1.0.3"></script>
-<script src="js/lib/codemirror/addon/search/searchcursor.js?version=1.0.3"></script>
-<script src="js/lib/codemirror/addon/search/search.js?version=1.0.3"></script>
-<script src="js/lib/codemirror/addon/scroll/annotatescrollbar.js?version=1.0.3"></script>
-<script src="js/lib/codemirror/addon/search/matchesonscrollbar.js?version=1.0.3"></script>
-
-<script src="js/lib/codemirror-webgl-clike.js?version=1.0.3"></script>
-<script src="js/lib/base.js?version=1.0.3"></script>
-<script src="gif-export/lib/gifjs/gif.js?version=1.0.3"></script>
-<script src="js/shadergif.js?version=1.0.3"></script>
+<%= javascript_include_tag 'shader_editor' %>

@@ -1,4 +1,9 @@
 //= require ./application.css
+//= require lib/codemirror/lib/codemirror.css
+//= require lib/codemirror/addon/dialog/dialog.css
+//= require lib/codemirror/addon/search/matchesonscrollbar.css
+// Todo: remove base.css, legacy editor css library my antoineMoPa
+//= require base.css
 
 body{
     padding:0;
