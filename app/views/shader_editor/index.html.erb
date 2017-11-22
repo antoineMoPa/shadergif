@@ -1,17 +1,17 @@
 <div id="shadergif-app" class="vertical-scroll-parent columns">
 	<div class="column">
-		<div class="vertical-scroll">
+		<div class="vertical-scroll gif-pane">
 			<div class="text-center">
 				<h3>Gif preview</h3>
+				<canvas class="gif-canvas" v-on:mousemove="canvas_mousemove"></canvas>
 			</div>
-			<canvas class="gif-canvas" v-on:mousemove="canvas_mousemove"></canvas>
-			<p class="text-center">
-				time: {{ time }}, mouse: {{ mouse[0].toFixed(4) }}, {{ mouse[1].toFixed(4) }}
-			</p>
 			<pre class="fragment-error-pre error-pre">
 			</pre>
 			<pre class="vertex-error-pre error-pre">
 			</pre>
+			<p class="text-center">
+				time: {{ time }}, mouse: {{ mouse[0].toFixed(4) }}, {{ mouse[1].toFixed(4) }}
+			</p>
 			
 			<div class="foldable">
 				<div class="foldable-header">
@@ -196,7 +196,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="column">
+	<div class="column limit-width-desktop">
 		<div class="vertical-scroll">
 			<textarea name='fragment' v-model="code">
 			</textarea>

@@ -80,22 +80,15 @@ textarea{
 }
 
 .fragment-error-pre{
-    margin:0;
+    margin:0px;
     padding:0px;
     font-size:15px;
     color:red;
-    position:absolute;
-    top:0;
-    right:0;
-    max-width:50%;
     z-index:2000;
     background:#eee;
-    width:50%;
 }
 
 .gif-canvas{
-    display:block;
-    margin:auto;
     margin-bottom:20px;
     box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
@@ -128,8 +121,11 @@ hr{
 
 .vertical-scroll-parent{
     max-height:100%;
-	overflow:hidden;
 	height:100%;
+	height:calc( 100% - 30px );
+	max-height:calc( 100% - 30px );
+	overflow:hidden;
+	
 }
 
 .vertical-scroll{
@@ -143,6 +139,12 @@ hr{
 .vertical-scroll-spacer{
     height:40px;
     clear:both;
+}
+
+@media all and (max-width:768px){
+	.column.limit-width-desktop{
+        max-width:50%;
+    }
 }
 
 @media all and (max-width:768px){
@@ -173,6 +175,10 @@ hr{
     width:50px;
     font-size:12px;
     margin-left:3px;
+}
+
+.settings input[type=number]{
+	min-width:60px;
 }
 
 /* CODEMIRROR */
