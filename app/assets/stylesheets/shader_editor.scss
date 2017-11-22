@@ -141,9 +141,12 @@ hr{
     clear:both;
 }
 
-@media all and (max-width:768px){
+@media all and (min-width:768px){
 	.column.limit-width-desktop{
         max-width:50%;
+    }
+	.CodeMirror{
+        max-width:100%;
     }
 }
 
