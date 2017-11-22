@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :username,
             {
               presence: true,
+              uniqueness: true,
               format: {
                 with: /[a-zA-Z0-9\_]{3,20}/,
                 message: "(3 to 20 characters max, only letters, numbers and underscores (_))" }
