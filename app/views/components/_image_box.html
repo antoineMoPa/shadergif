@@ -1,27 +1,12 @@
 <script type="text/html" id="image-box-template">
 	<div class="content has-text-centered">
-		<div v-on:click="show_actual_gif = true"
-			 class="image-container">
-			<transition name="view-gif">
-				<div
-					v-if="!show_actual_gif"
-					class="view-gif-button">
-					<div class="view-gif-button-inside">
-						GIF
-					</div>
-				</div>
-			</transition>
-			<img
-				width="540"
-				height="540"
-				v-if="!show_actual_gif"
-				v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.png'"
-			>
-			<img v-if="show_actual_gif"
-				 v-bind:src="'/gifs/' + gif.image_filename"
-				 width="540"
-				 height="540"
-			>
+		<div class="image-container">
+			<video width="540" height="540" loop autoplay>
+				<source
+					v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
+								type="video/webm"
+				>
+			</video>
 		</div>
 		<strong class="subtitle">{{ gif.title }}</strong>
 		<div>
@@ -32,6 +17,14 @@
 			Uploaded on {{ (new Date(gif.created_at)).toDateString() }}
 		</div>
 		<p>{{ gif.description }}</p>
+		<div>
+			<p>
+				<a v-bind:href="'/gifs/' + gif.image_filename">Raw gif</a> - 
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.webm'">Video</a> - 
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-preview.png'">Preview</a>
+				<br><br>
+			</p>
+		</div>
 		<button
 			v-if="!code_is_visible"
 			v-on:click="show_code"
