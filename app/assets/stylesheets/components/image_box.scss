@@ -1,3 +1,20 @@
+@media all and (min-width:540px){
+	.image-container{
+		width:540px;
+		height:540px;
+	}
+}
+
+@media all and (max-width:540px){
+	.image-container{
+		width:100%;
+		.video{
+			height:auto;
+		}
+	}
+}
+
+
 .image-code{
 	box-shadow:0 0 30px rgba(0, 0, 0, 0.3);
 	position:relative;

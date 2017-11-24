@@ -1,20 +1,35 @@
 <script type="text/html" id="image-box-template">
 	<div class="content has-text-centered">
-		<div class="image-container">
-			<video width="540" height="540" loop autoplay>
-				<source
-					v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
-								type="video/mp4"
+		<div class="image-box">
+			<div v-on:click="show_actual_gif = true"
+				 class="image-container">
+				<transition name="view-gif">
+					<div
+						v-if="!show_actual_gif"
+						class="view-gif-button">
+						<div class="view-gif-button-inside">
+							GIF
+						</div>
+					</div>
+				</transition>
+				<img v-if="show_actual_gif"
+					 v-bind:src="'/gifs/' + gif.image_filename"
 				>
-				<source
-					v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.ogv'"
-								type="video/ogg"
-				>
-			</video>
-		</div>
-		<strong class="subtitle">{{ gif.title }}</strong>
-		<div>
-			By <a v-bind:href="'/user/' + gif.username">
+				<video v-if="!show_actual_gif" loop autoplay>
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
+									type="video/mp4"
+					>
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.ogv'"
+									type="video/ogg"
+					>
+				</video>
+			</div>
+			<br>
+			<strong class="subtitle">{{ gif.title }}</strong>
+			<div>
+				By <a v-bind:href="'/user/' + gif.username">
 			{{ gif.username }}
 			</a>
 			-

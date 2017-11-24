@@ -8,8 +8,8 @@ class Gif < ApplicationRecord
     # Extract all frames
     `timeout 10 convert public/gifs/#{filename} public/gifs/generated/#{filename}-temp-%04d.png`
     # Create gif video
-    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -crf 35 public/gifs/generated/#{filename}-vid.mp4`
-    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -crf 35 public/gifs/generated/#{filename}-vid.ogv`
+    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -crf 37 public/gifs/generated/#{filename}-vid.mp4`
+    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -crf 37 public/gifs/generated/#{filename}-vid.ogv`
     
     # Save first frame as preview
     `mv public/gifs/generated/#{filename}-temp-0000.png public/gifs/generated/#{filename}-preview.png`
