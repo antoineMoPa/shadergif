@@ -1,0 +1,11 @@
+<script type="application/json" id="main-gifs-json">
+ [<%= raw(@gif) %>]
+</script>
+<div id="main-app">
+	<section class="section">
+		<div class="container">
+			<h1 class="title has-text-centered">Gif</h1>
+			<image-box-list v-bind:gifs="gifs"></image-box-list>
+		</div>
+	</section>
+</div>

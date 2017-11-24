@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'gifs/new' => 'gif#new'
 
   get 'gifs/list' => 'gif#list'
+  get 'gifs/:id' => 'gif#show'
   get 'gifs/:id/fork' => 'gif#fork'
   get 'gifs/:id/edit' => 'gif#edit'
   

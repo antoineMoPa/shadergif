@@ -1,9 +1,9 @@
 window.onload = function(){
-	if(document.getElementById("home-app") != null){
+	if(document.getElementById("main-app") != null){
 		var chunk_size = 8;
-		
-		var home_app = new Vue({
-			el: "#home-app",
+
+		var main_app = new Vue({
+			el: "#main-app",
 			data: {
 				gifs: [],
 				initial_qty: -1,
@@ -45,10 +45,10 @@ window.onload = function(){
 		});
 		
 		var gifs = JSON.parse(
-			document.getElementById("home-gifs-json").innerHTML
+			document.getElementById("main-gifs-json").innerHTML
 		);
 		
-		home_app.gifs = gifs;
+		main_app.gifs = gifs;
 		
 	}
 	

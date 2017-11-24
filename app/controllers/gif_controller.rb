@@ -37,13 +37,15 @@ class GifController < ApplicationController
       @gif.image_filename = filename
       @gif.save()
       
-      Thread.new do
-        @gif.gen_video_and_thumb
-      end
-      
-      redirect_to "/shader-editor/"
+      @gif.gen_video_and_thumb
+            
+      redirect_to "/gifs/" + @gif.id.to_s
   end
 
+  def show
+    @gif = Gif.find(params[:id]).to_json()
+  end
+  
   def list
     
     @gifs = Gif
