@@ -3,8 +3,8 @@
 		<div class="image-container">
 			<video width="540" height="540" loop autoplay>
 				<source
-					v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
-								type="video/webm"
+					v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
+								type="video/mp4"
 				>
 			</video>
 		</div>
@@ -20,7 +20,7 @@
 		<div>
 			<p>
 				<a v-bind:href="'/gifs/' + gif.image_filename">Raw gif</a> - 
-				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.webm'">Video</a> - 
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.mp4'">Video</a> - 
 				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-preview.png'">Preview</a>
 				<br><br>
 			</p>
