@@ -1,2 +1,10 @@
 site_name: Shadergif Documentation
 theme: readthedocs
+pages:
+- Home: 'index.md'
+- Techniques:
+    - 'Two triangles': 'techniques/two-triangles.md' 
+- Development:
+    - 'Generating the documentation': 'doc/doc.md'
+    - 'Server':
+        - 'Running the server': 'server/Server.md'
