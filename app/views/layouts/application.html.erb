@@ -43,6 +43,9 @@
 						<a class="navbar-item is-active" href="/">
 							Home
 						</a>
+						<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
+							Doc
+						</a>
 						<% if user_signed_in? %>
 							<%= link_to 'Account', edit_user_registration_path, :class => "navbar-item"  %>
 							<%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "navbar-item"  %>
@@ -50,24 +53,24 @@
 							<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
 						<% end %>
 						<% if request.path.ends_with? 'shader-editor' %>
-						<a class="navbar-item is-active"
-						   href="examples"
-						   target="_blank">
-							Examples
-						</a>
-						<% else %>
-						<span class="navbar-item">
-							<a class="button is-success is-inverted"
-							   href="/shader-editor/">
-								Shader Editor
+							<a class="navbar-item is-active"
+							   href="examples"
+							   target="_blank">
+								Examples
 							</a>
-						</span>
+						<% else %>
+							<span class="navbar-item">
+								<a class="button is-success is-inverted"
+								   href="/shader-editor/">
+									Shader Editor
+								</a>
+							</span>
 						<% end %>
 					</div>
 				</div>
 			</div>
 		</header>
-				
+		
 		<% if notice or alert %>
 			<div class="container notification-container">
 				<% if notice %>
