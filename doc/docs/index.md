@@ -4,19 +4,28 @@
 
 A shader is a piece of code that runs in the GPU. **Fragment** shaders are used to render surfaces in video games and to do post-processing (applying filters, lens-distortion, etc.).  **Vertex** shaders manipulate 3D and 2D objects in order to place them in the screen, before handling the result to fragment shaders.
 
-Shadergif is mostly about **Fragment** shaders, because it has a vertex shader running in the backend with generates a square which fills the screen. This allows shader programmers to use various 2D and 3D techniques. [See some 2D techniques here](techniques/two-triangles) 
+Shadergif is mostly about **Fragment** shaders, because it has a vertex shader running in the backend with generates a square which fills the screen. This allows shader programmers to use various 2D and 3D techniques. See some techniques [here](techniques/two-triangles).
 
-There are many shader languages (GLSL, HLSL, etc.). Shadergif supports GLSL. GLSL is a c-like language with bonus type like `vec2`, `mat2` and others.
+There are many shader languages (GLSL, HLSL, etc.). Shadergif works with GLSL. GLSL is a c-like language with bonus types like `vec2`, `mat2` and others. It also comes with many functions that do not come directly with C, such as math functions like `sin`, `cos`, `atan`, `length` (to measure the length of a vector), `distance` (measure a distance between 2 vector coordinates).
 
-To get started with the language, you can start here :
+To get started with the GLSL language :
 
-[The Book Of Shaders](https://thebookofshaders.com/00/)
+* [The Book Of Shaders](https://thebookofshaders.com/00/)
 
-## Introduction to Shadergif
 
-When running the shadergif editor, you will have a canvas on the left which constantly renders the code you type at the right. Don't hesitate to click `examples` in the top bar. For example, you could start with a circle:
+You will enjoy writing shaders if you have had a linear algebra class or if you have at least some vector math background.
 
-    // Just always put that line and don't ask questions
+* Here is an example of a really quick introduction: (http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/)
+* Here is a longer one: [http://immersivemath.com/ila/index.html)
+
+
+## Getting started with Shadergif
+
+When running the Shadergif editor, you will have a canvas on the left which constantly renders the code you type at the right. Don't hesitate to click `examples` in the top bar.
+
+Here is a commented version of the circle example:
+
+    // Just always put that line to avoid warnings and errors
     precision highp float;
     
 	// This will give you information on the current pixel you are rendering
@@ -36,21 +45,25 @@ When running the shadergif editor, you will have a canvas on the left which cons
 	// If it is smaller than your radius (0.3 here), you can set 
 	// a certain color.
     void main(void){
-        float x = UV.x * ratio;
-        float y = UV.y;
-        
-        vec2 pos = vec2(x, y);
-        
-        vec4 col = vec4(0.0);
+		// At first, we set the color to black
+        vec4 col = vec4(0.0);									// vec4(0.0) is equivalent to vec4(0.0, 0.0, 0.0, 0.0)
     
+		// Create a variable containing the position of the center of the circle
+		// (in this case, the middle of the screen)
         vec2 center = vec2(0.5,0.5);
+		
+		// distance is a GLSL function that returns... The distance!
         float distance_from_center = distance(pos, center);
     
+		// If we are closer to the center than our radius
         if(distance_from_center < 0.3){
+			// Fill the pixel with this color
             col.rgba = vec4(0.4, 0.5, 0.6, 1.0);
         }
-    
+		
+		// Set the opacity to 1 so we'll actually see something
         col.a = 1.0;
         
+		// Pass the pixel color back to OpenGL
         gl_FragColor = col;
     }
