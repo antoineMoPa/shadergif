@@ -12,28 +12,26 @@
 						</div>
 					</div>
 				</transition>
-				<img v-if="show_actual_gif"
-					 v-bind:src="'/gifs/' + gif.image_filename"
-				>
-				<video v-if="!show_actual_gif" loop autoplay>
+				<img v-if="!show_actual_gif"
+					 v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
+				<video v-if="show_actual_gif" loop autoplay controls>
 					<source
 						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
-									type="video/mp4"
-					>
+									type="video/mp4">
 					<source
 						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.ogv'"
-									type="video/ogg"
-					>
+									type="video/ogg">
 				</video>
 			</div>
 			<br>
 			<strong class="subtitle">{{ gif.title }}</strong>
 			<div>
 				By <a v-bind:href="'/user/' + gif.username">
-			{{ gif.username }}
-			</a>
-			-
-			Uploaded on {{ (new Date(gif.created_at)).toDateString() }}
+				{{ gif.username }}
+				</a>
+				-
+				Uploaded on {{ (new Date(gif.created_at)).toDateString() }}
+			</div>
 		</div>
 		<p>{{ gif.description }}</p>
 		<div>
@@ -65,13 +63,7 @@
 		 >Close</button
 		  ><code class="language-glsl" data-manual
 		   >{{ gif.code }}</code></pre>
-		<!--
-			 @TODO
-			 <div class="links">
-			 <a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Edit</a>
-			 <a class="button is-outlined" v-bind:href="'/gif/'+gif.id+'/fork'">Fork</a>
-			 </div>
-		-->
+		
 		<br>
 	</div>
 </script>
