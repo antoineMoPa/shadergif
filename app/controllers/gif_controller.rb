@@ -43,7 +43,7 @@ class GifController < ApplicationController
   end
 
   def show
-    @gif = Gif.find(params[:id]).to_json()
+    @gif = Gif.find(params[:id])
   end
   
   def list
