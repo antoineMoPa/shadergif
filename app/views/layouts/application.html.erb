@@ -16,6 +16,10 @@
 			<%= javascript_include_tag 'application-dev' %>
 		<% end %>
 		
+		<% if content_for?(:head) %>
+			<%= yield(:head) %>
+		<% end %>
+		
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<% if request.path.ends_with? 'shader-editor' %>
 			

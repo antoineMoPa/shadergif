@@ -1,3 +1,9 @@
+<% content_for :head do %>
+	<meta property="og:title" content="<%= @gif.title %>" />
+	<meta property="og:description" content="<%= @gif.description %>" />
+	<meta property="og:image" content="https://shadergif.com/gifs/<%= @gif.image_filename %>" />
+	<meta property="og:video" content="https://shadergif.com/gifs/generated/<%= @gif.image_filename %>-vid.mp4" />
+<% end %>
 <script type="application/json" id="main-gifs-json">
  [<%= raw(@gif.to_json()) %>]
 </script>
