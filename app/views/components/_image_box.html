@@ -37,7 +37,7 @@
 			<p>{{ gif.description }}</p>
 			<div>
 				Uploaded on
-				<a v-bind:href="'/user/' + gif.username">
+				<a v-bind:href="'/gifs/' + gif.id">
 					{{ (new Date(gif.created_at)).toDateString() }}
 				</a>
 			</div>
