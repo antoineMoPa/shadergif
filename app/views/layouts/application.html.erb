@@ -10,7 +10,11 @@
 		
 		<%= csrf_meta_tags %>
 		
-		<%= javascript_include_tag 'application' %>
+		<% if Rails.env.production? %>
+			<%= javascript_include_tag 'application' %>
+		<% else %>
+			<%= javascript_include_tag 'application-dev' %>
+		<% end %>
 		
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<% if request.path.ends_with? 'shader-editor' %>
