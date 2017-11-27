@@ -33,14 +33,16 @@
 				By <a v-bind:href="'/user/' + gif.username">
 				{{ gif.username }}
 				</a>
-				-
+			</div>
+			<p>{{ gif.description }}</p>
+			<div>
 				Uploaded on
 				<a v-bind:href="'/user/' + gif.username">
 					{{ (new Date(gif.created_at)).toDateString() }}
 				</a>
 			</div>
 		</div>
-		<p>{{ gif.description }}</p>
+		
 		<div>
 			<p>
 				<a v-bind:href="'/gifs/' + gif.image_filename">Raw gif (gif)</a> - 
