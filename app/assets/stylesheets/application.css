@@ -2,6 +2,7 @@
 //= require ./bulma/css/bulma.css
 //= require ./devise.scss
 //= require ./gif.scss
+//= require ./home.scss
 //= require lib/prism/prism.css
 //= require ./components/image_box.css
 
@@ -11,4 +12,5 @@
 
 .notification-container{
 	margin-top:20px;
+	margin-bottom:20px;
 }

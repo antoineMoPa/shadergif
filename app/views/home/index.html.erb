@@ -1,6 +1,13 @@
 <script type="application/json" id="main-gifs-json">
 	<%= raw(@gifs) %> 
 </script>
+<% if !user_signed_in? %>
+	<div class="home-description">
+		<p>
+			Shadergif allows you to create gifs using the GLSL language. Have fun browsing & coding!
+		</p>
+	</div>
+<% end %>
 <div id="main-app">
 	<section class="section">
 		<div class="container">
