@@ -439,7 +439,9 @@ function draw_ctx(can, ctx, time){
 		
 		var iGlobalTimeAttribute = ctx.getUniformLocation(ctx.program, "iGlobalTime");
 		var date = new Date();
-		var gtime = (date.getTime() % (3600 * 24)) / 1000.0;
+		var gtime = (date.getTime()) / 1000.0 % (3600 * 24);
+		// Add seconds
+		gtime += time;
 		ctx.uniform1f(iGlobalTimeAttribute, gtime);
 		
 		
