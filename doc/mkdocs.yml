@@ -2,6 +2,8 @@ site_name: Shadergif Documentation
 theme: readthedocs
 pages:
 - Home: 'index.md'
+- Manual:
+    - 'Uniforms': 'manual/uniforms.md'
 - Techniques:
     - 'Two triangles': 'techniques/two-triangles.md' 
 - Development:

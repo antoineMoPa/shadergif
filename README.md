@@ -4,12 +4,6 @@ A tool to play with fragment shaders to create nice 2D images. (Because fragment
 
 Features gif export, png export & GPU sound creation.
 
-# Uniforms
-
-time - goes from 0.0 to 1.0 and repeats
-
-ratio - The screen ratio (Can be used to adapt the code for the big & small canvases)
-
 # Examples
 
 Jellyfish: http://a-mo-pa.com/stuff/shadergif/?file=examples/jellyfish.glsl
