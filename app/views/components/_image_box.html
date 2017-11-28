@@ -14,7 +14,10 @@
 				</transition>
 				<img v-if="!show_actual_gif"
 					 v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
-				<video v-if="show_actual_gif" loop autoplay controls>
+				<video v-if="show_actual_gif" loop autoplay controls v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
+									type="video/webm">
 					<source
 						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
 									type="video/mp4">
