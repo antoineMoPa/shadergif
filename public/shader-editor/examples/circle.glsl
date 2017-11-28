@@ -7,11 +7,11 @@ void main(void){
     float x = UV.x * ratio;
     float y = UV.y;
     
-    vec2 pos = vec2(x, y);
+    vec2 pos = vec2(x, y) - vec2(0.5);
     
     vec4 col = vec4(0.0);
 
-    vec2 center = vec2(0.5,0.5);
+    vec2 center = vec2(0.0);
     float distance_from_center = distance(pos, center);
 
     if(distance_from_center < 0.3){
