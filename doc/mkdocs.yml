@@ -4,6 +4,7 @@ pages:
 - Home: 'index.md'
 - Manual:
     - 'Uniforms': 'manual/uniforms.md'
+    - 'Making small gifs': 'manual/making-small-gifs.md'
     - 'Tips & Code Snippets': 'manual/tips-and-snippets.md'
 - Techniques:
     - 'Two triangles': 'techniques/two-triangles.md' 
