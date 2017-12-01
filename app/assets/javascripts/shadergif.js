@@ -310,13 +310,19 @@ function update_shader(){
 function add_error(err, type_str, type_pre){
     try{
 		var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
-		line = parseInt(line) - 1;
 
 		// Fix potential bug killing all text sometimes
 		// like when inserting backticks (`)
 		// and the compiler does not give any line
 		// then codemirror becomes crazy
-		if(typeof line != "number"){
+		if(line == ""){
+			return
+		}
+		
+		line = parseInt(line) - 1;
+
+		// Bug that could happen
+		if(isNaN(line)){
 			return;
 		}
 		
