@@ -7,7 +7,9 @@ pages:
     - 'Making small gifs': 'manual/making-small-gifs.md'
     - 'Tips & Code Snippets': 'manual/tips-and-snippets.md'
 - Techniques:
-    - 'Two triangles': 'techniques/two-triangles.md' 
+    - 'Two triangles': 'techniques/two-triangles.md'
+- Tutorials:
+    - 'Building a bridge': 'tutorials/building-a-bridge.md'
 - Development:
     - 'Generating the documentation': 'doc/doc.md'
     - 'Server':
