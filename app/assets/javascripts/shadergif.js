@@ -309,12 +309,21 @@ function update_shader(){
 
 function add_error(err, type_str, type_pre){
     try{
-    var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
-    line = parseInt(line) - 1;
-    var errline = f_editor.addLineClass(line, "background", "errorline");
-    cm_errorLines.push(errline);
+		var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
+		line = parseInt(line) - 1;
+
+		// Fix potential bug killing all text sometimes
+		// like when inserting backticks (`)
+		// and the compiler does not give any line
+		// then codemirror becomes crazy
+		if(typeof line != "number"){
+			return;
+		}
+		
+		var errline = f_editor.addLineClass(line, "background", "errorline");
+		cm_errorLines.push(errline);
     } finally {
-    type_pre.textContent =
+		type_pre.textContent =
             "Error in " + type_str + " shader.\n" +
             err;
     }
