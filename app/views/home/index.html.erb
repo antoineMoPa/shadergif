@@ -11,18 +11,38 @@
 <div id="main-app">
 	<section class="section">
 		<div class="container">
-			<h1 class="title has-text-centered">Last uploaded gifs</h1>
-			<image-box-list v-bind:gifs="gifs"></image-box-list>
-			<br>
-			<div class="has-text-centered">
-				<button v-if="has_more"
-							  v-on:click="load_more"
-							  class="button is-large"
-				>
-					view more
-				</button>
-				<div v-else>
-					No more gifs to load!
+			<div class="columns">
+				<div class="column is-one-fifth">
+				</div>
+				<div class="column">
+					<h1 class="title has-text-centered">Last uploaded gifs</h1>
+					<image-box-list v-bind:gifs="gifs"></image-box-list>
+					<br>
+					<div class="has-text-centered">
+						<button v-if="has_more"
+									  v-on:click="load_more"
+									  class="button is-large"
+						>
+							view more
+						</button>
+						<div v-else>
+							No more gifs to load!
+						</div>
+					</div>
+				</div>
+				<div class="column is-one-fifth">
+					<div class="home-sidebar-spacer"></div>
+					<p class="has-text-weight-bold">Bridge tutorial</p>
+					<p>
+						View the very first shadergif tutorial:
+					</p>
+					<p class="has-text-centered">
+						<a href="https://doc.shadergif.com/tutorials/building-a-bridge/">
+							<img alt="bridge" src="/images/tutorials/bridge.png">
+							
+							<span class="button">view</span>
+						</a>
+					</p>
 				</div>
 			</div>
 		</div>
