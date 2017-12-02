@@ -1,0 +1,17 @@
+<%= form_with(model: gif, local: true) do |form| %>
+  <% if gif.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(gif.errors.count, "error") %> prohibited this gif from being saved:</h2>
+
+      <ul>
+      <% gif.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

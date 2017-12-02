@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :gifs
   devise_for :users, :controllers => { registrations: 'registrations' }
   
   get 'home/index'
@@ -8,12 +9,11 @@ Rails.application.routes.draw do
   get 'user/:username', to: 'user#show', as: 'user_show'
   get 'shader-editor' => 'shader_editor#index'
   get 'shader-editor/examples' => 'shader_editor#examples'
-  post 'gifs/new' => 'gif#new'
+  post 'gifs/new' => 'gifs#new'
 
-  get 'gifs/list' => 'gif#list'
-  get 'gifs/:id' => 'gif#show'
-  get 'gifs/:id/fork' => 'gif#fork'
-  get 'gifs/:id/edit' => 'gif#edit'
+  get 'gifs/list' => 'gifs#list'
+  get 'gifs/:id' => 'gifs#show'
+  get 'gifs/:id/fork' => 'gifs#fork'
+  get 'gifs/:id/edit' => 'gifs#edit'
   
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
