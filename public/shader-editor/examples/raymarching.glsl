@@ -33,7 +33,7 @@ float trace(vec3 o, vec3 r){
     float t = 0.0;
     float d;
     
-    for(int i = 0; i < 50; i++){
+    for(int i = 0; i < 30; i++){
     	p = o + r * t;
         d = map(p);
         t += d * 0.45;
