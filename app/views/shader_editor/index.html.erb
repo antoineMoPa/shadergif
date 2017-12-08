@@ -50,11 +50,11 @@
 					<div class="text-center">
 						<div class="settings inline-block">
 							<p>
-								w:<input type="number" v-model="width">
-								h:<input type="number" v-model="height">
+								w:<input type="number" v-model.number="width">
+								h:<input type="number" v-model.number="height">
 								frames:<input type="number"
 											  v-if="!frames_defined_in_code"
-											  v-model.lazy="frames">
+											  v-model.lazy.number="frames">
 								<span v-if="frames_defined_in_code"
 									  title="(defined in code)">
 									{{ frames }}
