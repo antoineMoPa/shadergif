@@ -264,7 +264,7 @@ var app = new Vue({
 		
 		// Render all the frames to a png
 		function make_gif(){
-			var sp = this.$refs['shader-player'];
+			var sp = app.$refs['shader-player'];
 			sp.shader_player.rendering_gif = true;
 			
 			var to_export = {};
@@ -316,7 +316,7 @@ var app = new Vue({
 		
 		// Render all the frames to a png
 		function make_png(){
-			var sp = this.$refs['shader-player'];
+			var sp = app.$refs['shader-player'];
 			sp.shader_player.rendering_gif = true;
 			
 			var tempCanvas = document.createElement("canvas");
