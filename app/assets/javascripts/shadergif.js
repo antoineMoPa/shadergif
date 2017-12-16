@@ -267,8 +267,8 @@ var app = new Vue({
 					temp_img.src = image_data;
 					temp_img.onload = function(){
 						ctx.drawImage(temp_img, 0, 0);
-						ctx.fillStyle = "#ffffff";
-						ctx.fillText("shadergif.com", app.width - 60, app.height - 10);
+						ctx.fillStyle = "#888888";
+						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
 						to_export.data.push(canvas.toDataURL());
 						next();
 					}
@@ -313,8 +313,8 @@ var app = new Vue({
 					temp_img.onload = function(){
 						var offset = curr * sp.shader_player.canvas.height;
 						ctx.drawImage(temp_img, 0, offset);
-						ctx.fillStyle = "#ffffff";
-						ctx.fillText("shadergif.com", app.width - 60, app.height - 10 + offset);
+						ctx.fillStyle = "#888888";
+						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10 + offset);
 						next();
 					}
 				} else {
