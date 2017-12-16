@@ -9,12 +9,14 @@
 </script>
 <div id="main-app">
 	<section class="section">
-		<div class="container">
+		<div class="container no-position-relative">
 			<h1 class="title has-text-centered"><%= @gif.title %></h1>
-			<template v-if="gifs[0]">
-				<shader-player v-bind:fragment-shader="gifs[0].code"></shader-player>
-
-			</template>
+			<div class="has-text-centered">
+				<template v-if="gifs[0]">
+					<shader-player v-bind:fragment-shader="gifs[0].code"></shader-player>
+					
+				</template>
+			</div>
 		</div>
 	</section>
 </div>

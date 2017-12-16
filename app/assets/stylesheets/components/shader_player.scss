@@ -1,0 +1,37 @@
+.shader-player{
+
+	.player-wrapper{
+		margin:auto;
+		position:relative;
+		
+		.fullscreen-button{
+			cursor:pointer;
+			position:absolute;
+			top:10px;
+			right:10px;
+			background:rgba(0.0, 0.0, 0.0, 0.3);
+			color:#aaa;
+			padding:5px;
+			animate: all 0.3s;
+			font-size:10px;
+			&:hover{
+				color:#fff;
+			}
+		}
+	}
+}
+
+.shader-player-fullscreen{
+	position: absolute;
+	top:0;
+	left:0;
+	
+	.fullscreen-button{
+		opacity:0.1;
+		
+		&:hover{
+			opacity: 1.0;
+		}
+	}
+}
+

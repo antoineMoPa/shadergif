@@ -345,7 +345,9 @@ Vue.component(
 			return {
 				canvas: null,
 				vertex_shader: "",
-				shader_player: null
+				shader_player: null,
+				fullscreen: false,
+				size_before_fullscreen: null
 			};
 		},
 		methods: {
@@ -364,16 +366,68 @@ Vue.component(
 		watch: {
 			fragmentShader: function(){
 				this.update_player();
+			},
+			fullscreen: function(fullscreen){
+				if(fullscreen == true){
+					// Switch to fullscreen
+					
+					this.size_before_fullscreen = [
+						this.shader_player.width,
+						this.shader_player.height,
+					];
+
+					this.shader_player.width = window.innerWidth;
+					this.shader_player.height = window.innerHeight;
+
+					// Hardcode fullscreen helper
+					var style = document.createElement("style");
+					style.innerHTML = ".container{position:static;}";
+					style.innerHTML += "html{overflow:hidden;}";
+					document.body.appendChild(style);
+					window.shader_player_hardcoded_style = style;
+					
+					this.shader_player.animate();
+				} else {
+					this.shader_player.width =
+						this.size_before_fullscreen[0];
+					this.shader_player.height =
+						this.size_before_fullscreen[1];
+
+					this.shader_player.animate();
+
+					// Remove hardcoded style
+					var style = window.shader_player_hardcoded_style;
+					style.parentNode.removeChild(style);
+				}
+			}
+		},
+		computed: {
+			player_size_style: function(){
+				return 'width:' + this.shader_player.width + 'px;' +
+					'height:' + this.shader_player.height + 'px';
 			}
 		},
 		mounted: function(){
-			this.canvas = this.$el.querySelectorAll(".gif-canvas")[0];
-			this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
+			var app = this;
 			this.shader_player = new ShaderPlayer();
-			this.shader_player.set_canvas(this.canvas);
 
-			this.shader_player.vertex_shader = this.vertex_shader;
-			this.update_player();
+			this.$nextTick(function(){
+				this.canvas = this.$el.querySelectorAll(".gif-canvas")[0];
+				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
+			
+				this.shader_player.set_canvas(this.canvas);
+				
+				this.shader_player.vertex_shader = this.vertex_shader;
+				this.update_player();
+
+				window.addEventListener("resize", function(){
+					if(app.fullscreen){
+						app.shader_player.width = window.innerWidth;
+						app.shader_player.height = window.innerHeight;
+						app.update_player();
+					}
+				});
+			});
 		}
 	}
 );

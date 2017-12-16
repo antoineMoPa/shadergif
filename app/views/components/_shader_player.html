@@ -1,6 +1,17 @@
 <script type="text/html" id="shader-player-template">
-	<div class="shader-player">
-		<canvas class="gif-canvas"></canvas>
+	<div v-bind:class="'shader-player ' + (fullscreen? 'shader-player-fullscreen' :'')">
+		<div class="player-wrapper"
+			 v-if="shader_player != null"
+			 v-bind:style="player_size_style">
+			
+			<div class="fullscreen-button"
+				 v-on:click="fullscreen = !fullscreen">
+				<span v-if="!fullscreen">[ full screen ]</span>
+				<span v-else>[ close ]</span>
+				
+			</div>
+			<canvas class="gif-canvas"></canvas>
+		</div>
 	</div>
 </script>
 <script name="vertex-shader" type="text/plain">// Vertex Shader
