@@ -24,6 +24,10 @@ class ShaderPlayer {
 		this.currentSource = null;
 		this.lastChunk = 0;
 		this.timeout = null;
+
+		this.on_error_listener = function(){
+			throw "Shader compilation error";
+		};
 	}
 
 	canvas_mousemove(e){
@@ -107,8 +111,6 @@ class ShaderPlayer {
 		
 		gl.program = gl.createProgram();
 
-		// TODO: clear code mirror errors here
-		
 		var vertex_shader =
 			add_shader(gl.VERTEX_SHADER, this.vertex_shader);
 		
@@ -129,15 +131,15 @@ class ShaderPlayer {
 				var type_str = type == gl.VERTEX_SHADER ?
 					"vertex":
 					"fragment";
-				
-				// TODO: add error to pre
-				//add_error(err, type_str, type_pre);
-				throw "Shader compilation error";
+
+				this.on_error_listener({
+					type: type,
+					error: err
+				}, gl);
 				
 				return -1;
 			} else {
-				// TODO
-				//type_pre.textContent = "";
+				//
 			}
 			
 			gl.attachShader(gl.program, shader);

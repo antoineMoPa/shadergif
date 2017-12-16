@@ -3,7 +3,7 @@
 		<div class="vertical-scroll gif-pane">
 			<div class="text-center">
 				<h3>Gif preview</h3>
-				<canvas class="gif-canvas" v-on:mousemove="canvas_mousemove"></canvas>
+				<canvas class="gif-canvas"></canvas>
 			</div>
 			<pre class="fragment-error-pre error-pre">
 			</pre>
@@ -21,11 +21,6 @@
 					
 					<div class="text-center">
 						<p>
-							<button name="send-to-server" class="inline-block"
-										  v-if="has_sg_api"
-										  v-on:click="send_to_server">
-								Send to server {{ send_status }}
-							</button>
 							<button name="make-gif" class="inline-block">
 								Create gif
 							</button>
