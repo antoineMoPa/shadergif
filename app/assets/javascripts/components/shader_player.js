@@ -16,13 +16,29 @@ class ShaderPlayer {
 		this.frames = 10;
 		this.rendering_gif = false;
 		this.mouse = [0,0];
+
+
+		// Audio stuff
+		this.pixels = new Uint8Array(this.width * this.height * 4);
+		this.audioCtx = new AudioContext();
+		this.currentSource = null;
+		this.lastChunk = 0;
+		this.timeout = null;
 	}
 
+	canvas_mousemove(e){
+		var c = e.target;
+		var x = (e.clientX - c.offsetLeft) / this.width - 0.5;
+		var y = (e.clientY - c.offsetTop) / this.height - 0.5;
+		this.mouse = [x, -y];
+	}
+	
 	set_canvas(_canvas){
 		var gl = _canvas.getContext("webgl");
 		this.canvas = _canvas;
 		_canvas.width = this.width;
 		_canvas.height = this.height;
+		_canvas.addEventListener("mousemove", this.canvas_mousemove);
 		this.gl = gl;
 		this.init_gl();
 	}
@@ -147,7 +163,54 @@ class ShaderPlayer {
 		gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
 	}
 
-
+	// TODO: TEST SOUND
+	play_sound(){
+		var gl = this.gl
+		draw_ctx(this.canvas, gl);
+		gl.readPixels(0, 0, this.width, this.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+		
+		// Get an AudioBufferSourceNode.
+		// This is the AudioNode to use when we want to play an AudioBuffer
+		var source = audioCtx.createBufferSource();
+		var frameCount = audioCtx.sampleRate * 1.0;
+		var audioArrayBuffer = audioCtx.createBuffer(1, 48000, 48000);
+		var nowBuffering = audioArrayBuffer.getChannelData(0);
+		
+		currentSource = source;
+		
+		var i = 0;
+		var j = 0;
+		
+		while(j < 48000){
+			// Copy and skip alpha
+			nowBuffering[j+0] = (pixels[i+0]/255) - 0.5;
+			nowBuffering[j+1] = (pixels[i+1]/255) - 0.5;
+			nowBuffering[j+2] = (pixels[i+2]/255) - 0.5;
+			i+=4;
+			j+=3;
+		}
+		
+		// set the buffer in the AudioBufferSourceNode
+		source.buffer = audioArrayBuffer;
+		
+		// connect the AudioBufferSourceNode to the
+		// destination so we can hear the sound
+		source.connect(audioCtx.destination);
+		
+		if(lastChunk == 0){
+			// start the source playing
+			source.start(0);
+			lastChunk = audioCtx.currentTime + 1;
+		} else {
+			source.start(lastChunk);
+			lastChunk += 1;
+		}
+		
+		// Find some resonable time for next computation
+		var deltat = (lastChunk - audioCtx.currentTime) * 1000 - 500;
+		timeout = setTimeout(play_sound,deltat);
+	}
+	
 	draw_gl(time){
 		var gl = this.gl;
 
@@ -196,8 +259,7 @@ o				}
 			
 			var soundTimeAttribute = gl.getUniformLocation(gl.program, "soundTime");
 
-			// TODO: bring back audio support to player
-			//gl.uniform1f(soundTimeAttribute, lastChunk);
+			gl.uniform1f(soundTimeAttribute, this.lastChunk);
 			
 			// Set time attribute
 			var tot_time = this.frames * this.anim_delay;
@@ -280,12 +342,6 @@ Vue.component(
 			};
 		},
 		methods: {
-			canvas_mousemove: function(e){
-				var c = e.target;
-				var x = (e.clientX - c.offsetLeft) / this.width - 0.5;
-				var y = (e.clientY - c.offsetTop) / this.height - 0.5;
-				this.mouse = [x, -y];
-			},
 			update_player: function(){
 				
 				if(this.fragmentShader == ""){

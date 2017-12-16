@@ -788,6 +788,12 @@ function play_sound(){
 	timeout = setTimeout(play_sound,deltat);
 }
 
+/*
+  OLD CODE
+  Previously used to send pngs to a local bash
+  server. Was very useful to render long videos
+  Project will probably be revived in a different way.
+ */
 function detect_sg_api(){
 	try{
 		var xhr = new XMLHttpRequest;
