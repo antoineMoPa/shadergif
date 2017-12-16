@@ -115,6 +115,10 @@ var app = new Vue({
 			}
 			
 			this.shader_player.fragment_shader = this.code;
+
+			// Needed when changing passes number
+			// (renderbuffer & stuff)
+			this.shader_player.init_gl();
 			this.shader_player.init_program();
 			this.shader_player.animate();
 		},
@@ -122,20 +126,20 @@ var app = new Vue({
 			this.update_player();
 		},
 		play_sound: function(){
-			play_sound();
+			this.shader_player.play_sound();
 		},
 		stop_sound: function(){
-			clearTimeout(timeout);
-			lastChunk = 0;
-			if(currentSource != null){
-				currentSource.stop();
+			clearTimeout(this.shader_player.timeout);
+			this.shader_player.lastChunk = 0;
+			if(this.shader_player.currentSource != null){
+				this.shader_player.currentSource.stop();
 			}
 		},
 		enable_sound_mode: function(){
 			this.sound_mode = true;
-			this.passes = 2;
-			this.width = 256;
-			this.height = 256;
+			this.shader_player.passes = 2;
+			this.shader_player.width = 256;
+			this.shader_player.height = 256;
 			this.update_player();
 		},
 		disable_sound_mode: function(){

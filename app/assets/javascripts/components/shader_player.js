@@ -23,6 +23,7 @@ class ShaderPlayer {
 		this.audioCtx = new AudioContext();
 		this.currentSource = null;
 		this.lastChunk = 0;
+		this.time = 0.0;
 		this.timeout = null;
 
 		this.on_error_listener = function(){
@@ -68,7 +69,7 @@ class ShaderPlayer {
 		}
 		
 		this.renderBufferDim = [ww, hh];
-		
+
 		for(var i = 0; i < 10; i++){
 			this.rttTexture[i] = gl.createTexture();
 			gl.bindTexture(gl.TEXTURE_2D, this.rttTexture[i]);
@@ -102,7 +103,7 @@ class ShaderPlayer {
 		];
 		
 		var tri = gl.createBuffer();
-		gl.bindBuffer(gl.ARRAY_BUFFER,tri);
+		gl.bindBuffer(gl.ARRAY_BUFFER, tri);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
 	}
 
@@ -169,26 +170,26 @@ class ShaderPlayer {
 	// TODO: TEST SOUND
 	play_sound(){
 		var gl = this.gl
-		draw_ctx(this.canvas, gl);
-		gl.readPixels(0, 0, this.width, this.height, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+		this.draw_gl(0);
+		gl.readPixels(0, 0, this.width, this.height, gl.RGBA, gl.UNSIGNED_BYTE, this.pixels);
 		
 		// Get an AudioBufferSourceNode.
 		// This is the AudioNode to use when we want to play an AudioBuffer
-		var source = audioCtx.createBufferSource();
-		var frameCount = audioCtx.sampleRate * 1.0;
-		var audioArrayBuffer = audioCtx.createBuffer(1, 48000, 48000);
+		var source = this.audioCtx.createBufferSource();
+		var frameCount = this.audioCtx.sampleRate * 1.0;
+		var audioArrayBuffer = this.audioCtx.createBuffer(1, 48000, 48000);
 		var nowBuffering = audioArrayBuffer.getChannelData(0);
 		
-		currentSource = source;
+		this.currentSource = source;
 		
 		var i = 0;
 		var j = 0;
 		
 		while(j < 48000){
 			// Copy and skip alpha
-			nowBuffering[j+0] = (pixels[i+0]/255) - 0.5;
-			nowBuffering[j+1] = (pixels[i+1]/255) - 0.5;
-			nowBuffering[j+2] = (pixels[i+2]/255) - 0.5;
+			nowBuffering[j+0] = (this.pixels[i+0]/255) - 0.5;
+			nowBuffering[j+1] = (this.pixels[i+1]/255) - 0.5;
+			nowBuffering[j+2] = (this.pixels[i+2]/255) - 0.5;
 			i+=4;
 			j+=3;
 		}
@@ -198,20 +199,20 @@ class ShaderPlayer {
 		
 		// connect the AudioBufferSourceNode to the
 		// destination so we can hear the sound
-		source.connect(audioCtx.destination);
+		source.connect(this.audioCtx.destination);
 		
-		if(lastChunk == 0){
+		if(this.lastChunk == 0){
 			// start the source playing
 			source.start(0);
-			lastChunk = audioCtx.currentTime + 1;
+			this.lastChunk = this.audioCtx.currentTime + 1;
 		} else {
-			source.start(lastChunk);
-			lastChunk += 1;
+			source.start(this.lastChunk);
+			this.lastChunk += 1;
 		}
 		
 		// Find some resonable time for next computation
-		var deltat = (lastChunk - audioCtx.currentTime) * 1000 - 500;
-		timeout = setTimeout(play_sound,deltat);
+		var deltat = (this.lastChunk - this.audioCtx.currentTime) * 1000 - 500;
+		this.timeout = setTimeout(this.play_sound.bind(this), deltat);
 	}
 	
 	draw_gl(time){
@@ -219,7 +220,7 @@ class ShaderPlayer {
 
 		for(var pass = 0; pass < this.passes; pass++ ){
 			if(pass < this.passes - 1){
-				gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer[pass]);
+				gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer[pass]);
 			} else {
 				gl.bindFramebuffer(gl.FRAMEBUFFER, null);
 			}
@@ -227,10 +228,9 @@ class ShaderPlayer {
 			// Manage lastpass
 			if(pass > 0){
 				gl.activeTexture(gl.TEXTURE0);
-				gl.bindTexture(gl.TEXTURE_2D, rttTexture[pass - 1]);
+				gl.bindTexture(gl.TEXTURE_2D, this.rttTexture[pass - 1]);
 				gl.uniform1i(gl.getUniformLocation(gl.program, 'lastPass'), pass - 1);
 			}
-			
 			
 			for(var i = 0; i < this.passes; i++){
 				gl.activeTexture(gl.TEXTURE0 + i);
@@ -240,7 +240,7 @@ class ShaderPlayer {
 					continue;
 o				}
 				var att = gl.getUniformLocation(gl.program, "pass" + i);
-				gl.bindTexture(gl.TEXTURE_2D, rttTexture[i]);
+				gl.bindTexture(gl.TEXTURE_2D, this.rttTexture[i]);
 				gl.uniform1i(att,i);
 			}
 			
@@ -266,8 +266,6 @@ o				}
 			
 			// Set time attribute
 			var tot_time = this.frames * this.anim_delay;
-			
-			this.time = time.toFixed(4);
 			
 			var timeAttribute = gl.getUniformLocation(gl.program, "time");
 			gl.uniform1f(timeAttribute, time);
@@ -358,7 +356,10 @@ Vue.component(
 				}
 				
 				this.shader_player.fragment_shader = this.fragmentShader;
-				
+
+				// Needed when changing passes number
+				// (renderbuffer & stuff)
+				this.shader_player.init_gl();
 				this.shader_player.init_program();
 				this.shader_player.animate();
 			}
