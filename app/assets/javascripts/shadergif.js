@@ -73,39 +73,7 @@ var app = new Vue({
 			if(this.autocompile){
 				this.update_player();
 			}
-			this.manage_passes();
         },
-	 	manage_passes: function(){
-			var c = this.code;
-			// Verify if passes is set there
-			var re = /\/\/PASSES=([0-6])/;
-			var result = re.exec(c);
-
-			var sp = this.$refs['shader-player'];
-			
-			if(result == null){
-				this.passes_defined_in_code = false;
-			} else {
-				this.passes_defined_in_code = true;
-				sp.shader_player.passes = parseInt(result[1]);
-			}
-
-			// Verify if frames is set in code
-			var re = /\/\/FRAMES=([0-9]*)/;
-			var result = re.exec(c);
-			
-			if(result == null){
-				this.frames_defined_in_code = false;
-			} else {
-				var qty = parseInt(result[1]);
-				if(isNaN(qty) || qty < 1){
-					this.frames_defined_in_code = false;
-				} else {
-					this.frames_defined_in_code = true;
-					sp.shader_player.frames = qty;
-				}
-			}
-		},
 		update_player: function(){
 			// Remove previous errors
 			for(var err in cm_errorLines){
@@ -125,15 +93,15 @@ var app = new Vue({
 			var sp = this.$refs['shader-player'];
 			sp.shader_player.width = this.width;
 			sp.shader_player.height = this.height;
-			sp.shader_player.frames = this.frames;
-			sp.shader_player.passes = this.passes;
-			sp.shader_player.fragment_shader = this.code;
-
-			// Needed when changing passes number
-			// (renderbuffer & stuff)
-			sp.shader_player.init_gl();
-			sp.shader_player.init_program();
-			sp.shader_player.animate();
+			
+			if(!sp.frames_defined_in_code){
+				sp.shader_player.frames = this.frames;
+			}
+			if(!sp.passes_defined_in_code){
+				sp.shader_player.passes = this.passes;
+			}
+			
+			sp.update_player();
 		},
 		recompile: function(){
 			this.update_player();
@@ -458,10 +426,6 @@ var app = new Vue({
 				
 				add_error(error.error, type_str, type_pre);
 			};
-			
-			// In case passes is set in code,
-			// set it at page load:
-			app.manage_passes();
 			
 			this.update_player();
 		});

@@ -3,7 +3,7 @@
 		<div class="vertical-scroll gif-pane">
 			<div class="text-center">
 				<h3>Gif preview</h3>
-				<shader-player ref="shader-player"></shader-player>
+				<shader-player ref="shader-player" v-bind:fragment-shader="code"></shader-player>
 			</div>
 			<pre class="fragment-error-pre error-pre">
 			</pre>
@@ -57,7 +57,7 @@
 											type="number"
 											min="1"
 											max="6"
-											v-model.lazy="passes">
+											v-model.lazy.number="passes">
 								<span v-if="passes_defined_in_code"
 									  title="(defined in code)">
 									{{ passes }}

@@ -347,18 +347,48 @@ Vue.component(
 				shader_player: null,
 				fullscreen: false,
 				debug_info: false,
+				passes_defined_in_code: false,
+				frames_defined_in_code: false,
 				size_before_fullscreen: null
 			};
 		},
 		methods: {
-			update_player: function(){
+			manage_passes: function(){
+				var c = this.shader_player.fragment_shader;
+				// Verify if passes is set there
+				var re = /\/\/PASSES=([0-6])/;
+				var result = re.exec(c);
 				
+				if(result == null){
+					this.passes_defined_in_code = false;
+				} else {
+					this.passes_defined_in_code = true;
+					this.shader_player.passes = parseInt(result[1]);
+				}
+
+				// Verify if frames is set in code
+				var re = /\/\/FRAMES=([0-9]*)/;
+				var result = re.exec(c);
+				
+				if(result == null){
+					this.frames_defined_in_code = false;
+				} else {
+					var qty = parseInt(result[1]);
+					if(isNaN(qty) || qty < 1){
+						this.frames_defined_in_code = false;
+					} else {
+						this.frames_defined_in_code = true;
+						this.shader_player.frames = qty;
+					}
+				}
+			},
+			update_player: function(){
 				if(this.fragmentShader == ""){
 					return;
 				}
 				
 				this.shader_player.fragment_shader = this.fragmentShader;
-
+				this.manage_passes();
 				// Needed when changing passes number
 				// (renderbuffer & stuff)
 				this.shader_player.init_gl();
