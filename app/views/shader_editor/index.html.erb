@@ -182,7 +182,7 @@
 			<div class="text-left">
 				<p>
 					For pngs, on Linux, you can split the result like this:
-					<pre>convert image.png -crop {{width}}x{{height}} +repage image-%04d.png</pre>
+					<pre v-if="shader_player">convert image.png -crop {{shader_player.width}}x{{shader_player.height}} +repage image-%04d.png</pre>
 				</p>
 				<p>
 					And then make gifs:

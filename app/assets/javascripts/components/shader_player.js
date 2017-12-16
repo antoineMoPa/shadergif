@@ -307,6 +307,10 @@ o				}
 		var app = this;
 		var frame = 0;
 		var anim_delay = 100;
+
+		// Update width/height
+		this.canvas.width = this.width;
+		this.canvas.height = this.height;
 		
 		if(this.anim_already_started){
 			return;

@@ -37,14 +37,11 @@ var app = new Vue({
         code: default_fragment_policy(),
 		passes_defined_in_code: false,
 		frames_defined_in_code: false,
-        width: DEFAULT_WIDTH,
-        height: DEFAULT_HEIGHT,
 		gifjs: {
 			quality: 8,
 			dithering: 'FloydSteinberg'
 		},
 		autocompile: true,
-		mouse: [0, 0],
 		images: []
     },
     watch: {
@@ -54,22 +51,17 @@ var app = new Vue({
 				this.gifjs.dithering = false;
 			}
 		},
-        width: function(w){
-            this.canvas.width = w;
-			this.re_init_ctx();
+        'shader_player.width': function(w){
+			this.update_player();
         },
-        height: function(h){
-            this.canvas.height = h;
-			this.re_init_ctx();
+        'shader_player.height': function(h){
+			this.update_player();
         },
-		passes: function(){
-			this.re_init_ctx();
+		'shader_player.passes': function(){
+			this.update_player();
 		}
     },
     methods: {
-		re_init_ctx: function(){
-			init_ctx(gl);
-		},
         code_change: function(){
             window.localStorage.code = this.code;
 			if(this.autocompile){
@@ -144,7 +136,7 @@ var app = new Vue({
 			this.passes = 2;
 			this.width = 256;
 			this.height = 256;
-			this.re_init_ctx();
+			this.update_player();
 		},
 		disable_sound_mode: function(){
 			this.sound_mode = false;
