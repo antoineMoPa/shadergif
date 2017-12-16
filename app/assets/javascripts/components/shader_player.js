@@ -33,8 +33,9 @@ class ShaderPlayer {
 
 	canvas_mousemove(e){
 		var c = e.target;
-		var x = (e.clientX - c.offsetLeft) / this.width - 0.5;
-		var y = (e.clientY - c.offsetTop) / this.height - 0.5;
+		var x = (e.clientX) / this.width - 0.5;
+		// Todo: parse parent nodes' scrollTop
+		var y = (e.clientY) / this.height - 0.5;
 		this.mouse = [x, -y];
 	}
 	
@@ -43,7 +44,7 @@ class ShaderPlayer {
 		this.canvas = _canvas;
 		_canvas.width = this.width;
 		_canvas.height = this.height;
-		_canvas.addEventListener("mousemove", this.canvas_mousemove);
+		_canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));
 		this.gl = gl;
 		this.init_gl();
 	}
@@ -345,6 +346,7 @@ Vue.component(
 				vertex_shader: "",
 				shader_player: null,
 				fullscreen: false,
+				debug_info: false,
 				size_before_fullscreen: null
 			};
 		},
@@ -419,7 +421,10 @@ Vue.component(
 				this.shader_player.set_canvas(this.canvas);
 				
 				this.shader_player.vertex_shader = this.vertex_shader;
-				this.update_player();
+
+				if(this.shader_player.fragment_shader != ""){
+					this.update_player();
+				}
 
 				window.addEventListener("resize", function(){
 					if(app.fullscreen){

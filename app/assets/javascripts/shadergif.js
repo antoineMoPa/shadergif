@@ -30,13 +30,16 @@ var app = new Vue({
     el: "#shadergif-app",
     data: {
 		sound_mode: false,
-		shader_player: null,
 		send_status: "",
         error: "",
 		f_editor: null,
         code: default_fragment_policy(),
 		passes_defined_in_code: false,
 		frames_defined_in_code: false,
+		width: 540,
+		height: 540,
+		frames: 10,
+		passes: 1,
 		gifjs: {
 			quality: 8,
 			dithering: 'FloydSteinberg'
@@ -51,13 +54,16 @@ var app = new Vue({
 				this.gifjs.dithering = false;
 			}
 		},
-        'shader_player.width': function(w){
+        'width': function(w){
 			this.update_player();
         },
-        'shader_player.height': function(h){
+        'height': function(h){
 			this.update_player();
         },
-		'shader_player.passes': function(){
+		'frames': function(f){
+			this.update_player();
+        },
+		'passes': function(){
 			this.update_player();
 		}
     },
@@ -74,12 +80,14 @@ var app = new Vue({
 			// Verify if passes is set there
 			var re = /\/\/PASSES=([0-6])/;
 			var result = re.exec(c);
+
+			var sp = this.$refs['shader-player'];
 			
 			if(result == null){
 				this.passes_defined_in_code = false;
 			} else {
 				this.passes_defined_in_code = true;
-				this.shader_player.passes = parseInt(result[1]);
+				sp.shader_player.passes = parseInt(result[1]);
 			}
 
 			// Verify if frames is set in code
@@ -94,7 +102,7 @@ var app = new Vue({
 					this.frames_defined_in_code = false;
 				} else {
 					this.frames_defined_in_code = true;
-					this.shader_player.frames = qty;
+					sp.shader_player.frames = qty;
 				}
 			}
 		},
@@ -114,13 +122,18 @@ var app = new Vue({
 				return;
 			}
 			
-			this.shader_player.fragment_shader = this.code;
+			var sp = this.$refs['shader-player'];
+			sp.shader_player.width = this.width;
+			sp.shader_player.height = this.height;
+			sp.shader_player.frames = this.frames;
+			sp.shader_player.passes = this.passes;
+			sp.shader_player.fragment_shader = this.code;
 
 			// Needed when changing passes number
 			// (renderbuffer & stuff)
-			this.shader_player.init_gl();
-			this.shader_player.init_program();
-			this.shader_player.animate();
+			sp.shader_player.init_gl();
+			sp.shader_player.init_program();
+			sp.shader_player.animate();
 		},
 		recompile: function(){
 			this.update_player();
@@ -156,10 +169,6 @@ var app = new Vue({
     },
 	mounted: function(){
 		var app = this;
-		
-		// In case passes is set in code,
-		// set it at page load:
-		app.manage_passes();
 		
 		function resize(){
 			var parent = qsa(".vertical-scroll-parent")[0];
@@ -255,7 +264,8 @@ var app = new Vue({
 		
 		// Render all the frames to a png
 		function make_gif(){
-			app.shader_player.rendering_gif = true;
+			var sp = this.$refs['shader-player'];
+			sp.shader_player.rendering_gif = true;
 			
 			var to_export = {};
 			
@@ -264,11 +274,11 @@ var app = new Vue({
 			
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
+
+			sp.shader_player.rendering_gif = true;
 			
-			app.shader_player.rendering_gif = true;
-			
-			canvas.width = app.shader_player.canvas.width;
-			canvas.height = app.shader_player.canvas.height;
+			canvas.width = sp.shader_player.canvas.width;
+			canvas.height = sp.shader_player.canvas.height;
 			var ctx = canvas.getContext("2d");
 			
 			var i = 0;
@@ -281,10 +291,10 @@ var app = new Vue({
 			  when all are loaded: create image from canvas
 			*/
 			function next(){
-				if(i < app.shader_player.frames){
+				if(i < sp.shader_player.frames){
 					var curr = i;
-					app.shader_player.draw_gl((curr + 1) / app.shader_player.frames);
-					var image_data = app.shader_player.canvas.toDataURL();
+					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
+					var image_data = sp.shader_player.canvas.toDataURL();
 					var temp_img = document.createElement("img");
 					temp_img.src = image_data;
 					temp_img.onload = function(){
@@ -296,7 +306,7 @@ var app = new Vue({
 					}
 				} else {
 					export_gif(to_export);
-					app.shader_player.rendering_gif = false;
+					sp.shader_player.rendering_gif = false;
 				}
 				i++;
 			}
@@ -306,13 +316,14 @@ var app = new Vue({
 		
 		// Render all the frames to a png
 		function make_png(){
-			app.shader_player.rendering_gif = true;
+			var sp = this.$refs['shader-player'];
+			sp.shader_player.rendering_gif = true;
 			
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
 			
-			canvas.width = app.shader_player.canvas.width;
-			canvas.height = app.shader_player.canvas.height * app.shader_player.frames;
+			canvas.width = sp.shader_player.canvas.width;
+			canvas.height = sp.shader_player.canvas.height * sp.shader_player.frames;
 			var ctx = canvas.getContext("2d");
 			
 			var i = 0;
@@ -325,14 +336,14 @@ var app = new Vue({
 			  when all are loaded: create image from canvas
 			*/
 			function next(){
-				if(i < app.shader_player.frames){
+				if(i < sp.shader_player.frames){
 					var curr = i;
-					app.shader_player.draw_gl((curr + 1) / app.shader_player.frames);
-					var image_data = app.shader_player.canvas.toDataURL();
+					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
+					var image_data = sp.shader_player.canvas.toDataURL();
 					var temp_img = document.createElement("img");
 					temp_img.src = image_data;
 					temp_img.onload = function(){
-						var offset = curr * app.shader_player.canvas.height;
+						var offset = curr * sp.shader_player.canvas.height;
 						ctx.drawImage(temp_img, 0, offset);
 						ctx.fillStyle = "#ffffff";
 						ctx.fillText("shadergif.com", app.width - 60, app.height - 10 + offset);
@@ -341,7 +352,7 @@ var app = new Vue({
 				} else {
 					// Final step
 					var image_data = canvas.toDataURL();
-					app.shader_player.rendering_gif = false;
+					sp.shader_player.rendering_gif = false;
 					app.images.unshift({type: "png", size: false, src: image_data});
 				}
 				i++;
@@ -423,33 +434,36 @@ var app = new Vue({
 			}
 		})();
 		
-		
-		this.shader_player = new ShaderPlayer();
-		var canvas = this.$el.querySelectorAll(".gif-canvas")[0];
-		this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
-		this.shader_player.set_canvas(canvas);
-		this.shader_player.vertex_shader = this.vertex_shader;
-		this.shader_player.fragment_shader = this.code;
-		
-		
-		
-		this.shader_player.on_error_listener = function(error, gl){
-			var fragment_error_pre = qsa(".fragment-error-pre")[0];
-			var vertex_error_pre = qsa(".vertex-error-pre")[0];
+
+		this.$nextTick(function(){
+			var sp = this.$refs['shader-player'];
+			sp.debug_info = true;
 			
-			var type_str = error.type == gl.VERTEX_SHADER ?
-				"vertex":
-				"fragment";
+			this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
+			sp.vertex_shader = this.vertex_shader;
+			sp.fragment_shader = this.code;
 			
-			var type_pre = vertex_error_pre;
-			if(type_str == "vertex"){
-				type_pre = fragment_error_pre;
-			}
+			sp.on_error_listener = function(error, gl){
+				var fragment_error_pre = qsa(".fragment-error-pre")[0];
+				var vertex_error_pre = qsa(".vertex-error-pre")[0];
+				
+				var type_str = error.type == gl.VERTEX_SHADER ?
+					"vertex":
+					"fragment";
+				
+				var type_pre = vertex_error_pre;
+				if(type_str == "vertex"){
+					type_pre = fragment_error_pre;
+				}
+				
+				add_error(error.error, type_str, type_pre);
+			};
 			
-			add_error(error.error, type_str, type_pre);
-		};
-		
-		this.update_player();
-		
+			// In case passes is set in code,
+			// set it at page load:
+			app.manage_passes();
+			
+			this.update_player();
+		});
 	}
 });

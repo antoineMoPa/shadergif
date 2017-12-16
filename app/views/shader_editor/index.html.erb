@@ -3,15 +3,12 @@
 		<div class="vertical-scroll gif-pane">
 			<div class="text-center">
 				<h3>Gif preview</h3>
-				<canvas class="gif-canvas"></canvas>
+				<shader-player ref="shader-player"></shader-player>
 			</div>
 			<pre class="fragment-error-pre error-pre">
 			</pre>
 			<pre class="vertex-error-pre error-pre">
 			</pre>
-			<p class="text-center" v-if="shader_player">
-				time: {{ shader_player.time.toFixed(4) }}, mouse: {{ shader_player.mouse[0].toFixed(4) }}, {{ shader_player.mouse[1].toFixed(4) }}
-			</p>
 			
 			<div class="foldable">
 				<div class="foldable-header">
@@ -44,15 +41,15 @@
 					</div>
 					<div class="text-center">
 						<div class="settings inline-block">
-							<p v-if="shader_player != null">
-								w:<input type="number" v-model.number="shader_player.width">
-								h:<input type="number" v-model.number="shader_player.height">
+							<p>
+								w:<input type="number" v-model.number="width">
+								h:<input type="number" v-model.number="height">
 								frames:<input type="number"
 											  v-if="!frames_defined_in_code"
-											  v-model.lazy.number="shader_player.frames">
+											  v-model.lazy.number="frames">
 								<span v-if="frames_defined_in_code"
 									  title="(defined in code)">
-									{{ shader_player.frames }}
+									{{ frames }}
 								</span>
 								
 								passes: <input
@@ -60,10 +57,10 @@
 											type="number"
 											min="1"
 											max="6"
-											v-model.lazy="shader_player.passes">
+											v-model.lazy="passes">
 								<span v-if="passes_defined_in_code"
 									  title="(defined in code)">
-									{{ shader_player.passes }}
+									{{ passes }}
 								</span>
 							</p>
 						</div>
@@ -182,7 +179,7 @@
 			<div class="text-left">
 				<p>
 					For pngs, on Linux, you can split the result like this:
-					<pre v-if="shader_player">convert image.png -crop {{shader_player.width}}x{{shader_player.height}} +repage image-%04d.png</pre>
+					<pre>convert image.png -crop {{width}}x{{height}} +repage image-%04d.png</pre>
 				</p>
 				<p>
 					And then make gifs:
