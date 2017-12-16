@@ -49,6 +49,13 @@ class GifsController < ApplicationController
              .find(params[:id])
   end
   
+  def play
+    @gif = Gif.joins(:user)
+             .select("gifs.*, users.username")
+             .find(params[:id])
+  end
+
+  
   def list
     
     @gifs = Gif

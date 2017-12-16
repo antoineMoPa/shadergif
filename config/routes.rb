@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   
   get 'gifs/list' => 'gifs#list'
   get 'gifs/:id' => 'gifs#show'
+  get 'gifs/:id/play' => 'gifs#play'
   get 'gifs/:id/fork' => 'gifs#fork'
   get 'gifs/:id/edit' => 'gifs#edit'
 

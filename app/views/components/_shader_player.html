@@ -1,0 +1,19 @@
+<script type="text/html" id="shader-player-template">
+	<div class="shader-player">
+		<canvas class="gif-canvas" v-on:mousemove="canvas_mousemove"></canvas>
+	</div>
+</script>
+<script name="vertex-shader" type="text/plain">// Vertex Shader
+ attribute vec3 position;
+ varying vec2 UV;
+ varying vec2 lastUV;
+ varying vec3 v_position;
+ uniform vec2 renderBufferRatio;
+ 
+ void main(){
+	 v_position = position;
+	 UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+	 lastUV = UV / renderBufferRatio;
+	 gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+ }
+</script>

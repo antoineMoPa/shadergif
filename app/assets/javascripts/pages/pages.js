@@ -8,7 +8,7 @@ window.onload = function(){
 				gifs: [],
 				initial_qty: -1,
 				current_offset: -1,
-				has_more: true
+				has_more: true,
 			},
 			methods: {
 				receive_more: function(req){

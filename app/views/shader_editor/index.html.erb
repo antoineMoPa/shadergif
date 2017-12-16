@@ -204,30 +204,30 @@
 	</div>
 </div>
 <script name="default-fragment-shader" type="text/plain">// Fragment shader
-precision highp float;
-				
-#define PI 3.14159265359
-#define PI2 6.28318530718
+ precision highp float;
+ 
+ #define PI 3.14159265359
+ #define PI2 6.28318530718
 
-varying vec2 UV;
-uniform float time;
-uniform float ratio;
+ varying vec2 UV;
+ uniform float time;
+ uniform float ratio;
 
-void main(void){
-	float x = UV.x * ratio - 0.5;
-	float y = UV.y - 0.5;
-	vec2 pos = vec2(x, y); 
-	
-	vec4 col = vec4(0.0);
-	
-	col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
-	col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
-	col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
-	col *= cos(30.0 * x);
-	col.a = 1.0;
-	
-	gl_FragColor = col;
-}
+ void main(void){
+	 float x = UV.x * ratio - 0.5;
+	 float y = UV.y - 0.5;
+	 vec2 pos = vec2(x, y); 
+	 
+	 vec4 col = vec4(0.0);
+	 
+	 col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
+	 col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
+	 col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
+	 col *= cos(30.0 * x);
+	 col.a = 1.0;
+	 
+	 gl_FragColor = col;
+ }
 </script>
 <script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
  precision highp float;
@@ -299,20 +299,6 @@ void main(void){
 	 }
 
      gl_FragColor = col;
- }
-</script>
-<script name="vertex-shader" type="text/plain">// Vertex Shader
- attribute vec3 position;
- varying vec2 UV;
- varying vec2 lastUV;
- varying vec3 v_position;
- uniform vec2 renderBufferRatio;
- 
- void main(){
-	 v_position = position;
-	 UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
-	 lastUV = UV / renderBufferRatio;
-	 gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
  }
 </script>
 
