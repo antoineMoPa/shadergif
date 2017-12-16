@@ -107,6 +107,7 @@ class ShaderPlayer {
 	}
 
 	init_program(){
+		var app = this;
 		var gl = this.gl;
 		
 		gl.program = gl.createProgram();
@@ -117,7 +118,7 @@ class ShaderPlayer {
 		var fragment_shader =
 			add_shader(gl.FRAGMENT_SHADER, this.fragment_shader);
 		
-		function add_shader(type,content){
+		function add_shader(type, content){
 			var shader = gl.createShader(type);
 			gl.shaderSource(shader,content);
 			gl.compileShader(shader);
@@ -132,7 +133,7 @@ class ShaderPlayer {
 					"vertex":
 					"fragment";
 
-				this.on_error_listener({
+				app.on_error_listener({
 					type: type,
 					error: err
 				}, gl);

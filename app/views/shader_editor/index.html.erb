@@ -9,8 +9,8 @@
 			</pre>
 			<pre class="vertex-error-pre error-pre">
 			</pre>
-			<p class="text-center">
-				time: {{ time }}, mouse: {{ mouse[0].toFixed(4) }}, {{ mouse[1].toFixed(4) }}
+			<p class="text-center" v-if="shader_player">
+				time: {{ shader_player.time }}, mouse: {{ shader_player.mouse[0].toFixed(4) }}, {{ shader_player.mouse[1].toFixed(4) }}
 			</p>
 			
 			<div class="foldable">
@@ -44,15 +44,15 @@
 					</div>
 					<div class="text-center">
 						<div class="settings inline-block">
-							<p>
-								w:<input type="number" v-model.number="width">
-								h:<input type="number" v-model.number="height">
+							<p v-if="shader_player != null">
+								w:<input type="number" v-model.number="shader_player.width">
+								h:<input type="number" v-model.number="shader_player.height">
 								frames:<input type="number"
 											  v-if="!frames_defined_in_code"
-											  v-model.lazy.number="frames">
+											  v-model.lazy.number="shader_player.frames">
 								<span v-if="frames_defined_in_code"
 									  title="(defined in code)">
-									{{ frames }}
+									{{ shader_player.frames }}
 								</span>
 								
 								passes: <input
@@ -60,10 +60,10 @@
 											type="number"
 											min="1"
 											max="6"
-											v-model.lazy="passes">
+											v-model.lazy="shader_player.passes">
 								<span v-if="passes_defined_in_code"
 									  title="(defined in code)">
-									{{ passes }}
+									{{ shader_player.passes }}
 								</span>
 							</p>
 						</div>
