@@ -398,6 +398,7 @@ Vue.component(
 		},
 		watch: {
 			fragmentShader: function(){
+				console.log("update");
 				this.update_player();
 			},
 			fullscreen: function(fullscreen){
@@ -451,8 +452,8 @@ Vue.component(
 				this.shader_player.set_canvas(this.canvas);
 				
 				this.shader_player.vertex_shader = this.vertex_shader;
-
-				if(this.shader_player.fragment_shader != ""){
+				
+				if(this.shader_player.fragmentShader != ""){
 					this.update_player();
 				}
 
