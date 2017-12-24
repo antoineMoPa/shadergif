@@ -6,7 +6,7 @@ class HomeController < ApplicationController
            .order(created_at: :desc)
            .joins(:user)
            .select("gifs.*, users.username")
-           .take(8)
+           .take(5)
            .to_json
     
   end
