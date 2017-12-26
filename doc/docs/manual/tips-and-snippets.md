@@ -23,3 +23,17 @@ And why not `PI2`:
 
 	#define PI2 6.28318530718
 
+To get the circular coordinates of a point:
+
+	#define ANGLE(p) atan(p.y, p.x)
+	#define CIRCULAR(p) vec2(ANGLE(p), length(p));
+	#define INV_CIRCULAR(c) vec2(c.y * cos(c.x), c.y * sin(c.x));
+
+Usage example:
+
+	vec2 c = CIRCULAR(p);
+
+	c.y += 0.1 * cos(c.x * 20.0);
+	
+	p = INV_CIRCULAR(c);
+
