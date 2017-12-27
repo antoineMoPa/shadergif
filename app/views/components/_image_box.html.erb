@@ -93,6 +93,23 @@
 					{{ comment.content }}
 				</div>
 			</div>
+			<br>
+			<% if(user_signed_in?) %>
+			<%= form_tag("/comments/new", method: "post") do %>
+			<div class="has-text-left">
+				<strong>Add a comment&nbsp;:</strong>
+			</div>
+			<input type="hidden" name="gif_id" v-bind:value="gif.id">
+			<textarea class="textarea" name="comment">
+			</textarea>
+			<br>
+			<div class="has-text-right">
+				<%= submit_tag "Publish", :class => "button is-primary" %>
+			</div>
+			<% end %>
+			<% else %>
+			<strong>Please <a href="/users/sign_in">sign in</a> to comment</strong>
+			<% end %> 
 		</div>
 		<br>
 	</div>

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'shader-editor' => 'shader_editor#index'
   get 'shader-editor/examples' => 'shader_editor#examples'
   post 'gifs/new' => 'gifs#new'
+  post 'comments/new' => 'comments#new'
   
   get 'gifs/list' => 'gifs#list'
   get 'gifs/:id' => 'gifs#show'
