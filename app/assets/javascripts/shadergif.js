@@ -71,23 +71,15 @@ var app = new Vue({
         code_change: function(){
             window.localStorage.code = this.code;
 			if(this.autocompile){
-				this.update_player();
+				this.$nextTick(function(){
+					this.update_player();
+				});
 			}
         },
 		update_player: function(){
 			// Remove previous errors
 			for(var err in cm_errorLines){
-				app.f_editor.removeLineClass(cm_errorLines[err],"background");
-			}
-
-			var fragment_error_pre = qsa(".fragment-error-pre")[0];
-			var vertex_error_pre = qsa(".vertex-error-pre")[0];
-			
-			vertex_error_pre.textContent = "";
-			fragment_error_pre.textContent = "";
-			
-			if(this.fragmentShader == ""){
-				return;
+				app.f_editor.removeLineClass(cm_errorLines[err], "background");
 			}
 			
 			var sp = this.$refs['shader-player'];
@@ -100,7 +92,17 @@ var app = new Vue({
 			if(!sp.passes_defined_in_code){
 				sp.shader_player.passes = this.passes;
 			}
+
+			var fragment_error_pre = qsa(".fragment-error-pre")[0];
+			var vertex_error_pre = qsa(".vertex-error-pre")[0];
 			
+			vertex_error_pre.textContent = "";
+			fragment_error_pre.textContent = "";
+			
+			if(this.fragmentShader == ""){
+				return;
+			}
+
 			sp.update_player();
 		},
 		recompile: function(){
@@ -411,7 +413,7 @@ var app = new Vue({
 			sp.vertex_shader = this.vertex_shader;
 			sp.fragment_shader = this.code;
 			
-			sp.on_error_listener = function(error, gl){
+			sp.shader_player.on_error_listener = function(error, gl){
 				var fragment_error_pre = qsa(".fragment-error-pre")[0];
 				var vertex_error_pre = qsa(".vertex-error-pre")[0];
 				
