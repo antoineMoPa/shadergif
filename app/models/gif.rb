@@ -1,6 +1,7 @@
 class Gif < ApplicationRecord
   belongs_to :user
-
+  has_many :comments
+  
   def gen_video_and_thumb
     filename = image_filename
     # Generate thumbnail

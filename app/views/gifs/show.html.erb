@@ -5,7 +5,7 @@
 	<meta property="og:video" content="https://shadergif.com/gifs/generated/<%= @gif.image_filename %>-vid.mp4" />
 <% end %>
 <script type="application/json" id="main-gifs-json">
- [<%= raw(@gif.to_json()) %>]
+ [<%= raw(@gif_json) %>]
 </script>
 <div id="main-app">
 	<section class="section">

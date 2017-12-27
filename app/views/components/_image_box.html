@@ -79,7 +79,21 @@
 		 >Close</button
 			   ><code class="language-glsl" data-manual
 				>{{ gif.code }}</code></pre>
-		
+
+		<br>
+		<div class="gif-comments" v-if="gif.comments != undefined">
+			<div class="has-text-left" v-if="gif.comments.length > 0">
+				<strong>Comments</strong>
+			</div>
+			<div class="comment" v-for="comment in gif.comments">
+				<div class="comment-username has-text-left">
+					<a v-bind:href="'/user/'+comment.user.username">{{ comment.user.username }}</a>&nbsp;:
+				</div>
+				<div class="comment-content has-text-left">
+					{{ comment.content }}
+				</div>
+			</div>
+		</div>
 		<br>
 	</div>
 </script>

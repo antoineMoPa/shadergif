@@ -42,11 +42,25 @@ class GifsController < ApplicationController
             
       redirect_to "/gifs/" + @gif.id.to_s
   end
-
+  
   def show
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username")
              .find(params[:id])
+    
+    @gif_json = @gif.to_json(
+      :include =>
+	  {
+        :comments => {
+          :include => {
+            :user => {
+              only: :username
+            }
+          }
+        }
+      }
+    )
+    
   end
   
   def play
