@@ -4,11 +4,15 @@ Shadergif is a tool to create & share shaders made with GLSL, a language that ru
 
 [shadergif.com](https://shadergif.com)
 
+Screenshot:
+
+![screenshot](public/screenshot.png)
+
 # Goals
 
 * Provide an alternative shader community platform with a nice browsing & coding experience.
 * Support more devices by rendering gif & video previews.
-* Be free and open source
+* Be free and open source.
 
 # Licence
 
