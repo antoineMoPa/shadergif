@@ -33,11 +33,11 @@ First let's start with an empty bridge function:
 	    gl_FragColor = col;
 	}
 
-You should now see that:
+You should now see that (nothing):
 
 ![We see nothing yet](building-a-bridge/nothing-at-all-yet.gif)
 
-Marvelous! But let's add actually... things!
+Marvelous! But let's actually add things!
 
 In the bridge function, you can begin by plotting a line. Even easier: draw the area below a line:
 
