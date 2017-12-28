@@ -1,3 +1,7 @@
+# GLSL tips and snippets
+
+Here are some of my favorite copy-pasta recipes:
+
 # Angles
 
 Find angle of point relative to (0,0):
