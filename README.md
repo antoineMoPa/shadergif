@@ -1,29 +1,21 @@
 # ShaderGif
 
-A tool to play with fragment shaders to create nice 2D images. (Because fragment shaders are awesome.)
+Shadergif is a tool to create & share shaders made with GLSL, a language that runs in your GPU.
 
-Features gif export, png export & GPU sound creation.
+[shadergif.com](https://shadergif.com)
 
-# Examples
+# Goals
 
-Jellyfish: http://a-mo-pa.com/stuff/shadergif/?file=examples/jellyfish.glsl
+* Provide an alternative shader community platform with a nice browsing & coding experience.
+* Support more devices by rendering gif & video previews.
+* Be free and open source
 
-![jellyfish-gif](http://67.media.tumblr.com/99a2e2a0055a5ba480c3d034db5d95b7/tumblr_ocaant6fWH1svno9go1_500.gif)
+# Licence
 
-Rio: http://a-mo-pa.com/stuff/shadergif/?file=examples/rio.glsl
-
-![rio](http://66.media.tumblr.com/31f918444dfeb6977d1a0818b5aed8d5/tumblr_oc62fccF031svno9go1_500.gif)
-
-Bridge: http://a-mo-pa.com/stuff/shadergif/?file=examples/bridge.glsl
-
-![Bridge](http://67.media.tumblr.com/1c175c8fd49c8be7ad155b7acddc850f/tumblr_oc6ennIUP41svno9go1_500.gif)
+Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
 
 # Documentation
 
-There is some documentation available:
+Visit: [doc.shadergif.com](https://doc.shadergif.com)
 
-[doc.shadergif.com](https://doc.shadergif.com)
-
-#  More images
-
-Visit my tumblr, you may find some gifs made with this: http://dontcode.tumblr.com
+To contribute to the documentation, install mkdocs. The text is in the `doc` folder.
