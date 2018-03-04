@@ -1,6 +1,9 @@
 <script type="application/json" id="main-gifs-json">
 	<%= raw(@gifs) %> 
 </script>
+<script type="application/json" id="mosaic-gifs-json">
+	<%= raw(@mosaic_gifs) %> 
+</script>
 <% if !user_signed_in? %>
 	<div class="home-description">
 		<p>
@@ -20,8 +23,8 @@
 					<br>
 					<div class="has-text-centered">
 						<button v-if="has_more"
-									  v-on:click="load_more"
-									  class="button is-large"
+								v-on:click="load_more"
+								class="button is-large"
 						>
 							view more
 						</button>
@@ -31,6 +34,8 @@
 					</div>
 				</div>
 				<div class="column is-one-fifth">
+					<p class="has-text-weight-bold">Last gifs</p>
+                    <image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
 					<div class="home-sidebar-spacer"></div>
 					<p class="has-text-weight-bold">Bridge tutorial</p>
 					<p>

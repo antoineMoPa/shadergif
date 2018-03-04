@@ -6,6 +6,7 @@ window.onload = function(){
 			el: "#main-app",
 			data: {
 				gifs: [],
+                mosaic_gifs: [],
 				initial_qty: -1,
 				current_offset: -1,
 				has_more: true,
@@ -47,9 +48,14 @@ window.onload = function(){
 		var gifs = JSON.parse(
 			document.getElementById("main-gifs-json").innerHTML
 		);
-		
+
 		main_app.gifs = gifs;
-		
+
+        var mosaic_gifs = JSON.parse(
+			document.getElementById("mosaic-gifs-json").innerHTML
+		);
+
+		main_app.mosaic_gifs = gifs;
 	}
 	
 	if(document.getElementById("profile-app") != null){

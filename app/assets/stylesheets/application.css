@@ -5,6 +5,7 @@
 //= require ./home.scss
 //= require lib/prism/prism.css
 //= require ./components/image_box.css
+//= require ./components/image_mosaic.css
 //= require ./components/shader_player.css
 
 .navbar{
