@@ -10,12 +10,13 @@ with Debian.
 
 Dependencies:
 
-	# First, build ruby
-	sudo apt-get install git binutils zlib1g-dev libssl-dev mariadb-client mariadb-server-10.1 libmariadb-dev libav-tools imagemagick
-	wget ruby-download-url ~/bin
-	cd ~/bin
-	untar your-ruby-archive
-	cd your-ruby-version
+	# First, install and build ruby
+    sudo apt-get install git binutils zlib1g-dev libssl-dev mariadb-client mariadb-server-10.1 libmariadb-dev libav-tools imagemagick
+    mkdir ~/bin
+    cd ~/bin
+    wget https://cache.ruby-lang.org/pub/ruby/ruby-2.4-stable.tar.gz
+	tar -zxvf ruby-*.tar.gz
+    cd $(ls | grep "ruby" | grep -v "\.tar\.gz")
 	./configure; make; sudo make install
 	sudo gem install bundle
     # Create database and user
