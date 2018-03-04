@@ -55,7 +55,7 @@ window.onload = function(){
 			document.getElementById("mosaic-gifs-json").innerHTML
 		);
 
-		main_app.mosaic_gifs = gifs;
+		main_app.mosaic_gifs = mosaic_gifs;
 	}
 	
 	if(document.getElementById("profile-app") != null){
