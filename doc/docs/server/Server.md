@@ -32,3 +32,9 @@ Dependencies:
 	rails server
 
 Then you can go to 127.0.0.1:3000
+
+# Regenerating thumbnails & previews
+
+There is a task for that:
+
+    rake gifs:recreate_thumbs_and_vids
