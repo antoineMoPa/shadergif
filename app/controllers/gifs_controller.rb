@@ -1,5 +1,5 @@
 class GifsController < ApplicationController
-  before_action :set_gif, only: [:show, :edit, :update, :destroy]
+  before_action :set_gif, only: [:show, :edit]
 
   def new
     if not user_signed_in?
@@ -121,29 +121,17 @@ class GifsController < ApplicationController
   # GET /gifs/1/edit
   def edit
   end
-
-  # PATCH/PUT /gifs/1
-  # PATCH/PUT /gifs/1.json
-  def update
-    respond_to do |format|
-      if @gif.update(gif_params)
-        format.html { redirect_to @gif, notice: 'Gif was successfully updated.' }
-        format.json { render :show, status: :ok, location: @gif }
-      else
-        format.html { render :edit }
-        format.json { render json: @gif.errors, status: :unprocessable_entity }
-      end
+  
+  def delete
+    gif = Gif.find(params[:gif_id])
+    
+    if gif.user_id != current_user.id
+      raise "Attempting to delete another users's gif..."
     end
-  end
-
-  # DELETE /gifs/1
-  # DELETE /gifs/1.json
-  def destroy
-    @gif.destroy
-    respond_to do |format|
-      format.html { redirect_to gifs_url, notice: 'Gif was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    
+    gif.destroy
+    
+    redirect_to "/user/gifs-and-drafts"
   end
 
   private

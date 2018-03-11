@@ -18,6 +18,9 @@
 							<th>
 								Last modification
 							</th>
+							<th>
+								Delete
+							</th>
 						</tr>
 						<tr v-for="draft in data.drafts">
 							<td>
@@ -30,6 +33,15 @@
 							</td>
 							<td>
 								{{ new Date(draft.updated_at).toDateString() }}
+							</td>
+							<td>
+								<form method="post" v-bind:action="'/gifs/' + draft.id + '/delete'">
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+									<input type="hidden"
+										   name="draft_id"
+										   v-bind:value="draft.id">
+									<%= submit_tag "Delete draft", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this draft?' } %>
+								</form>
 							</td>
 						</tr>
 					</table>
@@ -50,6 +62,9 @@
 							<th>
 								Last modification
 							</th>
+							<th>
+								Delete
+							</th>
 						</tr>
 						<tr v-for="gif in data.gifs">
 							<td>
@@ -65,6 +80,15 @@
 							</td>
 							<td>
 								{{ new Date(gif.updated_at).toDateString() }}
+							</td>
+							<td>
+								<form method="post" v-bind:action="'/gifs/' + gif.id + '/delete'">
+									<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+									<input type="hidden"
+										   name="gif_id"
+										   v-bind:value="gif.id">
+									<%= submit_tag "Delete gif", :class => "button is-danger",  data: { :confirm => 'Do you really want to delete this public gif?' } %>
+								</form>
 							</td>
 						</tr>
 					</table>

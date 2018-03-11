@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   get 'gifs/:id/edit' => 'gifs#edit'
   post 'gifs/new' => 'gifs#new'
   post 'gifs/new_draft' => 'gifs#new_draft'
+  post 'gifs/:gif_id/delete' => 'gifs#delete'
   
-
   resources :gifs
 end
