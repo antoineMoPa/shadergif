@@ -8,6 +8,8 @@ class GifsController < ApplicationController
     
     @gif = Gif.new
     @gif.user_id = current_user.id
+
+    @gif.is_public = true
     
     # Generate random id
     rand_id = (1..16).map do |i|
