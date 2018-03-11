@@ -45,7 +45,8 @@ var app = new Vue({
 			dithering: 'FloydSteinberg'
 		},
 		autocompile: true,
-		images: []
+		images: [],
+        has_pending_update_request: false
     },
     watch: {
 		'gifjs.dithering': function(d){
@@ -69,12 +70,27 @@ var app = new Vue({
     },
     methods: {
         code_change: function(){
-            window.localStorage.code = this.code;
-			if(this.autocompile){
-				this.$nextTick(function(){
-					this.update_player();
-				});
-			}
+            var app = this;
+            
+            // Sleep at least 300 milliseconds
+            // to avoid constant compilation when typing,
+            // which slows down the thread
+            if(
+                !this.has_pending_update_request
+            ){
+                this.has_pending_update_request = true;
+
+                setTimeout(function(){
+                    app.has_pending_update_request = false;
+                    window.localStorage.code = app.code;
+			        if(app.autocompile){
+				        app.$nextTick(function(){
+					        app.update_player();
+				        });
+			        }
+                }, 300);
+                return;
+            }
         },
 		update_player: function(){
 			// Remove previous errors

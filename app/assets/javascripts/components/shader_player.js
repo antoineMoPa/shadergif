@@ -383,6 +383,8 @@ Vue.component(
 				}
 			},
 			update_player: function(){
+                var now = new Date().getTime();
+
 				if(this.fragmentShader == ""){
 					return;
 				}
