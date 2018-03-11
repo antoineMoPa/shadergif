@@ -54,8 +54,7 @@ var app = new Vue({
 			dithering: 'FloydSteinberg'
 		},
 		autocompile: true,
-		images: [],
-		has_pending_update_request: false
+		images: []
 	},
 	watch: {
 		'gifjs.dithering': function(d){
@@ -80,25 +79,11 @@ var app = new Vue({
 	methods: {
 		code_change: function(){
 			var app = this;
-			
-			// Sleep at least 300 milliseconds
-			// to avoid constant compilation when typing,
-			// which slows down the thread
-			if(
-				!this.has_pending_update_request
-			){
-				this.has_pending_update_request = true;
-
-				setTimeout(function(){
-					app.has_pending_update_request = false;
-					window.localStorage.code = app.code;
-					if(app.autocompile){
-						app.$nextTick(function(){
-							app.update_player();
-						});
-					}
-				}, 300);
-				return;
+			window.localStorage.code = app.code;
+			if(app.autocompile){
+				app.$nextTick(function(){
+					app.update_player();
+				});
 			}
 		},
 		update_player: function(){
@@ -217,10 +202,25 @@ var app = new Vue({
 				// Do nothing
 			}
 		}
+
+		var change_timeout = null;
+		
+		function change_throttled(){
+			// Sleep at least 300 milliseconds
+			// to avoid constant compilation when typing,
+			// which slows down the thread
+			if(change_timeout == null){
+				change_timeout = setTimeout(function(){
+					app.code = app.f_editor.getValue();
+					app.code_change();
+					change_timeout = null;
+					return;
+				}, 300);
+			}
+		}
 		
 		app.f_editor.on("change", function(){
-			app.code = app.f_editor.getValue();
-			app.code_change();
+			change_throttled();
 		});
 		
 		function add_error(err, type_str, type_pre){
@@ -260,7 +260,7 @@ var app = new Vue({
 		// Render all the frames to a png
 		function make_gif(){
 			var sp = app.$refs['shader-player'];
-            sp.shader_player.rendering_gif = true;
+			sp.shader_player.rendering_gif = true;
 			app.rendering_gif = true;
 			
 			var to_export = {};
