@@ -273,7 +273,7 @@ var app = new Vue({
 						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
 						to_export.data.push(canvas.toDataURL());
 						next();
-					}
+                    };
 				} else {
 					export_gif(to_export);
 					sp.shader_player.rendering_gif = false;
@@ -318,7 +318,7 @@ var app = new Vue({
 						ctx.fillStyle = "#888888";
 						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10 + offset);
 						next();
-					}
+					};
 				} else {
 					// Final step
 					var image_data = canvas.toDataURL();
@@ -379,8 +379,8 @@ var app = new Vue({
 					reader.onloadend = function() {
 						// reader.result = base64 data
 						app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
-					}
-				})
+					};
+				});
 			}
 		}
 		

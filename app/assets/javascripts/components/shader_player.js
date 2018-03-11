@@ -397,7 +397,7 @@ Vue.component(
 			}
 		},
 		watch: {
-			fragmentShader: function(){-
+			fragmentShader: function(){
 				this.update_player();
 			},
 			fullscreen: function(fullscreen){
