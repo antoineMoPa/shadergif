@@ -1,0 +1,75 @@
+<script type="application/json" id="gifs-and-drafts-json">
+	<%= raw(@data) %> 
+</script>
+<div id="gifs-and-drafts-app">
+	<section class="section">
+		<div class="container">
+			<div class="columns">
+				<div class="column">
+					<h1 class="title has-text-centered">Your drafts</h1>
+					<table class="table">
+						<tr>
+							<th>
+								Title
+							</th>
+							<th>
+								Creation date
+							</th>
+							<th>
+								Last modification
+							</th>
+						</tr>
+						<tr v-for="draft in data.drafts">
+							<td>
+								<a v-bind:href="'/shader-editor/drafts/' + draft.id">
+									{{ draft.title }}
+								</a>
+							</td>
+							<td>
+								{{ new Date(draft.created_at).toDateString() }}
+							</td>
+							<td>
+								{{ new Date(draft.updated_at).toDateString() }}
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column">
+					<h1 class="title has-text-centered">Your public gifs</h1>
+					<table class="table">
+						<tr>
+							<th>
+								Gif
+							</th>
+							<th>
+								Title
+							</th>
+							<th>
+								Creation date
+							</th>
+							<th>
+								Last modification
+							</th>
+						</tr>
+						<tr v-for="gif in data.gifs">
+							<td>
+								<img v-bind:src='"/gifs/generated/" + gif.image_filename + "-small.gif"'>
+							</td>
+							<td>
+								<a v-bind:href="'/gifs/' + gif.id">
+									{{ gif.title }}
+								</a>
+							</td>
+							<td>
+								{{ new Date(gif.created_at).toDateString() }}
+							</td>
+							<td>
+								{{ new Date(gif.updated_at).toDateString() }}
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

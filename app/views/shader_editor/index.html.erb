@@ -12,10 +12,58 @@
 			
 			<div class="foldable">
 				<div class="foldable-header">
+					Draft management
+				</div>
+				<div class="foldable-content">
+					<div class="draft-management">
+						<% if user_signed_in? %>
+							<% if @is_draft %>
+								<%= form_tag("/gifs/save_draft", method: "post") do %>
+									<div class="field">
+										<label class="label">Draft title</label>
+										<div class="control">
+											<input type="text" name="title" placeholder="Give this a name" value="<%= @draft.title %>">
+										</div>
+									</div>
+									<input type="hidden"
+										   name="code"
+										   v-bind:value="code">
+									<input type="hidden"
+										   name="draft_id"
+										   value="<%= @draft.id %>">
+									<div class="has-text-right pull-right">
+										<%= submit_tag "Save draft", :class => "button is-primary" %>
+									</div>
+								<% end %>
+							<% else %>
+								<%= form_tag("/gifs/new_draft", method: "post") do %>
+									<div class="field">
+										<label class="label">Title</label>
+										<div class="control">
+											<input type="text" name="title" placeholder="Give this a name">
+										</div>
+									</div>
+									<input type="hidden"
+										   name="code"
+										   v-bind:value="code">
+									<div class="has-text-right pull-right">
+										<%= submit_tag "Create a new draft", :class => "button is-primary" %>
+									</div>
+								<% end %>
+							<% end %>
+						<% else %>
+							<div class="text-center">
+								Create an account or login to save drafts
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+			<div class="foldable foldable-hidden">
+				<div class="foldable-header">
 					Gif tools
 				</div>
 				<div class="foldable-content">
-					
 					<div class="text-center">
 						<p>
 							<button name="make-gif" class="inline-block">
@@ -33,8 +81,8 @@
 						</p>
 						<p>
 							<button name="recompile"
-										  v-if="!autocompile"
-										  v-on:click="recompile">
+									v-if="!autocompile"
+									v-on:click="recompile">
 								Compile and run
 							</button>
 						</p>
@@ -54,10 +102,10 @@
 								
 								passes: <input
 											v-if="!passes_defined_in_code"
-											type="number"
-											min="1"
-											max="6"
-											v-model.lazy.number="passes">
+												  type="number"
+												  min="1"
+												  max="6"
+												  v-model.lazy.number="passes">
 								<span v-if="passes_defined_in_code"
 									  title="(defined in code)">
 									{{ passes }}
@@ -95,26 +143,26 @@
 				<div class="foldable-content">
 					<div class="text-center">
 						<button class="inline-block"
-									   v-if="!sound_mode"
-									   v-on:click="enable_sound_mode">
+								v-if="!sound_mode"
+								v-on:click="enable_sound_mode">
 							Sound mode
 						</button>
 						<div v-if="sound_mode">
 							<button name="play-sound" class="inline-block"
-										  v-on:click="play_sound">
+									v-on:click="play_sound">
 								Play sound
 							</button>
 							<button name="stop-sound" class="inline-block"
-										  v-on:click="stop_sound">
+									v-on:click="stop_sound">
 								Stop
 							</button>
 							<br><br>
 							<button class="inline-block"
-									v-on:click="load_default_sound_shader">
+										   v-on:click="load_default_sound_shader">
 								Load default sound shader
 							</button>
 							<button class="inline-block"
-									v-on:click="disable_sound_mode">
+										   v-on:click="disable_sound_mode">
 								Disable sound mode
 							</button>
 						</div>
@@ -155,7 +203,10 @@
 									<div class="field">
 										<label class="label">Description</label>
 										<div class="control">
-											<textarea name="description" class="textarea">
+											<textarea name="description" class="textarea"
+											><% if @is_draft %>
+												<%= @draft.code%>
+											<% end %>
 											</textarea>
 										</div>
 									</div>
@@ -195,6 +246,10 @@
 		</div>
 	</div>
 </div>
+<script name="draft-code" type="text/plain"
+><% if @is_draft %>
+ <%= raw(@draft.code.to_json) %>
+<% end %></script>
 <script name="default-fragment-shader" type="text/plain">// Fragment shader
  precision highp float;
  

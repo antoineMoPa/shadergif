@@ -6,10 +6,10 @@ window.onload = function(){
 			el: "#main-app",
 			data: {
 				gifs: [],
-                mosaic_gifs: [],
+				mosaic_gifs: [],
 				initial_qty: -1,
 				current_offset: -1,
-				has_more: true,
+				has_more: true
 			},
 			methods: {
 				receive_more: function(req){
@@ -51,7 +51,7 @@ window.onload = function(){
 
 		main_app.gifs = gifs;
 
-        var mosaic_gifs = JSON.parse(
+		var mosaic_gifs = JSON.parse(
 			document.getElementById("mosaic-gifs-json").innerHTML
 		);
 
@@ -65,11 +65,29 @@ window.onload = function(){
 				gifs: []
 			}
 		});
-		
+
 		var gifs = JSON.parse(
 			document.getElementById("profile-gifs-json").innerHTML
 		);
 		
 		profile_app.gifs = gifs;
 	}
-}
+
+	if(document.getElementById("gifs-and-drafts-app") != null){
+		var gifs_and_drafts_app = new Vue({
+			el: "#gifs-and-drafts-app",
+			data: {
+				data: []
+			}
+		});
+		
+		var data = JSON.parse(
+			document.getElementById("gifs-and-drafts-json").innerHTML
+		);
+		
+		gifs_and_drafts_app.data = data;
+	}
+
+	
+	
+};

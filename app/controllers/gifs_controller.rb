@@ -45,10 +45,34 @@ class GifsController < ApplicationController
     
     redirect_to "/gifs/" + @gif.id.to_s
   end
+
+  def new_draft
+    if not user_signed_in?
+      raise "You are not logged in"
+    end
+    
+    @gif = Gif.new
+    @gif.user_id = current_user.id
+
+    @gif.is_public = false
+    
+    # Generate random id
+    rand_id = (1..16).map do |i|
+      [*'A'..'Z', *'a'..'z', *0..9][ rand(62) ]
+    end
+    
+    @gif.title = params[:title]
+    @gif.code = params[:code]
+
+    @gif.save()
+    
+    redirect_to "/shader-editor/drafts/" + @gif.id.to_s
+  end
   
   def show
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username")
+             .where("is_public = true")
              .find(params[:id])
     
     @gif_json = @gif.to_json(
@@ -69,6 +93,7 @@ class GifsController < ApplicationController
   def play
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username")
+             .where("is_public = true")
              .find(params[:id])
   end
 
@@ -79,6 +104,7 @@ class GifsController < ApplicationController
            .order(created_at: :desc)
            .joins(:user)
            .select("gifs.*, users.username")
+           .where("is_public = true")
            .limit(params[:take]).offset(params[:skip])
     
     render :json => @gifs
