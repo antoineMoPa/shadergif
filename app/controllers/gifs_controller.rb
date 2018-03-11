@@ -40,6 +40,14 @@ class GifsController < ApplicationController
     
     @gif.image_filename = filename
     @gif.save()
+
+    # Delete draft if it was a draft
+    if not params[:draft_id].nil?
+      draft = Gif.find(params[:draft_id])
+      if !draft.nil? and draft.user_id == current_user.id and !draft.is_public
+        draft.destroy()
+      end
+    end
     
     @gif.gen_video_and_thumb
     

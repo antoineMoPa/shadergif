@@ -48,6 +48,7 @@ var app = new Vue({
 		height: 540,
 		frames: 10,
 		passes: 1,
+		rendering_gif: false,
 		gifjs: {
 			quality: 8,
 			dithering: 'FloydSteinberg'
@@ -259,7 +260,8 @@ var app = new Vue({
 		// Render all the frames to a png
 		function make_gif(){
 			var sp = app.$refs['shader-player'];
-			sp.shader_player.rendering_gif = true;
+            sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
 			
 			var to_export = {};
 			
@@ -268,8 +270,9 @@ var app = new Vue({
 			
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
-
+			
 			sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
 			
 			canvas.width = sp.shader_player.canvas.width;
 			canvas.height = sp.shader_player.canvas.height;
@@ -301,10 +304,10 @@ var app = new Vue({
 				} else {
 					export_gif(to_export);
 					sp.shader_player.rendering_gif = false;
+					app.rendering_gif = false;
 				}
 				i++;
 			}
-			
 			next();
 		}
 		
@@ -312,6 +315,7 @@ var app = new Vue({
 		function make_png(){
 			var sp = app.$refs['shader-player'];
 			sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
 			
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
@@ -347,6 +351,7 @@ var app = new Vue({
 					// Final step
 					var image_data = canvas.toDataURL();
 					sp.shader_player.rendering_gif = false;
+					app.rendering_gif = false;
 					app.images.unshift({type: "png", size: false, src: image_data});
 				}
 				i++;

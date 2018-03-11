@@ -67,7 +67,12 @@
 					<div class="text-center">
 						<p>
 							<button name="make-gif" class="inline-block">
-								Create gif
+								<template v-if="!rendering_gif">
+									Create gif
+								</template>
+								<template v-else>
+									Rendering...
+								</template>
 							</button>
 							<button name="make-png" class="inline-block">
 								Create stacked png
@@ -191,9 +196,11 @@
 									<input type="hidden"
 										   name="image"
 										   v-bind:value="image.blob">
-									<input type="hidden"
-										   name="code"
-										   v-bind:value="image.code">
+									<% if @is_draft %>
+										<input type="hidden"
+											   name="draft_id"
+											   value="<%= @draft.id %>">
+									<% end %>
 									<div class="field">
 										<label class="label">Title</label>
 										<div class="control">
