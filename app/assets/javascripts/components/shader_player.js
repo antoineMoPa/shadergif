@@ -97,8 +97,8 @@ class ShaderPlayer {
 		
 		// Triangle strip for whole screen square
 		var vertices = [
-            -1,-1,0,
-            -1,1,0,
+			-1,-1,0,
+			-1,1,0,
 			1,-1,0,
 			1,1,0,
 		];
@@ -383,7 +383,7 @@ Vue.component(
 				}
 			},
 			update_player: function(){
-                var now = new Date().getTime();
+				var now = new Date().getTime();
 
 				if(this.fragmentShader == ""){
 					return;

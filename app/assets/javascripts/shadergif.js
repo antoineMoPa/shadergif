@@ -15,25 +15,25 @@ var DEFAULT_HEIGHT = 540;
 var cm_errorLines = [];
 
 function default_fragment_policy(){
-    var code = "";
-    
-    if(window.localStorage.code != undefined && window.localStorage.code != ""){
-        code = window.localStorage.code;
-    } else {
-        code = load_script("default-fragment-shader");
-    }
+	var code = "";
+	
+	if(window.localStorage.code != undefined && window.localStorage.code != ""){
+		code = window.localStorage.code;
+	} else {
+		code = load_script("default-fragment-shader");
+	}
 
-    return code;
+	return code;
 }
 
 var app = new Vue({
-    el: "#shadergif-app",
-    data: {
+	el: "#shadergif-app",
+	data: {
 		sound_mode: false,
 		send_status: "",
-        error: "",
+		error: "",
 		f_editor: null,
-        code: default_fragment_policy(),
+		code: default_fragment_policy(),
 		passes_defined_in_code: false,
 		frames_defined_in_code: false,
 		width: 540,
@@ -46,52 +46,52 @@ var app = new Vue({
 		},
 		autocompile: true,
 		images: [],
-        has_pending_update_request: false
-    },
-    watch: {
+		has_pending_update_request: false
+	},
+	watch: {
 		'gifjs.dithering': function(d){
 			// Convert string to null
 			if(d == "false"){
 				this.gifjs.dithering = false;
 			}
 		},
-        'width': function(w){
+		'width': function(w){
 			this.update_player();
-        },
-        'height': function(h){
+		},
+		'height': function(h){
 			this.update_player();
-        },
+		},
 		'frames': function(f){
 			this.update_player();
-        },
+		},
 		'passes': function(){
 			this.update_player();
 		}
-    },
-    methods: {
-        code_change: function(){
-            var app = this;
-            
-            // Sleep at least 300 milliseconds
-            // to avoid constant compilation when typing,
-            // which slows down the thread
-            if(
-                !this.has_pending_update_request
-            ){
-                this.has_pending_update_request = true;
+	},
+	methods: {
+		code_change: function(){
+			var app = this;
+			
+			// Sleep at least 300 milliseconds
+			// to avoid constant compilation when typing,
+			// which slows down the thread
+			if(
+				!this.has_pending_update_request
+			){
+				this.has_pending_update_request = true;
 
-                setTimeout(function(){
-                    app.has_pending_update_request = false;
-                    window.localStorage.code = app.code;
-			        if(app.autocompile){
-				        app.$nextTick(function(){
-					        app.update_player();
-				        });
-			        }
-                }, 300);
-                return;
-            }
-        },
+				setTimeout(function(){
+					app.has_pending_update_request = false;
+					window.localStorage.code = app.code;
+					if(app.autocompile){
+						app.$nextTick(function(){
+							app.update_player();
+						});
+					}
+				}, 300);
+				return;
+			}
+		},
 		update_player: function(){
 			// Remove previous errors
 			for(var err in cm_errorLines){
@@ -152,7 +152,7 @@ var app = new Vue({
 		send_to_server: function(){
 			make_png_server();
 		}
-    },
+	},
 	mounted: function(){
 		var app = this;
 		
@@ -289,7 +289,7 @@ var app = new Vue({
 						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
 						to_export.data.push(canvas.toDataURL());
 						next();
-                    };
+					};
 				} else {
 					export_gif(to_export);
 					sp.shader_player.rendering_gif = false;
@@ -378,7 +378,7 @@ var app = new Vue({
 			function convert(){
 				var code = app.f_editor.getValue();
 				
-				for(var i = 0; i < images.length; i++){    
+				for(var i = 0; i < images.length; i++){
 					gif.addFrame(images[i],{delay: to_export.delay});
 				}
 				
