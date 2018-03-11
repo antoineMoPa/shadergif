@@ -34,23 +34,35 @@
 					</div>
 				</div>
 				<div class="column is-one-fifth">
-                    <div class="has-text-centered">
-                        <p class="has-text-weight-bold">Just start coding:</p>
-                        <p>What are you waiting for?</p>
-                        <a class="button" href="/shader-editor/">
-                            Launch Editor
-					    </a>
-                        <br><br>
-                        <p>Also see the documentation and examples links
-                            at the top of the page to get started.
-                        </p>
-                    </div>
-                    <div class="home-sidebar-spacer"></div>
-                    <div class="has-text-centered">
-                        <p class="has-text-weight-bold">Last gifs</p>
-                        <br>
-                        <image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
-                    </div>
+					<div class="has-text-centered">
+						<p class="has-text-weight-bold">Just start coding:</p>
+						<p>What are you waiting for?</p>
+						<br>
+						<a class="button" href="/shader-editor/">
+							Launch Editor
+						</a>
+						<br><br>
+						<p>Also see the documentation and examples links
+							at the top of the page to get started.
+						</p>
+					</div>
+					<div class="home-sidebar-spacer"></div>
+					<% if !user_signed_in? %>
+						<div class="has-text-centered">
+							<p class="has-text-weight-bold">Don't have an account yet?</p>
+							<p>With an account, you can post public gifs and save drafts.</p>
+							<br>
+							<a class="button" href="/users/sign_up">
+								Sign up!
+							</a>
+						</div>
+					<% end %>
+					<div class="home-sidebar-spacer"></div>
+					<div class="has-text-centered">
+						<p class="has-text-weight-bold">Last gifs</p>
+						<br>
+						<image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
+					</div>
 					<div class="home-sidebar-spacer"></div>
 					<p class="has-text-weight-bold">Bridge tutorial</p>
 					<p>

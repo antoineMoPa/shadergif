@@ -1,12 +1,14 @@
 <section class="section">
 	<div class="column is-4 is-offset-4 devise-form has-text-centered">
 		<h1 class="title">Sign up</h1>
-
+		<p>
+			A user account will allow you to post public gifs and save private code drafts.
+        </p>
 		<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-		<%= devise_error_messages! %>
-		
+			<%= devise_error_messages! %>
 		<div class="field">
 			<%= f.label :email, :class => "label" %>
+            <p>For email recovery and account confirmation.</p>
 			<div class="control">
 				<%= f.email_field :email, autofocus: true,
 					:class => "input is-large" %>
@@ -15,10 +17,11 @@
 
 		<div class="field">
 			<%= f.label :username, :class => "label" %>
+            <p>Choose a username for your public profile.<br>You will use it to sign in.</p>
 			<div class="control">
 				<%= f.text_field :username, autofocus: true,
 					:class => "input", :pattern => "[a-zA-Z0-9\_]{3,20}" %>
-				<em>(3 to 20 characters max, only letters, numbers and underscores (_))</em>
+				<em>3 to 20 characters, only letters, numbers and underscores '_'</em>
 			</div>
 		</div>
 		
