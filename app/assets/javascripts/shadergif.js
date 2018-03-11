@@ -16,16 +16,16 @@ var cm_errorLines = [];
 
 function default_fragment_policy(){
 	var code = "";
-    
-    if(/\/drafts\//.test(window.location.href)){
-        // If we are viewing a draft, use it
-        code = JSON.parse(load_script("draft-code"));
-    } else if(
-        window.localStorage.code != undefined &&
-            window.localStorage.code != ""
-    ){
-        // Not a draft, use last edited code saved in localstorage
-        // (Prevents losing code when reloading the page)
+	
+	if(/\/drafts\//.test(window.location.href)){
+		// If we are viewing a draft, use it
+		code = JSON.parse(load_script("draft-code"));
+	} else if(
+		window.localStorage.code != undefined &&
+			window.localStorage.code != ""
+	){
+		// Not a draft, use last edited code saved in localstorage
+		// (Prevents losing code when reloading the page)
 		code = window.localStorage.code;
 	} else {
 		code = load_script("default-fragment-shader");

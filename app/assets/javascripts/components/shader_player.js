@@ -112,11 +112,11 @@ class ShaderPlayer {
 		var app = this;
 		var gl = this.gl;
 
-        // Delete previous program
-        if(gl.program != undefined){
-            gl.deleteProgram(gl.program);
-        }
-        
+		// Delete previous program
+		if(gl.program != undefined){
+			gl.deleteProgram(gl.program);
+		}
+		
 		gl.program = gl.createProgram();
 
 		var vertex_shader =
@@ -398,10 +398,10 @@ Vue.component(
 				this.manage_passes();
 				// Needed when changing passes number
 				// (renderbuffer & stuff)
-                if(this.gl == null){
-                    // Only init once
-				    this.shader_player.init_gl();
-                }
+				if(this.gl == null){
+					// Only init once
+					this.shader_player.init_gl();
+				}
 				this.shader_player.init_program();
 				this.shader_player.animate();
 			}
