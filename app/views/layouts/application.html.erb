@@ -21,8 +21,7 @@
 		<% end %>
 		
 		<meta name="viewport" content="width=device-width, user-scalable=no">
-		<% if request.path.match?("\/shader-editor\/") %>
-			
+		<% if @is_editor %>
 			<%= stylesheet_link_tag    'shader_editor', media: 'all' %>
 		<% else %>
 			<%= stylesheet_link_tag    'application', media: 'all' %>
@@ -60,7 +59,7 @@
 						<% else %>
 							<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
 						<% end %>
-						<% if request.path.ends_with? 'shader-editor' %>
+						<% if @is_editor %>
 							<a class="navbar-item is-active"
 							   href="/shader-editor/examples"
 							   target="_blank">

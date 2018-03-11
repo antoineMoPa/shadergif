@@ -1,5 +1,6 @@
 class ShaderEditorController < ApplicationController
   def index
+    @is_editor = true
   end
 
   def edit_draft
@@ -19,6 +20,7 @@ class ShaderEditorController < ApplicationController
     
     @draft = draft
     @is_draft = true
+    @is_editor = true
     
     render "index"
   end
