@@ -18,6 +18,14 @@ Screenshot:
 
 Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
 
+# You want to code shadergif ?
+
+Need help setting up a dev machine? You can contact me on twitter @antoineMoPa / tumblr ( dontcode.tumblr.com ) / whatever social network where you find me.
+
+I guess the first step is to setup a server in a virtual machine, or on your computer if you run Linux like me:
+
+https://doc.shadergif.com/server/Server/
+
 # Documentation
 
 Visit: [doc.shadergif.com](https://doc.shadergif.com)
