@@ -57,6 +57,29 @@ window.onload = function(){
 
 		main_app.mosaic_gifs = mosaic_gifs;
 	}
+
+	
+
+	if(document.getElementById("single-gif-app") != null){
+		var single_gif_app = new Vue({
+			el: "#single-gif-app",
+			data: {
+				gifs: []
+			}
+		});
+
+		var gifs = JSON.parse(
+			document.getElementById("single-gif-json").innerHTML
+		);
+		
+		single_gif_app.gifs = gifs;
+
+
+		single_gif_app.$nextTick(function(){
+			single_gif_app.$children[0].$children[0].show_code();
+		});
+	}
+
 	
 	if(document.getElementById("profile-app") != null){
 		var profile_app = new Vue({

@@ -4,10 +4,10 @@
 	<meta property="og:image" content="https://shadergif.com/gifs/<%= @gif.image_filename %>" />
 	<meta property="og:video" content="https://shadergif.com/gifs/generated/<%= @gif.image_filename %>-vid.mp4" />
 <% end %>
-<script type="application/json" id="main-gifs-json">
+<script type="application/json" id="single-gif-json">
  [<%= raw(@gif_json) %>]
 </script>
-<div id="main-app">
+<div id="single-gif-app">
 	<section class="section">
 		<div class="container">
 			<h1 class="title has-text-centered"><%= @gif.title %></h1>
