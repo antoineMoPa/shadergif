@@ -113,7 +113,16 @@ class ShaderPlayer {
 		var gl = this.gl;
 
 		// Delete previous program
-		if(gl.program != undefined){
+		if(typeof gl.program != "undefined"){
+			gl.useProgram(gl.program);
+			if(this.fragment_shader_object > -1){
+				gl.detachShader(gl.program, this.fragment_shader_object);
+			}
+			if(this.vertex_shader_object > -1){
+				gl.detachShader(gl.program, this.vertex_shader_object);
+			}
+			gl.deleteShader(gl.fragment_shader);
+			gl.deleteShader(gl.vertex_shader);
 			gl.deleteProgram(gl.program);
 		}
 		
@@ -124,6 +133,9 @@ class ShaderPlayer {
 		
 		var fragment_shader =
 			add_shader(gl.FRAGMENT_SHADER, this.fragment_shader);
+
+		this.fragment_shader_object = fragment_shader;
+		this.vertex_shader_object = vertex_shader;
 		
 		function add_shader(type, content){
 			var shader = gl.createShader(type);
@@ -224,6 +236,10 @@ class ShaderPlayer {
 	draw_gl(time){
 		var gl = this.gl;
 
+		if(gl == null || gl.program == null || typeof gl.program == "undefined"){
+			return;
+		}
+		
 		for(var pass = 0; pass < this.passes; pass++ ){
 			if(pass < this.passes - 1){
 				gl.bindFramebuffer(gl.FRAMEBUFFER, this.framebuffer[pass]);
@@ -398,11 +414,14 @@ Vue.component(
 				this.manage_passes();
 				// Needed when changing passes number
 				// (renderbuffer & stuff)
-				if(this.gl == null){
+				if(this.shader_player.gl == null){
 					// Only init once
 					this.shader_player.init_gl();
 				}
+
+				// TODO: rename this update_program
 				this.shader_player.init_program();
+				
 				this.shader_player.animate();
 			}
 		},
