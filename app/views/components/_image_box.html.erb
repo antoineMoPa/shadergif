@@ -6,7 +6,7 @@
 				<transition name="view-gif">
 					<div
 						v-if="!show_actual_gif"
-							  class="view-gif-button">
+						class="view-gif-button">
 						<div class="view-gif-button-inside">
 							GIF
 						</div>
@@ -57,23 +57,28 @@
 		</div>
 		<button
 			v-if="!code_is_visible"
-			v-on:click="show_code"
-			class="button"
+				  v-on:click="show_code"
+				  class="button"
 		>
 			View code
+		</button>
+		<button
+			v-on:click="use_in_editor"
+						class="button"
+		>
+			Use in editor
 		</button>
 		<a v-bind:href="'/gifs/' + gif.id + '/play'"
 						class="button">
 			Run Shader
 		</a>
-		
 		<!--
 			 Note the ugly tag closing design to avoid whitespace
 			 before and after the code in the <pre>
-		-->
+		   -->
 		<pre
 			v-if="code_is_visible"
-			class="image-code has-text-left"
+				  class="image-code has-text-left"
 		><button class="button close-image-code"
 				 v-on:click="code_is_visible = !code_is_visible"
 		 >Close</button
@@ -95,20 +100,20 @@
 			</div>
 			<br>
 			<% if(user_signed_in?) %>
-			<%= form_tag("/comments/new", method: "post") do %>
-			<div class="has-text-left">
-				<strong>Add a comment&nbsp;:</strong>
-			</div>
-			<input type="hidden" name="gif_id" v-bind:value="gif.id">
-			<textarea class="textarea" name="comment">
-			</textarea>
-			<br>
-			<div class="has-text-right">
-				<%= submit_tag "Publish", :class => "button is-primary" %>
-			</div>
-			<% end %>
+				<%= form_tag("/comments/new", method: "post") do %>
+					<div class="has-text-left">
+						<strong>Add a comment&nbsp;:</strong>
+					</div>
+					<input type="hidden" name="gif_id" v-bind:value="gif.id">
+					<textarea class="textarea" name="comment">
+					</textarea>
+					<br>
+					<div class="has-text-right">
+						<%= submit_tag "Publish", :class => "button is-primary" %>
+					</div>
+				<% end %>
 			<% else %>
-			<strong>Please <a href="/users/sign_in">sign in</a> to comment</strong>
+				<strong>Please <a href="/users/sign_in">sign in</a> to comment</strong>
 			<% end %> 
 		</div>
 		<br>

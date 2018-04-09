@@ -29,6 +29,10 @@ Vue.component(
 						
 					});
 				});
+			},
+			use_in_editor: function(){
+				window.localStorage.code = this.gif.code;
+				window.location.href = "/shader-editor/";
 			}
 		}
 	}
