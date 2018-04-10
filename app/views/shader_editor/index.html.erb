@@ -66,7 +66,7 @@
 				<div class="foldable-content">
 					<div class="text-center">
 						<p>
-							<button name="make-gif" class="inline-block">
+							<button name="make-gif" v-on:click="make_gif" class="inline-block">
 								<template v-if="!rendering_gif">
 									Create gif
 								</template>
@@ -74,7 +74,7 @@
 									Rendering...
 								</template>
 							</button>
-							<button name="make-png" class="inline-block">
+							<button name="make-png" v-on:click="make_png" class="inline-block">
 								Create stacked png
 							</button>
 						</p>

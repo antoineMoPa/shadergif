@@ -48,6 +48,7 @@ var app = new Vue({
 		height: 540,
 		frames: 10,
 		passes: 1,
+		anim_delay: 100,
 		rendering_gif: false,
 		gifjs: {
 			quality: 8,
@@ -145,19 +146,194 @@ var app = new Vue({
 		},
 		send_to_server: function(){
 			make_png_server();
+		},
+		export_gif: function(to_export){
+			// Make the gif from the frames
+			var app = this;
+			var gif = new GIF({
+				workers: 2,
+				quality: app.gifjs.quality,
+				dither: app.gifjs.dithering,
+				workerScript: "/workers/gif.worker.js"
+			});
+			
+			data = to_export.data;
+			
+			var images = [];
+			
+			for(var i = 0; i < data.length; i++){
+				var image = new Image();
+				image.src = data[i];
+				image.onload = imageLoaded;
+				images.push(image);
+			}
+			
+			var number_loaded = 0;
+			function imageLoaded(){
+				number_loaded++;
+				if(number_loaded == data.length){
+					convert();
+				}
+			}
+			
+			function convert(){
+				var code = app.f_editor.getValue();
+				
+				for(var i = 0; i < images.length; i++){
+					gif.addFrame(images[i],{delay: to_export.delay});
+				}
+				
+				gif.render();
+				
+				gif.on('finished',function(blob){
+					// Create image
+					var size =  (blob.size / 1000).toFixed(2);
+					
+					// Create base64 version
+					// PERF: TODO: generate image on submit only
+					var reader = new window.FileReader();
+					reader.readAsDataURL(blob);
+					reader.onloadend = function() {
+						// reader.result = base64 data
+						app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
+					};
+				});
+			}
+		},
+		make_gif: function() {
+			var app = this;
+			// Renders all the frames to a png
+			var sp = app.$refs['shader-player'];
+			sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
+			
+			var to_export = {};
+			
+			to_export.delay = app.anim_delay;
+			to_export.data = [];
+			
+			var tempCanvas = document.createElement("canvas");
+			var canvas = tempCanvas;
+			
+			sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
+			
+			canvas.width = sp.shader_player.canvas.width;
+			canvas.height = sp.shader_player.canvas.height;
+			var ctx = canvas.getContext("2d");
+			
+			var i = 0;
+			
+			/*
+			  "Unrolled" async loop:
+			  for every image:
+			  render & load image
+			  onload: add to canvas
+			  when all are loaded: create image from canvas
+			*/
+			function next(){
+				if(i < sp.shader_player.frames){
+					var curr = i;
+					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
+					var image_data = sp.shader_player.canvas.toDataURL();
+					var temp_img = document.createElement("img");
+					temp_img.src = image_data;
+					temp_img.onload = function(){
+						ctx.drawImage(temp_img, 0, 0);
+						ctx.fillStyle = "#888888";
+						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
+						to_export.data.push(canvas.toDataURL());
+						next();
+					};
+				} else {
+					app.export_gif(to_export);
+					sp.shader_player.rendering_gif = false;
+					app.rendering_gif = false;
+				}
+				i++;
+			}
+			next();
+		},
+		make_png: function() {
+			// Renders all the frames to a png
+			var app = this;
+			var sp = app.$refs['shader-player'];
+			sp.shader_player.rendering_gif = true;
+			app.rendering_gif = true;
+			
+			var tempCanvas = document.createElement("canvas");
+			var canvas = tempCanvas;
+			
+			canvas.width = sp.shader_player.canvas.width;
+			canvas.height = sp.shader_player.canvas.height * sp.shader_player.frames;
+			var ctx = canvas.getContext("2d");
+			
+			var i = 0;
+			
+			/*
+			  "Unrolled" async loop:
+			  for every image:
+			  render & load image
+			  onload: add to canvas
+			  when all are loaded: create image from canvas
+			*/
+			function next(){
+				if(i < sp.shader_player.frames){
+					var curr = i;
+					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
+					var image_data = sp.shader_player.canvas.toDataURL();
+					var temp_img = document.createElement("img");
+					temp_img.src = image_data;
+					temp_img.onload = function(){
+						var offset = curr * sp.shader_player.canvas.height;
+						ctx.drawImage(temp_img, 0, offset);
+						ctx.fillStyle = "#888888";
+						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10 + offset);
+						next();
+					};
+				} else {
+					// Final step
+					var image_data = canvas.toDataURL();
+					sp.shader_player.rendering_gif = false;
+					app.rendering_gif = false;
+					app.images.unshift({type: "png", size: false, src: image_data});
+				}
+				i++;
+			}
+			
+			next();
+		},
+		make_zip: function(){
+			// Lazy-load gif.js
+			var script = document.createElement("script");
+			script.src = "/assets/lib/jszip.min.js";
+			script.onload = function(){
+				window.shadergif_zip = new JSZip();
+				zip.file("Hello.txt", "Hello World\n");
+				var img = zip.folder("images");
+				img.file("smile.gif", imgData, {base64: true});
+				zip.generateAsync({type:"blob"})
+					.then(function(content) {
+						// see FileSaver.js
+						saveAs(content, "example.zip");
+					});
+				alert("zip");
+			};
+			document.body.appendChild(script);
 		}
 	},
 	mounted: function(){
 		var app = this;
-		
+
+		// TODO: refactor everything here into methods
+		// (Legacy code from before VUE.js)
 		function resize(){
 			var parent = qsa(".vertical-scroll-parent")[0];
 		}
 		
 		resize();
 		window.addEventListener("resize",resize);
-		
-		var anim_delay = 100;
+				
 		var frame = 0;
 		
 		var filename = "";
@@ -251,167 +427,12 @@ var app = new Vue({
 			}
 		}
 		
-		var gif_button = qsa("button[name='make-gif']")[0];
-		var png_button = qsa("button[name='make-png']")[0];
 		
-		gif_button.addEventListener("click", make_gif);
-		png_button.addEventListener("click", make_png);
 		
-		// Render all the frames to a png
-		function make_gif(){
-			var sp = app.$refs['shader-player'];
-			sp.shader_player.rendering_gif = true;
-			app.rendering_gif = true;
-			
-			var to_export = {};
-			
-			to_export.delay = anim_delay;
-			to_export.data = [];
-			
-			var tempCanvas = document.createElement("canvas");
-			var canvas = tempCanvas;
-			
-			sp.shader_player.rendering_gif = true;
-			app.rendering_gif = true;
-			
-			canvas.width = sp.shader_player.canvas.width;
-			canvas.height = sp.shader_player.canvas.height;
-			var ctx = canvas.getContext("2d");
-			
-			var i = 0;
-			
-			/*
-			  "Unrolled" async loop:
-			  for every image:
-			  render & load image
-			  onload: add to canvas
-			  when all are loaded: create image from canvas
-			*/
-			function next(){
-				if(i < sp.shader_player.frames){
-					var curr = i;
-					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
-					var image_data = sp.shader_player.canvas.toDataURL();
-					var temp_img = document.createElement("img");
-					temp_img.src = image_data;
-					temp_img.onload = function(){
-						ctx.drawImage(temp_img, 0, 0);
-						ctx.fillStyle = "#888888";
-						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
-						to_export.data.push(canvas.toDataURL());
-						next();
-					};
-				} else {
-					export_gif(to_export);
-					sp.shader_player.rendering_gif = false;
-					app.rendering_gif = false;
-				}
-				i++;
-			}
-			next();
-		}
 		
-		// Render all the frames to a png
-		function make_png(){
-			var sp = app.$refs['shader-player'];
-			sp.shader_player.rendering_gif = true;
-			app.rendering_gif = true;
-			
-			var tempCanvas = document.createElement("canvas");
-			var canvas = tempCanvas;
-			
-			canvas.width = sp.shader_player.canvas.width;
-			canvas.height = sp.shader_player.canvas.height * sp.shader_player.frames;
-			var ctx = canvas.getContext("2d");
-			
-			var i = 0;
-			
-			/*
-			  "Unrolled" async loop:
-			  for every image:
-			  render & load image
-			  onload: add to canvas
-			  when all are loaded: create image from canvas
-			*/
-			function next(){
-				if(i < sp.shader_player.frames){
-					var curr = i;
-					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
-					var image_data = sp.shader_player.canvas.toDataURL();
-					var temp_img = document.createElement("img");
-					temp_img.src = image_data;
-					temp_img.onload = function(){
-						var offset = curr * sp.shader_player.canvas.height;
-						ctx.drawImage(temp_img, 0, offset);
-						ctx.fillStyle = "#888888";
-						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10 + offset);
-						next();
-					};
-				} else {
-					// Final step
-					var image_data = canvas.toDataURL();
-					sp.shader_player.rendering_gif = false;
-					app.rendering_gif = false;
-					app.images.unshift({type: "png", size: false, src: image_data});
-				}
-				i++;
-			}
-			
-			next();
-		}
 		
-		// Make the gif from the frames
-		function export_gif(to_export){
-			var gif = new GIF({
-				workers: 2,
-				quality: app.gifjs.quality,
-				dither: app.gifjs.dithering,
-				workerScript: "/workers/gif.worker.js"
-			});
-			
-			data = to_export.data;
-			
-			var images = [];
-			
-			for(var i = 0; i < data.length; i++){
-				var image = new Image();
-				image.src = data[i];
-				image.onload = imageLoaded;
-				images.push(image);
-			}
-			
-			var number_loaded = 0;
-			function imageLoaded(){
-				number_loaded++;
-				if(number_loaded == data.length){
-					convert();
-				}
-			}
-			
-			function convert(){
-				var code = app.f_editor.getValue();
-				
-				for(var i = 0; i < images.length; i++){
-					gif.addFrame(images[i],{delay: to_export.delay});
-				}
-				
-				gif.render();
-				
-				gif.on('finished',function(blob){
-					// Create image
-					var size =  (blob.size / 1000).toFixed(2);
-					
-					// Create base64 version
-					// PERF: TODO: generate image on submit only
-					var reader = new window.FileReader();
-					reader.readAsDataURL(blob);
-					reader.onloadend = function() {
-						// reader.result = base64 data
-						app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
-					};
-				});
-			}
-		}
+		
+		
 		
 		// Init UI
 		
