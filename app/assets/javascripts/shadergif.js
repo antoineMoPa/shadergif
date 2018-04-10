@@ -50,6 +50,8 @@ var app = new Vue({
 		passes: 1,
 		anim_delay: 100,
 		rendering_gif: false,
+		has_zip: false,
+		zip_url: "",
 		gifjs: {
 			quality: 8,
 			dithering: 'FloydSteinberg'
@@ -200,72 +202,38 @@ var app = new Vue({
 				});
 			}
 		},
-		make_gif: function() {
-			var app = this;
+		render: function(options) {
+			if(typeof(options) == "undefined"){
+				options = {
+					zip: false,
+					stack: true,
+					gif: false
+				};
+			}
+				
 			// Renders all the frames to a png
-			var sp = app.$refs['shader-player'];
-			sp.shader_player.rendering_gif = true;
+			var app = this;
+			var sp = app.$refs['shader-player'].shader_player;
+			sp.rendering_gif = true;
 			app.rendering_gif = true;
-			
+
 			var to_export = {};
 			
-			to_export.delay = app.anim_delay;
-			to_export.data = [];
-			
-			var tempCanvas = document.createElement("canvas");
-			var canvas = tempCanvas;
-			
-			sp.shader_player.rendering_gif = true;
-			app.rendering_gif = true;
-			
-			canvas.width = sp.shader_player.canvas.width;
-			canvas.height = sp.shader_player.canvas.height;
-			var ctx = canvas.getContext("2d");
-			
-			var i = 0;
-			
-			/*
-			  "Unrolled" async loop:
-			  for every image:
-			  render & load image
-			  onload: add to canvas
-			  when all are loaded: create image from canvas
-			*/
-			function next(){
-				if(i < sp.shader_player.frames){
-					var curr = i;
-					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
-					var image_data = sp.shader_player.canvas.toDataURL();
-					var temp_img = document.createElement("img");
-					temp_img.src = image_data;
-					temp_img.onload = function(){
-						ctx.drawImage(temp_img, 0, 0);
-						ctx.fillStyle = "#888888";
-						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10);
-						to_export.data.push(canvas.toDataURL());
-						next();
-					};
-				} else {
-					app.export_gif(to_export);
-					sp.shader_player.rendering_gif = false;
-					app.rendering_gif = false;
-				}
-				i++;
+			if(options.gif){
+				to_export.delay = app.anim_delay;
+				to_export.data = [];
 			}
-			next();
-		},
-		make_png: function() {
-			// Renders all the frames to a png
-			var app = this;
-			var sp = app.$refs['shader-player'];
-			sp.shader_player.rendering_gif = true;
-			app.rendering_gif = true;
 			
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
+
+			canvas.width = sp.canvas.width;
+			canvas.height = sp.canvas.height;
 			
-			canvas.width = sp.shader_player.canvas.width;
-			canvas.height = sp.shader_player.canvas.height * sp.shader_player.frames;
+			if(options.stack){
+				canvas.height = sp.canvas.height * sp.frames;
+			}
+			
 			var ctx = canvas.getContext("2d");
 			
 			var i = 0;
@@ -278,46 +246,124 @@ var app = new Vue({
 			  when all are loaded: create image from canvas
 			*/
 			function next(){
-				if(i < sp.shader_player.frames){
+				if(i < sp.frames){
 					var curr = i;
-					sp.shader_player.draw_gl((curr + 1) / sp.shader_player.frames);
-					var image_data = sp.shader_player.canvas.toDataURL();
+					sp.draw_gl((curr + 1) / sp.frames);
+
+					var image_data = sp.canvas.toDataURL();
 					var temp_img = document.createElement("img");
 					temp_img.src = image_data;
+
+					var w = sp.width;
+					var h = sp.height;
+					var watermark = "shadergif.com";
+					var color = "#888888";
+					
 					temp_img.onload = function(){
-						var offset = curr * sp.shader_player.canvas.height;
-						ctx.drawImage(temp_img, 0, offset);
-						ctx.fillStyle = "#888888";
-						ctx.fillText("shadergif.com", sp.shader_player.width - 80, sp.shader_player.height - 10 + offset);
-						next();
+						if(options.stack){
+							var offset = curr * sp.canvas.height;
+							ctx.drawImage(temp_img, 0, offset);
+							ctx.fillStyle = color;
+							ctx.fillText(watermark,  - 80, h - 10 + offset);
+							next();
+						} else if(options.gif) {
+							ctx.drawImage(temp_img, 0, 0);
+							ctx.fillStyle = color;
+							ctx.fillText(watermark, w - 80, h - 10);
+							to_export.data.push(canvas.toDataURL());
+							next();
+						} else if (options.zip) {
+							var zip = window.shadergif_zip;
+							ctx.drawImage(temp_img, 0, 0);
+							ctx.fillStyle = color;
+							ctx.fillText(watermark, w - 80, h - 10);
+
+							// 4-Zero pad number
+							var filename = "image_";
+							var numzeros = 4;
+							var numlen = (curr + "").length;
+
+							for(var i =0; i < numzeros - numlen; i++){
+								filename += "0";
+							}
+							
+							filename += curr + ".png";
+							
+							canvas.toBlob(function(blob){
+								zip.file(
+									filename,
+									blob
+								);
+								next();
+							});
+						}
 					};
 				} else {
 					// Final step
-					var image_data = canvas.toDataURL();
-					sp.shader_player.rendering_gif = false;
-					app.rendering_gif = false;
-					app.images.unshift({type: "png", size: false, src: image_data});
+					if(options.gif){
+						app.export_gif(to_export);
+						sp.rendering_gif = false;
+						app.rendering_gif = false;
+					} else if (options.stack) {
+						image_data = canvas.toDataURL();
+						sp.rendering_gif = false;
+						app.rendering_gif = false;
+						app.images.unshift({
+							type: "png",
+							size: false,
+							src: image_data
+						});
+					} else if (options.zip) {
+						var zip = window.shadergif_zip;
+						
+						zip.generateAsync({type: "blob"})
+							.then(function(content) {
+								app.has_zip = true;
+								app.zip_url = URL.createObjectURL(content);
+							});
+					}
 				}
 				i++;
 			}
 			
 			next();
 		},
+		delete_downloaded_zip: function(){
+			// This could avoid memory problems in the future
+			app.has_zip = false;
+			setTimeout(function(){
+				URL.revokeObjectURL(app.zip_url);
+				app.zip_url = "";
+				console.log("revoked last gif object url to save memory.");
+			}, 10000);
+		},
+		make_gif: function() {
+			this.render({
+				zip: false,
+				stack: false,
+				gif: true
+			});
+		},
+		make_png: function(){
+			this.render({
+				zip: false,
+				stack: true,
+				gif: false
+			});
+		},
 		make_zip: function(){
+			var app = this;
 			// Lazy-load gif.js
 			var script = document.createElement("script");
 			script.src = "/assets/lib/jszip.min.js";
 			script.onload = function(){
-				window.shadergif_zip = new JSZip();
-				zip.file("Hello.txt", "Hello World\n");
-				var img = zip.folder("images");
-				img.file("smile.gif", imgData, {base64: true});
-				zip.generateAsync({type:"blob"})
-					.then(function(content) {
-						// see FileSaver.js
-						saveAs(content, "example.zip");
-					});
-				alert("zip");
+				var zip = window.shadergif_zip = new JSZip();
+
+				app.render({
+					zip: true,
+					stack: false,
+					gif: false
+				});
 			};
 			document.body.appendChild(script);
 		}
