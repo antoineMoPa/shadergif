@@ -279,7 +279,7 @@ var app = new Vue({
 							ctx.fillText(watermark, w - 80, h - 10);
 
 							// 4-Zero pad number
-							var filename = "image_";
+							var filename = "image-";
 							var numzeros = 4;
 							var numlen = (curr + "").length;
 
