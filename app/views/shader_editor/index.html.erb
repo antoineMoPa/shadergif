@@ -252,7 +252,13 @@
 			
 			<div class="text-left">
 				<p>
-					For pngs, on Linux, you can split the result like this:
+					<b>Linux/ImageMagick tips</b>
+					<br>
+					To make a gif from the png images in the .zip archive in Linux:
+				</p>
+				<pre>convert image-*.png anim.gif</pre>
+				<p>
+					For stacked png, on Linux, you can split the result like this:
 					<pre>convert image.png -crop {{width}}x{{height}} +repage image-%04d.png</pre>
 				</p>
 				<p>
