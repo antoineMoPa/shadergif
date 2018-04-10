@@ -315,7 +315,8 @@ var app = new Vue({
 						});
 					} else if (options.zip) {
 						var zip = window.shadergif_zip;
-						
+						sp.rendering_gif = false;
+						app.rendering_gif = false;
 						zip.generateAsync({type: "blob"})
 							.then(function(content) {
 								app.has_zip = true;
