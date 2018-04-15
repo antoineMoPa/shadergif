@@ -15,36 +15,61 @@
 	<section class="section">
 		<div class="container">
 			<div class="columns">
-				<div class="column is-one-fifth">
-				</div>
-				<div class="column">
-					<h1 class="title has-text-centered">Last uploaded gifs</h1>
-					<image-box-list v-bind:gifs="gifs"></image-box-list>
+				<div class="column is-one-fifth home-sidebar">
+					<p class="has-text-weight-bold">Documentation</p>
+					<p>
+						Want to get started with shaders in GLSL?<br>
+						Start with:
+						<a href="https://doc.shadergif.com/">
+							doc.shadergif.com
+						</a>
+					</p>
 					<br>
-					<div class="has-text-centered">
-						<button v-if="has_more"
-								v-on:click="load_more"
-								class="button is-large"
-						>
-							view more
-						</button>
-						<div v-else>
-							No more gifs to load!
+					<br>
+					<p class="has-text-weight-bold">Want some feature implemented?</p>
+					<p>
+						You could try coding it<br>
+						I'm on
+						<a href="https://github.com/antoineMoPa/shadergif">
+							<strong>github</strong>
+						</a>!
+						<br>
+						Give stars and fork!
+					</p>
+					<br><br>
+					<p class="has-text-weight-bold">Version</p>
+					<p>You are browsing shadergif version:</p>
+					<p><%= Shadergif::VERSION %></p>
+				</div>
+				<div class="column news-block">
+					<div class="news">
+						<h3 class="title">Last gifs uploaded by our users</h3>
+						<image-box-list v-bind:gifs="gifs"></image-box-list>
+						<br>
+						<div class="has-text-centered">
+							<button v-if="has_more"
+										  v-on:click="load_more"
+										  class="button is-large"
+							>
+								view more
+							</button>
+							<div v-else>
+								No more gifs to load!
+							</div>
 						</div>
 					</div>
 				</div>
-				<div class="column is-one-fifth">
+				<div class="column home-sidebar is-one-fifth">
+					<strong>Start Coding:</strong>
+					<br><br>
 					<div class="has-text-centered">
-						<p class="has-text-weight-bold">Just start coding:</p>
-						<p>What are you waiting for?</p>
-						<br>
 						<a class="button" href="/shader-editor/">
-							Launch Editor
+							Launch editor
 						</a>
 						<br><br>
-						<p>Also see the documentation and examples links
-							at the top of the page to get started.
-						</p>
+						<a class="button" href="/shader-editor/examples">
+							Start with sample code
+						</a>
 					</div>
 					<div class="home-sidebar-spacer"></div>
 					<% if !user_signed_in? %>
@@ -81,29 +106,6 @@
 					</p>
 					<br>
 					<br>
-					<p class="has-text-weight-bold">Documentation</p>
-					<p>
-						Want to get started with shaders in GLSL?<br>
-						Start with:
-						<a href="https://doc.shadergif.com/">
-							doc.shadergif.com
-						</a>
-					</p>
-					<br>
-					<br>
-					<p class="has-text-weight-bold">Contribute code!</p>
-					<p>
-						Want to help with shadergif's code?<br>
-						We are on
-						<a href="https://github.com/antoineMoPa/shadergif">
-							<strong>github</strong>
-						</a>!
-						<a href="https://github.com/antoineMoPa/shadergif">
-							github.com/antoineMoPa/shadergif
-						</a>
-						<br>
-						Give stars and fork!
-					</p>
 				</div>
 			</div>
 		</div>

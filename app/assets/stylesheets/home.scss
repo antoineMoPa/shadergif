@@ -9,11 +9,11 @@
 	padding-bottom:10px;
 	padding-left:10px;
 	padding-right:10px;
-	background:#7c54b7;
-	color:#fff;
+	background:#f3f3f3;
+	color:#444;
 
 	a{
-		color:#ffffff;
+		color:#3af;
 		text-decoration:underline;
 	}
 }
@@ -23,3 +23,31 @@
 		height:100px;
 	}
 }
+
+.home-sidebar,
+.news-block{
+	padding:20px;
+	margin-right:20px;
+	margin-left:20px;
+	box-shadow:0 0 5px rgba(0,0,0,0.2);
+	border-radius:3px;
+	margin-bottom:20px;
+}
+
+.news{
+	max-width:580px;
+	margin:auto;
+
+	.title{
+		font-size:20px;
+		color:#555;
+		margin-left:15px;
+	}
+	
+	.image-box{
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		border-bottom: 4px solid rgba(0,0,0,0.1);
+	}
+}
+
