@@ -40,6 +40,13 @@
 					<p class="has-text-weight-bold">Version</p>
 					<p>You are browsing shadergif version:</p>
 					<p><%= Shadergif::VERSION %></p>
+					<br><br>
+					<p class="has-text-weight-bold">Community Status</p>
+					<p>There are
+						<%= User.count() %>
+						registered users who shared
+						<%= Gif.count() %> gifs.
+					</p>
 				</div>
 				<div class="column news-block">
 					<div class="news">
