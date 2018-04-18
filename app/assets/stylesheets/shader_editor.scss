@@ -98,10 +98,16 @@ button{
     margin:auto;
     border:none;
     background:#3af;
+	border-radius:2px;
     color:#fff;
-    padding:10px;
+    padding:8px;
     font-size:16px;
     cursor:pointer;
+	box-shadow:0 0 5px rgba(0,0,0,0.1);
+	transition:all 0.3s;
+	&:hover{
+		box-shadow:0 0 5px rgba(0,0,0,0.3);
+	}
 }
 
 .result-images img{
@@ -178,6 +184,39 @@ hr{
     width:50px;
     font-size:12px;
     margin-left:3px;
+
+	&[type=file]{
+		width:auto;
+	}
+}
+
+.new-texture-input{
+	button, input{
+		max-width: 75%;
+		display: inline-block;
+	}
+}
+
+.textures-list{
+	width:100%;
+	background: #eee;
+
+	input{
+		width:auto;
+	}
+	
+	li{
+		padding-left:10px;
+		padding-right:10px;
+		&:nth-child(2n+1){
+			background:#f8f8f8;
+		}
+	}
+}
+
+.delete-texture-button{
+	display:inline-block;
+	margin-left:10px;
 }
 
 .settings input[type=number]{
@@ -212,6 +251,8 @@ hr{
 	padding: 10px;
 	color:#fff;
 	position:relative;
+	border-radius:2px;
+	box-shadow:0 0 5px rgba(0,0,0,0.1);
 }
 
 /* icon */

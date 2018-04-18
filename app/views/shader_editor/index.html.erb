@@ -138,6 +138,33 @@
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
+					Textures
+				</div>
+				<div class="foldable-content">
+					<div class="settings">
+						<p>Add a texture</p>
+						<div class="new-texture-input">
+							<input type="file" name="texture" class="shadergif-texture-input" accept=".png,.jpg" multiple>
+							<button v-on:click="new_texture">Add</button>
+						</div>
+
+						<div class="textures">
+							<ul class="textures-list">
+								<li v-for="(texture, index) in textures">
+									{{ index }} -
+									<input type="text" v-model="texture.name">
+									<button class="delete-texture-button"
+											v-on:click="delete_texture(index)">
+										Remove
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="foldable foldable-hidden">
+				<div class="foldable-header">
 					gif.js settings
 				</div>
 				<div class="foldable-content">

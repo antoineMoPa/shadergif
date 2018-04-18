@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171227022540) do
+ActiveRecord::Schema.define(version: 20180418043141) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "content"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(version: 20171227022540) do
     t.boolean "is_public"
     t.index ["forked_from"], name: "fk_rails_99e24f4b85"
     t.index ["user_id"], name: "index_gifs_on_user_id"
+  end
+
+  create_table "textures", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "filename"
+    t.string "name"
+    t.bigint "gif_id"
+    t.index ["gif_id"], name: "index_textures_on_gif_id"
   end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
