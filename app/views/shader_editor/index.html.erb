@@ -153,6 +153,7 @@
 								<li v-for="(texture, index) in textures">
 									{{ index }} -
 									<input type="text" v-model="texture.name">
+									<span title="sampler2D name">texture{{ index }}<span>
 									<button class="delete-texture-button"
 											v-on:click="delete_texture(index)">
 										Remove
@@ -160,6 +161,13 @@
 								</li>
 							</ul>
 						</div>
+						<p class="has-text-weight-bold">
+							Example use:
+						</p>
+						<pre class="texture-info-pre">// Top of the file:
+uniform sampler2D texture0;
+// Main:
+col += texture2D(texture0, UV);</pre>
 					</div>
 				</div>
 			</div>

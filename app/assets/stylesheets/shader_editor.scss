@@ -176,7 +176,8 @@ hr{
 
 .settings{
     margin-left:10px;
-    font-size:12px;
+	margin-right:10px;
+    font-size:14px;
     line-height:44px;
 }
 
@@ -190,7 +191,14 @@ hr{
 	}
 }
 
+.texture-info-pre{
+	line-height:20px;
+	color:#333;
+	font-size:14px;
+}
+
 .new-texture-input{
+	margin-left: 10px;
 	button, input{
 		max-width: 75%;
 		display: inline-block;
@@ -198,9 +206,8 @@ hr{
 }
 
 .textures-list{
-	width:100%;
 	background: #eee;
-
+	margin-right: 10px;
 	input{
 		width:auto;
 	}

@@ -1,5 +1,6 @@
 class ShaderPlayer {
 	constructor(){
+		this.compiled = false;
 		this.canvas = null;
 		this.gl = null;
 		this.fragment_shader = "";
@@ -8,6 +9,7 @@ class ShaderPlayer {
 		this.framebuffer = [];
 		this.renderbuffer = [];
 		this.renderBufferDim = [];
+		this.textures = [];
 
 		// TODO: synchronize with vue
 		this.width = 540;
@@ -31,6 +33,63 @@ class ShaderPlayer {
 		};
 	}
 
+	// Took from MDN:
+	// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL
+	// Initialize a texture and load an image.
+	// When the image finished loading copy it into the texture.
+	//
+	add_texture(url) {
+		function isPowerOf2(value) {
+			return (value & (value - 1)) == 0;
+		}
+		
+		var gl = this.gl;
+		
+		const texture = gl.createTexture();
+		gl.bindTexture(gl.TEXTURE_2D, texture);
+		
+		// Because images have to be download over the internet
+		// they might take a moment until they are ready.
+		// Until then put a single pixel in the texture so we can
+		// use it immediately. When the image has finished downloading
+		// we'll update the texture with the contents of the image.
+		const level = 0;
+		const internalFormat = gl.RGBA;
+		const width = 1;
+		const height = 1;
+		const border = 0;
+		const srcFormat = gl.RGBA;
+		const srcType = gl.UNSIGNED_BYTE;
+		const pixel = new Uint8Array([0, 0, 255, 255]);  // opaque blue
+		gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+					  width, height, border, srcFormat, srcType,
+					  pixel);
+		
+		const image = new Image();
+		image.onload = function() {
+			gl.bindTexture(gl.TEXTURE_2D, texture);
+			gl.texImage2D(gl.TEXTURE_2D, level, internalFormat,
+						  srcFormat, srcType, image);
+			
+			// WebGL1 has different requirements for power of 2 images
+			// vs non power of 2 images so check if the image is a
+			// power of 2 in both dimensions.
+			if (isPowerOf2(image.width) && isPowerOf2(image.height)) {
+				// Yes, it's a power of 2. Generate mips.
+				gl.generateMipmap(gl.TEXTURE_2D);
+			} else {
+				// No, it's not a power of 2. Turn of mips and set
+				// wrapping to clamp to edge
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+				gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+			}
+		};
+		image.src = url;
+
+		this.textures.push(texture);
+	}
+	
 	canvas_mousemove(e){
 		var c = e.target;
 		var x = (e.clientX) / this.width - 0.5;
@@ -50,6 +109,7 @@ class ShaderPlayer {
 	}
 	
 	init_gl(){
+		this.compiled = false;
 		var gl = this.gl;
 		var ww = 2;
 		var hh = 2;
@@ -106,9 +166,11 @@ class ShaderPlayer {
 		var tri = gl.createBuffer();
 		gl.bindBuffer(gl.ARRAY_BUFFER, tri);
 		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+		this.compiled = true;
 	}
 
 	init_program(){
+		this.compiled = false;
 		var app = this;
 		var gl = this.gl;
 
@@ -183,6 +245,7 @@ class ShaderPlayer {
 		
 		gl.enableVertexAttribArray(positionAttribute);
 		gl.vertexAttribPointer(positionAttribute, 3, gl.FLOAT, false, 0, 0);
+		this.compiled = true;
 	}
 
 	// TODO: TEST SOUND
@@ -234,6 +297,11 @@ class ShaderPlayer {
 	}
 	
 	draw_gl(time){
+
+		if(!this.compiled){
+			return;
+		}
+		
 		var gl = this.gl;
 
 		if(gl == null || gl.program == null || typeof gl.program == "undefined"){
@@ -254,15 +322,25 @@ class ShaderPlayer {
 				gl.uniform1i(gl.getUniformLocation(gl.program, 'lastPass'), pass - 1);
 			}
 			
-			for(var i = 0; i < this.passes; i++){
+			var i = 0;
+			
+			// Warning: i is continued in other loop
+			for(; i < this.passes; i++){
 				gl.activeTexture(gl.TEXTURE0 + i);
 				if(i == pass){
 					// Unbind current to prevent feedback loop
 					gl.bindTexture(gl.TEXTURE_2D, null);
 					continue;
-o				}
+				}
 				var att = gl.getUniformLocation(gl.program, "pass" + i);
 				gl.bindTexture(gl.TEXTURE_2D, this.rttTexture[i]);
+				gl.uniform1i(att,i);
+			}
+			
+			for(var j = 0; j < this.textures.length; j++, i++){
+				gl.activeTexture(gl.TEXTURE0 + i);
+				var att = gl.getUniformLocation(gl.program, "texture" + j);
+				gl.bindTexture(gl.TEXTURE_2D, this.textures[j]);
 				gl.uniform1i(att,i);
 			}
 			

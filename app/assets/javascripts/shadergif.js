@@ -123,20 +123,22 @@ var app = new Vue({
 			this.update_player();
 		},
 		play_sound: function(){
-			this.shader_player.play_sound();
+			var sp = this.$refs['shader-player'];
+			sp.shader_player.play_sound();
 		},
 		stop_sound: function(){
-			clearTimeout(this.shader_player.timeout);
-			this.shader_player.lastChunk = 0;
-			if(this.shader_player.currentSource != null){
-				this.shader_player.currentSource.stop();
+			var sp = this.$refs['shader-player'];
+			clearTimeout(sp.shader_player.timeout);
+			sp.shader_player.lastChunk = 0;
+			if(sp.shader_player.currentSource != null){
+				sp.shader_player.currentSource.stop();
 			}
 		},
 		enable_sound_mode: function(){
 			this.sound_mode = true;
-			this.shader_player.passes = 2;
-			this.shader_player.width = 256;
-			this.shader_player.height = 256;
+			this.passes = 2;
+			this.width = 256;
+			this.height = 256;
 			this.update_player();
 		},
 		disable_sound_mode: function(){
@@ -372,7 +374,7 @@ var app = new Vue({
 		new_texture: function(){
 			var app = this;
 			var input = document.querySelectorAll(".shadergif-texture-input")[0];
-
+			var sp = this.$refs['shader-player'];
 			
 			for(var i = 0; i < input.files.length; i++){
 				try{
@@ -384,6 +386,7 @@ var app = new Vue({
 							name: file.name,
 							data: reader.result
 						});
+						sp.shader_player.add_texture(reader.result);
 					}, false);
 					
 					if(file){
@@ -396,6 +399,9 @@ var app = new Vue({
 		},
 		delete_texture(index){
 			this.textures.splice(index, 1);
+						
+			var sp = this.$refs['shader-player'];
+			sp.delete_texture(index);
 		}
 	},
 	mounted: function(){
