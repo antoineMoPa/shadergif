@@ -1,23 +1,17 @@
+0.0.4:                                                (April 18 2018)
+    bugfix: fix sound mode
+	feature: ability to add textures (WIP, not yet saved)
+	feature: ability to download zips
+
+	Other: Layout changes
+	
 0.0.2:                                                (November 20 2017)
 	bugfix: fix gif rendering
+	
 0.0.1:                                                (November 20 2017)
 	new: version numbers, view more button, merge shader editor assets
 	     in a rails asset
 	
-some days later:
-	domain name bought, application uploaded
-	view code
-	received many spam calls because of newly bought domain name
-	
-day 3:
-	generate thumbnails vid
-day 2:
-	integrate shadergif editor better, work on gif form
-day 1:
-	create user and start using bulma, add old shadergif code
-day 0:
-	create rails app
-
-months/years before:
-	work on shadergif as a static html app, add vue.js, play around,
-	make gifs, post on tumblr, etc
+    months/years before:
+    	work on shadergif as a static html app, add vue.js, play around,
+    	make gifs, post on tumblr, etc
