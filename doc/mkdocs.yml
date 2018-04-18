@@ -1,5 +1,5 @@
 site_name: Shadergif Documentation
-theme: readthedocs
+theme: 'material'
 pages:
 - Home: 'index.md'
 - Manual:

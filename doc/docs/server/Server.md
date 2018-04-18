@@ -8,7 +8,9 @@ with Debian.
 
 # Installing and running the dev server
 
-Dependencies:
+Note: **copy** paste **line by line**.
+
+Some commands need the root password (sudo) and some commands may fail (downloading/building ruby).
 
 	# First, install and build ruby
     sudo apt-get install git binutils zlib1g-dev libssl-dev mariadb-client mariadb-server-10.1 libmariadb-dev libav-tools imagemagick
@@ -24,6 +26,7 @@ Dependencies:
     echo "GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';" | sudo mariadb
     echo "GRANT ALL PRIVILEGES ON shadergif_test.* TO 'shadergif_development'@'localhost';" | sudo mariadb
     # Then clone the app wherever you like
+	cd ~
 	git clone https://github.com/antoineMoPa/shadergif.git
    	cd shadergif
 	bundle install
