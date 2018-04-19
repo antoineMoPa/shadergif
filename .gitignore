@@ -16,5 +16,7 @@
 /node_modules
 /yarn-error.log
 
+/public/images/banner.png
+
 .byebug_history
 nohup.out
