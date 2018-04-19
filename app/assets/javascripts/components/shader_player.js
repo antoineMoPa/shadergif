@@ -89,6 +89,12 @@ class ShaderPlayer {
 
 		this.textures.push(texture);
 	}
+
+	delete_texture(index){
+		var gl = this.gl;
+		gl.deleteTexture(this.textures[index]);
+		this.textures.splice(index, 1);
+	}
 	
 	canvas_mousemove(e){
 		var c = e.target;

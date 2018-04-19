@@ -401,7 +401,7 @@ var app = new Vue({
 			this.textures.splice(index, 1);
 						
 			var sp = this.$refs['shader-player'];
-			sp.delete_texture(index);
+			sp.shader_player.delete_texture(index);
 		}
 	},
 	mounted: function(){
