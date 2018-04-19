@@ -33,19 +33,46 @@ Vue.component(
 			use_in_editor: function(){
 				window.localStorage.code = this.gif.code;
 				window.location.href = "/shader-editor/";
+			},
+			play: function(){
+				// stop other videos
+				var videos = document.querySelectorAll("video");
+				// Start this one
+				var video = this.$el.querySelectorAll("video")[0];
+
+				video.isCurrent = true;
+				
+				videos.forEach(function(vid){
+					if(vid.isCurrent){
+						// Don't pause ourselves
+						return;
+					}
+					vid.pause();
+
+					if(typeof(vid.onShadergifPause) != "undefined"){
+						vid.onShadergifPause();
+					}
+				});
+
+				video.isCurrent = false;
+				
+				video.play();
 			}
 		},
 		watch: {
 			show_video: function(){
-				var comp = this;
-				if(this.show_video == true){
-					// Autoplay
-					comp.$nextTick(function(){
-						var video = comp.$el.querySelectorAll("video")[0];
-						video.play();
-					});
+				if(this.show_video){
+					this.play();
 				}
 			}
+		},
+		mounted: function(){
+			var comp = this;
+			var video = this.$el.querySelectorAll("video")[0];
+
+			video.onShadergifPause = function(){
+				comp.show_video = false;
+			};
 		}
 	}
 );
