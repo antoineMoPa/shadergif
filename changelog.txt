@@ -1,17 +1,17 @@
-0.0.4:                                                (April 18 2018)
+0.0.4:                                                                       (April 18 2018)
     bugfix: fix sound mode
-	feature: ability to add textures (WIP, not yet saved)
-	feature: ability to download zips
+    feature: ability to add textures (WIP, not yet saved)
+    feature: ability to download zips
 
-	Other: Layout changes
-	
-0.0.2:                                                (November 20 2017)
-	bugfix: fix gif rendering
-	
-0.0.1:                                                (November 20 2017)
-	new: version numbers, view more button, merge shader editor assets
-	     in a rails asset
-	
+    Other: Layout changes
+
+0.0.2:                                                                    (November 20 2017)
+    bugfix: fix gif rendering
+
+0.0.1:                                                                    (November 20 2017)
+    new: version numbers, view more button, merge shader editor assets
+         in a rails asset
+
     months/years before:
-    	work on shadergif as a static html app, add vue.js, play around,
-    	make gifs, post on tumblr, etc
+        work on shadergif as a static html app, add vue.js, play around,
+        make gifs, post on tumblr, etc

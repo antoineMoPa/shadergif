@@ -77,22 +77,20 @@
 							<button name="make-png" v-on:click="make_png" class="inline-block">
 								Create stacked png
 							</button>
-							<% if user_signed_in? %>
-								<button name="make-zip"
-										v-on:click="make_zip"
-										class="inline-block">
-									Create .zip file
+							<button name="make-zip"
+									v-on:click="make_zip"
+									class="inline-block">
+								Create .zip file
+							</button>
+							<a v-if="has_zip"
+							   v-bind:href="zip_url"
+							   download="images.zip"
+							   class="inline-block"
+							   v-on:click="delete_downloaded_zip">
+								<button>
+									Save Zip
 								</button>
-								<a v-if="has_zip"
-								   v-bind:href="zip_url"
-								   download="images.zip"
-								   class="inline-block"
-								   v-on:click="delete_downloaded_zip">
-									<button>
-										Save Zip
-									</button>
-								</a>
-							<% end %>
+							</a>
 						</p>
 						<p>
 							<label for="autocompile">
