@@ -1,20 +1,20 @@
 <script type="text/html" id="image-box-template">
 	<div class="image-box content has-text-centered">
 		<div class="image-box">
-			<div v-on:click="show_actual_gif = true"
+			<div v-on:click="show_video = true"
 				 class="image-container">
 				<transition name="view-gif">
 					<div
-						v-if="!show_actual_gif"
+						v-if="!show_video"
 						class="view-gif-button">
 						<div class="view-gif-button-inside">
 							GIF
 						</div>
 					</div>
 				</transition>
-				<img v-if="!show_actual_gif"
+				<img v-if="!show_video"
 					 v-bind:src="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
-				<video v-if="show_actual_gif" loop autoplay controls v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
+				<video v-if="show_video" loop controls v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'">
 					<source
 						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
 									type="video/webm">

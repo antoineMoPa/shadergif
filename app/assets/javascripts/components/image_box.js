@@ -5,7 +5,7 @@ Vue.component(
 		props: ["gif"],
 		data: function(){
 			return {
-				show_actual_gif: false,
+				show_video: false,
 				code_is_visible: false
 			};
 		},
@@ -33,6 +33,18 @@ Vue.component(
 			use_in_editor: function(){
 				window.localStorage.code = this.gif.code;
 				window.location.href = "/shader-editor/";
+			}
+		},
+		watch: {
+			show_video: function(){
+				var comp = this;
+				if(this.show_video == true){
+					// Autoplay
+					comp.$nextTick(function(){
+						var video = comp.$el.querySelectorAll("video")[0];
+						video.play();
+					});
+				}
 			}
 		}
 	}
