@@ -53,7 +53,7 @@ window.onload = function(){
 
 		var mosaic_el = document.getElementById("mosaic-gifs-json");
 		
-		if(typeof(mosaic_el) != "undefined"){
+		if(typeof(mosaic_el) != "undefined" && mosaic_el != null){
 			var mosaic_gifs = JSON.parse(
 				mosaic_el.innerHTML
 			);

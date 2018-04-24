@@ -68,7 +68,8 @@ Vue.component(
 			
 				this.shader_player.set_container(container);
 				
-				this.shader_player.set_vertex_shader(this.vertex_shader);
+				this.shader_player.set_vertex_shader(app.vertex_shader);
+				this.shader_player.set_code(app.fragmentShader);
 				
 				window.addEventListener("resize", function(){
 					if(app.fullscreen){

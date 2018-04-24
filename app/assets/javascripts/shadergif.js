@@ -98,8 +98,8 @@ var app = new Vue({
 			}
 			
 			var sp = this.$refs['shader-player'];
-			sp.shader_player.width = this.width;
-			sp.shader_player.height = this.height;
+			sp.shader_player.set_width(this.width);
+			sp.shader_player.set_height(this.height);
 			
 			if(!sp.frames_defined_in_code){
 				sp.shader_player.frames = this.frames;
@@ -503,13 +503,6 @@ var app = new Vue({
 					err;
 			}
 		}
-		
-		
-		
-		
-		
-		
-		
 		
 		// Init UI
 		
