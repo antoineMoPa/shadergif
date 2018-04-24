@@ -43,12 +43,10 @@ var app = new Vue({
 		error: "",
 		f_editor: null,
 		code: default_fragment_policy(),
-		passes_defined_in_code: false,
 		frames_defined_in_code: false,
 		width: 540,
 		height: 540,
 		frames: 10,
-		passes: 1,
 		anim_delay: 100,
 		rendering_gif: false,
 		has_zip: false,
@@ -76,9 +74,6 @@ var app = new Vue({
 		},
 		'frames': function(f){
 			this.update_player();
-		},
-		'passes': function(){
-			this.update_player();
 		}
 	},
 	methods: {
@@ -104,10 +99,7 @@ var app = new Vue({
 			if(!this.player.frames_defined_in_code){
 				app.player.frames = this.frames;
 			}
-			if(!this.player.passes_defined_in_code){
-				app.player.passes = this.passes;
-			}
-
+			
 			var fragment_error_pre = qsa(".fragment-error-pre")[0];
 			var vertex_error_pre = qsa(".vertex-error-pre")[0];
 			
@@ -131,7 +123,6 @@ var app = new Vue({
 		},
 		enable_sound_mode: function(){
 			this.sound_mode = true;
-			this.passes = 2;
 			this.width = 256;
 			this.height = 256;
 			this.update_player();

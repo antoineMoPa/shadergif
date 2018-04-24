@@ -537,7 +537,7 @@ class ShaderPlayer {
 			this.passes_defined_in_code = false;
 		} else {
 			this.passes_defined_in_code = true;
-			this.shader_player.passes = parseInt(result[1]);
+			this.passes = parseInt(result[1]);
 		}
 
 		// Verify if frames is set in code
@@ -552,7 +552,7 @@ class ShaderPlayer {
 				this.frames_defined_in_code = false;
 			} else {
 				this.frames_defined_in_code = true;
-				this.shader_player.frames = qty;
+				this.frames = qty;
 			}
 		}
 	}
