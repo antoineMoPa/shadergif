@@ -247,16 +247,13 @@ var app = new Vue({
 				var pl = app.player;
 				if(i < pl.frames){
 					var curr = i;
-					app.player.draw_gl((curr + 1) / pl.frames);
-
-					var image_data = pl.canvas.toDataURL();
-					var temp_img = document.createElement("img");
-					temp_img.src = image_data;
 
 					var w = pl.width;
 					var h = pl.height;
 					var watermark = "shadergif.com";
 					var color = "#888888";
+					
+					var temp_img = document.createElement("img");
 					
 					temp_img.onload = function(){
 						if(options.stack){
@@ -297,6 +294,13 @@ var app = new Vue({
 							});
 						}
 					};
+
+					// Render
+					app.player.render((curr + 1) / pl.frames, function(canvas){
+						var image_data = canvas.toDataURL();
+						temp_img.src = image_data;
+					});
+					
 				} else {
 					// Final step
 					if(options.gif){

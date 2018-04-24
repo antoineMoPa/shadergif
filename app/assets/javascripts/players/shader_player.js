@@ -83,7 +83,9 @@ class ShaderPlayer {
 
 	/* callback receives a canvas element */
 	render(time, callback){
-		
+		callback = callback || function(){};
+		this.draw_gl(time);
+		callback(this.canvas);
 	}
 	
 	set_on_error_listener(callback){
