@@ -37,6 +37,7 @@ function default_fragment_policy(){
 var app = new Vue({
 	el: "#shadergif-app",
 	data: {
+		player: null,
 		sound_mode: false,
 		send_status: "",
 		error: "",

@@ -10,4 +10,6 @@
 // todo: remove base.js
 //= require lib/base.js
 //= require lib/gif-export/lib/gifjs/gif.js
+//= require players/shader_player.js
 //= require shadergif.js
+
