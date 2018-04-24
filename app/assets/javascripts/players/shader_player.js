@@ -56,12 +56,12 @@ class ShaderPlayer {
 			});
 		}
 	}
-
+	
 	/* 
 	   Generic player functions 
 	   (That would be in an interface if Javascript had that)
 	 */
-
+	
 	set_container(div){
 		div.appendChild(this.canvas);
 	}

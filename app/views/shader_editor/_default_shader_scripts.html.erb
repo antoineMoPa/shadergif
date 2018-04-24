@@ -1,0 +1,99 @@
+<script name="default-fragment-shader" type="text/plain">// Fragment shader
+precision highp float;
+
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+varying vec2 UV;
+uniform float time;
+uniform float ratio;
+
+void main(void){
+	float x = UV.x * ratio - 0.5;
+	float y = UV.y - 0.5;
+	vec2 pos = vec2(x, y); 
+	
+	vec4 col = vec4(0.0);
+	
+	col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
+	col *= cos(30.0 * x);
+	col.a = 1.0;
+	
+	gl_FragColor = col;
+}
+</script>
+<script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
+precision highp float;
+
+varying vec2 UV;
+varying vec2 lastUV;
+uniform float soundTime;
+uniform int pass;
+
+ uniform sampler2D lastPass;
+
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+vec4 pass2(){
+    vec4 col = vec4(0.0);
+	 
+	 col += texture2D(lastPass, lastUV);
+    
+    return col;
+}
+
+/* 
+	Write your sound code in this function
+	t : time for current (sub)pixel
+ */
+float val(float t){
+	 float note = 440.0;
+
+	 float signal =  
+   	 0.25 * cos(2.0 * PI * 1.0 * note * t);
+    
+    return signal;
+}
+
+vec4 pass1(){
+    vec4 col = vec4(0.0);
+	 
+    float sr = 48000.0;
+    float dt = 1.0/sr;
+
+    // Calculate time from position
+    float t = 
+   	 (UV.x) * 3.0 * 256.0 + (UV.y) * 3.0 * 256.0 * 256.0;
+	 
+    t /= sr;
+	 t += soundTime;
+
+	 // Encode sound in rgb values
+    col.r += val(t + 0.0 * dt);
+    col.g += val(t + 1.0 * dt);
+    col.b += val(t + 2.0 * dt);
+    col.a += 1.0;
+    
+    col.rgb /= 2.0;
+    col.rgb += 0.5;
+    
+    return col;
+}
+
+
+void main(){
+    vec4 col = vec4(0.0);
+	 
+	 if(pass == 1){
+		 col += pass1();
+        
+	 } else if(pass == 2){
+		 col += pass2();
+	 }
+
+    gl_FragColor = col;
+}
+</script>
