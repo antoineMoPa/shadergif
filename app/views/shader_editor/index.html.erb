@@ -311,5 +311,5 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 ><% if @is_draft %>
  <%= raw(@draft.code.to_json) %>
 <% end %></script>
-<%= javascript_include_tag 'shader_editor' %>
+<%= javascript_include_tag 'editor' %>
 <%= render :partial => 'default_shader_scripts' %>

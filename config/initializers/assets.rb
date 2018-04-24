@@ -14,6 +14,6 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
 Rails.application.config.assets.precompile += %w( application-dev.js )
-Rails.application.config.assets.precompile += %w( shader_editor.scss )
+Rails.application.config.assets.precompile += %w( editor.scss )
 Rails.application.config.assets.precompile += %w( components.js )
-Rails.application.config.assets.precompile += %w( shader_editor.js )
+Rails.application.config.assets.precompile += %w( editor.js )
