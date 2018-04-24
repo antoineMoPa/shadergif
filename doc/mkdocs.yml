@@ -11,6 +11,7 @@ pages:
 - Tutorials:
     - 'Building a bridge': 'tutorials/building-a-bridge.md'
 - Development:
-    - 'Generating the documentation': 'doc/doc.md'
+    - 'Generating the documentation': 'Development/Doc/doc.md'
+    - 'Player Kernels': 'Development/Players.md'
     - 'Server':
-        - 'Running the server': 'server/Server.md'
+        - 'Running the server': 'Development/Server.md'
