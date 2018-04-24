@@ -332,19 +332,19 @@ uniform float time;
 uniform float ratio;
 
 void main(void){
-	 float x = UV.x * ratio - 0.5;
-	 float y = UV.y - 0.5;
-	 vec2 pos = vec2(x, y); 
-	 
-	 vec4 col = vec4(0.0);
-	 
-	 col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
-	 col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
-	 col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
-	 col *= cos(30.0 * x);
-	 col.a = 1.0;
-	 
-	 gl_FragColor = col;
+	float x = UV.x * ratio - 0.5;
+	float y = UV.y - 0.5;
+	vec2 pos = vec2(x, y); 
+	
+	vec4 col = vec4(0.0);
+	
+	col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
+	col *= cos(30.0 * x);
+	col.a = 1.0;
+	
+	gl_FragColor = col;
 }
 </script>
 <script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
