@@ -12,7 +12,7 @@ class ShaderPlayer {
 		this.textures = [];
 		this.passes_defined_in_code = false;
 		this.frames_defined_in_code = false;
-				
+		this.window_focused = true;
 
 		// TODO: synchronize with vue
 		this.width = 540;
@@ -43,7 +43,18 @@ class ShaderPlayer {
 			this.canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));
 			this.gl = gl;
 			this.init_gl();
-		}	
+		}
+
+		{
+			// To save CPU / GPU
+			window.addEventListener('focus', function() {
+				this.window_focused = true;
+			});
+			
+			window.addEventListener('blur', function() {
+				this.window_focused = false;
+			});
+		}
 	}
 
 	/* 
@@ -505,7 +516,7 @@ class ShaderPlayer {
 				
 				window.requestAnimationFrame(function(){
 					// When rendering gif, draw is done elsewhere
-					if(!player.rendering_gif){
+					if(!player.rendering_gif && player.window_focused){
 						player.draw_gl((frame + 1) / player.frames);
 					}
 				});
