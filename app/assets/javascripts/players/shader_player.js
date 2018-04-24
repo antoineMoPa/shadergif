@@ -13,7 +13,8 @@ class ShaderPlayer {
 		this.passes_defined_in_code = false;
 		this.frames_defined_in_code = false;
 		this.window_focused = true;
-
+		this.anim_interval = null;
+		
 		// TODO: synchronize with vue
 		this.width = 540;
 		this.height = 540;
@@ -191,6 +192,12 @@ class ShaderPlayer {
 		// Todo: parse parent nodes' scrollTop
 		var y = (e.clientY) / this.height - 0.5;
 		this.mouse = [x, -y];
+	}
+
+	dispose(){
+		if(this.anim_interval != null){
+			clearInterval(this.anim_interval);
+		}
 	}
 	
 	init_gl(){
@@ -511,7 +518,7 @@ class ShaderPlayer {
 		
 		this.anim_already_started = true;
 		
-		setInterval(
+		this.anim_interval = setInterval(
 			function(){
 				frame++;
 				frame = frame % (player.frames);

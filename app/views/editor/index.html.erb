@@ -6,11 +6,7 @@
 				<div class="player-container">
 				</div>
 			</div>
-			<pre class="fragment-error-pre error-pre">
-			</pre>
-			<pre class="vertex-error-pre error-pre">
-			</pre>
-			
+			<pre class="error-pre">{{ error_msg }}</pre>
 			<div class="foldable">
 				<div class="foldable-header">
 					Draft management
@@ -99,10 +95,11 @@
 							</label>
 							<input id="autocompile" type="checkbox" v-model="autocompile">
 						</p>
+						<br>
 						<p>
 							<button name="recompile"
-									v-if="!autocompile"
-									v-on:click="recompile">
+										  v-if="!autocompile"
+										  v-on:click="recompile">
 								Compile and run
 							</button>
 						</p>
@@ -121,6 +118,18 @@
 								</span>
 							</p>
 						</div>
+					</div>
+					<div class="text-center">
+						<br>
+						<p>
+							<label>
+								Language:
+							</label>
+							<select v-model="type" class="inline-block">
+								<option>shader_webgl1</option>
+								<option>mathjs</option>
+							</select>
+						</p>
 					</div>
 				</div>
 			</div>

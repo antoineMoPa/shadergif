@@ -7,9 +7,14 @@ Rails.application.routes.draw do
 
   get 'user/gifs-and-drafts', to: 'user#gifs_and_drafts', as: 'user_gifs_and_drafts'
   get 'user/:username', to: 'user#show', as: 'user_show'
-  get 'shader-editor' => 'shader_editor#index'
-  get 'shader-editor/drafts/:gif_id' => 'shader_editor#edit_draft'
-  get 'shader-editor/examples' => 'shader_editor#examples'
+  get 'shader-editor' => 'editor#index'
+  get 'shader-editor/drafts/:gif_id' => 'editor#edit_draft'
+  get 'shader-editor/examples' => 'editor#examples'
+  
+  get 'editor' => 'editor#index'
+  get 'editor/drafts/:gif_id' => 'editor#edit_draft'
+  get 'editor/examples' => 'editor#examples'
+
   post 'gifs/save_draft' => 'shader_editor#save_draft'
   post 'comments/new' => 'comments#new'
   

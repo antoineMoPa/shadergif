@@ -20,6 +20,10 @@ A player kernel is a class containing at least these functions
 		set_height(h){
 			this.height = h;
 		}
+
+		dispose(){
+			// Clean up your stuff on player change/delete
+		}
 		
 		/* callback receives a canvas element */
 		render(time, callback){

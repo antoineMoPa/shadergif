@@ -1,4 +1,4 @@
-class ShaderEditorController < ApplicationController
+class EditorController < ApplicationController
   def index
     @is_editor = true
   end
@@ -45,7 +45,7 @@ class ShaderEditorController < ApplicationController
 
     draft.save()
     
-    redirect_to "/shader-editor/drafts/" + draft.id.to_s
+    redirect_to "/editor/drafts/" + draft.id.to_s
   end
 
   

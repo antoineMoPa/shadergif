@@ -49,6 +49,7 @@ function default_fragment_policy(){
 var app = new Vue({
 	el: "#shadergif-app",
 	data: {
+		type: "shader_webgl1",
 		player: null,
 		sound_mode: false,
 		send_status: "",
@@ -69,7 +70,8 @@ var app = new Vue({
 			dithering: 'FloydSteinberg'
 		},
 		autocompile: true,
-		images: []
+		images: [],
+		error_msg: ""
 	},
 	watch: {
 		'gifjs.dithering': function(d){
@@ -86,12 +88,16 @@ var app = new Vue({
 		},
 		'frames': function(f){
 			this.update_player();
+		},
+		'type': function(t){
+			this.set_player();
 		}
 	},
 	methods: {
 		code_change: function(){
 			var app = this;
 			window.localStorage.code = app.code;
+
 			if(app.autocompile){
 				app.$nextTick(function(){
 					app.update_player();
@@ -99,6 +105,8 @@ var app = new Vue({
 			}
 		},
 		update_player: function(){
+			app.error_msg = "";
+
 			// Remove previous errors
 			for(var err in cm_errorLines){
 				app.f_editor.removeLineClass(cm_errorLines[err], "background");
@@ -111,12 +119,6 @@ var app = new Vue({
 			if(!this.player.frames_defined_in_code){
 				app.player.frames = this.frames;
 			}
-			
-			var fragment_error_pre = qsa(".fragment-error-pre")[0];
-			var vertex_error_pre = qsa(".vertex-error-pre")[0];
-			
-			vertex_error_pre.textContent = "";
-			fragment_error_pre.textContent = "";
 		},
 		recompile: function(){
 			this.update_player();
@@ -404,19 +406,65 @@ var app = new Vue({
 			this.textures.splice(index, 1);
 						
 			app.player.delete_texture(index);
+		},
+		set_player(){
+			var type = this.type;
+			var container = this.$el.querySelectorAll(".player-container")[0];
+
+			if(this.player != null){
+				this.player.dispose();
+			}
+			
+			container.innerHTML = "";
+			
+			if(type == "mathjs"){
+				this.player = new MathjsPlayer();
+				this.player.set_container(container);
+			} else {
+				// assume shader_webgl1
+				this.player = new ShaderPlayer();
+				this.player.set_container(container);
+			}
+		},
+		add_error: function(err){
+			this.error_msg = "Error in  shader.\n" + err;
+
+			try{
+				var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
+				
+				// Fix potential bug killing all text sometimes
+				// like when inserting backticks (`)
+				// and the compiler does not give any line
+				// then codemirror becomes crazy
+				if(line == ""){
+					return
+				}
+				
+				line = parseInt(line) - 1;
+				
+				// Bug that could happen
+				if(isNaN(line)){
+					return;
+				}
+				
+				var errline = app.f_editor.addLineClass(line, "background", "errorline");
+				cm_errorLines.push(errline);
+			} finally {
+				// do nothing
+			}
 		}
+
 	},
 	mounted: function(){
 		var app = this;
-		
-		this.player = new ShaderPlayer();
-		this.player.set_container(this.$el.querySelectorAll(".player-container")[0]);
 		
 		// TODO: refactor everything here into methods
 		// (Legacy code from before VUE.js)
 		function resize(){
 			var parent = qsa(".vertical-scroll-parent")[0];
 		}
+
+		this.set_player();
 		
 		resize();
 		window.addEventListener("resize",resize);
@@ -485,35 +533,7 @@ var app = new Vue({
 		app.f_editor.on("change", function(){
 			change_throttled();
 		});
-		
-		function add_error(err, type_str, type_pre){
-			try{
-				var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
 				
-				// Fix potential bug killing all text sometimes
-				// like when inserting backticks (`)
-				// and the compiler does not give any line
-				// then codemirror becomes crazy
-				if(line == ""){
-					return
-				}
-				
-				line = parseInt(line) - 1;
-				
-				// Bug that could happen
-				if(isNaN(line)){
-					return;
-				}
-				
-				var errline = app.f_editor.addLineClass(line, "background", "errorline");
-				cm_errorLines.push(errline);
-			} finally {
-				type_pre.textContent =
-					"Error in " + type_str + " shader.\n" +
-					err;
-			}
-		}
-		
 		// Init UI
 		
 		(function(){
@@ -536,28 +556,23 @@ var app = new Vue({
 		
 
 		this.$nextTick(function(){
+			var app = this;
 			this.player.debug_info = true;
+
+			if(this.type == "shader_webgl1"){
+				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
+				this.player.set_vertex_shader(this.vertex_shader);
+				
+				this.player.set_on_error_listener(function(error, gl){
+					app.add_error(error.error);
+				});
+			} else {
+				this.player.set_on_error_listener(function(error){
+					app.add_error(error.error);
+				});
+			}
 			
-			this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
-			this.player.set_vertex_shader(this.vertex_shader);
 			this.player.set_code(this.code);
-			
-			
-			this.player.set_on_error_listener(function(error, gl){
-				var fragment_error_pre = qsa(".fragment-error-pre")[0];
-				var vertex_error_pre = qsa(".vertex-error-pre")[0];
-				
-				var type_str = error.type == gl.VERTEX_SHADER ?
-					"vertex":
-					"fragment";
-				
-				var type_pre = vertex_error_pre;
-				if(type_str == "vertex"){
-					type_pre = fragment_error_pre;
-				}
-				
-				add_error(error.error, type_str, type_pre);
-			});
 			
 			this.update_player();
 		});
