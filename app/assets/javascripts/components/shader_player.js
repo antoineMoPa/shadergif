@@ -9,66 +9,14 @@ Vue.component(
 				shader_player: null,
 				fullscreen: false,
 				debug_info: false,
-				passes_defined_in_code: false,
-				frames_defined_in_code: false,
 				size_before_fullscreen: null
 			};
 		},
 		methods: {
-			manage_passes: function(){
-				var c = this.shader_player.fragment_shader;
-				// Verify if passes is set there
-				var re = /\/\/PASSES=([0-6])/;
-				var result = re.exec(c);
-				
-				if(result == null){
-					this.passes_defined_in_code = false;
-				} else {
-					this.passes_defined_in_code = true;
-					this.shader_player.passes = parseInt(result[1]);
-				}
-
-				// Verify if frames is set in code
-				var re = /\/\/FRAMES=([0-9]*)/;
-				var result = re.exec(c);
-				
-				if(result == null){
-					this.frames_defined_in_code = false;
-				} else {
-					var qty = parseInt(result[1]);
-					if(isNaN(qty) || qty < 1){
-						this.frames_defined_in_code = false;
-					} else {
-						this.frames_defined_in_code = true;
-						this.shader_player.frames = qty;
-					}
-				}
-			},
-			update_player: function(){
-				var now = new Date().getTime();
-
-				if(this.fragmentShader == ""){
-					return;
-				}
-				
-				this.shader_player.fragment_shader = this.fragmentShader;
-				this.manage_passes();
-				// Needed when changing passes number
-				// (renderbuffer & stuff)
-				if(this.shader_player.gl == null){
-					// Only init once
-					this.shader_player.init_gl();
-				}
-
-				// TODO: rename this update_program
-				this.shader_player.init_program();
-				
-				this.shader_player.animate();
-			}
 		},
 		watch: {
 			fragmentShader: function(){
-				this.update_player();
+				this.shader_player.set_code(this.fragmentShader);
 			},
 			fullscreen: function(fullscreen){
 				if(fullscreen == true){
@@ -120,17 +68,12 @@ Vue.component(
 			
 				this.shader_player.set_container(container);
 				
-				this.shader_player.vertex_shader = this.vertex_shader;
+				this.shader_player.set_vertex_shader(this.vertex_shader);
 				
-				if(this.shader_player.fragmentShader != ""){
-					this.update_player();
-				}
-
 				window.addEventListener("resize", function(){
 					if(app.fullscreen){
-						app.shader_player.width = window.innerWidth;
-						app.shader_player.height = window.innerHeight;
-						app.update_player();
+						app.shader_player.set_width(window.innerWidth);
+						app.shader_player.set_height(window.innerHeight);
 					}
 				});
 			});

@@ -113,12 +113,6 @@ var app = new Vue({
 			
 			vertex_error_pre.textContent = "";
 			fragment_error_pre.textContent = "";
-			
-			if(this.fragmentShader == ""){
-				return;
-			}
-
-			sp.update_player();
 		},
 		recompile: function(){
 			this.update_player();
@@ -543,10 +537,11 @@ var app = new Vue({
 			sp.debug_info = true;
 			
 			this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
-			sp.vertex_shader = this.vertex_shader;
-			sp.fragment_shader = this.code;
+			sp.shader_player.set_vertex_shader(this.vertex_shader);
+			sp.shader_player.set_code(this.code);
 			
-			sp.shader_player.on_error_listener = function(error, gl){
+			
+			sp.shader_player.set_on_error_listener(function(error, gl){
 				var fragment_error_pre = qsa(".fragment-error-pre")[0];
 				var vertex_error_pre = qsa(".vertex-error-pre")[0];
 				
@@ -560,7 +555,7 @@ var app = new Vue({
 				}
 				
 				add_error(error.error, type_str, type_pre);
-			};
+			});
 			
 			this.update_player();
 		});

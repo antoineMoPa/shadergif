@@ -25,4 +25,9 @@ A player kernel is a class containing at least these functions
 		render(time, callback){
 			
 		}
+
+		set_on_error_listener(callback){
+			// Call this on error
+			this.on_error_listener = callback;
+		}
 	}

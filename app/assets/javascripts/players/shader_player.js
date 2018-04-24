@@ -10,6 +10,9 @@ class ShaderPlayer {
 		this.renderbuffer = [];
 		this.renderBufferDim = [];
 		this.textures = [];
+		this.passes_defined_in_code = false;
+		this.frames_defined_in_code = false;
+				
 
 		// TODO: synchronize with vue
 		this.width = 540;
@@ -29,9 +32,8 @@ class ShaderPlayer {
 		this.timeout = null;
 
 		this.on_error_listener = function(){
-			throw "Shader compilation error";
+			console.log("Shader compilation error");
 		};
-
 
 		{
 			// Init canvas
@@ -44,8 +46,67 @@ class ShaderPlayer {
 		}	
 	}
 
+	/* 
+	   Generic player functions 
+	   (That would be in an interface if Javascript had that)
+	 */
+
 	set_container(div){
 		div.appendChild(this.canvas);
+	}
+
+	set_code(code){
+		this.fragment_shader = code;
+		this.update();
+	}
+	
+	set_width(w){
+		this.width = w;
+		this.update();
+	}
+
+	set_height(h){
+		this.height = h;
+		this.update();
+	}
+
+	/* callback receives a canvas element */
+	render(time, callback){
+		
+	}
+	
+	set_on_error_listener(callback){
+		// Call this on error
+		this.on_error_listener = callback;
+	}
+	
+
+	/* Shader specific functions */
+
+	set_vertex_shader(code){
+		this.vertex_shader = code;
+		this.update();
+	}
+
+	update(){
+		var now = new Date().getTime();
+
+		if(this.fragmentShader == "" || this.vertex_shader == ""){
+			return;
+		}
+		
+		this.manage_passes();
+
+		// Needed when changing passes number
+		// (renderbuffer & stuff)
+		if(this.gl == null){
+			// Only init once
+			this.init_gl();
+		}
+		
+		// TODO: rename this update_program
+		this.init_program();
+		this.animate();
 	}
 	
 	// Took from MDN:
@@ -187,7 +248,7 @@ class ShaderPlayer {
 
 	init_program(){
 		this.compiled = false;
-		var app = this;
+		var player = this;
 
 		if(this.gl == null){
 			return;
@@ -235,7 +296,7 @@ class ShaderPlayer {
 					"vertex":
 					"fragment";
 
-				app.on_error_listener({
+				player.on_error_listener({
 					type: type,
 					error: err
 				}, gl);
@@ -423,7 +484,7 @@ class ShaderPlayer {
 	}
 
 	animate(){
-		var app = this;
+		var player = this;
 		var frame = 0;
 		var anim_delay = 100;
 
@@ -440,16 +501,46 @@ class ShaderPlayer {
 		setInterval(
 			function(){
 				frame++;
-				frame = frame % (app.frames);
+				frame = frame % (player.frames);
 				
 				window.requestAnimationFrame(function(){
 					// When rendering gif, draw is done elsewhere
-					if(!app.rendering_gif){
-						app.draw_gl((frame + 1) / app.frames);
+					if(!player.rendering_gif){
+						player.draw_gl((frame + 1) / player.frames);
 					}
 				});
 			}
 			, anim_delay
 		);
+	}
+
+	manage_passes(){
+		var c = this.fragment_shader;
+		// Verify if passes is set there
+		var re = /\/\/PASSES=([0-6])/;
+		var result = re.exec(c);
+		
+		if(result == null){
+			this.passes_defined_in_code = false;
+		} else {
+			this.passes_defined_in_code = true;
+			this.shader_player.passes = parseInt(result[1]);
+		}
+
+		// Verify if frames is set in code
+		var re = /\/\/FRAMES=([0-9]*)/;
+		var result = re.exec(c);
+		
+		if(result == null){
+			this.frames_defined_in_code = false;
+		} else {
+			var qty = parseInt(result[1]);
+			if(isNaN(qty) || qty < 1){
+				this.frames_defined_in_code = false;
+			} else {
+				this.frames_defined_in_code = true;
+				this.shader_player.frames = qty;
+			}
+		}
 	}
 }
