@@ -10,7 +10,8 @@
 				<span v-else>[ close ]</span>
 				
 			</div>
-			<canvas class="gif-canvas"></canvas>
+			<div class="player-container">
+			</div>
 		</div>
 		<p class="text-center" v-if="debug_info && shader_player">
 			time: {{ shader_player.time.toFixed(4) }}, mouse: {{ shader_player.mouse[0].toFixed(4) }}, {{ shader_player.mouse[1].toFixed(4) }}

@@ -51,11 +51,15 @@ window.onload = function(){
 
 		main_app.gifs = gifs;
 
-		var mosaic_gifs = JSON.parse(
-			document.getElementById("mosaic-gifs-json").innerHTML
-		);
+		var mosaic_el = document.getElementById("mosaic-gifs-json");
+		
+		if(typeof(mosaic_el) != "undefined"){
+			var mosaic_gifs = JSON.parse(
+				mosaic_el.innerHTML
+			);
 
-		main_app.mosaic_gifs = mosaic_gifs;
+			main_app.mosaic_gifs = mosaic_gifs;
+		}
 	}
 
 	

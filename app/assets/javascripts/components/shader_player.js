@@ -5,7 +5,6 @@ Vue.component(
 		props: ["fragment-shader"],
 		data: function(){
 			return {
-				canvas: null,
 				vertex_shader: "",
 				shader_player: null,
 				fullscreen: false,
@@ -116,10 +115,10 @@ Vue.component(
 			this.shader_player = new ShaderPlayer();
 
 			this.$nextTick(function(){
-				this.canvas = this.$el.querySelectorAll(".gif-canvas")[0];
+				var container = this.$el.querySelectorAll(".player-container")[0];
 				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
 			
-				this.shader_player.set_canvas(this.canvas);
+				this.shader_player.set_container(container);
 				
 				this.shader_player.vertex_shader = this.vertex_shader;
 				

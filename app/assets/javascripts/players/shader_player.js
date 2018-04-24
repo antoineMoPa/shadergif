@@ -1,7 +1,7 @@
 class ShaderPlayer {
 	constructor(){
 		this.compiled = false;
-		this.canvas = null;
+		this.canvas = document.createElement("canvas");
 		this.gl = null;
 		this.fragment_shader = "";
 		this.vertex_shader = "";
@@ -31,8 +31,23 @@ class ShaderPlayer {
 		this.on_error_listener = function(){
 			throw "Shader compilation error";
 		};
+
+
+		{
+			// Init canvas
+			var gl = this.canvas.getContext("webgl");
+			this.canvas.width = this.width;
+			this.canvas.height = this.height;
+			this.canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));
+			this.gl = gl;
+			this.init_gl();
+		}	
 	}
 
+	set_container(div){
+		div.appendChild(this.canvas);
+	}
+	
 	// Took from MDN:
 	// https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API/Tutorial/Using_textures_in_WebGL
 	// Initialize a texture and load an image.
@@ -104,18 +119,13 @@ class ShaderPlayer {
 		this.mouse = [x, -y];
 	}
 	
-	set_canvas(_canvas){
-		var gl = _canvas.getContext("webgl");
-		this.canvas = _canvas;
-		_canvas.width = this.width;
-		_canvas.height = this.height;
-		_canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));
-		this.gl = gl;
-		this.init_gl();
-	}
-	
 	init_gl(){
 		this.compiled = false;
+
+		if(this.gl == null){
+			return;
+		}
+		
 		var gl = this.gl;
 		var ww = 2;
 		var hh = 2;
@@ -178,6 +188,11 @@ class ShaderPlayer {
 	init_program(){
 		this.compiled = false;
 		var app = this;
+
+		if(this.gl == null){
+			return;
+		}
+
 		var gl = this.gl;
 
 		// Delete previous program
