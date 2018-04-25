@@ -59,11 +59,13 @@ class MathjsPlayer {
 	
 	set_width(w){
 		this.width = w;
+		this.canvas.width = w;
 		this.update();
 	}
 
 	set_height(h){
 		this.height = h;
+		this.canvas.height = h;
 		this.update();
 	}
 
