@@ -67,6 +67,7 @@
 			Use in editor
 		</button>
 		<a v-bind:href="'/gifs/' + gif.id + '/play'"
+		   v-if="gif.lang != 'mathjs'"
 						class="button">
 			Run Shader
 		</a>
