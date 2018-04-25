@@ -93,6 +93,12 @@ class MathjsPlayer {
 		var player = this;
 		var canvas = this.canvas;
 
+		if(player.mathjs_processing){
+			// Dont render 2 times at the time
+			return;
+		}
+		
+		player.mathjs_processing = true;
 		player.setMessage("Rendering...");
 		
 		player.mathjs_worker.onmessage = function(m){
