@@ -108,6 +108,7 @@ var app = new Vue({
 		'lang': function(t){
 			window.localStorage.lang = this.lang;
 			this.set_player();
+			this.update_player();
 		}
 	},
 	methods: {
