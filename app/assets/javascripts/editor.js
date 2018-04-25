@@ -46,11 +46,27 @@ function default_fragment_policy(){
 	return code;
 }
 
+function default_lang_policy(){
+
+	if(window.localStorage.lang != undefined){
+		if(window.localStorage.lang == "mathjs"){
+			return "mathjs";
+		}
+		if(window.localStorage.lang == "shader_webgl1"){
+			return "shader_webgl1";
+		}
+	}
+	
+	return "shader_webgl1";
+}
+
 var app = new Vue({
 	el: "#shadergif-app",
 	data: {
-		type: "shader_webgl1",
+		lang: default_lang_policy(),
 		player: null,
+		texture_support: false,
+		sound_support: false,
 		sound_mode: false,
 		send_status: "",
 		error: "",
@@ -89,7 +105,8 @@ var app = new Vue({
 		'frames': function(f){
 			this.update_player();
 		},
-		'type': function(t){
+		'lang': function(t){
+			window.localStorage.lang = this.lang;
 			this.set_player();
 		}
 	},
@@ -105,6 +122,8 @@ var app = new Vue({
 			}
 		},
 		update_player: function(){
+			var app = this;
+			
 			app.error_msg = "";
 
 			// Remove previous errors
@@ -408,7 +427,7 @@ var app = new Vue({
 			app.player.delete_texture(index);
 		},
 		set_player(){
-			var type = this.type;
+			var lang = this.lang;
 			var container = this.$el.querySelectorAll(".player-container")[0];
 
 			if(this.player != null){
@@ -417,38 +436,52 @@ var app = new Vue({
 			
 			container.innerHTML = "";
 			
-			if(type == "mathjs"){
+			if(lang == "mathjs"){
 				this.player = new MathjsPlayer();
 				this.player.set_container(container);
+				this.texture_support = false;
+				this.sound_support = false;
 			} else {
+				this.texture_support = true;
+				this.sound_support = true;
 				// assume shader_webgl1
 				this.player = new ShaderPlayer();
 				this.player.set_container(container);
+
+				var vertex_code = load_script("vertex-shader");
+				this.player.set_vertex_shader(vertex_code);
+				this.update_player();
 			}
+
+			this.player.set_on_error_listener(function(error){
+				app.add_error(error);
+			});
 		},
 		add_error: function(err){
-			this.error_msg = "Error in  shader.\n" + err;
+			this.error_msg = "Error\n" + err;
 
 			try{
-				var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
+				if(this.lang == "shader_webgl1"){
+					var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
+					
+					// Fix potential bug killing all text sometimes
+					// like when inserting backticks (`)
+					// and the compiler does not give any line
+					// then codemirror becomes crazy
+					if(line == ""){
+						return
+					}
 				
-				// Fix potential bug killing all text sometimes
-				// like when inserting backticks (`)
-				// and the compiler does not give any line
-				// then codemirror becomes crazy
-				if(line == ""){
-					return
+					line = parseInt(line) - 1;
+					
+					// Bug that could happen
+					if(isNaN(line)){
+						return;
+					}
+					
+					var errline = app.f_editor.addLineClass(line, "background", "errorline");
+					cm_errorLines.push(errline);
 				}
-				
-				line = parseInt(line) - 1;
-				
-				// Bug that could happen
-				if(isNaN(line)){
-					return;
-				}
-				
-				var errline = app.f_editor.addLineClass(line, "background", "errorline");
-				cm_errorLines.push(errline);
 			} finally {
 				// do nothing
 			}
@@ -476,12 +509,10 @@ var app = new Vue({
 		if(is_example != null){
 			filename = is_example[1] || "";
 		}
-		
-		var vertex_code = load_script("vertex-shader");
-		var fragment_code = qsa("textarea[name='fragment']")[0];
-		
+
 		// Enable codemirror
-		
+		var fragment_code = qsa("textarea[name='fragment']")[0];
+
 		app.f_editor = CodeMirror.fromTextArea(fragment_code, {
 			lineNumbers: true,
 			mode: "x-shader/x-fragment",
@@ -559,16 +590,16 @@ var app = new Vue({
 			var app = this;
 			this.player.debug_info = true;
 
-			if(this.type == "shader_webgl1"){
+			if(this.lang == "shader_webgl1"){
 				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
 				this.player.set_vertex_shader(this.vertex_shader);
 				
 				this.player.set_on_error_listener(function(error, gl){
-					app.add_error(error.error);
+					app.add_error(error);
 				});
 			} else {
 				this.player.set_on_error_listener(function(error){
-					app.add_error(error.error);
+					app.add_error(error);
 				});
 			}
 			

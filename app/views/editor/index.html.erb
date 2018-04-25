@@ -28,6 +28,9 @@
 									<input type="hidden"
 										   name="draft_id"
 										   value="<%= @draft.id %>">
+									<input type="hidden"
+										   name="lang"
+										   v-bind:value="<%= @draft.type %>">
 									<div class="has-text-right pull-right">
 										<%= submit_tag "Save draft", :class => "button is-primary" %>
 									</div>
@@ -43,6 +46,9 @@
 									<input type="hidden"
 										   name="code"
 										   v-bind:value="code">
+									<input type="hidden"
+										   name="lang"
+										   v-bind:value="lang">
 									<div class="has-text-right pull-right">
 										<%= submit_tag "Create a new draft", :class => "button is-primary" %>
 									</div>
@@ -125,7 +131,7 @@
 							<label>
 								Language:
 							</label>
-							<select v-model="type" class="inline-block">
+							<select v-model="lang" class="inline-block">
 								<option>shader_webgl1</option>
 								<option>mathjs</option>
 							</select>
@@ -133,7 +139,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="foldable foldable-hidden">
+			<div class="foldable foldable-hidden" v-if="texture_support">
 				<div class="foldable-header">
 					Textures
 				</div>
@@ -198,7 +204,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 					</div>
 				</div>
 			</div>
-			<div class="foldable foldable-hidden">
+			<div class="foldable foldable-hidden" v-if="sound_support">
 				<div class="foldable-header">
 					GPU sound tools
 				</div>
@@ -256,6 +262,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 									<input type="hidden"
 										   name="code"
 										   v-bind:value="image.code">
+									<input type="hidden"
+										   name="lang"
+										   v-bind:value="lang">
 									<% if @is_draft %>
 										<input type="hidden"
 											   name="draft_id"
@@ -318,7 +327,8 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 </div>
 <script name="draft-code" type="text/plain"
 ><% if @is_draft %>
- <%= raw(@draft.code.to_json) %>
+<%= raw(@draft.code.to_json) %>
 <% end %></script>
-<%= javascript_include_tag 'editor' %>
 <%= render :partial => 'default_shader_scripts' %>
+<%= javascript_include_tag 'editor' %>
+

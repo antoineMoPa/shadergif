@@ -22,6 +22,7 @@ class GifsController < ApplicationController
     @gif.title = params[:title]
     @gif.description = params[:description]
     @gif.code = params[:code]
+    @gif.lang = params[:lang]
     
     image = params[:image]
     
@@ -71,6 +72,7 @@ class GifsController < ApplicationController
     
     @gif.title = params[:title]
     @gif.code = params[:code]
+    @gif.lang = params[:lang]
 
     @gif.save()
     

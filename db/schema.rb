@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424221351) do
+ActiveRecord::Schema.define(version: 20180425001018) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "content"
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(version: 20180424221351) do
     t.text "code"
     t.bigint "forked_from"
     t.boolean "is_public"
-    t.string "type"
+    t.string "lang"
     t.index ["forked_from"], name: "fk_rails_99e24f4b85"
     t.index ["user_id"], name: "index_gifs_on_user_id"
   end

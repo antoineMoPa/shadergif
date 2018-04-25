@@ -42,6 +42,7 @@ class EditorController < ApplicationController
 
     draft.title = params[:title]
     draft.code = params[:code]
+    draft.lang = params[:lang]
 
     draft.save()
     

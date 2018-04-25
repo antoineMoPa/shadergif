@@ -93,9 +93,14 @@ class ShaderPlayer {
 		// Call this on error
 		this.on_error_listener = callback;
 	}
-	
 
-	/* Shader specific functions */
+	dispose(){
+		if(this.anim_interval != null){
+			clearInterval(this.anim_interval);
+		}
+	}
+
+	/* Shader player specific functions */
 
 	set_vertex_shader(code){
 		this.vertex_shader = code;
@@ -194,12 +199,6 @@ class ShaderPlayer {
 		this.mouse = [x, -y];
 	}
 
-	dispose(){
-		if(this.anim_interval != null){
-			clearInterval(this.anim_interval);
-		}
-	}
-	
 	init_gl(){
 		this.compiled = false;
 
@@ -311,17 +310,7 @@ class ShaderPlayer {
 			if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
 				var err = gl.getShaderInfoLog(shader);
 				
-				// Find shader type
-				var type_str = type == gl.VERTEX_SHADER ?
-					"vertex":
-					"fragment";
-
-				player.on_error_listener({
-					type: type,
-					error: err
-				}, gl);
-				
-				return -1;
+				player.on_error_listener(err);
 			} else {
 				//
 			}

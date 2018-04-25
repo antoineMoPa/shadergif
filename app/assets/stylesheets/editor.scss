@@ -85,7 +85,18 @@ textarea{
     font-size:15px;
     color:red;
     z-index:2000;
-    background:#eee;
+	background:#eee;
+}
+
+.mathjs-message-area{
+	margin:10px 20px;
+	width:140px;
+	margin:auto;
+	margin-top:0;
+	text-align:center;
+    padding:10px;
+	color:#333;
+	background:#eee;
 }
 
 .gif-canvas{
