@@ -32,8 +32,8 @@ onmessage = function(m) {
 		var x = (i % (w * 4)) / 4;
 		var y = Math.floor(i / (w * 4));
 		
-		x = x / w;
-		y = y / h;
+		x = x / w - 0.5;
+		y = y / h - 0.5;
 		
 		try{
 			var scope = {x: x, y: y, time: time};

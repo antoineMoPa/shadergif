@@ -139,6 +139,37 @@
 					</div>
 				</div>
 			</div>
+			<div class="foldable" v-if="lang == 'mathjs'">
+				<div class="foldable-header">
+					MathJS mode help
+				</div>
+				<div class="foldable-content">
+					<div class="settings">
+						<p>
+							The expression in the editor will be ran on all pixels.
+							<br>
+							You can use plain math syntax, sin, cos, the ternary operator (?:).
+						</p>
+						<br>
+						<p>
+							The result can be a 3 component array that will be interpreted as rgb values:
+						</p>
+						<pre class="mathjs-pre">[0.3, cos(x * 10), 0.0]</pre>
+						<br>
+						<p>
+							The result can also be a single value that will be interpreted as grayscale.
+						</p>
+						<pre class="mathjs-pre">cos(3 * sqrt(x^2 + y ^2))</pre>
+						<br>
+						<p>
+							Have a look at the math js syntax here:
+							<a target="_blank" href="http://mathjs.org/docs/expressions/syntax.html">
+								http://mathjs.org/docs/expressions/syntax.html
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
 			<div class="foldable foldable-hidden" v-if="texture_support">
 				<div class="foldable-header">
 					Textures
