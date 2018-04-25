@@ -509,6 +509,7 @@ var app = new Vue({
 		
 		if(is_example != null){
 			filename = is_example[1] || "";
+			this.lang = "shader_webgl1";
 		}
 
 		// Enable codemirror

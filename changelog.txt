@@ -1,3 +1,6 @@
+0.0.5:                                                                       (April 24 2018)
+    feature: mathjs mode
+
 0.0.4:                                                                       (April 18 2018)
     bugfix: fix sound mode
     feature: ability to add textures (WIP, not yet saved)
