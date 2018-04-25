@@ -14,6 +14,14 @@ Screenshot:
 * Support more devices by rendering gif & video previews.
 * Be free and open source.
 
+# Features
+
+ * Use local textures
+ * MathJS prototyping mode: Prototype directly with plain math syntax
+ * Download your gif frames as a zip or directly as a gif
+ * Create an account to post to homepage and comment
+ * GPU sound: The image data is used to fill a sound stream
+
 # Licence
 
 Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
@@ -25,6 +33,8 @@ Need help setting up a dev machine? You can contact me on twitter @antoineMoPa /
 I guess the first step is to setup a server in a virtual machine, or on your computer if you run Linux like me:
 
 https://doc.shadergif.com/server/Server/
+
+I have a virtualbox exported virtual machine that you could use, contact me to have a download link. (I did not upload it anywhere yet since it is 1.8GB) I'll be happy to send the VM to any (possible) contributor.
 
 # Documentation
 
