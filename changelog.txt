@@ -1,3 +1,7 @@
+0.0.6:                                                                       (April 25 2018)
+    feature: Textures are now saved to the server and loaded when editing again.
+
+
 0.0.5:                                                                       (April 24 2018)
     feature: mathjs mode
 
