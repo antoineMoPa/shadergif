@@ -311,6 +311,20 @@ hr{
 .result-image{
 	box-shadow:0 0 3px rgba(0, 0, 0, 0.3);
 	padding:20px;
+	position:relative;
+	
+	.close-result-button{
+		position:absolute;
+		top:8px;
+		right:8px;
+		color:#444;
+		font-size:10px;
+		cursor:pointer;
+
+		&:hover{
+			text-shadow:0 0 3px rgba(0,0,0,0.2);
+		}
+	}
 }
 
 .result-images form{

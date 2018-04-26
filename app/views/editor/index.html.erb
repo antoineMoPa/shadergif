@@ -275,9 +275,12 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			
 			<div class="result-images">
-				<div v-for="image in images"
+				<div v-for="(image, index) in images"
 					 class="container is-fluid">
-					<div class="result-image">					
+					<div class="result-image">
+						<p class="has-text-right close-result-button"
+						   title="Close if you will not use this result."
+						   v-on:click="images.splice(index, 1)">[close]</p>
 						<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
 						<img v-bind:src="image.src">
 						<template v-if="image.type == 'gif'">
@@ -293,6 +296,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 									<input type="hidden"
 										   name="code"
 										   v-bind:value="image.code">
+									<input type="hidden"
+										   name="lang"
+										   v-bind:value="lang">
 									<input type="hidden"
 										   name="lang"
 										   v-bind:value="lang">
