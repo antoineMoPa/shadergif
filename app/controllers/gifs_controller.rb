@@ -61,8 +61,8 @@ class GifsController < ApplicationController
         filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".texture"
 
         # Just a quick check before I code something better
-        if tex_param[:data].length > 524288
-          raise "Error: a texture has a size greater that 0.5mb"
+        if tex_param[:data].length > 1048576
+          raise "Error: a texture has a size greater that 1.0mb"
         end
         
         texture = Texture.new
