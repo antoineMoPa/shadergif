@@ -16,7 +16,7 @@ Screenshot:
 
 # Features
 
- * Use local textures
+ * Upload textures
  * MathJS prototyping mode: Prototype directly with plain math syntax
  * Download your gif frames as a zip or directly as a gif
  * Create an account to post to homepage and comment
