@@ -2,7 +2,7 @@ Vue.component(
 	'shader-player',
 	{
 		template: '#shader-player-template',
-		props: ["fragment-shader"],
+		props: ["gif"],
 		data: function(){
 			return {
 				vertex_shader: "",
@@ -12,12 +12,7 @@ Vue.component(
 				size_before_fullscreen: null
 			};
 		},
-		methods: {
-		},
 		watch: {
-			fragmentShader: function(){
-				this.shader_player.set_code(this.fragmentShader);
-			},
 			fullscreen: function(fullscreen){
 				if(fullscreen == true){
 					// Switch to fullscreen
@@ -61,15 +56,38 @@ Vue.component(
 		mounted: function(){
 			var app = this;
 			this.shader_player = new ShaderPlayer();
-
+			
 			this.$nextTick(function(){
 				var container = this.$el.querySelectorAll(".player-container")[0];
 				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
 			
 				this.shader_player.set_container(container);
+
+
+				function add_image(texture, index){
+					// 'Hardcoded' xhr
+					var xhr = new XMLHttpRequest();
+					xhr.open("GET", "/textures/" + texture.filename);
+					xhr.onreadystatechange = function() {
+						if(xhr.readyState == 4){
+							if (xhr.status == 200){
+								app.shader_player.add_texture(xhr.responseText);
+							}
+						};
+					};
+					xhr.send();
+				}
+				
+				if(typeof(app.gif.textures) != "undefined"){
+					for(var i = 0; i < app.gif.textures.length; i++){
+						add_image(app.gif.textures[i], i);
+					}
+				}
+
+				console.log(app.gif);
 				
 				this.shader_player.set_vertex_shader(app.vertex_shader);
-				this.shader_player.set_code(app.fragmentShader);
+				this.shader_player.set_code(app.gif.code);
 				
 				window.addEventListener("resize", function(){
 					if(app.fullscreen){
@@ -78,6 +96,9 @@ Vue.component(
 					}
 				});
 			});
+
+			
+			
 		}
 	}
 );

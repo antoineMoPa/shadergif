@@ -124,6 +124,7 @@ class GifsController < ApplicationController
 
   def play
     @gif = Gif.joins(:user)
+             .left_joins(:textures)
              .select("gifs.*, users.username")
              .where("is_public = true")
              .find(params[:id])

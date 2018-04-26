@@ -5,7 +5,7 @@
 	<meta property="og:video" content="https://shadergif.com/gifs/generated/<%= @gif.image_filename %>-vid.mp4" />
 <% end %>
 <script type="application/json" id="main-gifs-json">
- [<%= raw(@gif.to_json()) %>]
+ [<%= raw(@gif.to_json({:include => [:textures]})) %>]
 </script>
 <div id="main-app">
 	<section class="section">
@@ -13,7 +13,7 @@
 			<h1 class="title has-text-centered"><%= @gif.title %></h1>
 			<div class="has-text-centered">
 				<template v-if="gifs[0]">
-					<shader-player v-bind:fragment-shader="gifs[0].code"></shader-player>
+					<shader-player v-bind:gif="gifs[0]"></shader-player>
 					
 				</template>
 			</div>
