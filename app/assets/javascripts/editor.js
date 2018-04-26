@@ -65,6 +65,7 @@ var app = new Vue({
 	data: {
 		lang: default_lang_policy(),
 		player: null,
+		status: "",
 		texture_support: false,
 		sound_support: false,
 		sound_mode: false,
@@ -175,55 +176,63 @@ var app = new Vue({
 		export_gif: function(to_export){
 			// Make the gif from the frames
 			var app = this;
-			var gif = new GIF({
-				workers: 2,
-				quality: app.gifjs.quality,
-				dither: app.gifjs.dithering,
-				workerScript: "/workers/gif.worker.js"
-			});
+			app.status = "Encoding Gif";
 			
-			data = to_export.data;
-			
-			var images = [];
-			
-			for(var i = 0; i < data.length; i++){
-				var image = new Image();
-				image.src = data[i];
-				image.onload = imageLoaded;
-				images.push(image);
-			}
-			
-			var number_loaded = 0;
-			function imageLoaded(){
-				number_loaded++;
-				if(number_loaded == data.length){
-					convert();
-				}
-			}
-			
-			function convert(){
-				var code = app.f_editor.getValue();
-				
-				for(var i = 0; i < images.length; i++){
-					gif.addFrame(images[i],{delay: to_export.delay});
-				}
-				
-				gif.render();
-				
-				gif.on('finished',function(blob){
-					// Create image
-					var size =  (blob.size / 1000).toFixed(2);
-					
-					// Create base64 version
-					// PERF: TODO: generate image on submit only
-					var reader = new window.FileReader();
-					reader.readAsDataURL(blob);
-					reader.onloadend = function() {
-						// reader.result = base64 data
-						app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
-					};
+			app.$nextTick(function(){
+				var gif = new GIF({
+					workers: 2,
+					quality: app.gifjs.quality,
+					dither: app.gifjs.dithering,
+					workerScript: "/workers/gif.worker.js"
 				});
-			}
+				
+				data = to_export.data;
+				
+				var images = [];
+				
+				for(var i = 0; i < data.length; i++){
+					var image = new Image();
+					image.src = data[i];
+					image.onload = imageLoaded;
+					images.push(image);
+				}
+				
+				var number_loaded = 0;
+				function imageLoaded(){
+					number_loaded++;
+					if(number_loaded == data.length){
+						convert();
+					}
+				}
+				
+				function convert(){
+					var code = app.f_editor.getValue();
+					
+					for(var i = 0; i < images.length; i++){
+						gif.addFrame(images[i],{delay: to_export.delay});
+					}
+					
+					gif.render();
+					
+					gif.on('finished',function(blob){
+						// Create image
+						var size =  (blob.size / 1000).toFixed(2);
+						
+						// Create base64 version
+						// PERF: TODO: generate image on submit only
+						var reader = new window.FileReader();
+						reader.readAsDataURL(blob);
+						reader.onloadend = function() {
+							// reader.result = base64 data
+							app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
+							app.status = "Done!";
+							setTimeout(function(){
+								app.status = "";
+							}, 1000);
+						};
+					});
+				}
+			});
 		},
 		render: function(options) {
 			if(typeof(options) == "undefined"){
@@ -239,7 +248,8 @@ var app = new Vue({
 
 			app.player.rendering_gif = true;
 			app.rendering_gif = true;
-
+			app.status = "Rendering Gif";
+			
 			var to_export = {};
 			
 			if(options.gif){
@@ -329,13 +339,16 @@ var app = new Vue({
 				} else {
 					// Final step
 					if(options.gif){
+						app.status = "";
 						app.export_gif(to_export);
 						app.player.rendering_gif = false;
 						app.rendering_gif = false;
 					} else if (options.stack) {
+						app.status = "";
 						image_data = canvas.toDataURL();
 						app.player.rendering_gif = false;
 						app.rendering_gif = false;
+						
 						app.images.unshift({
 							type: "png",
 							size: false,
@@ -345,6 +358,7 @@ var app = new Vue({
 						var zip = window.shadergif_zip;
 						app.player.rendering_gif = false;
 						app.rendering_gif = false;
+						app.status = "";
 						zip.generateAsync({type: "blob"})
 							.then(function(content) {
 								app.has_zip = true;

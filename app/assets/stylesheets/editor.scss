@@ -32,6 +32,19 @@ header{
 	z-index:1000;
 }
 
+.app-status{
+	position:absolute;
+	z-index:100;
+	bottom:50px;
+	left:20px;
+	min-width:300px;
+	background:#ffffff;
+	color:#111;
+	box-shadow:0 0 10px rgba(0,0,0,0.3);
+	border-radius:3px;
+	padding:20px;
+}
+
 .examples-page header{
     position:static;
 }

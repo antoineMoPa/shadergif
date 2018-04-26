@@ -1,4 +1,9 @@
 <div id="shadergif-app" class="vertical-scroll-parent columns">
+	<p v-if="status != ''"
+	   class="app-status">
+		{{ status }}
+	</p>
+
 	<div class="column limit-width-desktop">
 		<div class="vertical-scroll gif-pane">
 			<div class="text-center">
@@ -69,14 +74,18 @@
 				<div class="foldable-content">
 					<div class="text-center">
 						<p>
-							<button name="make-gif" v-on:click="make_gif" class="inline-block">
-								<template v-if="!rendering_gif">
+							<template v-if="!rendering_gif">
+								<button name="make-gif" v-on:click="make_gif" class="inline-block">
+									
 									Create gif
-								</template>
-								<template v-else>
+								</button>
+							</template>
+							<template v-else>
+								<button class="inline-block">
 									Rendering...
-								</template>
-							</button>
+								</button>
+							</template>
+							
 							<button name="make-png" v-on:click="make_png" class="inline-block">
 								Create stacked png
 							</button>
@@ -102,12 +111,12 @@
 							<input id="autocompile" type="checkbox" v-model="autocompile">
 						</p>
 						<br>
-						<p>
+						<p v-if="!autocompile">
 							<button name="recompile"
-										  v-if="!autocompile"
-										  v-on:click="recompile">
+									v-on:click="recompile">
 								Compile and run
 							</button>
+							<br>
 						</p>
 					</div>
 					<div class="text-center">
