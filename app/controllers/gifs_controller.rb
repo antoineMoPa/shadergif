@@ -44,7 +44,7 @@ class GifsController < ApplicationController
     end
     
     @gif.image_filename = filename
-    @gif.save()
+    
 
     # Delete draft if it was a draft
     if not params[:draft_id].nil?
@@ -59,6 +59,11 @@ class GifsController < ApplicationController
       params[:textures].each do |tex_param|
         rand_id = gen_rand_id.join
         filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".texture"
+
+        # Just a quick check before I code something better
+        if tex_param[:data].length > 524288
+          raise "Error: a texture has a size greater that 0.5mb"
+        end
         
         texture = Texture.new
         texture.name = tex_param[:name]
@@ -71,6 +76,8 @@ class GifsController < ApplicationController
         end
       end
     end
+
+    @gif.save()
     
     @gif.gen_video_and_thumb
     
