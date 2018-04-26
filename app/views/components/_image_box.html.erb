@@ -60,12 +60,11 @@
 		>
 			View code
 		</button>
-		<button
-			v-on:click="use_in_editor"
-						class="button"
-		>
-			Use in editor
-		</button>
+		<a v-bind:href="'/editor/' + gif.id + '/edit'">
+			<button class="button">
+				Use in editor
+			</button>
+		</a>
 		<a v-bind:href="'/gifs/' + gif.id + '/play'"
 		   v-if="gif.lang != 'mathjs'"
 						class="button">

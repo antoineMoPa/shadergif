@@ -67,13 +67,10 @@ class GifsController < ApplicationController
         texture.save
         
         File.open("public/textures/" + filename, 'wb') do|f|
-          f.write(Base64.decode64(tex_param [:data]))
+          f.write(tex_param[:data])
         end
-        sedewe
       end
     end
-    
-
     
     @gif.gen_video_and_thumb
     
@@ -124,7 +121,7 @@ class GifsController < ApplicationController
     )
     
   end
-  
+
   def play
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username")
@@ -132,9 +129,7 @@ class GifsController < ApplicationController
              .find(params[:id])
   end
 
-  
   def list
-    
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
@@ -143,10 +138,6 @@ class GifsController < ApplicationController
            .limit(params[:take]).offset(params[:skip])
     
     render :json => @gifs
-  end
-
-  # GET /gifs/1/edit
-  def edit
   end
   
   def delete

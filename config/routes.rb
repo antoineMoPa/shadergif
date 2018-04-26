@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   
   get 'editor' => 'editor#index'
   get 'editor/drafts/:gif_id' => 'editor#edit_draft'
+  get 'editor/:gif_id/edit' => 'editor#edit'
   get 'editor/examples' => 'editor#examples'
 
   post 'gifs/save_draft' => 'shader_editor#save_draft'

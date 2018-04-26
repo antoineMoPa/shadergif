@@ -380,10 +380,16 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 		</div>
 	</div>
 </div>
-<script name="draft-code" type="text/plain"
-><% if @is_draft %>
-<%= raw(@draft.code.to_json) %>
-<% end %></script>
+<script name="start-code" type="text/plain">
+ <% if !@gif.nil? %>
+ <%= raw(@gif.code.to_json) %>
+ <% end %>
+</script>
+<script name="start-textures" type="text/plain">
+ <% if !@gif.nil? %>
+ <%= raw(@gif.textures.to_json) %>
+ <% end %>
+</script>
 <%= render :partial => 'default_shader_scripts' %>
 <%= javascript_include_tag 'editor' %>
 

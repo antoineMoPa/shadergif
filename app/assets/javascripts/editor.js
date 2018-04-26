@@ -29,9 +29,9 @@ var cm_errorLines = [];
 function default_fragment_policy(){
 	var code = "";
 	
-	if(/\/drafts\//.test(window.location.href)){
+	if(load_script("start-code").trim() != ""){
 		// If we are viewing a draft, use it
-		code = JSON.parse(load_script("draft-code"));
+		code = JSON.parse(load_script("start-code"));
 	} else if(
 		window.localStorage.code != undefined &&
 			window.localStorage.code != ""
@@ -508,8 +508,37 @@ var app = new Vue({
 			} finally {
 				// do nothing
 			}
-		}
+		},
+		load_start_textures: function(){
+			var app = this;
 
+			function add_image(texture, index){
+				// 'Hardcoded' xhr
+				var xhr = new XMLHttpRequest();
+				xhr.open("GET", "/textures/" + texture.filename);
+				xhr.onreadystatechange = function() {
+					if(xhr.readyState == 4){
+						if (xhr.status == 200){
+							app.textures.splice(i, 1, {
+								name: texture.name,
+								data: xhr.responseText
+							});
+							app.player.add_texture(xhr.responseText);
+						}
+					};
+				};
+				xhr.send();
+			}
+			
+			if(load_script("start-textures").trim() != ""){
+				// If we are viewing a draft, use it
+				var textures = JSON.parse(load_script("start-textures"));
+
+				for(var i = 0; i < textures.length; i++){
+					add_image(textures[i], i);
+				}
+			}
+		}
 	},
 	mounted: function(){
 		var app = this;
@@ -520,6 +549,8 @@ var app = new Vue({
 			var parent = qsa(".vertical-scroll-parent")[0];
 		}
 
+		this.load_start_textures();
+		
 		this.set_player();
 		
 		resize();

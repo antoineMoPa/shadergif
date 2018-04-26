@@ -1,8 +1,30 @@
 class EditorController < ApplicationController
   def index
+    # Used for CSS and frontend stuff
     @is_editor = true
   end
+  
+  # GET /shader_editor/1/edit
+  def edit
+    gif = Gif.left_joins(:textures)
+            .find(params[:gif_id])
+    
+    if gif.user_id != current_user.id
+      if not gif.is_public 
+        # You are trying to view someone's private gif? shameful.
+        raise "No gif here"
+      end
+    end
 
+    @gif = gif
+    @is_editor = true
+    render "index"
+  end
+  
+  def edif_gif
+    
+  end
+  
   def edit_draft
     if not user_signed_in?
       raise "You are not logged in"
@@ -18,7 +40,7 @@ class EditorController < ApplicationController
       raise "This gif is public"
     end
     
-    @draft = draft
+    @gif = draft
     @is_draft = true
     @is_editor = true
     
