@@ -293,23 +293,7 @@ hr{
 	position:relative;
 	border-radius:2px;
 	box-shadow:0 0 5px rgba(0,0,0,0.1);
-}
-
-/* icon */
-
-.foldable-header:after{
-	content:" ";
-	width:16px;
-	height:16px;
-	border: 1px solid #fff;
-	position:absolute;
-	top:13px;
-	right:10px;
-	transition:all 0.3s;
-}
-
-.foldable-hidden .foldable-header:after{
-	transform: rotateZ(45deg);
+	cursor:pointer;
 }
 
 .foldable-hidden .foldable-content{
