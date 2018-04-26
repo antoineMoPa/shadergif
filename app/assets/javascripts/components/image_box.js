@@ -30,11 +30,6 @@ Vue.component(
 					});
 				});
 			},
-			use_in_editor: function(){
-				window.localStorage.code = this.gif.code;
-				window.localStorage.lang = this.gif.lang;
-				window.location.href = "/shader-editor/";
-			},
 			play: function(){
 				// stop other videos
 				var videos = document.querySelectorAll("video");
