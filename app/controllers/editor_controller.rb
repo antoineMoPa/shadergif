@@ -9,8 +9,9 @@ class EditorController < ApplicationController
     gif = Gif.left_joins(:textures)
             .find(params[:gif_id])
     
-    if gif.user_id != current_user.id
-      if not gif.is_public 
+    
+    if not gif.is_public
+      if gif.user_id != current_user.id
         # You are trying to view someone's private gif? shameful.
         raise "No gif here"
       end
