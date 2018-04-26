@@ -311,6 +311,15 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 									<input type="hidden"
 										   name="lang"
 										   v-bind:value="lang">
+									<!-- All the textures as form elements -->
+									<template v-for="(texture, index) in textures">
+										<input type="hidden"
+											   v-bind:name="'textures[][name]'"
+											   v-model="texture.name">
+										<input type="hidden"
+											   v-bind:name="'textures[][data]'"
+											   v-model="texture.data">
+									</template>
 									<% if @is_draft %>
 										<input type="hidden"
 											   name="draft_id"

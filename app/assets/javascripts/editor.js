@@ -224,7 +224,15 @@ var app = new Vue({
 						reader.readAsDataURL(blob);
 						reader.onloadend = function() {
 							// reader.result = base64 data
-							app.images.unshift({type: "gif", size: size, blob: reader.result, src: URL.createObjectURL(blob), code: code});
+							app.images.unshift({
+								type: "gif",
+								size: size,
+								blob: reader.result,
+								src: URL.createObjectURL(blob),
+								code: code,
+								textures: app.textures
+							});
+							
 							app.status = "Done!";
 							setTimeout(function(){
 								app.status = "";

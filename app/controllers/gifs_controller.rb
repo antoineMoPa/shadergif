@@ -1,6 +1,12 @@
 class GifsController < ApplicationController
   before_action :set_gif, only: [:show, :edit]
 
+  def gen_rand_id
+    (1..16).map do |i|
+      [*'A'..'Z', *'a'..'z', *0..9][ rand(62) ]
+    end
+  end
+  
   def new
     if not user_signed_in?
       raise "You are not logged in"
@@ -12,9 +18,7 @@ class GifsController < ApplicationController
     @gif.is_public = true
     
     # Generate random id
-    rand_id = (1..16).map do |i|
-      [*'A'..'Z', *'a'..'z', *0..9][ rand(62) ]
-    end
+    rand_id = gen_rand_id
     
     rand_id = rand_id.join
     filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".gif"
@@ -49,6 +53,27 @@ class GifsController < ApplicationController
         draft.destroy()
       end
     end
+
+    # Upload texture
+    if not params[:textures].nil?
+      params[:textures].each do |tex_param|
+        rand_id = gen_rand_id.join
+        filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".texture"
+        
+        texture = Texture.new
+        texture.name = tex_param[:name]
+        texture.gif_id = @gif.id
+        texture.filename = filename
+        texture.save
+        
+        File.open("public/textures/" + filename, 'wb') do|f|
+          f.write(Base64.decode64(tex_param [:data]))
+        end
+        sedewe
+      end
+    end
+    
+
     
     @gif.gen_video_and_thumb
     
