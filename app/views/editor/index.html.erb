@@ -179,12 +179,15 @@
 					</div>
 				</div>
 			</div>
-			<div class="foldable foldable-hidden" v-if="texture_support">
+			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
 					Textures
 				</div>
 				<div class="foldable-content">
-					<div class="settings">
+					<div class="settings" v-if="!texture_support">
+						<p>Textures not supported for this language.</p>
+					</div>
+					<div class="settings" v-else>
 						<p>Add a texture</p>
 						<div class="new-texture-input">
 							<input type="file" name="texture" class="shadergif-texture-input" accept=".png,.jpg" multiple>
@@ -380,14 +383,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 		</div>
 	</div>
 </div>
-<script name="start-code" type="text/plain">
+<script name="start-gif" type="text/plain">
  <% if !@gif.nil? %>
- <%= raw(@gif.code.to_json) %>
- <% end %>
-</script>
-<script name="start-textures" type="text/plain">
- <% if !@gif.nil? %>
- <%= raw(@gif.textures.to_json) %>
+ <%= raw(@gif.to_json( :include => [:textures] )) %>
  <% end %>
 </script>
 <%= render :partial => 'default_shader_scripts' %>

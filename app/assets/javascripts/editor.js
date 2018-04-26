@@ -25,13 +25,27 @@ var is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.glsl)/);
 var DEFAULT_WIDTH = 540;
 var DEFAULT_HEIGHT = 540;
 var cm_errorLines = [];
+var start_gif = load_script("start-gif").trim();
 
+if(start_gif != ""){
+	start_gif = JSON.parse(start_gif);
+	
+	if(typeof(start_gif.textures) == "undefined"){
+		start_gif.textures = null;
+	}
+	
+} else {
+	start_gif = null;
+}
+
+
+ 
 function default_fragment_policy(){
 	var code = "";
 	
-	if(load_script("start-code").trim() != ""){
+	if(start_gif != null){
 		// If we are viewing a draft, use it
-		code = JSON.parse(load_script("start-code"));
+		code = start_gif.code;
 	} else if(
 		window.localStorage.code != undefined &&
 			window.localStorage.code != ""
@@ -436,7 +450,7 @@ var app = new Vue({
 						app.player.add_texture(reader.result);
 					}, false);
 					
-					if(file){
+ 					if(file){
 						reader.readAsDataURL(file);
 					}
 				} catch (e) {
@@ -529,13 +543,12 @@ var app = new Vue({
 				};
 				xhr.send();
 			}
-			
-			if(load_script("start-textures").trim() != ""){
-				// If we are viewing a draft, use it
-				var textures = JSON.parse(load_script("start-textures"));
 
-				for(var i = 0; i < textures.length; i++){
-					add_image(textures[i], i);
+			
+			if(start_gif != null && start_gif.textures != null){
+				// If we are viewing a draft, use it
+				for(var i = 0; i < start_gif.textures.length; i++){
+					add_image(start_gif.textures[i], i);
 				}
 			}
 		}
