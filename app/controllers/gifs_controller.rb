@@ -149,11 +149,17 @@ class GifsController < ApplicationController
   end
   
   def delete
+    # Eventual todo (if ever needed):
+    # delete actual files from filesystem
+    # or write a file garbage collector 
+    
     gif = Gif.find(params[:gif_id])
     
     if gif.user_id != current_user.id
       raise "Attempting to delete another users's gif..."
     end
+
+    Texture.where(gif_id: gif.id).destroy_all
     
     gif.destroy
     
