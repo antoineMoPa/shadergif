@@ -45,7 +45,8 @@ class GifsController < ApplicationController
     
     @gif.image_filename = filename
     
-
+    @gif.save()
+    
     # Delete draft if it was a draft
     if not params[:draft_id].nil?
       draft = Gif.find(params[:draft_id])
@@ -77,8 +78,6 @@ class GifsController < ApplicationController
       end
     end
 
-    @gif.save()
-    
     @gif.gen_video_and_thumb
     
     redirect_to "/gifs/" + @gif.id.to_s
