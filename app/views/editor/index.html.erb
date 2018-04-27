@@ -64,15 +64,23 @@
 								<input type="hidden"
 									   name="lang"
 									   v-model="gif.lang">
-								<div class="has-text-right pull-right">
-									<a v-if="gif.is_public"
-									   class="button is-link"
-									   v-bind:href="'/gifs/' + gif.id">
-										View public gif page
-									</a>
-									<%= submit_tag "Save", :class => "button is-primary" %>
+								<div class="columns">
+									
+									<div class="column">
+										<a v-if="gif.is_public"
+										   class="button is-link"
+										   v-bind:href="'/gifs/' + gif.id"
+										   target="_blank">
+											View public gif page
+										</a>
+									</div>
+									<div class="column">
+										<div class="has-text-right pull-right">
+											<%= submit_tag "Save", :class => "button is-primary" %>
+										</div>
+									</div>
 								</div>
-								<br>
+										<br>
 								<p>Note: Submitted gifs themselves can't be updated, only the code, title and description.</p>
 							<% end %>
 						</template>
