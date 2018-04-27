@@ -55,19 +55,22 @@
 		</div>
 		<button
 			v-if="!code_is_visible"
-				  v-on:click="show_code"
-				  class="button"
+			v-on:click="show_code"
+			class="button"
 		>
+			<img class="feather-icon" src="/icons/feather/align-left.svg">
 			View code
 		</button>
 		<a v-bind:href="'/editor/' + gif.id + '/edit'">
 			<button class="button">
+				<img class="feather-icon" src="/icons/feather/code.svg">
 				Use in editor
 			</button>
 		</a>
 		<a v-bind:href="'/gifs/' + gif.id + '/play'"
 		   v-if="gif.lang != 'mathjs'"
 						class="button">
+			<img class="feather-icon" src="/icons/feather/play.svg">
 			Run Shader
 		</a>
 		<!--
@@ -76,10 +79,13 @@
 		   -->
 		<pre
 			v-if="code_is_visible"
-				  class="image-code has-text-left"
+			class="image-code has-text-left"
 		><button class="button close-image-code"
 				 v-on:click="code_is_visible = !code_is_visible"
-		 >Close</button
+		 >
+			<img class="feather-icon" src="/icons/feather/x.svg">
+			Close
+		</button
 			   ><code class="language-glsl" data-manual
 				>{{ gif.code }}</code></pre>
 
