@@ -1,8 +1,11 @@
-0.0.7:                                                                       (April 27 2018)
+0.0.8:                                                                       (April 27 2018)
     feature: Icons from feather https://github.com/feathericons/feather
 	feature: Update title, description and language of a gif
 	bugfix: Better error messages instead of crashing when uploading textures, for example
-	
+	(It's 3 AM, sleep, shop, live, now its 18PM)
+	feature: webgl2 support (which means we can use GLSL es 300)
+	         That means that loops can have non-constant expressions,
+			 along with many new features. Yay!
 
 0.0.6:                                                                       (April 25 2018)
     feature: Textures are now saved to the server and loaded when editing again.
