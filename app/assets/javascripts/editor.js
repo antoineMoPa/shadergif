@@ -581,6 +581,8 @@ var app = new Vue({
 		function resize(){
 			var parent = qsa(".vertical-scroll-parent")[0];
 		}
+		resize();
+		window.addEventListener("resize",resize);
 
 		{
 			// Load current user data from script
@@ -592,12 +594,9 @@ var app = new Vue({
 				app.user = null;
 			}
 		}
-		
+
 		this.set_player();
 		this.load_start_textures();
-		
-		resize();
-		window.addEventListener("resize",resize);
 		
 		var frame = 0;
 		
@@ -666,26 +665,13 @@ var app = new Vue({
 		});
 				
 		// Init UI
-		
-		(function(){
-			var foldables = qsa(".foldable");
-			
-			function init_foldable(foldable){
-				var header = foldable.querySelectorAll(".foldable-header")[0];
-				var content = foldable.querySelectorAll(".foldable-content")[0];
-				
-				header.addEventListener("click", function(e){
-					e.preventDefault();
-					foldable.classList.toggle("foldable-hidden");
-				});
-			}
-			
-			for(var i = 0; i < foldables.length; i++){
-				init_foldable(foldables[i]);
-			}
-		})();
-		
 
+		qsa(".gif-pane")[0].addEventListener("click", function(e){
+			if(e.target.classList.contains("foldable-header")){
+				e.target.parentNode.classList.toggle("foldable-hidden");
+			}
+		});
+		
 		this.$nextTick(function(){
 			var app = this;
 			this.player.debug_info = true;
