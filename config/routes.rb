@@ -7,6 +7,9 @@ Rails.application.routes.draw do
 
   get 'user/gifs-and-drafts', to: 'user#gifs_and_drafts', as: 'user_gifs_and_drafts'
   get 'user/:username', to: 'user#show', as: 'user_show'
+
+  # Legacy paths that should be deleted one day
+  # (shader-editor)
   get 'shader-editor' => 'editor#index'
   get 'shader-editor/drafts/:gif_id' => 'editor#edit_draft'
   get 'shader-editor/examples' => 'editor#examples'
@@ -16,7 +19,8 @@ Rails.application.routes.draw do
   get 'editor/:gif_id/edit' => 'editor#edit'
   get 'editor/examples' => 'editor#examples'
 
-  post 'gifs/save_draft' => 'shader_editor#save_draft'
+  post 'gifs/save' => 'gifs#save'
+  post 'gifs/save_draft' => 'gifs#new_draft'
   post 'comments/new' => 'comments#new'
   
   get 'gifs/list' => 'gifs#list'

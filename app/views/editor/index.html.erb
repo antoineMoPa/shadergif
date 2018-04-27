@@ -14,56 +14,118 @@
 			<pre class="error-pre">{{ error_msg }}</pre>
 			<div class="foldable">
 				<div class="foldable-header">
-					Draft management
+					Gif/Draft Management
 				</div>
 				<div class="foldable-content">
 					<div class="draft-management">
-						<% if user_signed_in? %>
-							<% if @is_draft %>
-								<%= form_tag("/gifs/save_draft", method: "post") do %>
-									<div class="field">
-										<label class="label">Draft title</label>
-										<div class="control">
-											<input type="text" name="title" placeholder="Give this a name" value="<%= @draft.title %>">
+						<template v-if="is_current_users_gif">
+							<%= form_tag("/gifs/save", method: "post") do %>
+								<div class="columns">
+									<div class="column">
+										<div class="field">
+											<label class="label">Title</label>
+											<div class="control">
+												<input type="text" name="title" placeholder="Give this a name" v-model="gif.title">
+											</div>
 										</div>
 									</div>
-									<input type="hidden"
-										   name="code"
-										   v-bind:value="code">
-									<input type="hidden"
-										   name="draft_id"
-										   value="<%= @draft.id %>">
-									<input type="hidden"
-										   name="lang"
-										   v-bind:value="<%= @draft.type %>">
-									<div class="has-text-right pull-right">
-										<%= submit_tag "Save draft", :class => "button is-primary" %>
-									</div>
-								<% end %>
-							<% else %>
-								<%= form_tag("/gifs/new_draft", method: "post") do %>
-									<div class="field">
-										<label class="label">Title</label>
-										<div class="control">
-											<input type="text" name="title" placeholder="Give this a name">
+									<div class="column">
+										<div class="field">
+											<label class="label">
+												Language
+											</label>
+											<div class="control select">
+												<select v-model="lang" class="inline-block">
+													<option>shader_webgl1</option>
+													<option>mathjs</option>
+												</select>
+											</div>
 										</div>
 									</div>
-									<input type="hidden"
-										   name="code"
-										   v-bind:value="code">
-									<input type="hidden"
-										   name="lang"
-										   v-bind:value="lang">
-									<div class="has-text-right pull-right">
-										<%= submit_tag "Create a new draft", :class => "button is-primary" %>
+								</div>
+								<div class="field">
+									<label class="label">Description</label>
+									<div class="control">
+										<textarea name="description"
+												  class="textarea"
+												  v-model="gif.description"
+										></textarea>
 									</div>
-								<% end %>
+								</div>
+								<input type="hidden"
+									   name="code"
+									   v-bind:value="code">
+								<input type="hidden"
+									   name="id"
+									   v-model="gif.id">
+								<input type="hidden"
+									   name="lang"
+									   v-model="gif.lang">
+								<div class="has-text-right pull-right">
+									<%= submit_tag "Save", :class => "button is-primary" %>
+								</div>
+								<br>
+								<p>Note: Submitted gifs themselves can't be updated, only the code, title and description.</p>
 							<% end %>
-						<% else %>
+						</template>
+						<template v-else-if="user != null">
+							<%= form_tag("/gifs/save_draft", method: "post") do %>
+								<div class="field">
+									<label class="label">Save code as a new draft</label>
+									<div class="control">
+										<input type="text" name="title" placeholder="Give this a name" value="">
+									</div>
+								</div>
+								<input type="hidden"
+									   name="code"
+									   v-model="code">
+								<input type="hidden"
+									   name="draft_id"
+									   value="">
+								<input type="hidden"
+									   name="lang"
+									   v-model="lang">
+								<div class="has-text-right pull-right">
+									<%= submit_tag "Save draft", :class => "button is-primary" %>
+								</div>
+							<% end %>
+						</template>
+						<template v-else>
 							<div class="text-center">
-								Create an account or login to save drafts
+								Create an account or login to save gifs drafts
 							</div>
-						<% end %>
+							<div class="text-center">
+								<br>
+								<label>
+									Language:
+								</label>
+								<div class="select">
+									<select v-model="lang" class="inline-block">
+										<option>shader_webgl1</option>
+										<option>mathjs</option>
+									</select>
+								</div>
+							</div>
+						</template>
+					</div>
+				</div>
+			</div>
+			<div class="foldable foldable-hidden" v-if="is_current_users_gif">
+				<div class="foldable-header">
+					Delete Gif Zone
+				</div>
+				<div class="foldable-content">					
+					<div class="has-text-center">
+						<p class="has-text-weight-bold">Danger</p>
+						<div class="text-center">
+							<form method="post" v-bind:action="'/gifs/' + gif.id + '/delete'">
+								<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+								<input type="hidden"
+									   name="gif_id"
+									   v-bind:value="gif.id">
+								<%= submit_tag "Delete gif", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this gif?' } %>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -133,18 +195,6 @@
 								</span>
 							</p>
 						</div>
-					</div>
-					<div class="text-center">
-						<br>
-						<p>
-							<label>
-								Language:
-							</label>
-							<select v-model="lang" class="inline-block">
-								<option>shader_webgl1</option>
-								<option>mathjs</option>
-							</select>
-						</p>
 					</div>
 				</div>
 			</div>
@@ -339,11 +389,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 											   v-bind:name="'textures[][data]'"
 											   v-model="texture.data">
 									</template>
-									<% if @is_draft %>
-										<input type="hidden"
-											   name="draft_id"
-											   value="<%= @draft.id %>">
-									<% end %>
+									<input type="hidden"
+										   name="draft_id"
+										   v-model="gif.id">
 									<div class="field">
 										<label class="label">Title</label>
 										<div class="control">
@@ -402,6 +450,11 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 <script name="start-gif" type="text/plain">
  <% if !@gif.nil? %>
  <%= raw(@gif.to_json( :include => [:textures] )) %>
+ <% end %>
+</script>
+<script name="user" type="text/plain">
+ <% if !current_user.nil? %>
+ <%= raw(current_user.to_json(only: [:id] )) %>
  <% end %>
 </script>
 <%= render :partial => 'default_shader_scripts' %>

@@ -104,7 +104,7 @@ class GifsController < ApplicationController
 
     @gif.save()
     
-    redirect_to "/shader-editor/drafts/" + @gif.id.to_s
+    redirect_to "/editor/drafts/" + @gif.id.to_s
   end
   
   def show
@@ -128,6 +128,29 @@ class GifsController < ApplicationController
     
   end
 
+  # When saving stuff in editor
+  def save
+    if not user_signed_in?
+      raise "You are not logged in"
+    end
+    
+    gif = Gif.find(params[:id])
+    
+    if gif.nil? or gif.user_id != current_user.id
+      raise "This gif is not available"
+    end
+    
+    gif.title = params[:title]
+    gif.description = params[:description]
+    gif.code = params[:code]
+    gif.lang = params[:lang]
+    
+    gif.save()
+    
+    redirect_to "/editor/" + gif.id.to_s + "/edit"
+  end
+    
+  
   def play
     @gif = Gif.joins(:user)
              .left_joins(:textures)

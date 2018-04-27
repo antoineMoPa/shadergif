@@ -37,8 +37,6 @@ if(start_gif != ""){
 } else {
 	start_gif = null;
 }
-
-
  
 function default_fragment_policy(){
 	var code = "";
@@ -79,6 +77,8 @@ var app = new Vue({
 	data: {
 		lang: default_lang_policy(),
 		player: null,
+		user: null,
+		gif: start_gif,
 		status: "",
 		texture_support: false,
 		sound_support: false,
@@ -553,6 +553,13 @@ var app = new Vue({
 			}
 		}
 	},
+	computed: {
+		is_current_users_gif: function(){
+			return this.user != null &&
+				this.gif != null &&
+				this.user.id == this.gif.user_id;
+		}
+	},
 	mounted: function(){
 		var app = this;
 		
@@ -562,13 +569,23 @@ var app = new Vue({
 			var parent = qsa(".vertical-scroll-parent")[0];
 		}
 
-		this.load_start_textures();
+		{
+			// Load current user data from script
+			app.user = load_script("user").trim();
+			
+			if(app.user != ""){
+				app.user = JSON.parse(app.user);
+			} else {
+				app.user = null;
+			}
+		}
 		
 		this.set_player();
+		this.load_start_textures();
 		
 		resize();
 		window.addEventListener("resize",resize);
-				
+		
 		var frame = 0;
 		
 		var filename = "";

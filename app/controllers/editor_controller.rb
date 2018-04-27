@@ -9,7 +9,6 @@ class EditorController < ApplicationController
     gif = Gif.left_joins(:textures)
             .find(params[:gif_id])
     
-    
     if not gif.is_public
       if gif.user_id != current_user.id
         # You are trying to view someone's private gif? shameful.
@@ -47,31 +46,6 @@ class EditorController < ApplicationController
     
     render "index"
   end
-
-  def save_draft
-    if not user_signed_in?
-      raise "You are not logged in"
-    end
-
-    draft = Gif.find(params[:draft_id])
-    
-    if draft.nil? or draft.user_id != current_user.id
-      raise "This gif is not available"
-    end
-    
-    if draft.is_public
-      raise "This gif is public"
-    end
-
-    draft.title = params[:title]
-    draft.code = params[:code]
-    draft.lang = params[:lang]
-
-    draft.save()
-    
-    redirect_to "/editor/drafts/" + draft.id.to_s
-  end
-
   
   def examples
   end

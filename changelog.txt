@@ -1,3 +1,6 @@
+0.0.7:                                                                       (April X 2018)
+    feature: Icons from feather https://github.com/feathericons/feather
+
 0.0.6:                                                                       (April 25 2018)
     feature: Textures are now saved to the server and loaded when editing again.
 

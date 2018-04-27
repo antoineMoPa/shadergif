@@ -22,6 +22,5 @@ class Gif < ApplicationRecord
     
     # remove generated pngs
     `rm public/gifs/generated/#{filename}-temp-*.png`
-  end
-  
+  end  
 end
