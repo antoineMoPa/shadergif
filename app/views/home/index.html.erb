@@ -5,7 +5,7 @@
 	<%= raw(@mosaic_gifs) %> 
 </script>
 <% if !user_signed_in? %>
-	<div class="home-description">
+	<div class="home-description is-hidden-mobile">
 		<p>
 			Shadergif allows you to create gifs using the GLSL language. Have fun browsing & coding! It's <span title="read: free software, also">open source: <a href="https://github.com/antoineMoPa/shadergif">github</a>
 		</p>
@@ -15,7 +15,7 @@
 	<section class="section">
 		<div class="container">
 			<div class="columns">
-				<div class="column is-one-fifth home-sidebar">
+				<div class="column is-one-fifth home-sidebar is-hidden-tablet-only is-hidden-mobile">
 					<p class="has-text-weight-bold">Documentation</p>
 					<p>
 						Want to get started with shaders in GLSL?<br>
