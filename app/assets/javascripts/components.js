@@ -1,4 +1,5 @@
 //= require players/shader_player.js
+//= require players/shader_player_webgl2.js
 //= require players/mathjs_player.js
 //= require components/shader_player.js
 //= require components/image_box.js

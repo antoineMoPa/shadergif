@@ -59,7 +59,11 @@ function default_fragment_policy(){
 }
 
 function default_lang_policy(){
-
+	if(start_gif != null){
+		if(start_gif.lang != null){
+			return start_gif.lang;
+		}	
+	}
 	if(window.localStorage.lang != undefined){
 		if(window.localStorage.lang == "mathjs"){
 			return "mathjs";
@@ -477,11 +481,21 @@ var app = new Vue({
 				this.player = new MathjsPlayer();
 				this.player.set_container(container);
 				this.texture_support = false;
-				this.sound_support = false;
-			} else {
+				this.sound_support = false;b
+			} else if (lang == "shader_webgl2") {
 				this.texture_support = true;
 				this.sound_support = true;
+				this.player = new ShaderPlayerWebGL2();
+				this.player.set_container(container);
+
+				var vertex_code = load_script("vertex-shader-webgl2");
+				this.player.set_vertex_shader(vertex_code);
+				this.update_player();
+			} else {
 				// assume shader_webgl1
+				// (old shaders have lang == null)
+				this.texture_support = true;
+				this.sound_support = true;
 				this.player = new ShaderPlayer();
 				this.player.set_container(container);
 
@@ -496,9 +510,8 @@ var app = new Vue({
 		},
 		add_error: function(err){
 			this.error_msg = "Error\n" + err;
-
 			try{
-				if(this.lang == "shader_webgl1"){
+				if(this.lang == "shader_webgl1"){					
 					var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
 					
 					// Fix potential bug killing all text sometimes
@@ -519,7 +532,7 @@ var app = new Vue({
 					var errline = app.f_editor.addLineClass(line, "background", "errorline");
 					cm_errorLines.push(errline);
 				}
-			} finally {
+			} catch(e) {
 				// do nothing
 			}
 		},
@@ -592,7 +605,9 @@ var app = new Vue({
 		
 		if(is_example != null){
 			filename = is_example[1] || "";
-			this.lang = "shader_webgl1";
+			if(this.gif == null || this.gif.lang == null){
+				this.lang = "shader_webgl1";
+			}
 		}
 
 		// Enable codemirror
