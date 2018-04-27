@@ -40,7 +40,7 @@ if(start_gif != ""){
  
 function default_fragment_policy(){
 	var code = "";
-	
+
 	if(start_gif != null){
 		// If we are viewing a draft, use it
 		code = start_gif.code;
@@ -59,17 +59,24 @@ function default_fragment_policy(){
 }
 
 function default_lang_policy(){
+	if(is_example){
+		return "shader_webgl2";
+	}
+	
 	if(start_gif != null){
 		if(start_gif.lang != null){
 			return start_gif.lang;
 		}	
 	}
-	if(window.localStorage.lang != undefined){
+	if(typeof(window.localStorage.lang) != "undefined"){
 		if(window.localStorage.lang == "mathjs"){
 			return "mathjs";
 		}
 		if(window.localStorage.lang == "shader_webgl1"){
 			return "shader_webgl1";
+		}
+		if(window.localStorage.lang == "shader_webgl2"){
+			return "shader_webgl2";
 		}
 	}
 	
@@ -605,7 +612,7 @@ var app = new Vue({
 		if(is_example != null){
 			filename = is_example[1] || "";
 			if(this.gif == null || this.gif.lang == null){
-				this.lang = "shader_webgl1";
+				this.lang = "shader_webgl2";
 			}
 		}
 

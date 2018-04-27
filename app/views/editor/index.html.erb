@@ -84,9 +84,13 @@
 								<input type="hidden"
 									   name="draft_id"
 									   value="">
-								<input type="hidden"
-									   name="lang"
-									   v-model="lang">
+								<div class="control select">
+									<select v-model="lang" class="inline-block">
+										<option>shader_webgl2</option>
+										<option>shader_webgl1</option>
+										<option>mathjs</option>
+									</select>
+								</div>
 								<div class="has-text-right pull-right">
 									<%= submit_tag "Save draft", :class => "button is-primary" %>
 								</div>
