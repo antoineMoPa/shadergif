@@ -53,6 +53,7 @@
 												  v-model="gif.description"
 										></textarea>
 									</div>
+									<br>
 								</div>
 								<input type="hidden"
 									   name="code"
@@ -64,6 +65,11 @@
 									   name="lang"
 									   v-model="gif.lang">
 								<div class="has-text-right pull-right">
+									<a v-if="gif.is_public"
+									   class="button is-link"
+									   v-bind:href="'/gifs/' + gif.id">
+										View public gif page
+									</a>
 									<%= submit_tag "Save", :class => "button is-primary" %>
 								</div>
 								<br>
