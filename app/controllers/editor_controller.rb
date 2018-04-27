@@ -12,7 +12,10 @@ class EditorController < ApplicationController
     if not gif.is_public
       if gif.user_id != current_user.id
         # You are trying to view someone's private gif? shameful.
-        raise "No gif here"
+        @error = "No gif here."
+        @error_long = "Sorry!"
+        render 'error'
+        return
       end
     end
 
@@ -27,17 +30,26 @@ class EditorController < ApplicationController
   
   def edit_draft
     if not user_signed_in?
-      raise "You are not logged in"
+      @error = "You are not logged in."
+      @error_long = "Login and try again!"
+      render 'error'
+      return
     end
 
     draft = Gif.find(params[:gif_id])
     
     if draft.user_id != current_user.id
-      raise "This gif is not available"
+      @error = "This gif is not available."
+      @error_long = "Sorry!"
+      render 'error'
+      return
     end
     
     if draft.is_public
-      raise "This gif is public"
+      @error = "This gif is public, it is not a draft anymore."
+      @error_long = "Sorry!"
+      render 'error'
+      return
     end
     
     @gif = draft

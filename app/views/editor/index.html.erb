@@ -402,7 +402,8 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 									</template>
 									<input type="hidden"
 										   name="draft_id"
-										   v-bind:value="gif != null?gif.id:null">
+										   v-if="gif != null"
+										   v-bind:value="gif.id">
 									<div class="field">
 										<label class="label">Title</label>
 										<div class="control">

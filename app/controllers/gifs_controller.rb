@@ -9,7 +9,24 @@ class GifsController < ApplicationController
   
   def new
     if not user_signed_in?
-      raise "You are not logged in"
+      @error = "You are not logged in!"
+      @error_long = "Please create an account or sign in! "
+      render 'error'
+      return
+    end
+
+    # first verify textures size
+    if not params[:textures].nil?
+      params[:textures].each do |tex_param|
+        # Just a quick check before I code something better
+        if tex_param[:data].length > 1048576
+          @error = "Texture too big!"
+          @error_long = "Error: A texture has a size greater than 1.0mb. "
+          @error_long += "Try uploading smaller textures."
+          render 'error'
+          return
+        end
+      end
     end
     
     @gif = Gif.new
@@ -33,7 +50,10 @@ class GifsController < ApplicationController
     image_normal_begin = "data:image/gif;base64,"
     
     if not image.starts_with? image_normal_begin
-      raise "Image url encoding error"
+      @error = "Image url encoding error"
+      @error_long = "There was a weird problem while encoding your gif. You could try again with a smaller gif or a different browser."
+      render 'error'
+      return
     end
     
     # delete first part
@@ -60,11 +80,6 @@ class GifsController < ApplicationController
       params[:textures].each do |tex_param|
         rand_id = gen_rand_id.join
         filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".texture"
-
-        # Just a quick check before I code something better
-        if tex_param[:data].length > 1048576
-          raise "Error: a texture has a size greater that 1.0mb"
-        end
         
         texture = Texture.new
         texture.name = tex_param[:name]
@@ -85,7 +100,11 @@ class GifsController < ApplicationController
 
   def new_draft
     if not user_signed_in?
-      raise "You are not logged in"
+      @error = "You are not logged in!"
+      @error_long = "Please create an account or sign in! "
+      @error_long += "Maybe your session expired while you were coding."
+      render 'error'
+      return
     end
     
     @gif = Gif.new
@@ -131,13 +150,20 @@ class GifsController < ApplicationController
   # When saving stuff in editor
   def save
     if not user_signed_in?
-      raise "You are not logged in"
+      @error = "You are not logged in!"
+      @error_long = "Please create an account or sign in! "
+      @error_long += "Maybe your session expired while you were coding."
+      render 'error'
+      return
     end
     
     gif = Gif.find(params[:id])
     
     if gif.nil? or gif.user_id != current_user.id
-      raise "This gif is not available"
+      @error = "This gif is not available!"
+      @error_long = "Sorry!"
+      render 'error'
+      return
     end
     
     gif.title = params[:title]
@@ -178,7 +204,10 @@ class GifsController < ApplicationController
     gif = Gif.find(params[:gif_id])
     
     if gif.user_id != current_user.id
-      raise "Attempting to delete another users's gif..."
+      @error = "Yo that's not your gif, you can't delete it"
+      @error_long = "Sorry!"
+      render 'error'
+      return
     end
 
     Texture.where(gif_id: gif.id).destroy_all
