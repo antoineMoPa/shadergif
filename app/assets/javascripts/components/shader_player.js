@@ -1,3 +1,5 @@
+//= require lib/base.js
+
 Vue.component(
 	'shader-player',
 	{
@@ -55,11 +57,20 @@ Vue.component(
 		},
 		mounted: function(){
 			var app = this;
-			this.shader_player = new ShaderPlayer();
+
+			var vertex_code = "";
+				
+			if(app.gif.lang == null || app.gif.lang == "shader_webgl1"){
+				this.shader_player = new ShaderPlayer();
+				vertex_code = load_script("vertex-shader");
+			} else if (app.gif.lang == "shader_webgl2"){
+				this.shader_player = new ShaderPlayerWebGL2();
+				vertex_code = load_script("vertex-shader-webgl2");
+			}
 			
 			this.$nextTick(function(){
 				var container = this.$el.querySelectorAll(".player-container")[0];
-				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
+				this.vertex_shader = vertex_code;
 			
 				this.shader_player.set_container(container);
 
@@ -84,8 +95,6 @@ Vue.component(
 					}
 				}
 
-				console.log(app.gif);
-				
 				this.shader_player.set_vertex_shader(app.vertex_shader);
 				this.shader_player.set_code(app.gif.code);
 				

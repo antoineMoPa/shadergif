@@ -483,6 +483,8 @@ var app = new Vue({
 			}
 			
 			container.innerHTML = "";
+
+			var vertex_code = "";
 			
 			if(lang == "mathjs"){
 				this.player = new MathjsPlayer();
@@ -495,7 +497,7 @@ var app = new Vue({
 				this.player = new ShaderPlayerWebGL2();
 				this.player.set_container(container);
 
-				var vertex_code = load_script("vertex-shader-webgl2");
+				vertex_code = load_script("vertex-shader-webgl2");
 				this.player.set_vertex_shader(vertex_code);
 				this.update_player();
 			} else {
@@ -506,7 +508,7 @@ var app = new Vue({
 				this.player = new ShaderPlayer();
 				this.player.set_container(container);
 
-				var vertex_code = load_script("vertex-shader");
+				vertex_code = load_script("vertex-shader");
 				this.player.set_vertex_shader(vertex_code);
 				this.update_player();
 			}
