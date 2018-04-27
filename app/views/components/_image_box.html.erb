@@ -35,7 +35,7 @@
 				{{ gif.username }}
 				</a>
 			</div>
-			<p>{{ gif.description }}</p>
+			<pre class="has-text-left gif-description">{{ gif.description }}</pre>
 			<div>
 				Uploaded on
 				<a v-bind:href="'/gifs/' + gif.id">

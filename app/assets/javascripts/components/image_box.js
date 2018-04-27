@@ -1,3 +1,5 @@
+//= require lib/umarkdown.js
+
 Vue.component(
 	'image-box',
 	{
@@ -69,6 +71,13 @@ Vue.component(
 			video.onShadergifPause = function(){
 				comp.show_video = false;
 			};
+
+			this.$nextTick(function(){
+				/* run umarkdown on gif description */
+				umarkdown(
+					this.$el.querySelectorAll(".gif-description")[0]
+				);
+			});
 		}
 	}
 );
