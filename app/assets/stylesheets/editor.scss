@@ -223,29 +223,24 @@ hr{
 	line-height:20px;
 	color:#333;
 	font-size:14px;
-}
-
-.new-texture-input{
-	margin-left: 10px;
-	button, input{
-		max-width: 75%;
-		display: inline-block;
-	}
+	margin-top:10px;
+	padding:5px;
 }
 
 .textures-list{
-	background: #eee;
 	margin-right: 10px;
+	width:100%;
+		
 	input{
 		width:auto;
 	}
 	
-	li{
-		padding-left:10px;
-		padding-right:10px;
-		&:nth-child(2n+1){
-			background:#f8f8f8;
-		}
+	th{
+		font-weight:normal;
+	}
+
+	.new-texture-button{
+		margin-right:0;
 	}
 }
 

@@ -188,41 +188,57 @@
 						<p>Textures not supported for this language.</p>
 					</div>
 					<div class="settings" v-else>
-						<p>Add a texture</p>
-						<div class="new-texture-input">
-							<input type="file" name="texture" class="shadergif-texture-input" accept=".png,.jpg" multiple>
-							<button v-on:click="new_texture">Add</button>
-						</div>
-
 						<div class="textures">
-							<ul class="textures-list">
-								<li v-for="(texture, index) in textures">
-									{{ index }} -
-									<input type="text" v-model="texture.name">
-									<span title="sampler2D name">texture{{ index }}<span>
-									<button class="delete-texture-button"
-											v-on:click="delete_texture(index)">
-										Remove
-									</button>
-								</li>
-							</ul>
+							<table class="table textures-list">
+								<tr>
+									<th>
+										#
+									</th>
+									<th>
+										File name
+									</th>
+									<th>
+										Sampler2D name
+									</th>
+									<th class="has-text-right">
+										Remove Texture
+									</th>
+								</tr>
+								<tr v-for="(texture, index) in textures">
+									<td>
+										{{ index }}
+									</td>
+									<td>
+										<input type="text" v-model="texture.name">
+									</td>
+									<td>
+										<span title="sampler2D name">texture{{ index }}<span>
+									</td>
+									<td class="has-text-right">
+										<button class="delete-texture-button"
+												v-on:click="delete_texture(index)">
+											Remove
+										</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="2">
+										<input type="file" name="texture" class="shadergif-texture-input" accept=".png,.jpg" multiple>
+									</td>
+									<td colspan="2" class="has-text-right">
+										<button class="new-texture-button"
+											v-on:click="new_texture">Add</button>
+									</td>
+								</tr>
+							</table>
 						</div>
-						<p class="has-text-weight-bold">
+						<p>
 							Example use:
 						</p>
 						<pre class="texture-info-pre">// Top of the file:
 uniform sampler2D texture0;
 // Main:
 col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
-						<br>
-						<p class="has-text-weight-bold">WIP</p>
-						<p>
-							Note: textures are a work in progress.
-							Textures are currently not saved to the server.
-							The gifs you post will be as you see, but when
-							you will open it in the shader player again or in
-							the editor, the textures will not exist.
-						</p>
 					</div>
 				</div>
 			</div>
