@@ -328,4 +328,17 @@ hr{
     padding-right: 10px;
 }
 
+
+.foldable-header .feather-icon{
+	filter: invert(100%);
+	position:relative;
+	top:2px;
+}
+
+button .feather-icon{
+	filter: invert(100%);
+	position:relative;
+	top:3px;
+}
+
 /* END UI*/

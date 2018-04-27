@@ -14,6 +14,7 @@
 			<pre class="error-pre">{{ error_msg }}</pre>
 			<div class="foldable">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/edit.svg">
 					Gif/Draft Management
 				</div>
 				<div class="foldable-content">
@@ -112,6 +113,7 @@
 			</div>
 			<div class="foldable foldable-hidden" v-if="is_current_users_gif">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/trash.svg">
 					Delete Gif Zone
 				</div>
 				<div class="foldable-content">					
@@ -131,6 +133,7 @@
 			</div>
 			<div class="foldable">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/sliders.svg">
 					Gif tools
 				</div>
 				<div class="foldable-content">
@@ -138,22 +141,25 @@
 						<p>
 							<template v-if="!rendering_gif">
 								<button name="make-gif" v-on:click="make_gif" class="inline-block">
-									
+									<img class="feather-icon" src="/icons/feather/plus.svg">
 									Create gif
 								</button>
 							</template>
 							<template v-else>
 								<button class="inline-block">
+									<img class="feather-icon" src="/icons/feather/loader.svg">
 									Rendering...
 								</button>
 							</template>
 							
 							<button name="make-png" v-on:click="make_png" class="inline-block">
+								<img class="feather-icon" src="/icons/feather/image.svg">
 								Create stacked png
 							</button>
 							<button name="make-zip"
-									v-on:click="make_zip"
+										  v-on:click="make_zip"
 									class="inline-block">
+								<img class="feather-icon" src="/icons/feather/folder.svg">
 								Create .zip file
 							</button>
 							<a v-if="has_zip"
@@ -166,6 +172,7 @@
 								</button>
 							</a>
 						</p>
+						<br>
 						<p>
 							<label for="autocompile">
 								Automatically recompile while typing
@@ -200,6 +207,7 @@
 			</div>
 			<div class="foldable" v-if="lang == 'mathjs'">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/life-buoy.svg">
 					MathJS mode help
 				</div>
 				<div class="foldable-content">
@@ -231,6 +239,7 @@
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/image.svg">
 					Textures
 				</div>
 				<div class="foldable-content">
@@ -294,6 +303,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/settings.svg">
 					gif.js settings
 				</div>
 				<div class="foldable-content">
@@ -315,6 +325,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			<div class="foldable foldable-hidden" v-if="sound_support">
 				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/speaker.svg">
 					GPU sound tools
 				</div>
 				<div class="foldable-content">
