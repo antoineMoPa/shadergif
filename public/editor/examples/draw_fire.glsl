@@ -1,8 +1,10 @@
+#version 300 es
 //PASSES=3
 precision highp float;
 
-varying vec2 UV;
-varying vec2 lastUV;
+in vec2 UV;
+out vec4 out_color;
+in vec2 lastUV;
 uniform vec2 mouse;
 uniform float time;
 uniform int pass;
@@ -35,22 +37,22 @@ void main(void){
 		}
 		
 		// Blend in last frame
-		col += 0.17 * texture2D(pass1, lastUV + vec2(0.0, 0.0));
-		col += 0.17 * texture2D(pass1, lastUV + vec2(0.0, 0.005));
-		col += 0.17 * texture2D(pass1, lastUV + vec2(0.005, 0.0));
-		col += 0.33 * texture2D(pass1, lastUV + vec2(0.0, -0.02));
-		col += 0.17 * texture2D(pass1, lastUV + vec2(-0.005, 0.0));
+		col += 0.17 * texture(pass1, lastUV + vec2(0.0, 0.0));
+		col += 0.17 * texture(pass1, lastUV + vec2(0.0, 0.005));
+		col += 0.17 * texture(pass1, lastUV + vec2(0.005, 0.0));
+		col += 0.33 * texture(pass1, lastUV + vec2(0.0, -0.02));
+		col += 0.17 * texture(pass1, lastUV + vec2(-0.005, 0.0));
 		
 		col.gb *= vec2(0.95, 0.7) + 0.05 * cos(time * PI2);
 		col.rgb *= 0.98;
 		
 	} else if (pass == 2){
-		col = texture2D(pass0, lastUV);
+		col = texture(pass0, lastUV);
 	} else if (pass == 3){
-		col = texture2D(lastPass, lastUV);
+		col = texture(lastPass, lastUV);
 	}
 
 	col.a = 1.0;
 	
-	gl_FragColor = col;
+	out_color = col;
 }

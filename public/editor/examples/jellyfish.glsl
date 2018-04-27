@@ -1,11 +1,13 @@
+#version 300 es
 // Fragment shader
 
 #define PI 3.141592653589793
 
 precision highp float;
 
-varying vec2 UV;
-varying vec3 v_position;
+in vec2 UV;
+out vec4 out_color;
+in vec3 v_position;
 uniform float time;
 uniform float ratio;
 
@@ -150,5 +152,5 @@ void main(void){
     col += 0.2 * jfish.a *
         tan(2.0 * background(pos + vec2(0.23, 0.0)));
 
-    gl_FragColor = col;
+    out_color = col;
 }

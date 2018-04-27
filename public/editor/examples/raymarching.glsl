@@ -1,3 +1,4 @@
+#version 300 es
 #define PI 3.14159265359
 #define PI2 6.28318530718
 
@@ -16,7 +17,8 @@
 precision highp float;
 uniform float time;
 uniform float iGlobalTime;
-varying vec2 UV;
+in vec2 UV;
+out vec4 out_color;
 uniform vec3 iResolution;
 #endif
 
@@ -81,6 +83,6 @@ void main(){
 
     mainImage(col, uv);
 
-    gl_FragColor = col;
+    out_color = col;
 }
 #endif

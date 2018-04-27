@@ -1,8 +1,11 @@
+#version 300 es
+
 // Fragment shader
 precision highp float;
 
-varying vec2 UV;
-varying vec3 v_position;
+in vec2 UV;
+out vec4 out_color;
+in vec3 v_position;
 uniform float time;
 uniform float ratio;
 
@@ -194,5 +197,5 @@ void main(void){
     // Some shading
     col -= 0.03 * abs(3.0 * cos(x));
     
-    gl_FragColor = col;
+    out_color = col;
 }

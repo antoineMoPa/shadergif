@@ -1,8 +1,10 @@
+#version 300 es
 //PASSES=3
 precision highp float;
 
-varying vec2 UV;
-varying vec2 lastUV;
+in vec2 UV;
+out vec4 out_color;
+in vec2 lastUV;
 uniform float time;
 uniform int pass;
 uniform sampler2D lastPass;
@@ -32,16 +34,16 @@ void main(void){
         vec2 pos_offset = vec2(0.0);
         
         pos_offset.x += 0.002 * cos(time * PI2 + pos.y * 100.0);
-        col = texture2D(lastPass, lastUV + pos_offset);
+        col = texture(lastPass, lastUV + pos_offset);
         col.r += 0.1 * floor(pos.y * 10.0);
     } else if (pass == 3){
         // Last pass: add some blue and a vignette effect
-        col = texture2D(lastPass, lastUV);
+        col = texture(lastPass, lastUV);
         col.b += 0.1 * floor(pos.x * 10.0);
         col = col - 2.0 * pow(distance(UV, vec2(0.5)), 3.0);
     }
 
     col.a = 1.0;
     
-    gl_FragColor = col;
+    out_color = col;
 }

@@ -1,6 +1,8 @@
+#version 300 es
 precision highp float;
 
-varying vec2 UV;
+in vec2 UV;
+out vec4 out_color;
 uniform float ratio;
 
 void main(void){
@@ -19,5 +21,5 @@ void main(void){
 
     col.a = 1.0;
     
-    gl_FragColor = col;
+    out_color = col;
 }
