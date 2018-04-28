@@ -32,7 +32,7 @@ Need help setting up a dev machine? You can contact me on twitter @antoineMoPa /
 
 I guess the first step is to setup a server in a virtual machine, or on your computer if you run Linux like me:
 
-https://doc.shadergif.com/server/Server/
+https://doc.shadergif.com/Development/Server/
 
 I have a virtualbox exported virtual machine that you could use, contact me to have a download link. (I did not upload it anywhere yet since it is 1.8GB) I'll be happy to send the VM to any (possible) contributor.
 
