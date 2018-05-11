@@ -1,3 +1,6 @@
+0.0.9:                                                                       (May 10 2018)
+    feature: Update info text for webgl2 texture
+
 0.0.8:                                                                       (April 27 2018)
     feature: Icons from feather https://github.com/feathericons/feather
 	feature: Update title, description and language of a gif
