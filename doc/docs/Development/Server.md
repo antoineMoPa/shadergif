@@ -22,8 +22,8 @@ Some commands need the root password (sudo) and some commands may fail (download
 	./configure; make; sudo make install
 	sudo gem install bundle
 	# Create database and user
-        # Note, you might need to change 'mariadb' to 'mysql'
-        # in the following commands (e.g.: if not using Debian 9+)
+	# Note, you might need to change 'mariadb' to 'mysql'
+	# in the following commands (e.g.: if not using Debian 9+)
 	echo "CREATE USER 'shadergif_development'@'localhost' IDENTIFIED BY 'shadergif_dev_password';" | sudo mariadb
 	echo "GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';" | sudo mariadb
 	echo "GRANT ALL PRIVILEGES ON shadergif_test.* TO 'shadergif_development'@'localhost';" | sudo mariadb
