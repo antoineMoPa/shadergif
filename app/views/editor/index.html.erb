@@ -314,10 +314,18 @@
 						<p>
 							Example use:
 						</p>
-						<pre class="texture-info-pre">// Top of the file:
+						<template v-if="lang == 'shader_webgl2'">
+							<pre class="texture-info-pre">// Top of the file:
+uniform sampler2D texture0;
+// Main:
+col += texture(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
+						</template>
+						<template v-else>
+							<pre class="texture-info-pre">// Top of the file:
 uniform sampler2D texture0;
 // Main:
 col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
+						</template>
 					</div>
 				</div>
 			</div>
