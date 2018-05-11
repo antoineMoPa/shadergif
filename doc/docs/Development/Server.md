@@ -13,24 +13,27 @@ Note: **copy** paste **line by line**.
 Some commands need the root password (sudo) and some commands may fail (downloading/building ruby).
 
 	# First, install and build ruby
-    sudo apt-get install git binutils zlib1g-dev libssl-dev mariadb-client mariadb-server-10.1 libmariadb-dev libav-tools imagemagick
-    mkdir ~/bin
-    cd ~/bin
-    wget https://cache.ruby-lang.org/pub/ruby/ruby-2.4-stable.tar.gz
+	sudo apt-get install git binutils zlib1g-dev libssl-dev mariadb-client mariadb-server-10.1 libmariadb-dev libav-tools imagemagick
+	mkdir ~/bin
+	cd ~/bin
+	wget https://cache.ruby-lang.org/pub/ruby/ruby-2.4-stable.tar.gz
 	tar -zxvf ruby-*.tar.gz
-    cd $(ls | grep "ruby" | grep -v "\.tar\.gz")
+	cd $(ls | grep "ruby" | grep -v "\.tar\.gz")
 	./configure; make; sudo make install
 	sudo gem install bundle
-    # Create database and user
+	# Create database and user
+        # Note, you might need to change 'mariadb' to 'mysql'
+        # in the following commands (e.g.: if not using Debian 9+)
 	echo "CREATE USER 'shadergif_development'@'localhost' IDENTIFIED BY 'shadergif_dev_password';" | sudo mariadb
-    echo "GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';" | sudo mariadb
-    echo "GRANT ALL PRIVILEGES ON shadergif_test.* TO 'shadergif_development'@'localhost';" | sudo mariadb
-    # Then clone the app wherever you like
+	echo "GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';" | sudo mariadb
+	echo "GRANT ALL PRIVILEGES ON shadergif_test.* TO 'shadergif_development'@'localhost';" | sudo mariadb
+	
+	# Then clone the app wherever you like
 	cd ~
 	git clone https://github.com/antoineMoPa/shadergif.git
    	cd shadergif
 	bundle install
-    rails db:create
+	rails db:create
 	rails db:migrate
 	rails server
 
@@ -40,4 +43,4 @@ Then you can go to 127.0.0.1:3000
 
 There is a task for that:
 
-    rake gifs:recreate_thumbs_and_vids
+	rake gifs:recreate_thumbs_and_vids
