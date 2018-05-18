@@ -447,21 +447,25 @@ var app = new Vue({
 			var app = this;
 			var input = document.querySelectorAll(".shadergif-texture-input")[0];
 			var pl = this.$refs['shader-player'];
+
+			function watch_reader(reader, name){
+				reader.addEventListener("load", function (){
+					app.textures.push({
+						name: name,
+						data: reader.result
+					});
+					app.player.add_texture(reader.result);
+				}, false);
+			}
 			
 			for(var i = 0; i < input.files.length; i++){
 				try{
 					var file = input.files[i];
 					var reader  = new FileReader();
 
-					reader.addEventListener("load", function (){
-						app.textures.push({
-							name: file.name,
-							data: reader.result
-						});
-						app.player.add_texture(reader.result);
-					}, false);
-					
- 					if(file){
+					watch_reader(reader, file.name);
+
+					if(file){
 						reader.readAsDataURL(file);
 					}
 				} catch (e) {
