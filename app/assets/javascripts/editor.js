@@ -42,7 +42,7 @@ function default_fragment_policy(){
 	var code = "";
 
 	if(start_gif != null){
-		// If we are viewing a draft, use it
+	// If we are viewing a draft, use it
 		code = start_gif.code;
 	} else if(
 		window.localStorage.code != undefined &&
@@ -53,6 +53,7 @@ function default_fragment_policy(){
 		code = window.localStorage.code;
 	} else {
 		code = load_script("default-fragment-shader");
+		window.localStorage.lang = "shader_webgl2";
 	}
 
 	return code;
@@ -489,12 +490,14 @@ var app = new Vue({
 			container.innerHTML = "";
 
 			var vertex_code = "";
+
+			console.log("update_player", lang);
 			
 			if(lang == "mathjs"){
 				this.player = new MathjsPlayer();
 				this.player.set_container(container);
 				this.texture_support = false;
-				this.sound_support = false;b
+				this.sound_support = false;
 			} else if (lang == "shader_webgl2") {
 				this.texture_support = true;
 				this.sound_support = true;
@@ -504,6 +507,7 @@ var app = new Vue({
 				vertex_code = load_script("vertex-shader-webgl2");
 				this.player.set_vertex_shader(vertex_code);
 				this.update_player();
+				
 			} else {
 				// assume shader_webgl1
 				// (old shaders have lang == null)

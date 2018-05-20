@@ -1,5 +1,6 @@
 class ShaderPlayerWebGL2 {
 	constructor(){
+		console.log("constructor");
 		this.compiled = false;
 		this.canvas = document.createElement("canvas");
 		this.gl = null;
@@ -39,6 +40,7 @@ class ShaderPlayerWebGL2 {
 		{
 			// Init canvas
 			var gl = this.canvas.getContext("webgl2");
+			console.log(gl);
 			this.canvas.width = this.width;
 			this.canvas.height = this.height;
 			this.canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));
