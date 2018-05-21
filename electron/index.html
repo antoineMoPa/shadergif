@@ -1,4 +1,201 @@
-<div id="shadergif-app" class="vertical-scroll-parent columns">
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ShaderGif</title>
+		
+
+		<meta name="description" content="Write GLSL code and generate gifs."/>
+		
+		<meta charset="utf-8">
+		
+		<meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="2Q5vgBaeIO5LrL1xNcyNQS1PJSKA8Xk5LKiYsy4p/m86KqzB+sxixyLhcc49LKKFucYoBvOgnHR+Xuavt1eBgw==" />
+		
+			<script src="./assets/application-dev-353e72c627921bcbc2c01502a0ea2cb8eb9d6bdcde60fb3d52f4b03851c7c320.js"></script>
+		
+		
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+			<link rel="stylesheet" media="all" href="./assets/editor-b660a964da628aa21984499a8f601ac464da11975e2f788a973ddceccb8333db.css" />
+	</head>
+	<body>
+		<script type="text/html" id="shader-player-template">
+	<div v-bind:class="'shader-player ' + (fullscreen? 'shader-player-fullscreen' :'')">
+		<div class="player-wrapper"
+			 v-if="shader_player != null"
+			 v-bind:style="player_size_style">
+			
+			<div class="fullscreen-button"
+				 v-on:click="fullscreen = !fullscreen">
+				<span v-if="!fullscreen">[ full screen ]</span>
+				<span v-else>[ close ]</span>
+				
+			</div>
+			<div class="player-container">
+			</div>
+		</div>
+		<p class="text-center" v-if="debug_info && shader_player">
+			time: {{ shader_player.time.toFixed(4) }}, mouse: {{ shader_player.mouse[0].toFixed(4) }}, {{ shader_player.mouse[1].toFixed(4) }}
+		</p>
+	</div>
+</script>
+<script name="vertex-shader" type="text/plain">// Vertex Shader
+attribute vec3 position;
+varying vec2 UV;
+varying vec2 lastUV;
+varying vec3 v_position;
+uniform vec2 renderBufferRatio;
+
+void main(){
+	 v_position = position;
+	 UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+	 lastUV = UV / renderBufferRatio;
+	 gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+}
+</script>
+<script name="vertex-shader-webgl2" type="text/plain">#version 300 es
+// Vertex Shader for WebGL2
+ 
+layout(location = 0) in vec3 position;
+out vec2 UV;
+out vec2 lastUV;
+out vec3 v_position;
+
+uniform vec2 renderBufferRatio;
+
+void main(){
+	 v_position = position;
+	 UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+	 lastUV = UV / renderBufferRatio;
+	 gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+}
+</script>
+
+<script type="text/html" id="image-box-list-template">
+	<div class="image-box-list">
+		<image-box
+			 v-for="gif in gifs"
+			 key="gif"
+			 v-bind:gif="gif"
+			 ></image-box>
+	</div>
+</script>
+
+<script type="text/html" id="image-box-template">
+	<div class="image-box content has-text-centered">
+		<div class="">
+			<div v-on:click="show_video = true"
+				 class="image-container">
+				<transition name="view-gif">
+					<div
+						v-if="!show_video"
+						class="view-gif-button">
+						<div class="view-gif-button-inside">
+							GIF
+						</div>
+					</div>
+				</transition>
+				<video loop v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'" v-on:click="play">
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
+									type="video/webm">
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.mp4'"
+									type="video/mp4">
+					<source
+						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.ogv'"
+									type="video/ogg">
+				</video>
+			</div>
+			<br>
+			<strong class="subtitle">
+				<a v-bind:href="'/gifs/' + gif.id">
+					{{ gif.title }}
+				</a>
+			</strong>
+			<div>
+				By <a v-bind:href="'/user/' + gif.username">
+				{{ gif.username }}
+				</a>
+			</div>
+			<pre class="has-text-left gif-description">{{ gif.description }}</pre>
+			<div>
+				Uploaded on
+				<a v-bind:href="'/gifs/' + gif.id">
+					{{ (new Date(gif.created_at)).toDateString() }}
+				</a>
+			</div>
+		</div>
+		
+		<div>
+			<p>
+				<a v-bind:href="'/gifs/' + gif.image_filename">Raw gif (gif)</a> - 
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.mp4'">Video (mp4)</a> -
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.ogv'">Video (ogv)</a> - 
+				<a v-bind:href="'/gifs/generated/' + gif.image_filename + '-preview.png'">Preview (png)</a>
+				<br><br>
+			</p>
+		</div>
+		<button
+			v-if="!code_is_visible"
+			v-on:click="show_code"
+			class="button"
+		>
+			<img class="feather-icon" src="./icons/feather/align-left.svg">
+			View code
+		</button>
+		<a v-bind:href="'/editor/' + gif.id + '/edit'">
+			<button class="button">
+				<img class="feather-icon" src="./icons/feather/code.svg">
+				Use in editor
+			</button>
+		</a>
+		<a v-bind:href="'/gifs/' + gif.id + '/play'"
+		   v-if="gif.lang != 'mathjs'"
+						class="button">
+			<img class="feather-icon" src="./icons/feather/play.svg">
+			Run Shader
+		</a>
+		<!--
+			 Note the ugly tag closing design to avoid whitespace
+			 before and after the code in the <pre>
+		   -->
+		<pre
+			v-if="code_is_visible"
+			class="image-code has-text-left"
+		><button class="button close-image-code"
+				 v-on:click="code_is_visible = !code_is_visible"
+		 >
+			<img class="feather-icon" src="./icons/feather/x.svg">
+			Close
+		</button
+			   ><code class="language-glsl" data-manual
+				>{{ gif.code }}</code></pre>
+
+		<br>
+		<div class="gif-comments" v-if="gif.comments != undefined">
+			<div class="has-text-left" v-if="gif.comments.length > 0">
+				<strong>Comments</strong>
+			</div>
+			<div class="comment" v-for="comment in gif.comments">
+				<div class="comment-username has-text-left">
+					<a v-bind:href="'/user/'+comment.user.username">{{ comment.user.username }}</a>&nbsp;:
+				</div>
+				<div class="comment-content has-text-left">
+					{{ comment.content }}
+				</div>
+			</div>
+			<br>
+				<strong>Please <a href="/users/sign_in">sign in</a> to comment</strong>
+		</div>
+		<br>
+	</div>
+</script>
+
+
+		
+		<script src="./assets/components-c6289e8d40cd584ea5206e418e8a801726891ab4c4616dd430ff150528657086.js"></script>
+		
+		<div id="shadergif-app" class="vertical-scroll-parent columns">
 	<p v-if="status != ''"
 	   class="app-status">
 		{{ status }}
@@ -12,123 +209,10 @@
 			<pre class="error-pre">{{ error_msg }}</pre>
 			<div class="foldable">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/edit.svg">
+					<img class="feather-icon" src="./icons/feather/edit.svg">
 					General Settings
 				</div>
 				<div class="foldable-content">
-					<% if not Rails.env.electron? %>
-						<div class="draft-management">
-							<template v-if="is_current_users_gif">
-								<%= form_tag("/gifs/save", method: "post") do %>
-									<div class="columns">
-										<div class="column">
-											<div class="field">
-												<label class="label">Title</label>
-												<div class="control">
-													<input type="text" name="title" placeholder="Give this a name" v-model="gif.title">
-												</div>
-											</div>
-										</div>
-										<div class="column">
-											<div class="field">
-												<label class="label">
-													Language
-												</label>
-												<div class="control select">
-													<select v-model="lang" class="inline-block">
-														<option>shader_webgl2</option>
-														<option>shader_webgl1</option>
-														<option>mathjs</option>
-													</select>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="field" v-if="gif.is_public">
-										<label class="label">Description</label>
-										<div class="control">
-											<textarea name="description"
-													  class="textarea"
-													  v-model="gif.description"
-											></textarea>
-										</div>
-										<br>
-									</div>
-									<input type="hidden"
-										   name="code"
-										   v-bind:value="code">
-									<input type="hidden"
-										   name="id"
-										   v-model="gif.id">
-									<input type="hidden"
-										   name="lang"
-										   v-model="gif.lang">
-									<div class="columns">
-										
-										<div class="column">
-											<a v-if="gif.is_public"
-											   class="button is-link"
-											   v-bind:href="'/gifs/' + gif.id"
-											   target="_blank">
-												View public gif page
-											</a>
-										</div>
-										<div class="column">
-											<div class="has-text-right pull-right">
-												<%= submit_tag "Save", :class => "button is-primary" %>
-											</div>
-										</div>
-									</div>
-									<br>
-									<p>Note: Submitted gifs themselves can't be updated, only the code, title and description.</p>
-								<% end %>
-							</template>
-							<template v-else-if="user != null">
-								<%= form_tag("/gifs/save_draft", method: "post") do %>
-									<div class="field">
-										<label class="label">Save code as a new draft</label>
-										<div class="control">
-											<input type="text" name="title" placeholder="Give this a name" value="">
-										</div>
-									</div>
-									<input type="hidden"
-										   name="code"
-										   v-model="code">
-									<input type="hidden"
-										   name="draft_id"
-										   value="">
-									<div class="control select">
-										<select v-model="lang" class="inline-block">
-											<option>shader_webgl2</option>
-											<option>shader_webgl1</option>
-											<option>mathjs</option>
-										</select>
-									</div>
-									<div class="has-text-right pull-right">
-										<%= submit_tag "Save draft", :class => "button is-primary" %>
-									</div>
-								<% end %>
-							</template>
-							<template v-else>
-								<div class="text-center">
-									Create an account or login to save gifs drafts
-								</div>
-								<div class="text-center">
-									<br>
-									<label>
-										Language:
-									</label>
-									<div class="select">
-										<select v-model="lang" class="inline-block">
-											<option>shader_webgl2</option>
-											<option>shader_webgl1</option>
-											<option>mathjs</option>
-										</select>
-									</div>
-								</div>
-							</template>
-						</div>
-					<% else %>
 						<div class="text-center">
 							<label>
 								Language:
@@ -141,34 +225,11 @@
 								</select>
 							</div>
 						</div>
-					<% end %>
 				</div>
 			</div>
-			<% if not Rails.env.electron? %>
-				<div class="foldable foldable-hidden" v-if="is_current_users_gif">
-					<div class="foldable-header">
-						<img class="feather-icon" src="/icons/feather/trash.svg">
-						Delete Gif Zone
-					</div>
-					<div class="foldable-content">					
-						<div class="has-text-center">
-							<p class="has-text-weight-bold">Danger</p>
-							<div class="text-center">
-								<form method="post" v-bind:action="'/gifs/' + gif.id + '/delete'">
-									<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-									<input type="hidden"
-										   name="gif_id"
-										   v-bind:value="gif.id">
-									<%= submit_tag "Delete gif", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this gif?' } %>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			<% end %>
 			<div class="foldable">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/sliders.svg">
+					<img class="feather-icon" src="./icons/feather/sliders.svg">
 					Gif tools
 				</div>
 				<div class="foldable-content">
@@ -176,25 +237,25 @@
 						<p>
 							<template v-if="!rendering_gif">
 								<button name="make-gif" v-on:click="make_gif" class="inline-block">
-									<img class="feather-icon" src="/icons/feather/plus.svg">
+									<img class="feather-icon" src="./icons/feather/plus.svg">
 									Create gif
 								</button>
 							</template>
 							<template v-else>
 								<button class="inline-block">
-									<img class="feather-icon" src="/icons/feather/loader.svg">
+									<img class="feather-icon" src="./icons/feather/loader.svg">
 									Rendering...
 								</button>
 							</template>
 							
 							<button name="make-png" v-on:click="make_png" class="inline-block">
-								<img class="feather-icon" src="/icons/feather/image.svg">
+								<img class="feather-icon" src="./icons/feather/image.svg">
 								Create stacked png
 							</button>
 							<button name="make-zip"
 										  v-on:click="make_zip"
 									class="inline-block">
-								<img class="feather-icon" src="/icons/feather/folder.svg">
+								<img class="feather-icon" src="./icons/feather/folder.svg">
 								Create .zip file
 							</button>
 							<a v-if="has_zip"
@@ -242,7 +303,7 @@
 			</div>
 			<div class="foldable" v-if="lang == 'mathjs'">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/life-buoy.svg">
+					<img class="feather-icon" src="./icons/feather/life-buoy.svg">
 					MathJS mode help
 				</div>
 				<div class="foldable-content">
@@ -274,7 +335,7 @@
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/image.svg">
+					<img class="feather-icon" src="./icons/feather/image.svg">
 					Textures
 				</div>
 				<div class="foldable-content">
@@ -346,7 +407,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/settings.svg">
+					<img class="feather-icon" src="./icons/feather/settings.svg">
 					gif.js settings
 				</div>
 				<div class="foldable-content">
@@ -368,7 +429,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			<div class="foldable foldable-hidden" v-if="sound_support">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/speaker.svg">
+					<img class="feather-icon" src="./icons/feather/speaker.svg">
 					GPU sound tools
 				</div>
 				<div class="foldable-content">
@@ -416,62 +477,6 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 						<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
 						<img v-bind:src="image.src">
 						<template v-if="image.type == 'gif'">
-							<% if not Rails.env.electron? %>
-								<% if user_signed_in? %>
-									<p class="has-text-weight-bold">Submit to front page</p>
-									<p>Please include licensing information in
-										the code if needed.</p>
-									
-									<%= form_tag("/gifs/new", method: "post") do %>
-										<input type="hidden"
-											   name="image"
-											   v-bind:value="image.blob">
-										<input type="hidden"
-											   name="code"
-											   v-bind:value="image.code">
-										<input type="hidden"
-											   name="lang"
-											   v-bind:value="lang">
-										<input type="hidden"
-											   name="lang"
-											   v-bind:value="lang">
-										<!-- All the textures as form elements -->
-										<template v-for="(texture, index) in textures">
-											<input type="hidden"
-												   v-bind:name="'textures[][name]'"
-												   v-model="texture.name">
-											<input type="hidden"
-												   v-bind:name="'textures[][data]'"
-												   v-model="texture.data">
-										</template>
-										<input type="hidden"
-											   name="draft_id"
-											   v-if="gif != null"
-											   v-bind:value="gif.id">
-										<div class="field">
-											<label class="label">Title</label>
-											<div class="control">
-												<input type="text" name="title">
-											</div>
-										</div>
-										<div class="field">
-											<label class="label">Description</label>
-											<div class="control">
-												<textarea name="description" class="textarea"
-												></textarea>
-											</div>
-										</div>
-										
-										<div class="has-text-right">
-											<%= submit_tag "Publish", :class => "button is-primary" %>
-										</div>
-									<% end %>
-								<% else %>
-									<div class="text-center">
-										Create an account or login to submit gifs
-									</div>
-								<% end %>
-							<% end %>
 						</template>
 					</div>
 				</div>
@@ -505,16 +510,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 	</div>
 </div>
 <script name="start-gif" type="text/plain">
- <% if !@gif.nil? %>
- <%= raw(@gif.to_json( :include => [:textures] )) %>
- <% end %>
 </script>
 <script name="user" type="text/plain">
- <% if !current_user.nil? %>
- <%= raw(current_user.to_json(only: [:id] )) %>
- <% end %>
 </script>
-<% if Rails.env.electron? %>
 	<script>
 	 const {ipcRenderer} = require('electron');
 	 ipcRenderer.on('code-request', function(event, filePath) {
@@ -524,8 +522,110 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 		 app.f_editor.setValue(content);
 	 });
 	</script>
-<% end %>
 
-<%= render :partial => 'default_shader_scripts' %>
-<%= javascript_include_tag 'editor' %>
+<script name="default-fragment-shader" type="text/plain">#version 300 es
+precision highp float;
 
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+in vec2 UV;
+uniform float time;
+out vec4 out_color;
+uniform float ratio;
+
+void main(void){
+	float x = UV.x * ratio - 0.5;
+	float y = UV.y - 0.5;
+	vec2 pos = vec2(x, y); 
+	
+	vec4 col = vec4(0.0);
+	
+	col.r = abs(sin(30.0 * y + 3.1416 * time + 0.3));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 0.5));
+	col.b = abs(sin(30.0 * y + 3.1416 * time + 1.0));
+	col *= cos(30.0 * x);
+	col.a = 1.0;
+	
+    out_color = col;
+}
+</script>
+<script name="default-sound-shader" type="text/plain">// Sound Fragment Shader
+precision highp float;
+
+varying vec2 UV;
+varying vec2 lastUV;
+uniform float soundTime;
+uniform int pass;
+
+ uniform sampler2D lastPass;
+
+#define PI 3.14159265359
+#define PI2 6.28318530718
+
+vec4 pass2(){
+    vec4 col = vec4(0.0);
+	 
+	 col += texture2D(lastPass, lastUV);
+    
+    return col;
+}
+
+/* 
+	Write your sound code in this function
+	t : time for current (sub)pixel
+ */
+float val(float t){
+	 float note = 440.0;
+
+	 float signal =  
+   	 0.25 * cos(2.0 * PI * 1.0 * note * t);
+    
+    return signal;
+}
+
+vec4 pass1(){
+    vec4 col = vec4(0.0);
+	 
+    float sr = 48000.0;
+    float dt = 1.0/sr;
+
+    // Calculate time from position
+    float t = 
+   	 (UV.x) * 3.0 * 256.0 + (UV.y) * 3.0 * 256.0 * 256.0;
+	 
+    t /= sr;
+	 t += soundTime;
+
+	 // Encode sound in rgb values
+    col.r += val(t + 0.0 * dt);
+    col.g += val(t + 1.0 * dt);
+    col.b += val(t + 2.0 * dt);
+    col.a += 1.0;
+    
+    col.rgb /= 2.0;
+    col.rgb += 0.5;
+    
+    return col;
+}
+
+
+void main(){
+    vec4 col = vec4(0.0);
+	 
+	 if(pass == 1){
+		 col += pass1();
+        
+	 } else if(pass == 2){
+		 col += pass2();
+	 }
+
+    gl_FragColor = col;
+}
+</script>
+
+<script src="./assets/editor-b713a21671c6e28fc242bb70a10db57f29764265ebaba9903de4817d4235e88e.js"></script>
+
+
+	</body>
+</html>

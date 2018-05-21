@@ -1,4 +1,7 @@
-0.0.9:                                                                       (May 10 2018)
+0.0.10:                                                                        (May 21 2018)
+    feature: New electron app with very initial features
+	         (Saving gifs,pngs does not work yet)
+0.0.9:                                                                         (May 10 2018)
     feature: Update info text for webgl2 texture
 
 0.0.8:                                                                       (April 27 2018)

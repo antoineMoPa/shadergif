@@ -149,13 +149,18 @@ hr{
     width:60%;
 }
 
+#shadergif-app,
+.column{
+	margin-top:0;
+	margin-bottom:0;
+	padding-top:0;
+	padding-bottom:0;
+}
+
 .vertical-scroll-parent{
     max-height:100%;
 	height:100%;
-	height:calc( 100% - 30px );
-	max-height:calc( 100% - 30px );
 	overflow:hidden;
-	
 }
 
 .vertical-scroll{
@@ -178,6 +183,9 @@ hr{
 	.CodeMirror{
         max-width:100%;
     }
+	.gif-pane{
+		padding-top:30px;
+	}
 }
 
 @media all and (max-width:768px){

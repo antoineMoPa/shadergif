@@ -1,0 +1,9 @@
+assets/**
+icons/**
+lib/**
+node_modules/**
+public/**
+workers/**
+images/**
+changelog.txt
+yarn.lock
