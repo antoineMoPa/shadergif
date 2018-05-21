@@ -3,6 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const url = require('url');
 const version = require('./package.json').version;
+const shadergifFileTypes = [{
+	name: 'Shadergif files (.glsl, .fs, .shadergif)',
+	extensions: ['shadergif', 'glsl', 'fs']
+}];
 
 function createWindow () {
 	// Create the browser window.
@@ -49,17 +53,26 @@ function createWindow () {
 }
 
 function on_save_button(){
-	dialog.showSaveDialog(function (filePath) {
+	dialog.showSaveDialog({
+		name: 'myshader.shadergif',
+		filters: shadergifFileTypes
+	}, function (filePath) {
 		if (filePath === undefined) {
 			return;
 		}
-		win.webContents.send('code-request', filePath);
+		
+		if(/.*\.shadergif$/.exec(filePath) != null){
+			// Saving a shadergif file
+			win.webContents.send('shadergif-file-request', filePath);
+		} else {
+			// Saving plain code
+			win.webContents.send('code-request', filePath);
+		}
 	});
 }
 
-ipcMain.on('code-return', (event, code, lang, filePath) => {
-	console.log(code, lang, filePath);
-	fs.writeFile(filePath, code, function (err) {
+ipcMain.on('code-return', (event, content, filePath) => {
+	fs.writeFile(filePath, content, function (err) {
 		if (err === undefined || err == null) {
 			dialog.showMessageBox({
 				message: 'The file has been saved!',
@@ -72,14 +85,22 @@ ipcMain.on('code-return', (event, code, lang, filePath) => {
 });
 
 function on_open_button(){
-	dialog.showOpenDialog(function (filePaths) {
+	dialog.showOpenDialog({
+		filters: shadergifFileTypes
+	}, function (filePaths) {
 		if(typeof(filePaths) == 'undefined' || filePaths.length == 0){
 			return;
 		}
 		var filePath = filePaths[0];
 		try {
 			var file = fs.readFileSync(filePath, 'utf-8');
-			win.webContents.send('code-set', file);
+
+			if(/.*\.shadergif$/.exec(filePath) != null){
+				// Reading a shadergif file
+				win.webContents.send('shadergif-file-set', file);
+			} else {
+				win.webContents.send('code-set', file);
+			}
 		} catch (err) {
 			console.log('Error reading the file: ' + JSON.stringify(err));
 		}

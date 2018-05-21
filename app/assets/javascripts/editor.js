@@ -720,9 +720,42 @@ var app = new Vue({
 function init_electron(){
 	const {ipcRenderer} = require('electron');
 	ipcRenderer.on('code-request', function(event, filePath) {
-		ipcRenderer.send('code-return', app.code, app.lang, filePath);
+		ipcRenderer.send('code-return', app.code, filePath);
 	});
 	ipcRenderer.on('code-set', function(event, content) {
 		app.f_editor.setValue(content);
 	});
+	
+	ipcRenderer.on('shadergif-file-request', function(event, filePath) {
+		var file = {
+			code: app.code,
+			textures: app.textures,
+			lang: app.lang,
+			width: app.width,
+			height: app.height,
+			frames: app.frames
+		};
+		file = JSON.stringify(file);
+		ipcRenderer.send('code-return', file, filePath);
+	});
+
+	ipcRenderer.on('shadergif-file-set', function(event, file) {
+		file = JSON.parse(file);
+		alert("setting!");
+		app.code = file.code;
+		app.textures.splice(0);
+		for(var i = 0; i < file.textures.length; i++){
+			app.textures.push(
+				file.textures[i]
+			);
+			app.player.add_texture(file.textures[i].data);
+		}
+		app.lang = file.lang;
+		app.width = file.width;
+		app.height = file.height;
+		app.frames = file.frames;
+		
+		app.f_editor.setValue(app.code);
+	});
+	
 }
