@@ -471,6 +471,15 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 										Create an account or login to submit gifs
 									</div>
 								<% end %>
+
+							<% else %>
+								<div class="has-text-right">
+									<a class="button"
+									   v-bind:href="image.src"
+									   download="anim.gif">
+										Save
+									</a>
+								</div>
 							<% end %>
 						</template>
 					</div>
@@ -478,23 +487,6 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 			</div>
 			
 			<br>
-			
-			<div class="text-left">
-				<p>
-					<b>Linux/ImageMagick tips</b>
-					<br>
-					To make a gif from the png images in the .zip archive in Linux:
-				</p>
-				<pre>convert image-*.png anim.gif</pre>
-				<p>
-					For stacked png, on Linux, you can split the result like this:
-					<pre>convert image.png -crop {{width}}x{{height}} +repage image-%04d.png</pre>
-				</p>
-				<p>
-					And then make gifs:
-				</p>
-				<pre>convert image-*.png anim.gif</pre>
-			</div>
 		</div>
 	</div>
 	<div class="column limit-width-desktop">
@@ -519,6 +511,11 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 <%= javascript_include_tag 'editor' %>
 <% if Rails.env.electron? %>
 	<script>
-	 init_electron();
+	 try{
+		 init_electron();
+	 } catch (e) {
+		 // Most probably just running in browser
+		 // for development
+	 }
 	</script>
 <% end %>

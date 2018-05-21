@@ -581,6 +581,9 @@ var app = new Vue({
 					add_image(start_gif.textures[i], i);
 				}
 			}
+		},
+		downloadImage: function(src, name){
+			window.open(src, name);
 		}
 	},
 	computed: {

@@ -23,6 +23,11 @@ Rails.application.configure do
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = false
 
+  # If debugging in browser, we want to serve assets
+  if not ENV["BUILDING_ELECTRON"].present?
+    config.public_file_server.enabled = true
+  end
+  
   Devise.secret_key = "electronnokey"
   
   # https://stackoverflow.com/questions/9674714/disable-asset-minification-in-rails-production
