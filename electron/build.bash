@@ -30,9 +30,6 @@ for element in "public/assets" "public/icons" "public/images" "public/workers" "
 	cp -r $element $electron_path;
 done
 
-# Cleanup
-rm -r public/assets
-
 cd electron
 
 # editor.js expects this to be there
