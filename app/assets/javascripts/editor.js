@@ -712,3 +712,14 @@ var app = new Vue({
 		});
 	}
 });
+
+/* Electron specific code */
+function init_electron(){
+	const {ipcRenderer} = require('electron');
+	ipcRenderer.on('code-request', function(event, filePath) {
+		ipcRenderer.send('code-return', app.code, app.lang, filePath);
+	});
+	ipcRenderer.on('code-set', function(event, content) {
+		app.f_editor.setValue(content);
+	});
+}

@@ -7,3 +7,4 @@ workers/**
 images/**
 changelog.txt
 yarn.lock
+index.html

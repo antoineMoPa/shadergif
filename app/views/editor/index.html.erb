@@ -514,18 +514,11 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
  <%= raw(current_user.to_json(only: [:id] )) %>
  <% end %>
 </script>
-<% if Rails.env.electron? %>
-	<script>
-	 const {ipcRenderer} = require('electron');
-	 ipcRenderer.on('code-request', function(event, filePath) {
-		 ipcRenderer.send('code-return', app.code, app.lang, filePath);
-	 });
-	 ipcRenderer.on('code-set', function(event, content) {
-		 app.f_editor.setValue(content);
-	 });
-	</script>
-<% end %>
 
 <%= render :partial => 'default_shader_scripts' %>
 <%= javascript_include_tag 'editor' %>
-
+<% if Rails.env.electron? %>
+	<script>
+	 init_electron();
+	</script>
+<% end %>
