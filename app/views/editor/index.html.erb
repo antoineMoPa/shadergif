@@ -415,8 +415,8 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 						   v-on:click="images.splice(index, 1)">[close]</p>
 						<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
 						<img v-bind:src="image.src">
-						<template v-if="image.type == 'gif'">
-							<% if not Rails.env.electron? %>
+						<% if not Rails.env.electron? %>
+							<template v-if="image.type == 'gif'">
 								<% if user_signed_in? %>
 									<p class="has-text-weight-bold">Submit to front page</p>
 									<p>Please include licensing information in
@@ -471,17 +471,16 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 										Create an account or login to submit gifs
 									</div>
 								<% end %>
-
-							<% else %>
-								<div class="has-text-right">
-									<a class="button"
-									   v-bind:href="image.src"
-									   download="anim.gif">
-										Save
-									</a>
-								</div>
-							<% end %>
-						</template>
+							</template>
+						<% else %>
+						<div class="has-text-right">
+							<a class="button"
+							   v-bind:href="image.src"
+							   download="anim.gif">
+								Save
+							</a>
+						</div>
+						<% end %>
 					</div>
 				</div>
 			</div>
