@@ -1,9 +1,19 @@
 window.onload = function(){
-	if(document.getElementById("main-app") != null){
+	var has_app = false;
+	var is_search = false;
+
+	var el = document.getElementById("main-app");
+
+	if(el == null){
+		el = document.getElementById("search-app");
+		is_search = true;
+	}
+	
+	if(el != null){
 		var chunk_size = 8;
 
 		var main_app = new Vue({
-			el: "#main-app",
+			el: el,
 			data: {
 				gifs: [],
 				mosaic_gifs: [],
@@ -39,7 +49,16 @@ window.onload = function(){
 					req.addEventListener("load", function(){
 						app.receive_more(req);
 					});
-					req.open("GET", "/gifs/list?take="+chunk_size+"&skip="+app.current_offset);
+
+					if(is_search){
+						var url = new URL(window.location.href);
+						var keyword = url.searchParams.get("search");
+						req.open("GET", "/search.json?search="+keyword+"&take="+chunk_size+"&skip="+app.current_offset);
+					} else {
+						req.open("GET", "/gifs/list?take="+chunk_size+"&skip="+app.current_offset);
+					}
+					
+					
 					req.send();
 				}
 			}

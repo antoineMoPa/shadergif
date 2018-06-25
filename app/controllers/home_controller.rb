@@ -26,6 +26,19 @@ class HomeController < ApplicationController
     ActiveSupport.escape_html_entities_in_json = true
     search = params[:search]
     
+    if params.has_key?(:take)
+      take = params[:take]
+    else
+      take = 5
+    end
+
+    if params.has_key?(:skip)
+      skip = params[:skip]
+    else
+      skip = 0
+    end
+    
+    
     # Big homepage gifs
     @gifs = Gif
            .order(created_at: :desc)
@@ -35,9 +48,12 @@ class HomeController < ApplicationController
            .where('users.username LIKE :search OR ' +
                   'title LIKE :search ' +
                   'OR description LIKE :search', search: "%#{search}%")
-           .take(5)
+           .limit(take).offset(skip)
            .to_json
-    
+
+    if request.path_parameters[:format] == 'json'
+      render :json => @gifs
+    end
   end
   
 end
