@@ -1,5 +1,6 @@
 0.0.11:                                                                       (June 21 2018)
     feature: Search
+	modification: Make lines wrap in editor, since horizontal scrolling is painful.
 
 0.0.10:                                                                        (May 21 2018)
     feature: New electron app with very initial features

@@ -635,7 +635,8 @@ var app = new Vue({
 		app.f_editor = CodeMirror.fromTextArea(fragment_code, {
 			lineNumbers: true,
 			mode: "x-shader/x-fragment",
-			indentUnit: 4
+			indentUnit: 4,
+			lineWrapping: true
 		});
 		
 		// Fetch file and put it in textarea
