@@ -1,0 +1,10 @@
+<script type="application/json" id="main-gifs-json">
+	<%= raw(@gifs) %> 
+</script>
+<div id="main-app" class="search-page">
+	<section class="section">
+		<div class="container">
+			<image-box-list v-bind:gifs="gifs"></image-box-list>
+		</div>
+	</section>
+</div>

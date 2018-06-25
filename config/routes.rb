@@ -8,6 +8,8 @@ Rails.application.routes.draw do
   get 'user/gifs-and-drafts', to: 'user#gifs_and_drafts', as: 'user_gifs_and_drafts'
   get 'user/:username', to: 'user#show', as: 'user_show'
 
+  get 'search' => 'home#search'
+  
   # Legacy paths that should be deleted one day
   # (shader-editor)
   get 'shader-editor' => 'editor#index'
