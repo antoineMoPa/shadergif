@@ -31,60 +31,60 @@
 		<%= render :partial => 'components/all_components' %>
 		
 		<%= javascript_include_tag 'components' %>
-		<% if not @is_editor %>
+		<% if not (@is_editor and Rails.env.electron?) %>
 			<header class="navbar">
-			<div class="container">
-				
-				<div class="navbar-brand">
-					<a class="navbar-item" title="Version <%= Shadergif::VERSION %>" href="/">
-						<img class="logo" src="/images/logo-shadergif.png" alt="ShaderGif">
-					</a>
+				<div class="container">
 					
-					<button class="button navbar-burger" data-target="main-mobile-menu">
-						<span></span>
-						<span></span>
-						<span></span>
-					</button>
-				</div>
-				<div class="navbar-menu" id="main-mobile-menu">
-					<div class="navbar-start navbar-search-container">
-						<form class="search-form" action="/search" method="GET">
-							<input class="input navbar-search" type="text" name="search" placeholder="Search...">
-							<input type="submit" class="button navbar-search-submit" value="Search">
-						</form>
+					<div class="navbar-brand">
+						<a class="navbar-item" title="Version <%= Shadergif::VERSION %>" href="/">
+							<img class="logo" src="/images/logo-shadergif.png" alt="ShaderGif">
+						</a>
+						
+						<button class="button navbar-burger" data-target="main-mobile-menu">
+							<span></span>
+							<span></span>
+							<span></span>
+						</button>
 					</div>
-					<div class="navbar-end">
-						<a class="navbar-item is-active" href="/">
-							Home
-						</a>
-						<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
-							Doc
-						</a>
-						<% if user_signed_in? %>
-							<%= link_to 'Gifs&Drafts', user_gifs_and_drafts_path, :class => "navbar-item"  %>
-							<%= link_to 'Account', edit_user_registration_path, :class => "navbar-item"  %>
-							<%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "navbar-item"  %>
-						<% else %>
-							<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
-						<% end %>
-						<% if @is_editor %>
-							<a class="navbar-item is-active"
-							   href="/editor/examples"
-							   target="_blank">
-								Examples
+					<div class="navbar-menu" id="main-mobile-menu">
+						<div class="navbar-start navbar-search-container">
+							<form class="search-form" action="/search" method="GET">
+								<input class="input navbar-search" type="text" name="search" placeholder="Search...">
+								<input type="submit" class="button navbar-search-submit" value="Search">
+							</form>
+						</div>
+						<div class="navbar-end">
+							<a class="navbar-item is-active" href="/">
+								Home
 							</a>
-						<% else %>
-							<span class="navbar-item">
-								<a class="button"
-								   href="/editor/">
-									<img class="feather-icon" src="/icons/feather/code.svg">
-									Shader Editor
+							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
+								Doc
+							</a>
+							<% if user_signed_in? %>
+								<%= link_to 'Gifs&Drafts', user_gifs_and_drafts_path, :class => "navbar-item"  %>
+								<%= link_to 'Account', edit_user_registration_path, :class => "navbar-item"  %>
+								<%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "navbar-item"  %>
+							<% else %>
+								<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
+							<% end %>
+							<% if @is_editor %>
+								<a class="navbar-item is-active"
+								   href="/editor/examples"
+								   target="_blank">
+									Examples
 								</a>
-							</span>
-						<% end %>
+							<% else %>
+								<span class="navbar-item">
+									<a class="button"
+									   href="/editor/">
+										<img class="feather-icon" src="/icons/feather/code.svg">
+										Shader Editor
+									</a>
+								</span>
+							<% end %>
+						</div>
 					</div>
 				</div>
-			</div>
 			</header>
 		<% end %>
 		
