@@ -128,7 +128,7 @@ class GifsController < ApplicationController
   
   def show
     @gif = Gif.joins(:user)
-             .select("gifs.*, users.username")
+             .select("gifs.*, users.username, users.profile_picture")
              .where("is_public = true")
              .find(params[:id])
     
@@ -180,7 +180,7 @@ class GifsController < ApplicationController
   def play
     @gif = Gif.joins(:user)
              .left_joins(:textures)
-             .select("gifs.*, users.username")
+             .select("gifs.*, users.username, users.profile_picture")
              .where("is_public = true")
              .find(params[:id])
   end
@@ -189,7 +189,7 @@ class GifsController < ApplicationController
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
-           .select("gifs.*, users.username")
+           .select("gifs.*, users.username, users.profile_picture")
            .where("is_public = true")
            .limit(params[:take]).offset(params[:skip])
     
@@ -221,7 +221,7 @@ class GifsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_gif
       @gif = Gif.joins(:user)
-             .select("gifs.*, users.username")
+             .select("gifs.*, users.username, users.profile_picture")
              .find(params[:id])
     end
 
