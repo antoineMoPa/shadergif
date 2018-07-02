@@ -68,21 +68,19 @@
 						
 					</p>
 				</div>
-				<div class="column news-block">
-					<div class="news">
-						<h3 class="title">Last gifs uploaded by our users</h3>
-						<image-box-list v-bind:gifs="gifs"></image-box-list>
-						<br>
-						<div class="has-text-centered">
-							<button v-if="has_more"
-										  v-on:click="load_more"
-										  class="button is-large"
-							>
-								view more
-							</button>
-							<div v-else>
-								No more gifs to load!
-							</div>
+				<div class="column">
+					<h3 class="title">Last gifs uploaded by our users</h3>
+					<image-box-list v-bind:gifs="gifs"></image-box-list>
+					<br>
+					<div class="has-text-centered">
+						<button v-if="has_more"
+								v-on:click="load_more"
+								class="button is-large"
+						>
+							view more
+						</button>
+						<div v-else>
+							No more gifs to load!
 						</div>
 					</div>
 				</div>

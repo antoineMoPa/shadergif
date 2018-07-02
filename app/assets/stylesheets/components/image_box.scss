@@ -14,6 +14,13 @@
 	}
 }
 
+.image-box{
+	padding-top:10px;
+	box-shadow:0 0 4px rgba(0,0,0,0.1);
+	background:#fff;
+	border-radius:3px;
+}
+
 
 .image-code{
 	box-shadow:0 0 30px rgba(0, 0, 0, 0.3);
@@ -57,8 +64,7 @@
 	line-height:66px;
 	float:left;
 	margin-left:10px;
-	padding-left:10px;
-	border-left:3px solid #ddd;
+	padding-left:20px;
 	text-align:center;
 }
 
@@ -67,6 +73,8 @@
 }
 
 .title-box{
-	box-shadow:0 0 10px rgba(0,0,0,0.3);
+	margin:10px;
 	height:66px;
+	margin-bottom:10px;
+	max-width:600px;
 }

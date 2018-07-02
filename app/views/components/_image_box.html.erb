@@ -1,6 +1,21 @@
 <script type="text/html" id="image-box-template">
 	<div class="image-box content has-text-centered">
 		<div class="">
+			<div class="has-text-left title-box">
+				<span class="profile-box">
+					<img v-if="gif.profile_picture"
+						 class="profile-picture"
+						 v-bind:src="'/profile_pictures/' + gif.profile_picture">
+					<a v-bind:href="'/user/' + gif.username" class="profile-username">
+						{{ gif.username }}
+					</a>
+				</span>
+				<strong class="subtitle gif-subtitle">
+					<a v-bind:href="'/gifs/' + gif.id">
+						{{ gif.title }}
+					</a>
+				</strong>
+			</div>
 			<div v-on:click="show_video = true"
 				 class="image-container">
 				<transition name="view-gif">
@@ -25,21 +40,6 @@
 				</video>
 			</div>
 			<br>
-			<div class="has-text-left title-box">
-				<span class="profile-box">
-					<img v-if="gif.profile_picture"
-						 class="profile-picture"
-						 v-bind:src="'/profile_pictures/' + gif.profile_picture">
-					<a v-bind:href="'/user/' + gif.username" class="profile-username">
-						{{ gif.username }}
-					</a>
-				</span>
-				<strong class="subtitle gif-subtitle">
-					<a v-bind:href="'/gifs/' + gif.id">
-						{{ gif.title }}
-					</a>
-				</strong>
-			</div>
 			<div class="clearfix"></div>
 			<pre class="has-text-left gif-description">{{ gif.description }}</pre>
 			<div>

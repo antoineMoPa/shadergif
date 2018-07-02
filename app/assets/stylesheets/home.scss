@@ -38,24 +38,18 @@
     }
 }
 
-.home-page .column{
+.home-page .home-sidebar,
+.home-page .news-block,
+.home-page .title{
 	background:#fff;
 }
 
-.news{
-	max-width:580px;
-	margin:auto;
-
-	.title{
-		font-size:20px;
-		color:#555;
-		margin-left:15px;
-	}
-	
-	.image-box{
-		margin-bottom: 20px;
-		padding-bottom: 20px;
-		border-bottom: 4px solid rgba(0,0,0,0.1);
-	}
+.home-page .title{
+	padding:20px;
+	padding-bottom:25px;
+	margin-top:-10px;
+	margin-bottom:-5px;
+	border-radius:3px;
+	border-bottom-right-radius:0;
+	border-bottom-left-radius:0;
 }
-
