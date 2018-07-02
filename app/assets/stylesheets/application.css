@@ -49,6 +49,13 @@
 	float:left;
 }
 
+.profile-picture-form .profile-picture{
+	width:200px;
+	height:200px;
+	float:none;
+}
+
+
 .profile-username{
 	float:left;
 	line-height:50px;

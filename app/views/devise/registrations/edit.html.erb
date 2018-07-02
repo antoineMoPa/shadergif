@@ -4,7 +4,7 @@
 	   class="button">View your public profile</a>
 </div>
 
-<section class="section">
+<section class="section profile-picture-form">
 	<div class="column is-4 is-offset-4 devise-form has-text-centered">
 		<h2 class="title">Profile Picture</h2>
 		<%= form_tag("/user/update_profile_pic", method: "post", :multipart => true) do %>
@@ -15,9 +15,13 @@
 					<img class="profile-picture" src="/profile_pictures/<%= current_user.profile_picture %>">
 				</div>
 			<% end %>
-			<input type="file" name="profile_picture" accept=".png,.jpg">
+			<div class="cropper-container">
+				<input type="file" name="profile_picture_tmp" accept=".png,.jpg">
+				<input type="hidden" name="profile_picture" >
+			</div>
+			<img class="crop-img" width="200px" height="200px">
 			<br><br>
-			<%= submit_tag "Save", :class => "button is-primary" %>
+			<%= submit_tag "Save", :class => "button is-primary save-profile-pic" %>
 		<% end %>
 	</div>
 </section>
@@ -84,3 +88,57 @@
 		<%= link_to "Back", :back %>
 	</div>
 </section>
+
+<!-- I don't want to overload the whole app with the cropper,
+	 just where it is needed -->
+<script src="/assets/lib/cropperjs/cropper.min.js"></script>
+
+<script>
+ var input_tmp = document.querySelectorAll("input[name='profile_picture_tmp']")[0];
+ var input = document.querySelectorAll("input[name='profile_picture']")[0];
+ var image = document.querySelectorAll(".crop-img")[0];
+ var save_button = document.querySelectorAll(".save-profile-pic")[0];
+
+ var cropper;
+ 
+ input_tmp.addEventListener('change', function (e) {
+	 
+     var files = e.target.files;
+     var done = function (url) {
+         input_tmp.value = '';
+         image.src = url;
+		 image.onload = function(){
+			 cropper = new Cropper(image, {
+				 aspectRatio: 1,
+				 viewMode: 3,
+			 });
+		 }
+     };
+     var reader;
+     var file;
+     var url;
+     if (files && files.length > 0) {
+         file = files[0];
+         if (URL) {
+             done(URL.createObjectURL(file));
+         } else if (FileReader) {
+             reader = new FileReader();
+             reader.onload = function (e) {
+				 done(reader.result);
+             };
+             reader.readAsDataURL(file);
+         }
+     }
+ });
+
+ save_button.onclick = function(e){
+	 var dataURL = cropper.getCroppedCanvas({
+		 minWidth: 20,
+		 minHeight: 20,
+		 maxWidth: 200,
+		 maxHeight: 200,
+	 }).toDataURL('image/png');
+	 input.value = dataURL;
+ };
+ 
+</script>

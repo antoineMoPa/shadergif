@@ -26,6 +26,10 @@
 		<% else %>
 			<%= stylesheet_link_tag    'application', media: 'all' %>
 		<% end %>
+
+		<% if current_page?(:controller => 'registrations', :action => 'edit') %>
+			<link rel="stylesheet" href="/assets/lib/cropperjs/cropper.min.css">
+		<% end %>
 	</head>
 	<body>
 		<%= render :partial => 'components/all_components' %>

@@ -17,7 +17,10 @@ class UserController < ApplicationController
 
     @user.profile_picture = new_filename
 
-    if params[:profile_picture].size > (1024 * 128)
+    url_encoded_image = params[:profile_picture]
+    image = Base64.decode64(url_encoded_image['data:image/png;base64,'.length .. -1])
+    
+    if image.size > (1024 * 128)
       @error = "Image too big!"
       @error_long = "Error: The picture has a size greater than 131kb. "
       @error_long += "Try uploading a smaller image."
@@ -27,7 +30,7 @@ class UserController < ApplicationController
     end
 
     File.open("public/profile_pictures/" + new_filename, 'wb') do|f|
-      f.write(params[:profile_picture].read)
+      f.write(image)
     end
     
     @user.save()
