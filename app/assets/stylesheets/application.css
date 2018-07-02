@@ -33,3 +33,10 @@
 	display:inline-block;
 	margin-top:7px;
 }
+
+.profile-picture{
+	border-radius:50%;
+	width:70px;
+	height:70px;
+	box-shadow:0 0 10px rgba(0,0,0,0.3);
+}

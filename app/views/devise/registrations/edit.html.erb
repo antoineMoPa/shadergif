@@ -6,6 +6,24 @@
 
 <section class="section">
 	<div class="column is-4 is-offset-4 devise-form has-text-centered">
+		<h2 class="title">Profile Picture</h2>
+		<%= form_tag("/user/update_profile_pic", method: "post", :multipart => true) do %>
+			<p>Create or update your profile picture.</p>
+			<br>
+			<% if not current_user.profile_picture.nil? %>
+				<div class="has-text-centered">
+					<img class="profile-picture" src="/profile_pictures/<%= current_user.profile_picture %>">
+				</div>
+			<% end %>
+			<input type="file" name="profile_picture" accept=".png,.jpg">
+			<br><br>
+			<%= submit_tag "Save", :class => "button is-primary" %>
+		<% end %>
+	</div>
+</section>
+
+<section class="section">
+	<div class="column is-4 is-offset-4 devise-form has-text-centered">
 		<h2 class="title">Edit <%= resource_name.to_s.humanize %></h2>
 		
 		<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
