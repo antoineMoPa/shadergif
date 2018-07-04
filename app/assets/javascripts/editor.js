@@ -491,8 +491,6 @@ var app = new Vue({
 
 			var vertex_code = "";
 
-			console.log("update_player", lang);
-			
 			if(lang == "mathjs"){
 				this.player = new MathjsPlayer();
 				this.player.set_container(container);
@@ -584,6 +582,9 @@ var app = new Vue({
 		},
 		downloadImage: function(src, name){
 			window.open(src, name);
+		},
+		on_submit: function(e){
+			this.status = 'Be patient while gif is uploading!';
 		}
 	},
 	computed: {
@@ -760,3 +761,4 @@ function init_electron(){
 	});
 	
 }
+
