@@ -36,11 +36,11 @@ function umarkdown(element){
 			new_html += "</pre>";
 
 			// Bold
-			line = line.replace(/\*\*(.*)\*\*/g,"<span class='bold'>$1</span>");
+			line = line.replace(/\*\*([^\*]*)\*\*/g,"<span class='bold'>$1</span>");
 			// Italic
-			line = line.replace(/\*(.*)\*/g,"<span class='italic'>$1</span>");
+			line = line.replace(/\*([^\*]*)\*/g,"<span class='italic'>$1</span>");
 			// Backticks
-			line = line.replace(/\`(.*)\`/g,"<span class='backticks'>$1</span>");
+			line = line.replace(/\`([^\`]*)\`/g,"<span class='backticks'>$1</span>");
 			
 			new_html += line;
 		}
