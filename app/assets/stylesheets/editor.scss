@@ -112,9 +112,8 @@ textarea{
 	background:#eee;
 }
 
-.gif-canvas{
-    margin-bottom:20px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
+.player-container canvas{
+    max-width: calc(100% - 40px);
 }
 
 button{
