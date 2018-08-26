@@ -42,7 +42,7 @@ function default_fragment_policy(){
 	var code = "";
 
 	if(start_gif != null){
-	// If we are viewing a draft, use it
+		// If we are viewing a draft, use it
 		code = start_gif.code;
 	} else if(
 		window.localStorage.code != undefined &&
@@ -84,6 +84,47 @@ function default_lang_policy(){
 	return "shader_webgl1";
 }
 
+function default_frame_count_policy(){
+	if(start_gif != null){
+		if(start_gif.frames != null){
+			return parseInt(start_gif.frames);
+		}
+	}
+	
+	if(typeof(window.localStorage.frames) != "undefined"){
+		return parseInt(window.localStorage.frames);
+	}
+	
+	return 10;
+}
+
+function default_width_policy(){
+	if(start_gif != null){
+		if(start_gif.width != null){
+			return parseInt(start_gif.width);
+		}
+	}
+
+	// No localstorage, since bugs would happen. Example:
+	// Create a huge canvas by mistake
+	// Browser semi-hangs
+	// You reload tab / reboot PC to fix problem
+	// LocalStorage says width/height is still huge
+	// You are stuck in the bug
+
+	return 540;
+}
+
+function default_height_policy(){
+	if(start_gif != null){
+		if(start_gif.height != null){
+			return parseInt(start_gif.height);
+		}
+	}
+
+	return 540;
+}
+
 var app = new Vue({
 	el: "#shadergif-app",
 	data: {
@@ -100,9 +141,9 @@ var app = new Vue({
 		f_editor: null,
 		code: default_fragment_policy(),
 		frames_defined_in_code: false,
-		width: 540,
-		height: 540,
-		frames: 10,
+		width: default_width_policy(),
+		height: default_height_policy(),
+		frames: default_frame_count_policy(),
 		anim_delay: 100,
 		rendering_gif: false,
 		has_zip: false,
@@ -256,7 +297,8 @@ var app = new Vue({
 								blob: reader.result,
 								src: URL.createObjectURL(blob),
 								code: code,
-								textures: app.textures
+								textures: app.textures,
+								frames: app.frames
 							});
 							
 							app.status = "Done!";

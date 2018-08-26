@@ -35,7 +35,7 @@
 													Language
 												</label>
 												<div class="control select">
-													<select v-model="lang" class="inline-block">
+													<select v-model="lang" name="lang" class="inline-block">
 														<option>shader_webgl2</option>
 														<option>shader_webgl1</option>
 														<option>mathjs</option>
@@ -63,6 +63,25 @@
 									<input type="hidden"
 										   name="lang"
 										   v-model="gif.lang">
+
+									<div class="text-center">
+										<div class="settings inline-block">
+											<p>
+												w:<input type="number" name="width" v-model.number="width">
+												h:<input type="number" name="height" v-model.number="height">
+												frames:<input type="number"
+															  name="frames"
+															  v-if="!frames_defined_in_code"
+															  v-model.lazy.number="frames">
+												<span v-if="frames_defined_in_code"
+													  title="(defined in code)">
+													{{ frames }}
+												</span>
+											</p>
+										</div>
+									</div>
+									<br>
+									
 									<div class="columns">
 										
 										<div class="column">
@@ -80,7 +99,8 @@
 										</div>
 									</div>
 									<br>
-									<p>Note: Submitted gifs themselves can't be updated, only the code, title and description.</p>
+									<p>Note: Submitted gifs themselves can't be updated.</p>
+									<p>The code, title, description and other parameters can be modified later.</p>
 								<% end %>
 							</template>
 							<template v-else-if="user != null">
@@ -98,11 +118,25 @@
 										   name="draft_id"
 										   value="">
 									<div class="control select">
-										<select v-model="lang" class="inline-block">
+										<select v-model="lang" name="lang" class="inline-block">
 											<option>shader_webgl2</option>
 											<option>shader_webgl1</option>
 											<option>mathjs</option>
 										</select>
+									</div>
+									<div class="settings inline-block">
+										<p>
+											w:<input type="number" name="width" v-model.number="width">
+											h:<input type="number" name="height" v-model.number="height">
+											frames:<input type="number"
+														  name="frames"
+														  v-if="!frames_defined_in_code"
+														  v-model.lazy.number="frames">
+											<span v-if="frames_defined_in_code"
+												  title="(defined in code)">
+												{{ frames }}
+											</span>
+										</p>
 									</div>
 									<div class="has-text-right pull-right">
 										<%= submit_tag "Save draft", :class => "button is-primary"%>
@@ -134,11 +168,26 @@
 								Language:
 							</label>
 							<div class="select">
-								<select v-model="lang" class="inline-block">
+								<select v-model="lang" name="lang" class="inline-block">
 									<option>shader_webgl2</option>
 									<option>shader_webgl1</option>
 									<option>mathjs</option>
 								</select>
+							</div>
+						</div>
+						<div class="text-center">
+							<div class="settings inline-block">
+								<p>
+									w:<input type="number" v-model.number="width" name="width">
+									h:<input type="number" v-model.number="height" name="height">
+									frames:<input type="number"
+												  v-if="!frames_defined_in_code"
+												  v-model.lazy.number="frames">
+									<span v-if="frames_defined_in_code"
+										  title="(defined in code)">
+										{{ frames }}
+									</span>
+								</p>
 							</div>
 						</div>
 					<% end %>
@@ -222,21 +271,6 @@
 							</button>
 							<br>
 						</p>
-					</div>
-					<div class="text-center">
-						<div class="settings inline-block">
-							<p>
-								w:<input type="number" v-model.number="width">
-								h:<input type="number" v-model.number="height">
-								frames:<input type="number"
-											  v-if="!frames_defined_in_code"
-											  v-model.lazy.number="frames">
-								<span v-if="frames_defined_in_code"
-									  title="(defined in code)">
-									{{ frames }}
-								</span>
-							</p>
-						</div>
 					</div>
 				</div>
 			</div>
@@ -433,8 +467,8 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 											   name="lang"
 											   v-bind:value="lang">
 										<input type="hidden"
-											   name="lang"
-											   v-bind:value="lang">
+											   name="frames"
+											   v-bind:value="image.frames">
 										<!-- All the textures as form elements -->
 										<template v-for="(texture, index) in textures">
 											<input type="hidden"

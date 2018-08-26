@@ -11,7 +11,8 @@ Vue.component(
 				shader_player: null,
 				fullscreen: false,
 				debug_info: false,
-				size_before_fullscreen: null
+				size_before_fullscreen: null,
+				frames: 10
 			};
 		},
 		watch: {
@@ -33,7 +34,7 @@ Vue.component(
 					style.innerHTML += "html{overflow:hidden;}";
 					document.body.appendChild(style);
 					window.shader_player_hardcoded_style = style;
-					
+
 					this.shader_player.animate();
 				} else {
 					this.shader_player.width =
@@ -95,6 +96,7 @@ Vue.component(
 					}
 				}
 
+				this.shader_player.frames = app.gif.frames;
 				this.shader_player.set_vertex_shader(app.vertex_shader);
 				this.shader_player.set_code(app.gif.code);
 				
