@@ -11,9 +11,9 @@ class Gif < ApplicationRecord
     # -scene 1: start at 1 (better for avconv)
     `timeout 10 convert public/gifs/#{filename} -scene 1 public/gifs/generated/#{filename}-temp-%04d.png`
     # Create gif video
-    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -qscale:v 4 -r 10 public/gifs/generated/#{filename}-vid.mp4`
-    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -qscale:v 4 -r 10 public/gifs/generated/#{filename}-vid.ogv`
-    `avconv -y -r 10 -i public/gifs/generated/#{filename}-temp-%04d.png -c:v libvpx -qmin 10 -qmax 50 -b:v 750K -r 10 public/gifs/generated/#{filename}-vid.webm`
+    `avconv -y -framerate 10 -i public/gifs/generated/#{filename}-temp-%04d.png -qscale:v 4 -framerate 10 public/gifs/generated/#{filename}-vid.mp4`
+    `avconv -y -framerate 10 -i public/gifs/generated/#{filename}-temp-%04d.png -qscale:v 4 -framerate 10 public/gifs/generated/#{filename}-vid.ogv`
+    `avconv -y -framerate 10 -i public/gifs/generated/#{filename}-temp-%04d.png -c:v libvpx -qmin 10 -qmax 50 -b:v 750K -framerate 10 public/gifs/generated/#{filename}-vid.webm`
     
     # Save first frame as preview
     `mv public/gifs/generated/#{filename}-temp-0001.png public/gifs/generated/#{filename}-preview.png`
