@@ -1,3 +1,6 @@
+0.0.13:                                                                        (July 2 2018)
+    bugfix: Video conversion frame were sometimes dropped
+
 0.0.12:                                                                        (July 2 2018)
     feature: Profile pictures
 
