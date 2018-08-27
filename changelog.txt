@@ -2,7 +2,7 @@
     bugfix: Video conversion frame were sometimes dropped
     feature: Frame count, width, height is now saved and can be modified
 	         (frame count means shader player is not limited to 10 frames anymore!!!)
-
+    feature: Watermark can now be change to something else that shadergif.com
 
 0.0.12:                                                                        (July 2 2018)
     feature: Profile pictures

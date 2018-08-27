@@ -148,6 +148,7 @@ var app = new Vue({
 		rendering_gif: false,
 		has_zip: false,
 		zip_url: "",
+		watermark: "shadergif.com",
 		textures: [],
 		gifjs: {
 			quality: 8,
@@ -361,9 +362,10 @@ var app = new Vue({
 
 					var w = pl.width;
 					var h = pl.height;
-					var watermark = "shadergif.com";
+					var watermark = app.watermark;
+					var offset_x = 10;
 					var color = "#888888";
-					
+					ctx.textAlign="end";
 					var temp_img = document.createElement("img");
 					
 					temp_img.onload = function(){
@@ -371,19 +373,19 @@ var app = new Vue({
 							var offset = curr * pl.canvas.height;
 							ctx.drawImage(temp_img, 0, offset);
 							ctx.fillStyle = color;
-							ctx.fillText(watermark,  - 80, h - 10 + offset);
+							ctx.fillText(watermark,  - offset_x, h - 10 + offset);
 							next();
 						} else if(options.gif) {
 							ctx.drawImage(temp_img, 0, 0);
 							ctx.fillStyle = color;
-							ctx.fillText(watermark, w - 80, h - 10);
+							ctx.fillText(watermark, w - offset_x, h - 10);
 							to_export.data.push(canvas.toDataURL());
 							next();
 						} else if (options.zip) {
 							var zip = window.shadergif_zip;
 							ctx.drawImage(temp_img, 0, 0);
 							ctx.fillStyle = color;
-							ctx.fillText(watermark, w - 80, h - 10);
+							ctx.fillText(watermark, w - offset_x, h - 10);
 
 							// 4-Zero pad number
 							var filename = "image-";
