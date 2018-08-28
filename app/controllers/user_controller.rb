@@ -98,5 +98,40 @@ class UserController < ApplicationController
     
     @data = @data.to_json
   end
+
+  def profile
+    @user = User.where(username: params[:username]).first()
+
+    if @user.nil?
+      return redirect_to "/"
+    end
     
+    ActiveSupport.escape_html_entities_in_json = true
+    search = params[:search]
+    
+    if params.has_key?(:take)
+      take = params[:take]
+    else
+      take = 5
+    end
+
+    if params.has_key?(:skip)
+      skip = params[:skip]
+    else
+      skip = 0
+    end
+
+    @gifs = @user.gifs
+            .order(created_at: :desc)
+            .joins(:user)
+            .select("gifs.*, users.username, users.profile_picture")
+            .where("is_public = true")
+            .limit(take).offset(skip)
+            .to_json
+    
+    if request.path_parameters[:format] == 'json'
+      render :json => @gifs
+    end
+  end
+  
 end

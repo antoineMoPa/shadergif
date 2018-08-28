@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   post 'user/update_profile_pic' => 'user#update_profile_pic'
   
   get 'search' => 'home#search'
+  get 'profile' => 'user#profile'
   
   # Legacy paths that should be deleted one day
   # (shader-editor)

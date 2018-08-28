@@ -1,14 +1,22 @@
 window.onload = function(){
 	var has_app = false;
 	var is_search = false;
+	var is_profile = false;
 
 	var el = document.getElementById("main-app");
 
 	if(el == null){
 		el = document.getElementById("search-app");
-		is_search = true;
+		if(el != null){
+			is_search = true;
+		}
 	}
 	
+	if(el == null){
+		el = document.getElementById("profile-app");
+		is_profile = true;
+	}	
+
 	if(el != null){
 		var chunk_size = 8;
 
@@ -54,10 +62,13 @@ window.onload = function(){
 						var url = new URL(window.location.href);
 						var keyword = url.searchParams.get("search");
 						req.open("GET", "/search.json?search="+keyword+"&take="+chunk_size+"&skip="+app.current_offset);
+					} else if (is_profile) {
+						var url_splitted = window.location.href.split("/");
+						var username = url_splitted[url_splitted.length-1]
+						req.open("GET", "/profile.json?username="+username+"&take="+chunk_size+"&skip="+app.current_offset);
 					} else {
 						req.open("GET", "/gifs/list?take="+chunk_size+"&skip="+app.current_offset);
 					}
-					
 					
 					req.send();
 				}
@@ -101,22 +112,6 @@ window.onload = function(){
 		single_gif_app.$nextTick(function(){
 			single_gif_app.$children[0].$children[0].show_code();
 		});
-	}
-
-	
-	if(document.getElementById("profile-app") != null){
-		var profile_app = new Vue({
-			el: "#profile-app",
-			data: {
-				gifs: []
-			}
-		});
-
-		var gifs = JSON.parse(
-			document.getElementById("profile-gifs-json").innerHTML
-		);
-		
-		profile_app.gifs = gifs;
 	}
 
 	if(document.getElementById("gifs-and-drafts-app") != null){

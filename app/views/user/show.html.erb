@@ -1,5 +1,5 @@
 
-<script type="application/json" id="profile-gifs-json">
+<script type="application/json" id="main-gifs-json">
 	<%= raw(@gifs) %> 
 </script>
 <div id="profile-app">
@@ -7,6 +7,17 @@
 		<div class="container">
 			<h1 class="title has-text-centered"><%= @user.username %></h1>
 			<image-box-list v-bind:gifs="gifs"></image-box-list>
+		</div>
+		<div class="has-text-centered view-more-container">
+			<button v-if="has_more"
+						  v-on:click="load_more"
+						  class="button is-large"
+			>
+				view more
+			</button>
+			<div v-else>
+				No more gifs to load!
+			</div>
 		</div>
 	</section>
 </div>
