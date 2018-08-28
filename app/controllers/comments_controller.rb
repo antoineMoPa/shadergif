@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
     @notification = Notification.new
     @notification.user_id = gif_poster.id
     @notification.gif_id = @gif.id
-    @notification.text = "Someone commented on your post."
+    @notification.text = "Someone commented on your link{gif}."
     @notification.link = "/gifs/" + @gif.id.to_s
     @notification.is_read = false
     @notification.save()

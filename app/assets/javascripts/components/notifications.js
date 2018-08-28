@@ -5,8 +5,10 @@ Vue.component(
 			<div class="notifications">
 				<div v-for="notification in notifications"
 					 v-bind:class="((!notification.is_read)?'is-primary':'') + ' notification'">
-					<a v-bind:href="notification.link">
-					   {{ notification.text }}
+					<span class="notification-text" v-html="notif_html(notification)">
+					</span>
+					<a v-bind:href="notification.link" class="notification-link notification-date">
+						{{ new Date(notification.created_at).toLocaleString() }}
 					</a>
 				</div>
 			</div>
@@ -16,6 +18,14 @@ Vue.component(
 			return {
 			  	
 			}	  
+		},
+		methods: {
+			notif_html: function(notification){
+				var text = notification.text;
+				return text.replace(/link\{(.*)\}/, function(string, title){
+					return "<a href='" + notification.link + "'>" + title + "</a>";
+				})
+			}
 		}
 	}
 );
