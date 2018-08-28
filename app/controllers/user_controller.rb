@@ -55,6 +55,23 @@ class UserController < ApplicationController
             .take(10)
             .to_json
   end
+
+  def notifications
+    @user = User.find(current_user.id)
+
+    if @user.nil?
+      return redirect_to "/"
+    end
+    
+    @notifications = Notification
+                     .where(user_id: current_user.id)
+                     .order(created_at: :desc)
+                     .take(1000)
+                     .to_json
+
+    Notification.where(user_id: current_user.id).update(is_read: true)
+                     
+  end
   
   def gifs_and_drafts
     if !user_signed_in?

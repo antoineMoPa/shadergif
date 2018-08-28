@@ -3,10 +3,12 @@
 //= require ./devise.scss
 //= require ./gif.scss
 //= require ./home.scss
+//= require ./notifications.scss
 //= require lib/prism/prism.css
 //= require ./components/image_box.css
 //= require ./components/image_mosaic.css
 //= require ./components/shader_player.css
+
 
 .navbar{
 	box-shadow: 0 0 3px rgba(0,0,0,0.3);

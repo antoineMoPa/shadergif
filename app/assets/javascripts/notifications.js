@@ -1,2 +1,12 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
+
+
+function init_notifications_page(){
+	var notifications_list = JSON.parse(document.querySelectorAll("#notifications-list")[0].innerHTML);
+
+	new Vue({
+		el: "#notifications-page-app",
+		data: {
+			notifications: notifications_list
+		}
+	});
+}

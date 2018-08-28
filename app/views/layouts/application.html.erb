@@ -86,6 +86,20 @@
 									</a>
 								</span>
 							<% end %>
+							<% if user_signed_in? %>
+								<span class="navbar-item">
+									<% notification_count = current_user.notification_count() %>
+									<% if notification_count > 0 %>
+										<a class="notification-count" href="/notifications">
+											<%= notification_count %>
+										</a>
+									<% else %>
+										<a class="notification-count no-notifications" href="/notifications">
+											<%= notification_count %>
+										</a>
+									<% end %>
+								</span>
+							<% end %>	
 						</div>
 					</div>
 				</div>

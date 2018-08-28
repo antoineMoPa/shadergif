@@ -3,6 +3,7 @@ class AddNotifications < ActiveRecord::Migration[5.1]
     create_table :notifications do |t|
       t.string :text
       t.string :link
+      t.boolean :is_read
       t.timestamps
     end
 

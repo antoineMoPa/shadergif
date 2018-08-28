@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20180828151431) do
   create_table "notifications", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "text"
     t.string "link"
+    t.boolean "is_read"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"

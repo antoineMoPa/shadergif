@@ -1,0 +1,10 @@
+<script id="notifications-list" type="text/json"><%= raw(@notifications) %></script>
+<div id="notifications-page-app">
+	<section class="section">
+		<div class="container">
+			<h1 class="title has-text-centered">Notification Inbox</h1>
+			<notifications v-bind:notifications="notifications"/>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">init_notifications_page()</script>
