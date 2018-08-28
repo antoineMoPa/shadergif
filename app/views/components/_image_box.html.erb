@@ -103,6 +103,9 @@
 			<div class="comment" v-for="comment in gif.comments">
 				<div class="comment-username has-text-left">
 					<a v-bind:href="'/user/'+comment.user.username">{{ comment.user.username }}</a>&nbsp;:
+					<span class="comment-date">
+						({{ new Date(comment.created_at).toLocaleString() }})
+					</span>
 				</div>
 				<div class="comment-content has-text-left">
 					{{ comment.content }}
