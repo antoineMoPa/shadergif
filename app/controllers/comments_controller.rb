@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  
+
   def new
 
     id = params[:gif_id].to_i
@@ -18,8 +18,21 @@ class CommentsController < ApplicationController
       
       @comment.save()
 
+      notify_poster()
+      
       redirect_to "/gifs/" + @gif.id.to_s
     end
   end
 
+  def notify_poster
+    gif_poster = User.find(@gif.user_id)
+
+    @notification = Notification.new
+    @notification.user_id = gif_poster.id
+    @notification.gif_id = @gif.id
+    @notification.text = "Someone commented on your post."
+    @notification.link = "/gifs/" + @gif.id.to_s
+    @notification.save()
+  end
+  
 end
