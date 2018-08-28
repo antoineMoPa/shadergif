@@ -57,12 +57,12 @@ class UserController < ApplicationController
   end
 
   def notifications
-    @user = User.find(current_user.id)
-
-    if @user.nil?
+    if !user_signed_in?
       return redirect_to "/"
     end
     
+    @user = User.find(current_user.id)
+
     @notifications = Notification
                      .where(user_id: current_user.id)
                      .order(created_at: :desc)
