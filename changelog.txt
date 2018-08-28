@@ -1,3 +1,6 @@
+0.0.14:                                                                     (August 28 2018)
+    feature: Very basic notification system for post comments
+	
 0.0.13:                                                                     (August 26 2018)
     bugfix: Video conversion frame were sometimes dropped
     feature: Frame count, width, height is now saved and can be modified
