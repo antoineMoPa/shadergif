@@ -13,20 +13,31 @@
 # Features
 
  * Upload textures
- * Download frames as a png zip to render videos and gifs with external software
- * Create gifs with embedded encoder
- * GPU sound: The image data is used to fill a sound stream
- * MathJS prototyping mode: Prototype directly with plain math syntax
+ * Download frames as a png zip
+ * Create gifs
+ * Write and receive comments
+ * Gif previews - (Easy on visitor GPU, when compared to ShaderToy)
+
+# Experimental Features
+
+I do not test these often when releasing, so they might be broken sometimes.
+
+ * GPU sound (experimental, be careful with your ears/speakers)
+ * MathJS prototyping mode (experimental)
+
+Write an issue or send me an email if you want to try it and it is broken.
 
 # Licence
 
 Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
 
-# You want to code shadergif ?
+# You want to code ShaderGif ?
 
-First setup a server:
+A good first step would be to setup a local dev server:
 
 https://doc.shadergif.com/Development/Server/
+
+ShaderGif is coded with ruby on rails with some Vue.js in the frontend and lots of custom Javascript. Indentation should be with tabs.
 
 # Documentation
 
