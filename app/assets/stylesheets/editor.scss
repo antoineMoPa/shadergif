@@ -6,11 +6,12 @@
 //= require base.css
 
 body{
-    padding:0;
-    margin:0;
-    max-width:100%;
-    overflow-x:hidden;
-    font-family:sans-serif;
+	padding:0;
+	margin:0;
+	max-width:100%;
+	max-height:100%;
+	overflow-x:hidden;
+	font-family:sans-serif;
 }
 
 html, body, window{
@@ -24,10 +25,10 @@ html, body, window{
 }
 
 header{
-    background: #35a;
-    margin:0;
-    width:100%;
-    height:40px;
+	background: #35a;
+	margin:0;
+	width:100%;
+	height:40px;
 	position:absolute;
 	z-index:1000;
 }
@@ -46,58 +47,58 @@ header{
 }
 
 .examples-page header{
-    position:static;
+	position:static;
 }
 
 .examples-page p,
 .examples-page h2{
-    margin-left:20px;
+	margin-left:20px;
 }
 
 h1,h2,h3{
-    margin-top:20px;
-    margin-bottom:20px;
-    font-weight:300;
-}    
+	margin-top:20px;
+	margin-bottom:20px;
+	font-weight:300;
+}	
 
 h1{
-    font-size:20px;
-    font-weight:300;
-    display:inline-block;
-    padding:0;
-    margin:0;
-    margin-left:10px;
-    margin-right:20px;
-    color:#fff;
-    line-height:40px;
+	font-size:20px;
+	font-weight:300;
+	display:inline-block;
+	padding:0;
+	margin:0;
+	margin-left:10px;
+	margin-right:20px;
+	color:#fff;
+	line-height:40px;
 }
 
 header a{
-    color:#fff;
-    text-decoration:none;
+	color:#fff;
+	text-decoration:none;
 }
 
 p,pre,ul{
-    margin-left:10px;
+	margin-left:10px;
 }
 
 .inline-block{
-    display:inline-block;
-    vertical-align:top;
-    margin:0;
+	display:inline-block;
+	vertical-align:top;
+	margin:0;
 }
 
 textarea{
-    height:auto;
-    font-size:15px;
+	height:auto;
+	font-size:15px;
 }
 
 .error-pre{
-    margin:10px 20px;
-    padding:10px;
-    font-size:15px;
-    color:red;
-    z-index:2000;
+	margin:10px 20px;
+	padding:10px;
+	font-size:15px;
+	color:red;
+	z-index:2000;
 	background:#eee;
 }
 
@@ -107,25 +108,25 @@ textarea{
 	margin:auto;
 	margin-top:0;
 	text-align:center;
-    padding:10px;
+	padding:10px;
 	color:#333;
 	background:#eee;
 }
 
 .player-container canvas{
-    max-width: calc(100% - 40px);
+	max-width: calc(100% - 40px);
 }
 
 button{
-    display:block;
-    margin:auto;
-    border:none;
-    background:#3af;
+	display:block;
+	margin:auto;
+	border:none;
+	background:#3af;
 	border-radius:2px;
-    color:#fff;
-    padding:8px;
-    font-size:16px;
-    cursor:pointer;
+	color:#fff;
+	padding:8px;
+	font-size:16px;
+	cursor:pointer;
 	box-shadow:0 0 5px rgba(0,0,0,0.1);
 	transition:all 0.3s;
 	&:hover{
@@ -134,18 +135,18 @@ button{
 }
 
 .result-images img{
-    display: block;
-    margin: auto;
-    margin-top:20px;
-    margin-bottom:20px;
-    max-height:600px;
-    background:#f3f3f3;
+	display: block;
+	margin: auto;
+	margin-top:20px;
+	margin-bottom:20px;
+	max-height:600px;
+	background:#f3f3f3;
 }
 
 hr{
-    margin-top:20px;
-    color:#eee;
-    width:60%;
+	margin-top:20px;
+	color:#eee;
+	width:60%;
 }
 
 #shadergif-app,
@@ -157,8 +158,9 @@ hr{
 }
 
 .vertical-scroll-parent{
-    max-height:100%;
+	max-height:100%;
 	height:100%;
+	height:calc(100% - 55px);
 	overflow:hidden;
 }
 
@@ -166,50 +168,50 @@ hr{
 	padding-left:0;
 	padding-right:0;
 	min-height:100%;
-    max-height:100%;
-    overflow-y:scroll;
+	max-height:100%;
+	overflow-y:scroll;
 }
 
-.vertical-scroll-spacer{
-    height:40px;
-    clear:both;
+.vertical-scroll-spacera{
+	height:40px;
+	clear:both;
 }
 
 @media all and (min-width:768px){
 	.column.limit-width-desktop{
-        max-width:50%;
-    }
+		max-width:50%;
+	}
 	.CodeMirror{
-        max-width:100%;
-    }
+		max-width:100%;
+	}
 	.gif-pane{
 		padding-top:30px;
 	}
 }
 
 @media all and (max-width:768px){
-    body{
-        overflow-y:scroll;
-    }
-    canvas,img{
-        max-width:100%;
-    }
-	.vertical-scroll{
-        max-height:none;
-        overflow-y:scroll;
-    }
-    .vertical-scroll-parent{
-        max-height:none;
-		height:auto;
+	body{
 		overflow-y:scroll;
-    }
+	}
+	canvas,img{
+		max-width:100%;
+	}
+	.vertical-scroll{
+		max-height:none;
+		overflow-y:auto;
+	}
+	.vertical-scroll-parent{
+		max-height:none;
+		height:auto;
+		overflow-y:auto;
+	}
 }
 
 .settings{
-    margin-left:10px;
+	margin-left:10px;
 	margin-right:10px;
-    font-size:14px;
-    line-height:44px;
+	font-size:14px;
+	line-height:44px;
 
 	p{
 		line-height:25px;
@@ -217,9 +219,9 @@ hr{
 }
 
 .settings input{
-    width:50px;
-    font-size:12px;
-    margin-left:3px;
+	width:50px;
+	font-size:12px;
+	margin-left:3px;
 
 	&[type=file]{
 		width:auto;
@@ -258,7 +260,7 @@ hr{
 
 .settings input[type=number]{
 	min-width:60px;	
-    height:30px;
+	height:30px;
 }
 
 .mathjs-pre{
@@ -269,14 +271,14 @@ hr{
 /* CODEMIRROR */
 
 .CodeMirror{
-    height:100%;
-    height:calc(100% - 30px);
-    font-size:15px;
+	height:100%;
+	height:calc(100% - 30px);
+	font-size:15px;
 }
 
 .errorline{
-    background:#fdd;
-    color:#f00;
+	background:#fdd;
+	color:#f00;
 }
 
 /* END CODEMIRROR */
@@ -327,12 +329,12 @@ hr{
 }
 
 .result-images form{
-    margin:10px; 
+	margin:10px; 
 }
 
 .draft-management{
-    padding-left: 10px;
-    padding-right: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 
