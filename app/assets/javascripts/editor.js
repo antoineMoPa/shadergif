@@ -81,7 +81,7 @@ function default_lang_policy(){
 		}
 	}
 	
-	return "shader_webgl1";
+	return "shader_webgl2";
 }
 
 function default_frame_count_policy(){
