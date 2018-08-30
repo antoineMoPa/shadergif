@@ -43,7 +43,7 @@ function default_fragment_policy(){
 
 	if(start_gif != null){
 		// If we are viewing a draft, use it
-		code = start_gif.code.replace("\r\n", "\n");
+		code = start_gif.code.replace(/\r\n/g, "\n");
 	} else if(
 		window.localStorage.code != undefined &&
 			window.localStorage.code != ""
