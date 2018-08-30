@@ -39,10 +39,16 @@ onmessage = function(m) {
 			var scope = {x: x, y: y, time: time};
 			var result = expr.eval(scope);
 
+			// On multi-line scripts, the result is
+			// in result.entries[0]
+			if(typeof(result.entries) != "undefined"){
+				result = result.entries[0];
+			}
+
 			if(typeof(scope.out) != "undefined"){
 				result = scope.out;
 			}
-			
+
 			if(typeof(result) == "number"){
 				result = float_to_pixel(result);
 				// Black and white pixel
