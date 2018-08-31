@@ -11,8 +11,8 @@
 //= require lib/gif-export/lib/gifjs/gif.js
 
 /*
-  Resources: 
-  
+  Resources:
+
   * https://gist.github.com/mbostock/5440492
   * http://memfrag.se/blog/simple-vertex-shader-for-2d
   * https://www.opengl.org/wiki/Data_Type_%28GLSL%29#Vector_constructors
@@ -21,7 +21,7 @@
 
   */
 
-var is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.glsl)/);
+var is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.glsl?(\?v=[0-9]+))/);
 var DEFAULT_WIDTH = 540;
 var DEFAULT_HEIGHT = 540;
 var cm_errorLines = [];
@@ -29,15 +29,15 @@ var start_gif = load_script("start-gif").trim();
 
 if(start_gif != ""){
 	start_gif = JSON.parse(start_gif);
-	
+
 	if(typeof(start_gif.textures) == "undefined"){
 		start_gif.textures = null;
 	}
-	
+
 } else {
 	start_gif = null;
 }
- 
+
 function default_fragment_policy(){
 	var code = "";
 
@@ -63,11 +63,11 @@ function default_lang_policy(){
 	if(is_example){
 		return "shader_webgl2";
 	}
-	
+
 	if(start_gif != null){
 		if(start_gif.lang != null){
 			return start_gif.lang;
-		}	
+		}
 	}
 	if(typeof(window.localStorage.lang) != "undefined"){
 		if(window.localStorage.lang == "mathjs"){
@@ -80,7 +80,7 @@ function default_lang_policy(){
 			return "shader_webgl2";
 		}
 	}
-	
+
 	return "shader_webgl2";
 }
 
@@ -90,11 +90,11 @@ function default_frame_count_policy(){
 			return parseInt(start_gif.frames);
 		}
 	}
-	
+
 	if(typeof(window.localStorage.frames) != "undefined"){
 		return parseInt(window.localStorage.frames);
 	}
-	
+
 	return 10;
 }
 
@@ -193,7 +193,7 @@ var app = new Vue({
 		},
 		update_player: function(){
 			var app = this;
-			
+
 			app.error_msg = "";
 
 			// Remove previous errors
@@ -204,7 +204,7 @@ var app = new Vue({
 			this.player.set_code(this.code);
 			this.player.set_width(this.width);
 			this.player.set_height(this.height);
-			
+
 			if(!this.player.frames_defined_in_code){
 				app.player.frames = this.frames;
 			}
@@ -245,7 +245,7 @@ var app = new Vue({
 			// Make the gif from the frames
 			var app = this;
 			app.status = "Encoding Gif";
-			
+
 			app.$nextTick(function(){
 				var gif = new GIF({
 					workers: 2,
@@ -253,18 +253,18 @@ var app = new Vue({
 					dither: app.gifjs.dithering,
 					workerScript: "/workers/gif.worker.js"
 				});
-				
+
 				data = to_export.data;
-				
+
 				var images = [];
-				
+
 				for(var i = 0; i < data.length; i++){
 					var image = new Image();
 					image.src = data[i];
 					image.onload = imageLoaded;
 					images.push(image);
 				}
-				
+
 				var number_loaded = 0;
 				function imageLoaded(){
 					number_loaded++;
@@ -272,20 +272,20 @@ var app = new Vue({
 						convert();
 					}
 				}
-				
+
 				function convert(){
 					var code = app.f_editor.getValue();
-					
+
 					for(var i = 0; i < images.length; i++){
 						gif.addFrame(images[i],{delay: to_export.delay});
 					}
-					
+
 					gif.render();
-					
+
 					gif.on('finished',function(blob){
 						// Create image
 						var size =  (blob.size / 1000).toFixed(2);
-						
+
 						// Create base64 version
 						// PERF: TODO: generate image on submit only
 						var reader = new window.FileReader();
@@ -301,7 +301,7 @@ var app = new Vue({
 								textures: app.textures,
 								frames: app.frames
 							});
-							
+
 							app.status = "Done!";
 							setTimeout(function(){
 								app.status = "";
@@ -319,35 +319,35 @@ var app = new Vue({
 					gif: false
 				};
 			}
-				
+
 			// Renders all the frames to a png
 			var app = this;
 
 			app.player.rendering_gif = true;
 			app.rendering_gif = true;
 			app.status = "Rendering Gif";
-			
+
 			var to_export = {};
-			
+
 			if(options.gif){
 				to_export.delay = app.anim_delay;
 				to_export.data = [];
 			}
-			
+
 			var tempCanvas = document.createElement("canvas");
 			var canvas = tempCanvas;
 
 			canvas.width = app.player.canvas.width;
 			canvas.height = app.player.canvas.height;
-			
+
 			if(options.stack){
 				canvas.height = app.player.canvas.height * app.player.frames;
 			}
-			
+
 			var ctx = canvas.getContext("2d");
-			
+
 			var i = 0;
-			
+
 			/*
 			  "Unrolled" async loop:
 			  for every image:
@@ -367,7 +367,7 @@ var app = new Vue({
 					var color = "#888888";
 					ctx.textAlign="end";
 					var temp_img = document.createElement("img");
-					
+
 					temp_img.onload = function(){
 						if(options.stack){
 							var offset = curr * pl.canvas.height;
@@ -395,9 +395,9 @@ var app = new Vue({
 							for(var i =0; i < numzeros - numlen; i++){
 								filename += "0";
 							}
-							
+
 							filename += curr + ".png";
-							
+
 							canvas.toBlob(function(blob){
 								zip.file(
 									filename,
@@ -413,7 +413,7 @@ var app = new Vue({
 						var image_data = canvas.toDataURL();
 						temp_img.src = image_data;
 					});
-					
+
 				} else {
 					// Final step
 					if(options.gif){
@@ -426,7 +426,7 @@ var app = new Vue({
 						image_data = canvas.toDataURL();
 						app.player.rendering_gif = false;
 						app.rendering_gif = false;
-						
+
 						app.images.unshift({
 							type: "png",
 							size: false,
@@ -446,7 +446,7 @@ var app = new Vue({
 				}
 				i++;
 			}
-			
+
 			next();
 		},
 		delete_downloaded_zip: function(){
@@ -502,7 +502,7 @@ var app = new Vue({
 					app.player.add_texture(reader.result);
 				}, false);
 			}
-			
+
 			for(var i = 0; i < input.files.length; i++){
 				try{
 					var file = input.files[i];
@@ -520,7 +520,7 @@ var app = new Vue({
 		},
 		delete_texture(index){
 			this.textures.splice(index, 1);
-						
+
 			app.player.delete_texture(index);
 		},
 		set_player(){
@@ -530,7 +530,7 @@ var app = new Vue({
 			if(this.player != null){
 				this.player.dispose();
 			}
-			
+
 			container.innerHTML = "";
 
 			var vertex_code = "";
@@ -549,7 +549,7 @@ var app = new Vue({
 				vertex_code = load_script("vertex-shader-webgl2");
 				this.player.set_vertex_shader(vertex_code);
 				this.update_player();
-				
+
 			} else {
 				// assume shader_webgl1
 				// (old shaders have lang == null)
@@ -570,9 +570,9 @@ var app = new Vue({
 		add_error: function(err){
 			this.error_msg = "Error\n" + err;
 			try{
-				if(this.lang == "shader_webgl1"){					
+				if(this.lang == "shader_webgl1"){
 					var line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
-					
+
 					// Fix potential bug killing all text sometimes
 					// like when inserting backticks (`)
 					// and the compiler does not give any line
@@ -580,14 +580,14 @@ var app = new Vue({
 					if(line == ""){
 						return
 					}
-				
+
 					line = parseInt(line) - 1;
-					
+
 					// Bug that could happen
 					if(isNaN(line)){
 						return;
 					}
-					
+
 					var errline = app.f_editor.addLineClass(line, "background", "errorline");
 					cm_errorLines.push(errline);
 				}
@@ -616,7 +616,7 @@ var app = new Vue({
 				xhr.send();
 			}
 
-			
+
 			if(start_gif != null && start_gif.textures != null){
 				// If we are viewing a draft, use it
 				for(var i = 0; i < start_gif.textures.length; i++){
@@ -640,7 +640,7 @@ var app = new Vue({
 	},
 	mounted: function(){
 		var app = this;
-		
+
 		// TODO: refactor everything here into methods
 		// (Legacy code from before VUE.js)
 		function resize(){
@@ -652,7 +652,7 @@ var app = new Vue({
 		{
 			// Load current user data from script
 			app.user = load_script("user").trim();
-			
+
 			if(app.user != ""){
 				app.user = JSON.parse(app.user);
 			} else {
@@ -662,11 +662,11 @@ var app = new Vue({
 
 		this.set_player();
 		this.load_start_textures();
-		
+
 		var frame = 0;
-		
+
 		var filename = "";
-		
+
 		if(is_example != null){
 			filename = is_example[1] || "";
 			if(this.gif == null || this.gif.lang == null){
@@ -683,7 +683,7 @@ var app = new Vue({
 			indentUnit: 4,
 			lineWrapping: true
 		});
-		
+
 		// Fetch file and put it in textarea
 		if(filename != ""){
 			try{
@@ -693,7 +693,7 @@ var app = new Vue({
 					if (4 == xhr.readyState) {
 						var val = xhr.responseText;
 						app.f_editor.setValue(val);
-						
+
 						// Change URL to avoid erasing user text
 						// when reloading next time.
 						window.history.pushState(
@@ -711,7 +711,7 @@ var app = new Vue({
 		}
 
 		var change_timeout = null;
-		
+
 		function change_throttled(){
 			// Sleep at least 300 milliseconds
 			// to avoid constant compilation when typing,
@@ -725,11 +725,11 @@ var app = new Vue({
 				}, 300);
 			}
 		}
-		
+
 		app.f_editor.on("change", function(){
 			change_throttled();
 		});
-				
+
 		// Init UI
 
 		qsa(".gif-pane")[0].addEventListener("click", function(e){
@@ -737,7 +737,7 @@ var app = new Vue({
 				e.target.parentNode.classList.toggle("foldable-hidden");
 			}
 		});
-		
+
 		this.$nextTick(function(){
 			var app = this;
 			this.player.debug_info = true;
@@ -745,7 +745,7 @@ var app = new Vue({
 			if(this.lang == "shader_webgl1"){
 				this.vertex_shader = document.querySelectorAll("script[name=vertex-shader]")[0].innerHTML;
 				this.player.set_vertex_shader(this.vertex_shader);
-				
+
 				this.player.set_on_error_listener(function(error, gl){
 					app.add_error(error);
 				});
@@ -754,9 +754,9 @@ var app = new Vue({
 					app.add_error(error);
 				});
 			}
-			
+
 			this.player.set_code(this.code);
-			
+
 			this.update_player();
 		});
 	}
@@ -771,7 +771,7 @@ function init_electron(){
 	ipcRenderer.on('code-set', function(event, content) {
 		app.f_editor.setValue(content);
 	});
-	
+
 	ipcRenderer.on('shadergif-file-request', function(event, filePath) {
 		var file = {
 			code: app.code,
@@ -800,9 +800,8 @@ function init_electron(){
 		app.width = file.width;
 		app.height = file.height;
 		app.frames = file.frames;
-		
+
 		app.f_editor.setValue(app.code);
 	});
-	
-}
 
+}
