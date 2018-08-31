@@ -62,7 +62,7 @@ Vue.component(
 			var vertex_code = "";
 				
 			if(app.gif.lang == null || app.gif.lang == "shader_webgl1"){
-				this.shader_player = new ShaderPlayer();
+				this.shader_player = new ShaderPlayerWebGL1();
 				vertex_code = load_script("vertex-shader");
 			} else if (app.gif.lang == "shader_webgl2"){
 				this.shader_player = new ShaderPlayerWebGL2();

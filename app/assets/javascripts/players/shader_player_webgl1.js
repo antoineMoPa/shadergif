@@ -1,4 +1,4 @@
-class ShaderPlayer {
+class ShaderPlayerWebGL1 {
 	constructor(){
 		this.compiled = false;
 		this.canvas = document.createElement("canvas");

@@ -555,7 +555,7 @@ var app = new Vue({
 				// (old shaders have lang == null)
 				this.texture_support = true;
 				this.sound_support = true;
-				this.player = new ShaderPlayer();
+				this.player = new ShaderPlayerWebGL1();
 				this.player.set_container(container);
 
 				vertex_code = load_script("vertex-shader");
