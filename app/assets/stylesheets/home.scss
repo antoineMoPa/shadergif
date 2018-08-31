@@ -47,8 +47,18 @@
 .home-sidebar{
 	overflow: hidden;
 	overflow-wrap: break-word;
+	.button{
+		width:100%;
+		text-align:left;
+	}
 }
 
 .home-news{
 	padding-top: 0px;
+}
+
+@media all and (max-width:768px){
+	.section{
+		padding-top:30px;
+	}
 }

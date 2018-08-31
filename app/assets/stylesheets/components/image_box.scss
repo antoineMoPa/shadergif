@@ -88,3 +88,43 @@
 	float:right;
 	font-size:10px;
 }
+
+@media all and (max-width:768px){
+	.image-box{
+		.profile-username{
+			font-size:12px;
+			line-height:25px;
+		}
+		.profile-picture{
+			width:25px;
+			height:25px;
+		}
+		.gif-subtitle{
+			line-height:30px;
+			font-size:14px;
+		}
+		.gif-subtitle,
+		.profile-box{
+			padding:6px;
+			margin:8px;
+			margin-left:0;
+			margin-right:0;
+		}
+		.gif-subtitle{
+			width:100%;
+			background:#eeeeee;
+		}
+		.title-box{
+			margin:0;
+		}
+		.title-box,
+		.profile-box{
+			height:auto;
+		}
+		.button{
+			margin-top:10px;
+			width:100%;
+		}
+	}
+}
+
