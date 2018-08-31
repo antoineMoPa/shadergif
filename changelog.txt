@@ -1,8 +1,8 @@
 0.0.15:                                                                     (August 31 2018)
     bugfixes: Mouse position in fullscreen, multi-line mathjs
-	modification: Shorter variable names in circle example
-			 	  Add mouse & time uniform by default in same example
-	modification: Better CSS for mobile
+    modification: Shorter variable names in circle example
+                   Add mouse & time uniform by default in same example
+    modification: Better CSS for mobile
 
 0.0.14:                                                                     (August 28 2018)
     feature: Very basic notification system for post comments
@@ -10,7 +10,7 @@
 0.0.13:                                                                     (August 26 2018)
     bugfix: Video conversion frame were sometimes dropped
     feature: Frame count, width, height is now saved and can be modified
-	         (frame count means shader player is not limited to 10 frames anymore!!!)
+             (frame count means shader player is not limited to 10 frames anymore!!!)
     feature: Watermark can now be change to something else that shadergif.com
 
 0.0.12:                                                                        (July 2 2018)
