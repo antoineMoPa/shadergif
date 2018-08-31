@@ -61,7 +61,7 @@ Vue.component(
 
 			var vertex_code = "";
 				
-			if(app.gif.lang == null || app.gif.lang == "shader_webgl1"){
+			if(app.gif.lang == "" || app.gif.lang == null || app.gif.lang == "shader_webgl1"){
 				this.shader_player = new ShaderPlayerWebGL1();
 				vertex_code = load_script("vertex-shader");
 			} else if (app.gif.lang == "shader_webgl2"){
@@ -72,7 +72,7 @@ Vue.component(
 			this.$nextTick(function(){
 				var container = this.$el.querySelectorAll(".player-container")[0];
 				this.vertex_shader = vertex_code;
-			
+
 				this.shader_player.set_container(container);
 
 
