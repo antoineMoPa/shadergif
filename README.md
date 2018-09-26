@@ -31,7 +31,7 @@ Write an issue or send me an email if you want to try it and it is broken.
 
 Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
 
-# You want to code ShaderGif ?
+# You Want to Code ShaderGif ?
 
 ShaderGif is coded with ruby on rails with Vue.js in the frontend.
 
@@ -42,7 +42,7 @@ Docker: look at next section.
 More info on local dev servers: https://doc.shadergif.com/Development/Server/
 
 
-# Running dev version with docker
+# Running Dev Version with Docker
 
 If you can run docker on your machine, follow these instructions.
 
