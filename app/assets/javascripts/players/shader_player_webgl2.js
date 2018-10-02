@@ -12,6 +12,7 @@ class ShaderPlayerWebGL2 {
 		this.textures = [];
 		this.passes_defined_in_code = false;
 		this.frames_defined_in_code = false;
+		this.native_webgl2_supported = false;
 		this.window_focused = true;
 		this.anim_interval = null;
 
@@ -39,6 +40,14 @@ class ShaderPlayerWebGL2 {
 		{
 			// Init canvas
 			var gl = this.canvas.getContext("webgl2");
+
+			// Detect webgl2 native problems
+			// (read: my old laptop's graphics card is too old)
+			// We default to not working
+			if(gl != null){
+				this.native_webgl2_supported = true;
+			}
+			
 			this.canvas.width = this.width;
 			this.canvas.height = this.height;
 			this.canvas.addEventListener("mousemove", this.canvas_mousemove.bind(this));

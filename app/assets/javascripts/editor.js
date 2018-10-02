@@ -60,10 +60,6 @@ function default_fragment_policy(){
 }
 
 function default_lang_policy(){
-	if(is_example){
-		return "shader_webgl2";
-	}
-
 	if(start_gif != null){
 		if(start_gif.lang != null){
 			return start_gif.lang;
@@ -132,6 +128,7 @@ var app = new Vue({
 		player: null,
 		user: null,
 		gif: start_gif,
+		webgl2_init_error: false,
 		status: "",
 		texture_support: false,
 		sound_support: false,
@@ -544,6 +541,11 @@ var app = new Vue({
 				this.texture_support = true;
 				this.sound_support = true;
 				this.player = new ShaderPlayerWebGL2();
+
+				if(!this.player.native_webgl2_supported){
+					this.webgl2_init_error = true;
+				}
+				
 				this.player.set_container(container);
 
 				vertex_code = load_script("vertex-shader-webgl2");
@@ -669,8 +671,14 @@ var app = new Vue({
 
 		if(is_example != null){
 			filename = is_example[1] || "";
+
 			if(this.gif == null || this.gif.lang == null){
-				this.lang = "shader_webgl2";
+				if(filename.match(/_webgl1/)){
+					this.lang = "shader_webgl1";
+				} else {
+					this.lang = "shader_webgl2";
+				}
+				
 			}
 		}
 

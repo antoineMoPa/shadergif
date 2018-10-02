@@ -8,6 +8,14 @@
 			<div class="text-center">
 				<div class="player-container">
 				</div>
+				<div v-if="webgl2_init_error == true" class="webgl-error">
+					<p>Sorry, your graphics card does not seem to support WebGL2.</p>
+					<p>You can try switching to webgl1 and <a target="_blank" href="https://gist.github.com/antoineMoPa/892aee51e0fa8e8a6fe212c384e66866">downgrading</a> the shader.</p>
+					<p>To find a base webgl1 shader:
+						<a href="/editor/?file=examples/circle_webgl1.glsl?v=3">circle_webgl1.glsl</a>
+					</p>
+					
+				</div>
 			</div>
 			<pre class="error-pre">{{ error_msg }}</pre>
 			<div class="foldable">
