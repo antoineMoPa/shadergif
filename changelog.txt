@@ -1,6 +1,6 @@
 0.0.16:                                                                     (October 2 2018)
     bugfixes: Show a warning + tips when webgl2 is not supported
-	other: New about page
+    other: New about page
 
 0.0.15:                                                                     (August 31 2018)
     bugfixes: Mouse position in fullscreen, multi-line mathjs
