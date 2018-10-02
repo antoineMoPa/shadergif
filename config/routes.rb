@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   root 'home#index'
 
+  get 'about' => 'home#about'
+  
   get 'user/gifs-and-drafts', to: 'user#gifs_and_drafts', as: 'user_gifs_and_drafts'
   get 'user/:username', to: 'user#show', as: 'user_show'
   get 'notifications', to: 'user#notifications', as: 'user_notifications'

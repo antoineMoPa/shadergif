@@ -64,6 +64,9 @@
 							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
 								Doc
 							</a>
+							<a class="navbar-item" href="/about" title="about">
+								About
+							</a>
 							<% if user_signed_in? %>
 								<%= link_to 'Gifs&Drafts', user_gifs_and_drafts_path, :class => "navbar-item"  %>
 								<%= link_to 'Account', edit_user_registration_path, :class => "navbar-item"  %>
