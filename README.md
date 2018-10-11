@@ -72,6 +72,15 @@ Then:
 
 You can try fixing bugs, adding features, etc. If you make something cool, you can fork, push and create a pull request!
 
+## Running ESLint
+
+Running eslint is recommended before pull requests.
+
+In the root shadergif folder:
+
+    npm install
+    npm run lint --fix .
+
 # Documentation
 
 Visit: [doc.shadergif.com](https://doc.shadergif.com)

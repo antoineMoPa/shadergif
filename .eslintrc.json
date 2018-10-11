@@ -1,0 +1,42 @@
+{
+  "extends": "airbnb-base",
+  "rules": {
+	"eqeqeq": "off",
+	"no-console": "off",
+	"no-plusplus": 0,
+	"no-bitwise": 0,
+	"no-var": 0,
+	"camelcase": 0,
+	"func-names": 0,
+	"no-continue": 0,
+	"no-lone-blocks": 0,
+	"no-alert": 0,
+	"no-multi-assign": 0,
+	"no-useless-escape": 0,
+	"no-new": 0,
+	/* Rules after this should actually 
+	   be reenabled progressively */
+	"no-restricted-syntax": 0,
+	"guard-for-in": 0,
+	"no-lonely-if": 0,
+	"import/no-unresolved": 0,
+	"global-require": 0,
+	"no-shadow": 0,
+	"class-methods-use-this": 0,
+	"function-paren-newline": 0,
+	"block-scoped-var": 0,
+	"no-unused-vars": 0,
+	"no-undef": 0,
+	"no-mixed-operators": 0,
+	"vars-on-top": 0,
+	"no-redeclare": 0,
+	"radix": 0,
+	"no-underscore-dangle": 0,
+	"prefer-destructuring": 0,
+	"no-param-reassign": 0,
+	"max-len": 0,
+	"no-multi-spaces": 0,
+	"no-use-before-define": 0,
+	"no-restricted-globals": 0
+  }
+}

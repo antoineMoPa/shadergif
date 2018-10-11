@@ -1,0 +1,4 @@
+app/assets/javascripts/lib/**
+public/**
+electron/**
+cable.js
