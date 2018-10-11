@@ -44,7 +44,21 @@ More info on local dev servers: https://doc.shadergif.com/Development/Server/
 
 # Running Dev Version with Docker
 
-If you can run docker on your machine, follow these instructions.
+An alternative, instead of downloading and configuring all necessary software manually, is to use the Dockerfile.
+
+## Additional Windows Docker Instruction
+
+### Docker for windows (Windows 10+)
+
+Go to docker settings (via the system tray icon), allow Docker to use the drive where you will clone the code (C:/ or D:/ or something else).
+
+### Docker Toolbox
+
+Normally, Virtualbox was installed along with Docker Toolbox. Go to your VirtualBox default machine settings and in the avanced network settings, share port 3000. You must add a redirection from hosts' port 3000 to the machine's port 3000, both IP addresses can be left blank. The name of the rule is not important.
+
+If using Docker Toolbox, you should clone the git repository in a folder that is somewhere under the C:/Users/ path.
+
+## Docker setup
 
 If you have not cloned the repo yet:
 
