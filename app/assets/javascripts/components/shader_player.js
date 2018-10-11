@@ -17,9 +17,16 @@ Vue.component(
 		},
 		watch: {
 			fullscreen: function(fullscreen){
+				// Prevent fullscreen if webgl2 shader is not supported
+				if(this.gif.lang == "shader_webgl2"){
+					if(!this.shader_player.native_webgl2_supported){
+						this.fullscreen = false;
+						return;
+					}
+				}
+
 				if(fullscreen == true){
 					// Switch to fullscreen
-					
 					this.size_before_fullscreen = [
 						this.shader_player.width,
 						this.shader_player.height,
@@ -34,7 +41,7 @@ Vue.component(
 					style.innerHTML += "html{overflow:hidden;}";
 					document.body.appendChild(style);
 					window.shader_player_hardcoded_style = style;
-
+					
 					this.shader_player.animate();
 				} else {
 					this.shader_player.width =
@@ -75,6 +82,14 @@ Vue.component(
 
 				this.shader_player.set_container(container);
 
+				if(this.gif.lang == "shader_webgl2"){
+					if(!this.shader_player.native_webgl2_supported){
+						alert(
+							"Sorry, your browser and/or computer does not support WebGL2.\n"+
+							"You can still try viewing WebGL1 shaders."
+						);
+					}
+				}
 
 				function add_image(texture, index){
 					// 'Hardcoded' xhr

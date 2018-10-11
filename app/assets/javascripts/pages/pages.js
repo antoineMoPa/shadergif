@@ -64,7 +64,7 @@ window.onload = function(){
 						req.open("GET", "/search.json?search="+keyword+"&take="+chunk_size+"&skip="+app.current_offset);
 					} else if (is_profile) {
 						var url_splitted = window.location.href.split("/");
-						var username = url_splitted[url_splitted.length-1]
+						var username = url_splitted[url_splitted.length-1];
 						req.open("GET", "/profile.json?username="+username+"&take="+chunk_size+"&skip="+app.current_offset);
 					} else {
 						req.open("GET", "/gifs/list?take="+chunk_size+"&skip="+app.current_offset);
