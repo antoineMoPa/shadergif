@@ -23,6 +23,10 @@ class ShaderPlayerWebGL1 {
 		this.rendering_gif = false;
 		this.mouse = [0,0];
 
+		// Better fit mobile screens
+		if(window.innerWidth < 540){
+			this.width = window.innerWidth;
+		}
 
 		// Audio stuff
 		this.pixels = new Uint8Array(this.width * this.height * 4);

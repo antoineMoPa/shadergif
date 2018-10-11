@@ -3,6 +3,8 @@
 	.player-wrapper{
 		margin:auto;
 		position:relative;
+		margin-left:-30px;
+		margin-right:-30px;
 		
 		.fullscreen-button{
 			cursor:pointer;
@@ -26,7 +28,10 @@
 	top:0;
 	left:0;
 	z-index:1000;
-	
+	.player-wrapper{
+		margin-left:0;
+		margin-right:0;
+	}
 	.fullscreen-button{
 		opacity:0.5;
 		
