@@ -6,6 +6,10 @@ class GifsController < ApplicationController
       [*'A'..'Z', *'a'..'z', *0..9][ rand(62) ]
     end
   end
+
+  def create
+    new
+  end
   
   def new
     if not user_signed_in?
