@@ -17,7 +17,7 @@ class HomeController < ApplicationController
            .joins(:user)
            .select("gifs.*, users.username, users.profile_picture")
            .where("is_public = true")
-           .take(5)
+           .take(15)
            .to_json
     
   end
