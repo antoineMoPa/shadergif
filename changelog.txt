@@ -1,3 +1,8 @@
+0.0.17:                                                                    (October 17 2018)
+    other: Make default rails tests pass for the first time, hoping to write some actual
+           useful tests one day.
+           Load more gifs on the homepage at page load (15).
+
 0.0.16:                                                                     (October 2 2018)
     bugfixes: Show a warning + tips when webgl2 is not supported
     other: New about page
@@ -10,7 +15,7 @@
 
 0.0.14:                                                                     (August 28 2018)
     feature: Very basic notification system for post comments
-	
+    
 0.0.13:                                                                     (August 26 2018)
     bugfix: Video conversion frame were sometimes dropped
     feature: Frame count, width, height is now saved and can be modified
