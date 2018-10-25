@@ -1,7 +1,29 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+if Rails.env.development?
+
+  user = User.new(
+    :email => 'test@test.com',
+    :username =>'test',
+    :password => 'password',
+    :password_confirmation => 'password'
+  )
+  user.save!
+  
+
+  for i in 1..1000 do
+    gif = Gif.new
+    gif.user_id = user.id
+    gif.is_public = true
+    gif.title = "Dev env gif"
+    gif.description = "Just a dev env gif"
+    gif.code = "{}"
+    gif.frames = 10
+    gif.lang = "shader_webgl1"
+    gif.image_filename = "dev_env_gif.gif"
+    gif.save!()
+  end
+  
+end
