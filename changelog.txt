@@ -1,3 +1,6 @@
+0.0.18:                                                                    (November 4 2018)
+    feature: infinite scrolling in profile, home and search
+
 0.0.17:                                                                    (October 17 2018)
     other: Make default rails tests pass for the first time, hoping to write some actual
            useful tests one day.

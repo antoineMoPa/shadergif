@@ -1,10 +1,11 @@
 <script type="text/html" id="image-box-template">
 	<div class="image-box content has-text-centered">
-		<div class="">
+		<div>
 			<div class="has-text-left title-box">
 				<span class="profile-box">
 					<img v-if="gif.profile_picture"
 						 class="profile-picture"
+						 style="min-height:500px"
 						 v-bind:src="'/profile_pictures/' + gif.profile_picture">
 					<a v-bind:href="'/user/' + gif.username" class="profile-username">
 						{{ gif.username }}
@@ -22,13 +23,13 @@
 				<transition name="view-gif">
 					<div
 						v-if="!show_video"
-						class="view-gif-button">
+							  class="view-gif-button">
 						<div class="view-gif-button-inside">
 							GIF
 						</div>
 					</div>
 				</transition>
-				<video loop v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'" v-on:click="play">
+				<video loop v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'" v-on:click="play" style="min-height:500px">
 					<source
 						v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
 									type="video/webm">

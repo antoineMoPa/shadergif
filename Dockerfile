@@ -21,4 +21,4 @@ ADD Gemfile tmp_bundle/
 ADD Gemfile.lock tmp_bundle/
 RUN sh -c 'cd tmp_bundle; bundle install'
 
-ENTRYPOINT sh -c 'cd editable/shadergif; bash scripts/run_docker.sh'
+ENTRYPOINT sh -c 'cd editable/shadergif; bash scripts/run_docker.sh; bash'
