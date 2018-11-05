@@ -1,155 +1,175 @@
 <script type="application/json" id="main-gifs-json">
-	<%= raw(@gifs) %> 
+ <%= raw(@gifs) %> 
 </script>
 <script type="application/json" id="mosaic-gifs-json">
-	<%= raw(@mosaic_gifs) %> 
+ <%= raw(@mosaic_gifs) %> 
+</script>
+<script type="text/html" id="home-column-1">
+    <p class="has-text-weight-bold">About</p>
+    <p>
+        Briefly, ShaderGif is a free and open source home for shader art.<br>
+        <br>
+        <a class="button" href="/about">Read more</a>
+    </p>
+    <br>
+    <p class="has-text-weight-bold">Documentation</p>
+    <p>
+        Want to get started with shaders in GLSL?<br>
+        Start with:
+        <a href="https://doc.shadergif.com/">
+            doc.shadergif.com
+        </a>
+    </p>
+    <br>
+    <br>
+    <p class="has-text-weight-bold">Want some feature implemented?</p>
+    <p>
+        You could try coding it<br>
+        I'm on
+        <a href="https://github.com/antoineMoPa/shadergif">
+            <strong>github</strong>
+        </a>!
+        <br>
+        Give stars and fork!
+    </p>
+    <br><br>
+    <p class="has-text-weight-bold">Version</p>
+    <p>You are browsing shadergif version:</p>
+    <p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
+    <br><br>
+    <p class="has-text-weight-bold">Community Status</p>
+    <p>There are
+        <%= User.count() %>
+        registered users who shared
+        <%= Gif.count() %> gifs.
+    </p>
+    <br>
+    <p class="has-text-weight-bold">How to upload a gif?</p>
+    <p>
+        First you need to <a href="/users/sign_up">register</a>.
+        <br>
+        Then, in the shader editor, click the "Create gif" button.
+        <br>
+        The encoding will take a few seconds.
+        <br>
+        Once it's ready, the gif will appear at
+        the bottom of the page.
+        <br>
+        If you wish, you can add a title and post it.
+        It will be shown on the front page.
+        <br>
+        The uploading will take a few seconds, it's normal. (
+        The server is rendering a video preview of the gif for the
+        homepage)
+    </p>
+</script>
+<script type="text/html" id="home-column-2">
+    <strong>Start Coding:</strong>
+    <br><br>
+    <div class="has-text-centered">
+        <a class="button" href="/editor/">
+            <img class="feather-icon" src="/icons/feather/code.svg">
+            Launch editor
+        </a>
+        <br><br>
+        <a class="button" href="/editor/examples">
+            <img class="feather-icon" src="/icons/feather/clipboard.svg">
+            Start with sample code
+        </a>
+        <br><br>
+        <a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
+            <img class="feather-icon" src="/icons/feather/github.svg">
+            View on github
+        </a>
+    </div>
+    <br>
+    <% if !user_signed_in? %>
+        <div class="has-text-centered">
+            <p class="has-text-weight-bold">Don't have an account yet?</p>
+            <p>With an account, you can post public gifs and save drafts.</p>
+            <br>
+            <a class="button" href="/users/sign_up">
+                <img class="feather-icon" src="/icons/feather/user-plus.svg">
+                Sign up!
+            </a>
+        </div>
+    <% end %>
+    <br>
+    <div class="has-text-centered">
+        <p class="has-text-weight-bold">Last gifs</p>
+        <br>
+        <image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
+    </div>
+    <br>
+    <p class="has-text-weight-bold">Bridge tutorial</p>
+    <p>
+        View the very first shadergif tutorial:
+    </p>
+    <br>
+    <p class="has-text-centered">
+        <a href="https://doc.shadergif.com/tutorials/building-a-bridge/">
+            <img alt="bridge" src="/images/tutorials/bridge.png">
+            <br>        
+            <span class="button">view</span>
+        </a>
+    </p>
+    <br>
+    <p>Send feedback to <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
+    </p>
+    <br>
+    <br>
+    <strong>Search Topics</strong>
+    <p>Lack inpsiration?<br>
+        Browse these:<br>
+        <a href="/search?search=raymarch">Raymarch</a><br>
+        <a href="/search?search=integer">Integer</a><br>
+        <a href="/search?search=texture">Texture</a><br>
+        <a href="/search?search=fractal">Fractal</a><br>
+        <a href="/search?search=automata">Automata</a><br>
+        <a href="/search?search=voronoi">Voronoi</a><br>
+    </p>
 </script>
 <div id="main-app" class="home-page">
-	<section class="section">
-		<div class="container">
-			<div class="columns">
-				<div class="column is-one-fifth home-sidebar is-hidden-tablet-only">
-					<p class="has-text-weight-bold">About</p>
-					<p>
-						Briefly, ShaderGif is a free and open source home for shader art.<br>
-						<br>
-						<a class="button" href="/about">Read more</a>
-					</p>
-					<br>
-					<p class="has-text-weight-bold">Documentation</p>
-					<p>
-						Want to get started with shaders in GLSL?<br>
-						Start with:
-						<a href="https://doc.shadergif.com/">
-							doc.shadergif.com
-						</a>
-					</p>
-					<br>
-					<br>
-					<p class="has-text-weight-bold">Want some feature implemented?</p>
-					<p>
-						You could try coding it<br>
-						I'm on
-						<a href="https://github.com/antoineMoPa/shadergif">
-							<strong>github</strong>
-						</a>!
-						<br>
-						Give stars and fork!
-					</p>
-					<br><br>
-					<p class="has-text-weight-bold">Version</p>
-					<p>You are browsing shadergif version:</p>
-					<p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
-					<br><br>
-					<p class="has-text-weight-bold">Community Status</p>
-					<p>There are
-						<%= User.count() %>
-						registered users who shared
-						<%= Gif.count() %> gifs.
-					</p>
-					<br>
-					<p class="has-text-weight-bold">How to upload a gif?</p>
-					<p>
-						First you need to <a href="/users/sign_up">register</a>.
-						<br>
-						Then, in the shader editor, click the "Create gif" button.
-						<br>
-						The encoding will take a few seconds.
-						<br>
-						Once it's ready, the gif will appear at
-						the bottom of the page.
-						<br>
-						If you wish, you can add a title and post it.
-						It will be shown on the front page.
-						<br>
-						The uploading will take a few seconds, it's normal. (
-						The server is rendering a video preview of the gif for the
-						homepage)
-						
-					</p>
-				</div>
-				<div class="column home-news">
-					<image-box-list v-bind:gifs="gifs"></image-box-list>
-					<br>
-					<div class="has-text-centered view-more-container">
-						<button v-if="has_more"
-								v-on:click="load_more"
-								class="button load-more-button is-large"
-						>
-							view more
-						</button>
-						<div v-else>
-							No more gifs to load!
-						</div>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-fifth home-sidebar is-hidden-touch">
+                    <script>
+                     document.write(document.getElementById("home-column-1").innerHTML);
+                    </script>
+                </div>
+                <div class="column home-news">
+                    <image-box-list v-bind:gifs="gifs"></image-box-list>
+                    <br>
+                </div>
+                <div class="column home-sidebar is-one-fifth">
+                    <script>
+                     document.write(document.getElementById("home-column-2").innerHTML);
+                    </script>
+					<div class="is-hidden-desktop">
+					<script>
+					 // Both columns go here in mobile
+					 document.write(document.getElementById("home-column-1").innerHTML);
+					</script>
 					</div>
-				</div>
-				<div class="column home-sidebar is-one-fifth">
-					<strong>Start Coding:</strong>
-					<br><br>
-					<div class="has-text-centered">
-						<a class="button" href="/editor/">
-							<img class="feather-icon" src="/icons/feather/code.svg">
-							Launch editor
-						</a>
-						<br><br>
-						<a class="button" href="/editor/examples">
-							<img class="feather-icon" src="/icons/feather/clipboard.svg">
-							Start with sample code
-						</a>
-						<br><br>
-						<a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
-							<img class="feather-icon" src="/icons/feather/github.svg">
-							View on github
-						</a>
-					</div>
-					<br>
-					<% if !user_signed_in? %>
-						<div class="has-text-centered">
-							<p class="has-text-weight-bold">Don't have an account yet?</p>
-							<p>With an account, you can post public gifs and save drafts.</p>
-							<br>
-							<a class="button" href="/users/sign_up">
-								<img class="feather-icon" src="/icons/feather/user-plus.svg">
-								Sign up!
-							</a>
-						</div>
-					<% end %>
-					<br>
-					<div class="has-text-centered">
-						<p class="has-text-weight-bold">Last gifs</p>
-						<br>
-						<image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
-					</div>
-					<br>
-					<p class="has-text-weight-bold">Bridge tutorial</p>
-					<p>
-						View the very first shadergif tutorial:
-					</p>
-					<br>
-					<p class="has-text-centered">
-						<a href="https://doc.shadergif.com/tutorials/building-a-bridge/">
-							<img alt="bridge" src="/images/tutorials/bridge.png">
-							<br>		
-							<span class="button">view</span>
-						</a>
-					</p>
-					<br>
-					<p>Send feedback to <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
-					</p>
-					<br>
-					<br>
-					<strong>Search Topics</strong>
-					<p>Lack inpsiration?<br>
-						Browse these:<br>
-						<a href="/search?search=raymarch">Raymarch</a><br>
-						<a href="/search?search=integer">Integer</a><br>
-						<a href="/search?search=texture">Texture</a><br>
-						<a href="/search?search=fractal">Fractal</a><br>
-						<a href="/search?search=automata">Automata</a><br>
-						<a href="/search?search=voronoi">Voronoi</a><br>
-					</p>
-				</div>
-			</div>
-		</div>
-	</section>
+                </div>
+            </div>
+            <div class="is-hidden-desktop">
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="has-text-centered view-more-container">
+                <button v-if="has_more"
+                              v-on:click="load_more"
+                              class="button load-more-button is-large"
+                >
+                    view more gifs
+                </button>
+                <div v-else>
+                    No more gifs to load!
+                </div>
+            </div>
+        </div>
+    </section>
 </div>

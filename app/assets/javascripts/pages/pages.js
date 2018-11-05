@@ -27,7 +27,7 @@ window.addEventListener('scroll', () => {
         // I don't know why, but I prefer some delays here
         setTimeout(main_app.load_more, 1000);
         setTimeout(() => {
-          el.innerHTML = 'loading more...';
+          el.innerHTML = 'loading more gifs...';
         }, 300);
         window.last_auto_scroll_fetch = new Date().getTime();
       }
@@ -84,8 +84,21 @@ window.onload = function () {
 
           // Increase quantity
           this.current_offset += resp.length;
-          // Add gifs
-          this.gifs = this.gifs.concat(resp);
+
+          if (window.innerWidth > 768) {
+            // Desktop-tablet: just add gifs
+            // Add gifs
+            this.gifs = this.gifs.concat(resp);
+          } else {
+            // Mobile: remove gifs, scroll to top, add new gifs
+            this.gifs.splice(0);
+            window.scrollTo(0, 0);
+            // Let time for user to see that new gifs are loaded
+            // But dont put a useless GPU consuming transition
+            setTimeout(() => {
+              this.gifs = this.gifs.concat(resp);
+            }, 300);
+          }
 
           // Go back to initial text
           load_more_button.innerHTML = 'view more';
