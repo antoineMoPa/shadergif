@@ -5,7 +5,6 @@
 				<span class="profile-box">
 					<img v-if="gif.profile_picture"
 						 class="profile-picture"
-						 style="min-height:500px"
 						 v-bind:src="'/profile_pictures/' + gif.profile_picture">
 					<a v-bind:href="'/user/' + gif.username" class="profile-username">
 						{{ gif.username }}
