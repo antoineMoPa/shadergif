@@ -33,7 +33,7 @@ Vue.component(
                     </div>
                 </div>
             </transition>
-            <video loop v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'" v-on:click="play" style="min-height:500px" preload="none">
+            <video loop v-bind:poster="'/gifs/generated/' + gif.image_filename + '-preview.jpg'" v-on:click="play" preload="none">
                 <source
                     v-bind:src="'/gifs/generated/' + gif.image_filename + '-vid.webm'"
                     type="video/webm">
