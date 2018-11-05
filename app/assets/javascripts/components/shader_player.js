@@ -1,9 +1,58 @@
 //= require lib/base.js
 
+const vertexShader = `// Vertex Shader
+attribute vec3 position;
+varying vec2 UV;
+varying vec2 lastUV;
+varying vec3 v_position;
+uniform vec2 renderBufferRatio;
+
+void main(){
+    v_position = position;
+    UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+    lastUV = UV / renderBufferRatio;
+    gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+}`;
+
+const vertexShaderWebGL2 = `#version 300 es
+// Vertex Shader for WebGL2
+ 
+layout(location = 0) in vec3 position;
+out vec2 UV;
+out vec2 lastUV;
+out vec3 v_position;
+
+uniform vec2 renderBufferRatio;
+
+void main(){
+    v_position = position;
+    UV = vec2((position.x+1.0) / 2.0, (position.y + 1.0)/2.0);
+    lastUV = UV / renderBufferRatio;
+    gl_Position = vec4(v_position.x,v_position.y, 0.0, 1.0);
+}`;
+
 Vue.component(
   'shader-player',
   {
-    template: '#shader-player-template',
+    template: `
+<div v-bind:class="'shader-player ' + (fullscreen? 'shader-player-fullscreen' :'')">
+    <div class="player-wrapper"
+         v-if="shader_player != null"
+         v-bind:style="player_size_style">
+        
+        <div class="fullscreen-button"
+             v-on:click="fullscreen = !fullscreen">
+            <span v-if="!fullscreen">[ full screen ]</span>
+            <span v-else>[ close ]</span>
+            
+        </div>
+        <div class="player-container">
+        </div>
+    </div>
+    <p class="text-center" v-if="debug_info && shader_player">
+        time: {{ shader_player.time.toFixed(4) }}, mouse: {{ shader_player.mouse[0].toFixed(4) }}, {{ shader_player.mouse[1].toFixed(4) }}
+    </p>
+</div>`,
     props: ['gif'],
     data() {
       return {
@@ -68,10 +117,10 @@ Vue.component(
 
       if (app.gif.lang == '' || app.gif.lang == null || app.gif.lang == 'shader_webgl1') {
         this.shader_player = new ShaderPlayerWebGL1();
-        vertex_code = load_script('vertex-shader');
+        vertex_code = vertexShader;
       } else if (app.gif.lang == 'shader_webgl2') {
         this.shader_player = new ShaderPlayerWebGL2();
-        vertex_code = load_script('vertex-shader-webgl2');
+        vertex_code = vertexShaderWebGL2;
       }
 
       this.$nextTick(function () {

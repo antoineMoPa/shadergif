@@ -32,8 +32,6 @@
 		<% end %>
 	</head>
 	<body>
-		<%= render :partial => 'components/all_components' %>
-		
 		<%= javascript_include_tag 'components' %>
 		<% if not (@is_editor and Rails.env.electron?) %>
 			<header class="navbar">

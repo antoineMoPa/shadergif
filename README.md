@@ -81,6 +81,12 @@ In the root shadergif folder:
     npm install
     npm run lint-fix
 
+## Testing
+
+In the root folder:
+
+    rake test
+
 # Documentation
 
 Visit: [doc.shadergif.com](https://doc.shadergif.com)
