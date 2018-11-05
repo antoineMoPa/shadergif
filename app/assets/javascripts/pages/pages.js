@@ -1,37 +1,37 @@
 /*
   This is a bit of a hack, the profile/search/landing pages use almost
   the same JS and vue app.
-  
+
   Trust me it would be separate components if I wrote it now.
   Separate it if you want.
  */
 
 window.last_auto_scroll_fetch = null;
-window.addEventListener("scroll", () => {
-  if(typeof(window.scroll_load_more_element) != "undefined"){
-	let el = window.scroll_load_more_element;
-	
-	/* 
-	   Thank you stackoverflow for what's next
-	   https://stackoverflow.com/questions/487073/
-	   Check if element is visible after scrolling
-	*/
-	let rect = el.getBoundingClientRect();
-	let elemTop = rect.top;
-	let elemBottom = rect.bottom;
-	let isVisible = elemTop < window.innerHeight && elemBottom >= 0;
-	const threshold = 2000;
-	
-	if(isVisible){
-	  if(new Date().getTime() - window.last_auto_scroll_fetch > threshold){
+window.addEventListener('scroll', () => {
+  if (typeof (window.scroll_load_more_element) != 'undefined') {
+    const el = window.scroll_load_more_element;
+
+    /*
+       Thank you stackoverflow for what's next
+       https://stackoverflow.com/questions/487073/
+       Check if element is visible after scrolling
+    */
+    const rect = el.getBoundingClientRect();
+    const elemTop = rect.top;
+    const elemBottom = rect.bottom;
+    const isVisible = elemTop < window.innerHeight && elemBottom >= 0;
+    const threshold = 2000;
+
+    if (isVisible) {
+      if (new Date().getTime() - window.last_auto_scroll_fetch > threshold) {
         // I don't know why, but I prefer some delays here
         setTimeout(main_app.load_more, 1000);
-        setTimeout(function(){
-          el.innerHTML = "loading more...";
-        },300);
-		window.last_auto_scroll_fetch = new Date().getTime();
-	  }
-	}
+        setTimeout(() => {
+          el.innerHTML = 'loading more...';
+        }, 300);
+        window.last_auto_scroll_fetch = new Date().getTime();
+      }
+    }
   }
 });
 
@@ -66,14 +66,14 @@ window.onload = function () {
         current_offset: -1,
         has_more: true,
       },
-      updated: function() {
-        var load_more_button = this.$el.querySelectorAll(".load-more-button")[0];
+      updated() {
+        var load_more_button = this.$el.querySelectorAll('.load-more-button')[0];
         window.scroll_load_more_element = load_more_button;
       },
       methods: {
         receive_more(req) {
-		  let load_more_button = document.querySelectorAll(".load-more-button")[0];
-          
+          const load_more_button = document.querySelectorAll('.load-more-button')[0];
+
           // Exctract data
           const resp = JSON.parse(req.responseText);
 
@@ -81,14 +81,14 @@ window.onload = function () {
           if (resp.length == 0) {
             this.has_more = false;
           }
-		  
+
           // Increase quantity
           this.current_offset += resp.length;
-		  // Add gifs
+          // Add gifs
           this.gifs = this.gifs.concat(resp);
 
-		  // Go back to initial text
-		  load_more_button.innerHTML = "view more";
+          // Go back to initial text
+          load_more_button.innerHTML = 'view more';
         },
         load_more() {
           const app = this;
@@ -121,8 +121,8 @@ window.onload = function () {
       },
     });
 
-	window.main_app = main_app;
-	
+    window.main_app = main_app;
+
     var gifs = JSON.parse(
       document.getElementById('main-gifs-json').innerHTML,
     );

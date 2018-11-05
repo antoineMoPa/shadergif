@@ -79,7 +79,7 @@ Running eslint is recommended before pull requests.
 In the root shadergif folder:
 
     npm install
-    npm run lint --fix .
+    npm run lint-fix
 
 # Documentation
 

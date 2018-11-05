@@ -2,7 +2,8 @@
   "name": "shadergif",
   "private": true,
   "scripts": {
-    "lint": "eslint"
+    "lint": "eslint",
+	"lint-fix": "eslint --fix ."
   },
   "dependencies": {},
   "devDependencies": {
