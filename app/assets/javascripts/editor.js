@@ -27,6 +27,7 @@ const DEFAULT_HEIGHT = 540;
 const cm_errorLines = [];
 let start_gif = load_script('start-gif').trim();
 
+
 if (start_gif != '') {
   start_gif = JSON.parse(start_gif);
 
@@ -546,7 +547,7 @@ var app = new Vue({
 
         this.player.set_container(container);
 
-        vertex_code = load_script('vertex-shader-webgl2');
+        vertex_code = vertexShaderWebGL2;
         this.player.set_vertex_shader(vertex_code);
         this.update_player();
       } else {
@@ -557,7 +558,7 @@ var app = new Vue({
         this.player = new ShaderPlayerWebGL1();
         this.player.set_container(container);
 
-        vertex_code = load_script('vertex-shader');
+        vertex_code = vertexShader;
         this.player.set_vertex_shader(vertex_code);
         this.update_player();
       }
@@ -746,7 +747,7 @@ var app = new Vue({
       this.player.debug_info = true;
 
       if (this.lang == 'shader_webgl1') {
-        this.vertex_shader = document.querySelectorAll('script[name=vertex-shader]')[0].innerHTML;
+        this.vertex_shader = vertexShader;
         this.player.set_vertex_shader(this.vertex_shader);
 
         this.player.set_on_error_listener((error, gl) => {
