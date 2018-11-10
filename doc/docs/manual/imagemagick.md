@@ -7,8 +7,14 @@ It is easily automated and has binding in many languages.
 [https://en.wikipedia.org/wiki/ImageMagick](https://en.wikipedia.org/wiki/ImageMagick)
 
 ## Basics
+In the gif editor, there is a zip export button. Use it to get a zipped folder.
+In the terminal, navigate to the downloaded path and extract de zip:
 
-To make a gif from the png images in the .zip archive in Linux:
+    unzip images.zip
+	
+Now you should have all the images in the folder (image-0000.png, image-0001.png, ...).
+
+To make a gif from the png images:
 
     convert image-*.png anim.gif
 

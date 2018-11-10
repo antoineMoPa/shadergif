@@ -4,8 +4,8 @@ pages:
 - Home: 'index.md'
 - Manual:
     - 'Uniforms': 'manual/uniforms.md'
-    - 'Making small gifs': 'manual/making-small-gifs.md'
     - 'GLSL Tips & Code Snippets': 'manual/glsl-tips-and-snippets.md'
+    - 'Making small gifs': 'manual/making-small-gifs.md'
     - 'ImageMagick Tips': 'manual/imagemagick.md'
 - Techniques:
     - 'Two triangles': 'techniques/two-triangles.md'
