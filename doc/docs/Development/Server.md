@@ -1,3 +1,16 @@
+# With Docker
+
+    git clone https://github.com/antoineMoPa/shadergif.git # (You can also clone with ssh)
+    cd shadergif
+
+    docker build -t shadergif .
+	docker run -p 3000:3000 -v $(pwd):/editable/shadergif -it shadergif
+
+Note: Docker has many problems with files, symlinks, shared folders and usability in general on Windows.
+I'd recommend to install Ubuntu or Debian in a VirtualBox VM to avoid most problems.
+
+# Without Docker: Installing and running the dev server
+
 Shadergif is a rails app. The instructions here are for Debian-like operating systems.
 
 If you don't have Debian or a Debian-like operating system, you could set up a virtual machine
@@ -5,8 +18,6 @@ with Debian.
 
 * Download virtualbox, to run the VM: [virtualbox.org](https://www.virtualbox.org/)
 * Download Debian (You will probably want a AMD64 version, which is the architecture of most modern CPUs, including intel): [Debian mirrors list](https://www.debian.org/CD/http-ftp/#stable)
-
-# Installing and running the dev server
 
 Note: **copy** paste **line by line**.
 
