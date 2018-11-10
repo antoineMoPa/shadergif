@@ -8,7 +8,7 @@ It is easily automated and has binding in many languages.
 
 ## Basics
 In the gif editor, there is a zip export button. Use it to get a zipped folder.
-In the terminal, navigate to the downloaded path and extract de zip:
+In the terminal, navigate to the downloaded path and extract the zip:
 
     unzip images.zip
 	
