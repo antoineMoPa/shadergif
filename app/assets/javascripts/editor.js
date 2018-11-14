@@ -66,14 +66,10 @@ function default_lang_policy() {
     }
   }
   if (typeof (window.localStorage.lang) !== 'undefined') {
-    if (window.localStorage.lang == 'mathjs') {
-      return 'mathjs';
-    }
-    if (window.localStorage.lang == 'shader_webgl1') {
-      return 'shader_webgl1';
-    }
-    if (window.localStorage.lang == 'shader_webgl2') {
-      return 'shader_webgl2';
+    let available_langs = ['mathjs','shader_webgl1','shader_webgl2'];
+    console.log(window.localStorage.lang, window.localStorage.lang in available_langs);
+    if (available_langs.includes(window.localStorage.lang)) {
+      return window.localStorage.lang;
     }
   }
 
