@@ -3,16 +3,31 @@
 #
 
 if Rails.env.development?
+  
+  user = User.new(
+    :email => 'test@example.com',
+    :username =>'test1',
+    :password => 'password',
+    :password_confirmation => 'password'
+  )
+  user.save!
+
+  user = User.new(
+    :email => 'example@example.com',
+    :username =>'test2',
+    :password => 'password',
+    :password_confirmation => 'password'
+  )
+  user.save!
 
   user = User.new(
     :email => 'test@test.com',
-    :username =>'test',
+    :username =>'test3',
     :password => 'password',
     :password_confirmation => 'password'
   )
   user.save!
   
-
   for i in 1..1000 do
     gif = Gif.new
     gif.user_id = user.id

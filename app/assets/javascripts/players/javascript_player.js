@@ -13,7 +13,7 @@ class JavascriptPlayer {
     this.mathjs_worker = null;
     this.mathjs_processing = false;
     this.compiled = false;
-    
+
     /* 
       The sandboxed iframe allows us to run scripts while minimizing client-side 
       hack risk.
@@ -22,6 +22,9 @@ class JavascriptPlayer {
     this.iframe.setAttribute("sandbox", "allow-scripts"); // Security: dont remove
     window.onmessage = this.onIframeMessage.bind(this);
 
+    this.frames = 10;
+    this.anim_delay = 100;
+    
     this.canvas = document.createElement('canvas');
     this.frames_defined_in_code = false;
     this.window_focused = true;
@@ -80,6 +83,7 @@ window.onerror = (message, source, lineno) => {
 `;
     
     let appendedCode = `
+let frame = 0;
 let canvas = document.querySelectorAll('canvas')[0];
 let ctx = canvas.getContext('2d');
 /* Lock to animation */
@@ -100,25 +104,29 @@ window.addEventListener('message',(event) => {
         render(canvas, data.render.time);
     }
 });
+let player_frames = `+ this.frames +`;
+let anim_delay = `+ this.anim_delay +`;
 
 function animate() {
+    frame %= (player_frames);
     if(play_animation) {
         const now = new Date().getTime();
-        render(canvas, now);
+        render(canvas, (frame + 1) / player_frames);
     }
-    window.requestAnimationFrame(animate);
+    setTimeout(() => {window.requestAnimationFrame(animate)}, anim_delay);
+    frame++;
 }
 
 window.requestAnimationFrame(animate);
 
 window.onmessage = (event) => {
-    if(event.time) {
+    if(event.data.render) {
         play_animation = false;
-        render(canvas, event.time);
+        render(canvas, event.data.render.time);
         play_animation = true;
         parent.postMessage({
             time: event.time,
-            imageData: ctx.getImageData(0,0, canvas.width, canvas.height)
+            canvas: canvas.toDataURL() 
         }, '*');
     }
 };
@@ -137,10 +145,9 @@ window.onmessage = (event) => {
   onIframeMessage(event) {
     let data = event.data;
 
-    if (data.imageData) {
-      let time = data.time;
+    if (data.canvas) {
       if(this.receiveFrame){
-        this.receiveFrame(time, data.imageData);
+        this.receiveFrame(data.canvas);
       }
     }
 
@@ -188,13 +195,10 @@ window.onmessage = (event) => {
     },"*");
 
     this.promise = new Promise(((resolve, reject) => {
-      this.receiveFrame = resolve();
-      // Max render time
-      setTimeout((() => {
-        reject();
-        this.setError("Error: Frame render time busted.");
-      }).bind(this), 3000);
-    }).bind(this));
+      this.receiveFrame = (data) => {
+        resolve(data);
+      };
+    }).bind(this)).then(callback);
     
     const message = {
       code: this.code,

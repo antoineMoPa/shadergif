@@ -91,6 +91,9 @@ Vue.component(
       } else if (app.gif.lang == 'shader_webgl2') {
         this.shader_player = new ShaderPlayerWebGL2();
         vertex_code = vertexShaderWebGL2;
+      } else {
+        window.location.href = "/editor/" + app.gif.id + "/edit";
+        return;
       }
 
       this.$nextTick(function () {

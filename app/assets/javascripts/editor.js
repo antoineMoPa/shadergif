@@ -426,7 +426,18 @@ var app = new Vue({
 
           // Render
           app.player.render((curr + 1) / pl.frames, (canvas) => {
-            const image_data = canvas.toDataURL();
+            let image_data = "";
+            /* 
+              Shader player return a canvas,
+              but iframed players (javascript)
+              return a dataurl
+             */
+            if(typeof(canvas) != "string"){
+              image_data = canvas.toDataURL();
+            } else {
+              image_data = canvas;
+            }
+            
             temp_img.src = image_data;
           });
         } else {
