@@ -147,7 +147,7 @@ window.onmessage = (event) => {
     if(data.error) {
       let message = data.error;
       let lineno = data.lineno;
-      this.setError("Error at line " + lineno + ": " + message, lineno);
+      this.setError("Error at line " + (lineno+1) + ": " + message, lineno);
     }
     
   }
