@@ -27,6 +27,18 @@ const DEFAULT_HEIGHT = 540;
 const cm_errorLines = [];
 let start_gif = load_script('start-gif').trim();
 
+const lang_players_assoc = {
+  'mathjs': MathjsPlayer,
+  'shader_webgl1': ShaderPlayerWebGL1,
+  'shader_webgl2': ShaderPlayerWebGL2,
+  'javascript': JavascriptPlayer
+};
+
+var available_langs = [];
+
+for(let lang_name in lang_players_assoc){
+  available_langs.push(lang_name);
+}
 
 if (start_gif != '') {
   start_gif = JSON.parse(start_gif);
@@ -66,8 +78,6 @@ function default_lang_policy() {
     }
   }
   if (typeof (window.localStorage.lang) !== 'undefined') {
-    let available_langs = ['mathjs','shader_webgl1','shader_webgl2'];
-    console.log(window.localStorage.lang, window.localStorage.lang in available_langs);
     if (available_langs.includes(window.localStorage.lang)) {
       return window.localStorage.lang;
     }
@@ -121,6 +131,7 @@ var app = new Vue({
   el: '#shadergif-app',
   data: {
     lang: default_lang_policy(),
+    available_langs: available_langs,
     player: null,
     user: null,
     gif: start_gif,
@@ -527,38 +538,32 @@ var app = new Vue({
 
       let vertex_code = '';
 
-      if (lang == 'mathjs') {
-        this.player = new MathjsPlayer();
-        this.player.set_container(container);
-        this.texture_support = false;
-        this.sound_support = false;
-      } else if (lang == 'shader_webgl2') {
+      this.texture_support = false;
+      this.sound_support = false;
+      var PlayerType = lang_players_assoc[lang];
+      this.player = new PlayerType();
+      
+      if (lang == 'shader_webgl2') {
+        // Extra logic for webgl2
         this.texture_support = true;
         this.sound_support = true;
-        this.player = new ShaderPlayerWebGL2();
-
+        
         if (!this.player.native_webgl2_supported) {
           this.webgl2_init_error = true;
         }
-
-        this.player.set_container(container);
-
         vertex_code = vertexShaderWebGL2;
         this.player.set_vertex_shader(vertex_code);
-        this.update_player();
-      } else {
-        // assume shader_webgl1
-        // (old shaders have lang == null)
+      } else if (lang == 'shader_webgl1') {
+        // Extra logic for webgl1
         this.texture_support = true;
         this.sound_support = true;
-        this.player = new ShaderPlayerWebGL1();
-        this.player.set_container(container);
-
         vertex_code = vertexShader;
         this.player.set_vertex_shader(vertex_code);
-        this.update_player();
       }
 
+      this.player.set_container(container);
+      this.update_player();
+      
       this.player.set_on_error_listener((error) => {
         app.add_error(error);
       });
