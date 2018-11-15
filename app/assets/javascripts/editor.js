@@ -21,22 +21,23 @@
 
   */
 
-const is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.glsl?(\?v=[0-9]+))/);
+const is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.(glsl|example\.js)?(\?v=[0-9]+))/);
+
 const DEFAULT_WIDTH = 540;
 const DEFAULT_HEIGHT = 540;
 const cm_errorLines = [];
 let start_gif = load_script('start-gif').trim();
 
 const lang_players_assoc = {
-  'mathjs': MathjsPlayer,
-  'shader_webgl1': ShaderPlayerWebGL1,
-  'shader_webgl2': ShaderPlayerWebGL2,
-  'javascript': JavascriptPlayer
+  mathjs: MathjsPlayer,
+  shader_webgl1: ShaderPlayerWebGL1,
+  shader_webgl2: ShaderPlayerWebGL2,
+  javascript: JavascriptPlayer,
 };
 
 var available_langs = [];
 
-for(let lang_name in lang_players_assoc){
+for (const lang_name in lang_players_assoc) {
   available_langs.push(lang_name);
 }
 
@@ -131,7 +132,7 @@ var app = new Vue({
   el: '#shadergif-app',
   data: {
     lang: default_lang_policy(),
-    available_langs: available_langs,
+    available_langs,
     player: null,
     user: null,
     gif: start_gif,
@@ -214,7 +215,7 @@ var app = new Vue({
         app.player.frames = this.frames;
       }
     },
-    update_error_listener () {
+    update_error_listener() {
       if (this.lang == 'shader_webgl1') {
         this.player.set_on_error_listener((error, gl) => {
           app.add_error(error);
@@ -426,18 +427,18 @@ var app = new Vue({
 
           // Render
           app.player.render((curr + 1) / pl.frames, (canvas) => {
-            let image_data = "";
-            /* 
+            let image_data = '';
+            /*
               Shader player return a canvas,
               but iframed players (javascript)
               return a dataurl
              */
-            if(typeof(canvas) != "string"){
+            if (typeof (canvas) != 'string') {
               image_data = canvas.toDataURL();
             } else {
               image_data = canvas;
             }
-            
+
             temp_img.src = image_data;
           });
         } else {
@@ -565,12 +566,12 @@ var app = new Vue({
       this.sound_support = false;
       var PlayerType = lang_players_assoc[lang];
       this.player = new PlayerType();
-      
+
       if (lang == 'shader_webgl2') {
         // Extra logic for webgl2
         this.texture_support = true;
         this.sound_support = true;
-        
+
         if (!this.player.native_webgl2_supported) {
           this.webgl2_init_error = true;
         }
@@ -586,7 +587,7 @@ var app = new Vue({
 
       this.player.set_container(container);
       this.update_player();
-      
+
       this.player.set_on_error_listener((error) => {
         app.add_error(error);
       });
@@ -595,7 +596,7 @@ var app = new Vue({
       this.error_msg = `Error\n${err}`;
       try {
         if (this.lang == 'shader_webgl1') {
-          let line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
+          const line = err.match(/^ERROR: [0-9]*:([0-9]*)/)[1];
 
           // Fix potential bug killing all text sometimes
           // like when inserting backticks (`)
@@ -604,16 +605,16 @@ var app = new Vue({
           if (line == '') {
             return;
           }
-          
+
           // Bug that could happen
           if (isNaN(line)) {
             return;
           }
-          
+
           lineno = parseInt(line) - 1;
         }
 
-        if(typeof(lineno) != "undefined") {
+        if (typeof (lineno) != 'undefined') {
           const errline = app.f_editor.addLineClass(lineno, 'background', 'errorline');
           cm_errorLines.push(errline);
         }
@@ -700,6 +701,8 @@ var app = new Vue({
       if (this.gif == null || this.gif.lang == null) {
         if (filename.match(/_webgl1/)) {
           this.lang = 'shader_webgl1';
+        } else if (filename.match(/\.example\.js/)) {
+          this.lang = 'javascript';
         } else {
           this.lang = 'shader_webgl2';
         }

@@ -92,7 +92,7 @@ Vue.component(
         this.shader_player = new ShaderPlayerWebGL2();
         vertex_code = vertexShaderWebGL2;
       } else {
-        window.location.href = "/editor/" + app.gif.id + "/edit";
+        window.location.href = `/editor/${app.gif.id}/edit`;
         return;
       }
 

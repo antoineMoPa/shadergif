@@ -65,15 +65,15 @@ window.onload = function () {
         initial_qty: -1,
         current_offset: -1,
         has_more: true,
-        column_1: "",
-        column_2: ""
+        column_1: '',
+        column_2: '',
       },
       updated() {
         var load_more_button = this.$el.querySelectorAll('.load-more-button')[0];
         window.scroll_load_more_element = load_more_button;
 
-        this.column_1 = document.getElementById("home-column-1").innerHTML;
-        this.column_2 = document.getElementById("home-column-2").innerHTML;
+        this.column_1 = document.getElementById('home-column-1').innerHTML;
+        this.column_2 = document.getElementById('home-column-2').innerHTML;
       },
       methods: {
         receive_more(req) {
