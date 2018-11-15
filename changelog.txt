@@ -1,3 +1,6 @@
+0.0.19:                                                                   (November 15 2018)
+    feature: Javascript mode!
+
 0.0.18:                                                                    (November 4 2018)
     feature: infinite scrolling in profile, home and search
 
