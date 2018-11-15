@@ -182,6 +182,7 @@ var app = new Vue({
       window.localStorage.lang = this.lang;
       this.set_player();
       this.update_player();
+      this.update_error_listener();
     },
   },
   methods: {
@@ -211,6 +212,17 @@ var app = new Vue({
 
       if (!this.player.frames_defined_in_code) {
         app.player.frames = this.frames;
+      }
+    },
+    update_error_listener () {
+      if (this.lang == 'shader_webgl1') {
+        this.player.set_on_error_listener((error, gl) => {
+          app.add_error(error);
+        });
+      } else {
+        this.player.set_on_error_listener((error, lineno) => {
+          app.add_error(error, lineno);
+        });
       }
     },
     recompile() {
@@ -589,7 +601,7 @@ var app = new Vue({
           
           lineno = parseInt(line) - 1;
         }
-        console.log(lineno);
+
         if(typeof(lineno) != "undefined") {
           const errline = app.f_editor.addLineClass(lineno, 'background', 'errorline');
           cm_errorLines.push(errline);
@@ -753,16 +765,9 @@ var app = new Vue({
       if (this.lang == 'shader_webgl1') {
         this.vertex_shader = vertexShader;
         this.player.set_vertex_shader(this.vertex_shader);
-
-        this.player.set_on_error_listener((error, gl) => {
-          app.add_error(error);
-        });
-      } else {
-        this.player.set_on_error_listener((error, lineno) => {
-          app.add_error(error, lineno);
-        });
       }
 
+      this.update_error_listener();
       this.player.set_code(this.code);
 
       this.update_player();
