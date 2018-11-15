@@ -20,12 +20,9 @@ class JavascriptPlayer {
      */
     this.iframe = document.createElement("iframe");
     this.iframe.setAttribute("sandbox", "allow-scripts"); // Security: dont remove
-    window.onmessage = this.onIframeMessage;
+    window.onmessage = this.onIframeMessage.bind(this);
 
-    // TODO remove, dev only
-    window.iframe = this.iframe;
     this.canvas = document.createElement('canvas');
-    this.message_area = document.createElement('pre');
     this.frames_defined_in_code = false;
     this.window_focused = true;
     this.code = '';
@@ -57,10 +54,6 @@ class JavascriptPlayer {
         this.window_focused = false;
       });
     }
-
-    {
-      this.message_area.classList.add('mathjs-message-area');
-    }
   }
   
   getIframeSrc() {
@@ -74,13 +67,25 @@ class JavascriptPlayer {
     content += "</style>";
     content += "</head>";
     content += "<body>";
+    
     content += "<canvas width='"+this.width+"' height='"+this.height+"'></canvas>";
-    content += "<script type='text/javascript'>";
-    content += this.code;
-    content += `
-const canvas = document.querySelectorAll("canvas")[0];
-const ctx = canvas.getContext("2d");
 
+    content += `
+<script type='text/javascript'>
+window.onerror = (message, source, lineno) => {
+    parent.postMessage({error: message, lineno: lineno - 8}, "*");
+    return true;
+};
+</script>
+`;
+    
+    let appendedCode = `
+let canvas = document.querySelectorAll('canvas')[0];
+let ctx = canvas.getContext('2d');
+/* Lock to animation */
+/* To ensure that the gif rendering does not interfere */
+/* With regular preview animation */
+let play_animation = true;
 render(canvas, 0.0);
 
 window.addEventListener('message',(event) => {
@@ -96,18 +101,32 @@ window.addEventListener('message',(event) => {
     }
 });
 
-function animate(){
-    const now = new Date().getTime();
-    render(canvas, now);
+function animate() {
+    if(play_animation) {
+        const now = new Date().getTime();
+        render(canvas, now);
+    }
     window.requestAnimationFrame(animate);
 }
 
 window.requestAnimationFrame(animate);
-/*
-parent.postMessage({
-    imageData: ctx.getImageData(0,0, canvas.width, canvas.height)
-}, "*");*/
+
+window.onmessage = (event) => {
+    if(event.time) {
+        play_animation = false;
+        render(canvas, event.time);
+        play_animation = true;
+        parent.postMessage({
+            time: event.time,
+            imageData: ctx.getImageData(0,0, canvas.width, canvas.height)
+        }, '*');
+    }
+};
 `;
+    content += "<script type='text/javascript'>";
+    // Keep code and try on first line to keep line numbers right in error messages
+    content += this.code + ";";
+    content += appendedCode;
     content += "</script>";
     content += "</body>";
     content += "</html>";
@@ -119,18 +138,26 @@ parent.postMessage({
     let data = event.data;
 
     if (data.imageData) {
-      console.log(data.imageData);
+      let time = data.time;
+      if(this.receiveFrame){
+        this.receiveFrame(time, data.imageData);
+      }
+    }
+
+    if(data.error) {
+      let message = data.error;
+      let lineno = data.lineno;
+      this.setError("Error at line " + lineno + ": " + message, lineno);
     }
     
   }
-  
+
   /*
      Generic player functions
      (That would be in an interface if Javascript had that)
    */
   set_container(div) {
     div.appendChild(this.iframe);
-    div.appendChild(this.message_area);
   }
 
   set_code(code) {
@@ -159,7 +186,16 @@ parent.postMessage({
         time: time
       }
     },"*");
-   
+
+    this.promise = new Promise(((resolve, reject) => {
+      this.receiveFrame = resolve();
+      // Max render time
+      setTimeout((() => {
+        reject();
+        this.setError("Error: Frame render time busted.");
+      }).bind(this), 3000);
+    }).bind(this));
+    
     const message = {
       code: this.code,
       time,
@@ -182,10 +218,11 @@ parent.postMessage({
     const now = new Date().getTime();
     this.iframe.contentWindow.postMessage({code: this.code},"*");
     this.iframe.contentWindow.postMessage({width: this.width, height: this.height},"*");
-    this.iframe.src = "data:text/html;charset=utf-8," + this.getIframeSrc();
+    this.iframe.src = "data:text/html;charset=utf-8," + encodeURIComponent(this.getIframeSrc());
+
   }
 
-  setMessage(message) {
-    this.message_area.innerText = message;
+  setError(message, lineno) {
+    this.on_error_listener(message, lineno);
   }
 }

@@ -38,7 +38,7 @@ class MathjsPlayer {
     }
 
     {
-      this.message_area.classList.add('mathjs-message-area');
+      this.message_area.classList.add('player-message-area');
     }
   }
 

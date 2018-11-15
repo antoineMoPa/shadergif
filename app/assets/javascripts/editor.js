@@ -568,7 +568,7 @@ var app = new Vue({
         app.add_error(error);
       });
     },
-    add_error(err) {
+    add_error(err, lineno) {
       this.error_msg = `Error\n${err}`;
       try {
         if (this.lang == 'shader_webgl1') {
@@ -581,19 +581,22 @@ var app = new Vue({
           if (line == '') {
             return;
           }
-
-          line = parseInt(line) - 1;
-
+          
           // Bug that could happen
           if (isNaN(line)) {
             return;
           }
-
-          const errline = app.f_editor.addLineClass(line, 'background', 'errorline');
+          
+          lineno = parseInt(line) - 1;
+        }
+        console.log(lineno);
+        if(typeof(lineno) != "undefined") {
+          const errline = app.f_editor.addLineClass(lineno, 'background', 'errorline');
           cm_errorLines.push(errline);
         }
       } catch (e) {
         // do nothing
+        console.log(e);
       }
     },
     load_start_textures() {
@@ -755,8 +758,8 @@ var app = new Vue({
           app.add_error(error);
         });
       } else {
-        this.player.set_on_error_listener((error) => {
-          app.add_error(error);
+        this.player.set_on_error_listener((error, lineno) => {
+          app.add_error(error, lineno);
         });
       }
 
