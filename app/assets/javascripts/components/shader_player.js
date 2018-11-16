@@ -31,7 +31,7 @@ Vue.component(
         fullscreen: false,
         debug_info: false,
         size_before_fullscreen: null,
-        frames: 10,
+        frames: 10
       };
     },
     watch: {
@@ -48,7 +48,7 @@ Vue.component(
           // Switch to fullscreen
           this.size_before_fullscreen = [
             this.shader_player.width,
-            this.shader_player.height,
+            this.shader_player.height
           ];
 
           this.shader_player.width = window.innerWidth;
@@ -72,13 +72,13 @@ Vue.component(
           var style = window.shader_player_hardcoded_style;
           style.parentNode.removeChild(style);
         }
-      },
+      }
     },
     computed: {
       player_size_style() {
         return `width:${this.shader_player.width}px;`
           + `height:${this.shader_player.height}px`;
-      },
+      }
     },
     mounted() {
       const app = this;
@@ -106,7 +106,7 @@ Vue.component(
           if (!this.shader_player.native_webgl2_supported) {
             alert(
               'Sorry, your browser and/or computer does not support WebGL2.\n'
-              + 'You can still try viewing WebGL1 shaders.',
+              + 'You can still try viewing WebGL1 shaders.'
             );
           }
         }
@@ -142,6 +142,6 @@ Vue.component(
           }
         });
       });
-    },
-  },
+    }
+  }
 );

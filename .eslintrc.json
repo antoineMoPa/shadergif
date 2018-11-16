@@ -37,6 +37,13 @@
 	"max-len": 0,
 	"no-multi-spaces": 0,
 	"no-use-before-define": 0,
-	"no-restricted-globals": 0
+	"no-restricted-globals": 0,
+	"comma-dangle": ["error", {
+        "arrays": "never",
+        "objects": "never",
+        "imports": "never",
+        "exports": "never",
+        "functions": "never"
+    }]
   }
 }

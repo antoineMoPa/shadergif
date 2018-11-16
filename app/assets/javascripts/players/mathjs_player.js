@@ -77,7 +77,7 @@ class MathjsPlayer {
       w: canvas.width,
       h: canvas.height,
       code: this.code,
-      time,
+      time
     };
 
     this._mathjs_render(message, (canvas) => {
@@ -144,7 +144,7 @@ class MathjsPlayer {
       w: canvas.width,
       h: canvas.height,
       code: this.code,
-      time: now,
+      time: now
     };
 
     this._mathjs_render(message, (canvas) => {

@@ -22,7 +22,7 @@ onmessage = function (m) {
     var expr = math.compile(code);
   } catch (e) {
     postMessage({
-      error: e.toString(),
+      error: e.toString()
     });
     return;
   }
@@ -80,7 +80,7 @@ onmessage = function (m) {
       }
     } catch (e) {
       postMessage({
-        error: e.toString(),
+        error: e.toString()
       });
       return;
     }
@@ -89,6 +89,6 @@ onmessage = function (m) {
   postMessage({
     data: arr,
     w,
-    h,
+    h
   });
 };

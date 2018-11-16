@@ -141,7 +141,7 @@ Vue.component(
     data() {
       return {
         show_video: false,
-        code_is_visible: false,
+        code_is_visible: false
       };
     },
     methods: {
@@ -187,14 +187,14 @@ Vue.component(
         video.isCurrent = false;
 
         video.play();
-      },
+      }
     },
     watch: {
       show_video() {
         if (this.show_video) {
           this.play();
         }
-      },
+      }
     },
     mounted() {
       const comp = this;
@@ -207,9 +207,9 @@ Vue.component(
       this.$nextTick(function () {
         /* run umarkdown on gif description */
         umarkdown(
-          this.$el.querySelectorAll('.gif-description')[0],
+          this.$el.querySelectorAll('.gif-description')[0]
         );
       });
-    },
-  },
+    }
+  }
 );

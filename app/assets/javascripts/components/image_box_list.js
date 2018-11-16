@@ -15,6 +15,6 @@ Vue.component(
       return {
 
       };
-    },
-  },
+    }
+  }
 );

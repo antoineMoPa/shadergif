@@ -189,8 +189,8 @@ window.onmessage = (event) => {
 
     this.iframe.contentWindow.postMessage({
       render: {
-        time,
-      },
+        time
+      }
     }, '*');
 
     this.promise = new Promise(((resolve, reject) => {
@@ -201,7 +201,7 @@ window.onmessage = (event) => {
 
     const message = {
       code: this.code,
-      time,
+      time
     };
   }
 

@@ -6,7 +6,7 @@ function init_notifications_page() {
   new Vue({
     el: '#notifications-page-app',
     data: {
-      notifications: notifications_list,
-    },
+      notifications: notifications_list
+    }
   });
 }

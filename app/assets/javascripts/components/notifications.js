@@ -23,7 +23,7 @@ Vue.component(
       notif_html(notification) {
         const text = notification.text;
         return text.replace(/link\{(.*)\}/, (string, title) => `<a href='${notification.link}'>${title}</a>`);
-      },
-    },
-  },
+      }
+    }
+  }
 );

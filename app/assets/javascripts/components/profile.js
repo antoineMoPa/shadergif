@@ -7,6 +7,6 @@ Vue.component(
       return {
 
       };
-    },
-  },
+    }
+  }
 );

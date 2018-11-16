@@ -66,7 +66,7 @@ window.onload = function () {
         current_offset: -1,
         has_more: true,
         column_1: '',
-        column_2: '',
+        column_2: ''
       },
       updated() {
         var load_more_button = this.$el.querySelectorAll('.load-more-button')[0];
@@ -135,14 +135,14 @@ window.onload = function () {
           }
 
           req.send();
-        },
-      },
+        }
+      }
     });
 
     window.main_app = main_app;
 
     var gifs = JSON.parse(
-      document.getElementById('main-gifs-json').innerHTML,
+      document.getElementById('main-gifs-json').innerHTML
     );
 
     main_app.gifs = gifs;
@@ -151,7 +151,7 @@ window.onload = function () {
 
     if (typeof (mosaic_el) !== 'undefined' && mosaic_el != null) {
       const mosaic_gifs = JSON.parse(
-        mosaic_el.innerHTML,
+        mosaic_el.innerHTML
       );
 
       main_app.mosaic_gifs = mosaic_gifs;
@@ -162,12 +162,12 @@ window.onload = function () {
     const single_gif_app = new Vue({
       el: '#single-gif-app',
       data: {
-        gifs: [],
-      },
+        gifs: []
+      }
     });
 
     var gifs = JSON.parse(
-      document.getElementById('single-gif-json').innerHTML,
+      document.getElementById('single-gif-json').innerHTML
     );
 
     single_gif_app.gifs = gifs;
@@ -182,12 +182,12 @@ window.onload = function () {
     const gifs_and_drafts_app = new Vue({
       el: '#gifs-and-drafts-app',
       data: {
-        data: [],
-      },
+        data: []
+      }
     });
 
     const data = JSON.parse(
-      document.getElementById('gifs-and-drafts-json').innerHTML,
+      document.getElementById('gifs-and-drafts-json').innerHTML
     );
 
     gifs_and_drafts_app.data = data;

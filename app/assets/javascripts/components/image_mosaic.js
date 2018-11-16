@@ -12,6 +12,6 @@ Vue.component(
     `,
     props: ['gifs'],
     methods: {
-    },
-  },
+    }
+  }
 );

@@ -32,7 +32,7 @@ const lang_players_assoc = {
   mathjs: MathjsPlayer,
   shader_webgl1: ShaderPlayerWebGL1,
   shader_webgl2: ShaderPlayerWebGL2,
-  javascript: JavascriptPlayer,
+  javascript: JavascriptPlayer
 };
 
 var available_langs = [];
@@ -157,11 +157,11 @@ var app = new Vue({
     textures: [],
     gifjs: {
       quality: 8,
-      dithering: 'FloydSteinberg',
+      dithering: 'FloydSteinberg'
     },
     autocompile: true,
     images: [],
-    error_msg: '',
+    error_msg: ''
   },
   watch: {
     'gifjs.dithering': function (d) {
@@ -184,7 +184,7 @@ var app = new Vue({
       this.set_player();
       this.update_player();
       this.update_error_listener();
-    },
+    }
   },
   methods: {
     code_change() {
@@ -268,7 +268,7 @@ var app = new Vue({
           workers: 2,
           quality: app.gifjs.quality,
           dither: app.gifjs.dithering,
-          workerScript: '/workers/gif.worker.js',
+          workerScript: '/workers/gif.worker.js'
         });
 
         data = to_export.data;
@@ -316,7 +316,7 @@ var app = new Vue({
                 src: URL.createObjectURL(blob),
                 code,
                 textures: app.textures,
-                frames: app.frames,
+                frames: app.frames
               });
 
               app.status = 'Done!';
@@ -333,7 +333,7 @@ var app = new Vue({
         options = {
           zip: false,
           stack: true,
-          gif: false,
+          gif: false
         };
       }
 
@@ -418,7 +418,7 @@ var app = new Vue({
               canvas.toBlob((blob) => {
                 zip.file(
                   filename,
-                  blob,
+                  blob
                 );
                 next();
               });
@@ -457,7 +457,7 @@ var app = new Vue({
             app.images.unshift({
               type: 'png',
               size: false,
-              src: image_data,
+              src: image_data
             });
           } else if (options.zip) {
             const zip = window.shadergif_zip;
@@ -489,14 +489,14 @@ var app = new Vue({
       this.render({
         zip: false,
         stack: false,
-        gif: true,
+        gif: true
       });
     },
     make_png() {
       this.render({
         zip: false,
         stack: true,
-        gif: false,
+        gif: false
       });
     },
     make_zip() {
@@ -510,7 +510,7 @@ var app = new Vue({
         app.render({
           zip: true,
           stack: false,
-          gif: false,
+          gif: false
         });
       };
       document.body.appendChild(script);
@@ -524,7 +524,7 @@ var app = new Vue({
         reader.addEventListener('load', () => {
           app.textures.push({
             name,
-            data: reader.result,
+            data: reader.result
           });
           app.player.add_texture(reader.result);
         }, false);
@@ -635,7 +635,7 @@ var app = new Vue({
             if (xhr.status == 200) {
               app.textures.splice(i, 1, {
                 name: texture.name,
-                data: xhr.responseText,
+                data: xhr.responseText
               });
               app.player.add_texture(xhr.responseText);
             }
@@ -657,14 +657,14 @@ var app = new Vue({
     },
     on_submit(e) {
       this.status = 'Be patient while gif is uploading!';
-    },
+    }
   },
   computed: {
     is_current_users_gif() {
       return this.user != null
         && this.gif != null
         && this.user.id == this.gif.user_id;
-    },
+    }
   },
   mounted() {
     const app = this;
@@ -716,7 +716,7 @@ var app = new Vue({
       lineNumbers: true,
       mode: 'x-shader/x-fragment',
       indentUnit: 4,
-      lineWrapping: true,
+      lineWrapping: true
     });
 
     // Fetch file and put it in textarea
@@ -734,7 +734,7 @@ var app = new Vue({
             window.history.pushState(
               {},
               'ShaderGif',
-              window.location.href.replace(/\?.*$/, '', ''),
+              window.location.href.replace(/\?.*$/, '', '')
             );
           }
         };
@@ -786,7 +786,7 @@ var app = new Vue({
 
       this.update_player();
     });
-  },
+  }
 });
 
 /* Electron specific code */
@@ -806,7 +806,7 @@ function init_electron() {
       lang: app.lang,
       width: app.width,
       height: app.height,
-      frames: app.frames,
+      frames: app.frames
     };
     file = JSON.stringify(file);
     ipcRenderer.send('code-return', file, filePath);
@@ -819,7 +819,7 @@ function init_electron() {
     app.textures.splice(0);
     for (let i = 0; i < file.textures.length; i++) {
       app.textures.push(
-        file.textures[i],
+        file.textures[i]
       );
       app.player.add_texture(file.textures[i].data);
     }

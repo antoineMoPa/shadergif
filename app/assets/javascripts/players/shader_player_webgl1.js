@@ -285,7 +285,7 @@ class ShaderPlayerWebGL1 {
       -1, -1, 0,
       -1, 1, 0,
       1, -1, 0,
-      1, 1, 0,
+      1, 1, 0
     ];
 
     const tri = gl.createBuffer();
@@ -465,13 +465,13 @@ class ShaderPlayerWebGL1 {
         gl.getUniformLocation(gl.program, 'renderBufferRatio'),
         [
           this.renderBufferDim[0] / this.width,
-          this.renderBufferDim[1] / this.height,
-        ],
+          this.renderBufferDim[1] / this.height
+        ]
       );
 
       gl.uniform2fv(
         gl.getUniformLocation(gl.program, 'mouse'),
-        [this.mouse[0], this.mouse[1]],
+        [this.mouse[0], this.mouse[1]]
       );
 
       const passAttribute = gl.getUniformLocation(gl.program, 'pass');
@@ -503,8 +503,8 @@ class ShaderPlayerWebGL1 {
           [
             this.width,
             this.height,
-            1.0,
-          ],
+            1.0
+          ]
         ));
 
       // Screen ratio
@@ -546,7 +546,7 @@ class ShaderPlayerWebGL1 {
           }
         });
       },
-      anim_delay,
+      anim_delay
     );
   }
 
