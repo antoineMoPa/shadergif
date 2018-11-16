@@ -118,22 +118,7 @@ Vue.component(
             </div>
         </div>
         <br>
-        <% if(user_signed_in?) %>
-        <%= form_tag("/comments/new", method: "post") do %>
-        <div class="has-text-left">
-            <strong>Add a comment&nbsp;:</strong>
-        </div>
-        <input type="hidden" name="gif_id" v-bind:value="gif.id">
-        <textarea class="textarea" name="comment">
-        </textarea>
-        <br>
-        <div class="has-text-right">
-            <%= submit_tag "Publish", :class => "button is-primary" %>
-        </div>
-        <% end %>
-        <% else %>
-        <strong>Please <a href="/users/sign_in">sign in</a> to comment</strong>
-        <% end %> 
+        <div class="comment-form"></div>
     </div>
     <br>
 </div>`,
@@ -204,6 +189,12 @@ Vue.component(
         comp.show_video = false;
       };
 
+      let formTemplate = document.querySelectorAll(".comment-form-template")[0];
+      let form = this.$el.querySelectorAll('.comment-form')[0];
+      form.innerHTML = formTemplate.innerHTML;
+      let input = form.querySelectorAll('input[name=gif_id]')[0];
+      input.value = this.gif.id;
+        
       this.$nextTick(function () {
         /* run umarkdown on gif description */
         umarkdown(
