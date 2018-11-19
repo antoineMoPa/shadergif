@@ -89,4 +89,9 @@
 	border-radius:3px;
 	line-height:60px;
 	font-size:30px;
+	transition:all 0.1s;
+}
+
+.language-box:hover{
+	box-shadow:0 0 10px rgba(0,0,0,0.3);
 }

@@ -57,13 +57,13 @@
 						</div>
 						<div class="navbar-end">
 							<a class="navbar-item is-active" href="/">
-								Home
+								<img class="feather-icon" src="/icons/feather/home.svg">Home
 							</a>
 							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
-								Doc
+								<img class="feather-icon" src="/icons/feather/book.svg">Doc
 							</a>
 							<a class="navbar-item" href="/about" title="about">
-								About
+								<img class="feather-icon" src="/icons/feather/help-circle.svg">About
 							</a>
 							<% if user_signed_in? %>
 								<%= link_to 'Gifs&Drafts', user_gifs_and_drafts_path, :class => "navbar-item"  %>
