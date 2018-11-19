@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   get 'shader-editor' => 'editor#index'
   get 'shader-editor/drafts/:gif_id' => 'editor#edit_draft'
   get 'shader-editor/examples' => 'editor#examples'
-  
+
+  get 'editor/selector' => 'editor#selector'
   get 'editor' => 'editor#index'
   get 'editor/drafts/:gif_id' => 'editor#edit_draft'
   get 'editor/:gif_id/edit' => 'editor#edit'
