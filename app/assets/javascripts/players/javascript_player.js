@@ -13,6 +13,7 @@ class JavascriptPlayer {
     this.mathjs_worker = null;
     this.mathjs_processing = false;
     this.compiled = false;
+    this.looksInfinite = false;
 
     /*
       The sandboxed iframe allows us to run scripts while minimizing client-side
@@ -83,6 +84,7 @@ window.onerror = (message, source, lineno) => {
 `;
 
     const appendedCode = `
+let looksInfinite = ${this.looksInfinite};
 let frame = 0;
 let canvas = document.querySelectorAll('canvas')[0];
 let ctx = canvas.getContext('2d');
@@ -90,7 +92,10 @@ let ctx = canvas.getContext('2d');
 /* To ensure that the gif rendering does not interfere */
 /* With regular preview animation */
 let play_animation = true;
-render(canvas, 0.0);
+
+if(!looksInfinite){
+    render(canvas, 0.0);
+}
 
 window.addEventListener('message',(event) => {
     let data = event.data;
@@ -109,7 +114,7 @@ let anim_delay = ${this.anim_delay};
 
 function animate() {
     frame %= (player_frames);
-    if(play_animation) {
+    if(play_animation && !looksInfinite) {
         const now = new Date().getTime();
         render(canvas, (frame + 1) / player_frames);
     }
@@ -166,7 +171,65 @@ window.onmessage = (event) => {
     div.appendChild(this.iframe);
   }
 
+  /*
+    Infinite loop detector
+   */
+  preventInfinite(_code) {
+    const index = 0;
+    let code = _code;
+    let position = code.indexOf('for');
+
+    do {
+      position = code.indexOf('for');
+      if (position == -1) {
+        break;
+      }
+
+      code = code.substr(position + 3, code.length);
+
+      const untilClosingParens = code.substr(code.indexOf('(') + 1, code.indexOf(')') - 1);
+
+      // If there is no closing parens, the string will be 0
+
+      if (untilClosingParens == '') {
+        break;
+      }
+
+      const forParameters = untilClosingParens.split(';');
+
+      if (forParameters.length != 3) {
+        break;
+      }
+
+      const param0 = forParameters[0].trim();
+      const param1 = forParameters[1].trim();
+      const param2 = forParameters[2].trim();
+
+      // No condition in for loop?
+      // It will probably be infinite
+      if (!/(<|>|==|!=)+/.test(param1)) {
+        this.setError('Rendering prevented because a for loop looks infinite.');
+        this.looksInfinite = true;
+        return;
+      }
+
+      // No incrementation / decremention?
+      // This looks like an infinite loop...
+      if (!/(\-\-|\+\+|\+=|\-=)+/.test(param2)) {
+        this.setError('Rendering prevented because a for loop looks infinite.');
+        this.looksInfinite = true;
+        return;
+      }
+
+      // Improvement idea: look to see if the side of
+      // the iteration matches in param1 and param2
+    } while (position != -1);
+
+    this.looksInfinite = false;
+  }
+
   set_code(code) {
+    this.preventInfinite(code);
     this.code = code;
     this.update();
   }
