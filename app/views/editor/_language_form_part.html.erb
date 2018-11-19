@@ -1,0 +1,10 @@
+<div class="field">
+	<label class="label">
+		Language
+	</label>
+	<div class="control select">
+		<select v-model="lang" name="lang" class="inline-block">
+			<option v-for="available_lang in available_langs">{{ available_lang }}</option>
+		</select>
+	</div>
+</div>

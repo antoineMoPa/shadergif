@@ -1,0 +1,19 @@
+<div>
+	<label class="label">
+		Dimensions
+	</label>
+	<div class="settings has-text-centered">
+		<p>
+			w:<input type="number" name="width" v-model.number="width">
+			h:<input type="number" name="height" v-model.number="height">
+			frames:<input type="number"
+						  name="frames"
+						  v-if="!frames_defined_in_code"
+						  v-model.lazy.number="frames">
+			<span v-if="frames_defined_in_code"
+				  title="(defined in code)">
+				{{ frames }}
+			</span>
+		</p>
+	</div>
+</div>
