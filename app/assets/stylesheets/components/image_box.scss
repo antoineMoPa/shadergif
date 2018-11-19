@@ -67,8 +67,14 @@
 	text-align:center;
 }
 
-.profile-box{
-	float:left;
+@media all and (min-width:768px) {
+	.profile-box{
+		float:right;
+		line-height:66px;
+	}
+	.by-author{
+		display:none;
+	}
 }
 
 .title-box{
@@ -89,37 +95,46 @@
 	font-size:10px;
 }
 
+.by-author{
+	font-size:10px;
+}
+
 @media all and (max-width:768px){
 	.image-box{
 		.profile-username{
+			line-height:20px;
 			font-size:12px;
+			text-align:center;
 			line-height:25px;
 		}
 		.profile-picture{
 			width:25px;
 			height:25px;
+			position:relative;
+			top:10px;
 		}
 		.gif-subtitle{
-			line-height:30px;
 			font-size:14px;
+			line-height:15px;
 		}
 		.gif-subtitle,
 		.profile-box{
-			padding:6px;
-			margin:8px;
+			width:100%;
+			text-align:center;
+			padding:0;
+			margin:0;
 			margin-left:0;
 			margin-right:0;
 		}
 		.gif-subtitle{
+			a{
+				color:#333;
+				font-size:110%;
+			}
 			width:100%;
-			background:#eeeeee;
 		}
 		.title-box{
 			margin:0;
-		}
-		.title-box,
-		.profile-box{
-			height:40px;
 		}
 		.button{
 			margin-top:10px;

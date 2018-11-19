@@ -6,22 +6,21 @@ Vue.component(
     template: `
 <div class="image-box content has-text-centered">
     <div>
-        <div class="has-text-left title-box">
-            <span class="profile-box">
-                <img v-if="gif.profile_picture"
-                     class="profile-picture"
-                     v-bind:src="'/profile_pictures/' + gif.profile_picture">
-                <a v-bind:href="'/user/' + gif.username" class="profile-username">
-                    {{ gif.username }}
-                </a>
-            </span>
+        <div class="title-box">
             <strong class="subtitle gif-subtitle">
                 <a v-bind:href="'/gifs/' + gif.id">
                     {{ gif.title }}
                 </a>
             </strong>
+            <span class="profile-box">
+                <a v-bind:href="'/user/' + gif.username" class="profile-username">
+                    {{ gif.username }}
+                    <img v-if="gif.profile_picture"
+                        class="profile-picture"
+                        v-bind:src="'/profile_pictures/' + gif.profile_picture">
+                </a>
+            </span>
         </div>
-        <div class="clearfix"></div>
         <div v-on:click="show_video = true"
              class="image-container">
             <transition name="view-gif">

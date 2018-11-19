@@ -48,7 +48,13 @@
 	width:50px;
 	height:50px;
 	box-shadow:0 0 10px rgba(0,0,0,0.3);
-	float:left;
+	background:#eee;
+}
+
+@media all and (min-width:768px) {
+	.profile-picture{
+		float:none;
+	}
 }
 
 .profile-picture-form .profile-picture{
@@ -57,13 +63,18 @@
 	float:none;
 }
 
-
-.profile-username{
-	float:left;
-	line-height:50px;
-	margin-left:10px;
-	vertical-align:middle;
-	display:inline-block;
+@media all and (min-width:768px) {
+	.profile-username{
+		line-height:50px;
+		margin-left:10px;
+		position: relative;
+		top:-18px;
+	}
+	.profile-picture{
+		margin-left:20px;
+		position: relative;
+		top: 18px;
+	}
 }
 
 .clearfix{
