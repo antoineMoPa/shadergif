@@ -1,6 +1,7 @@
-0.0.20:                                                                   (November 19 2018)
+0.0.20:                                                                   (November 18 2018)
     feature: Language selector page
-	
+    feature: Detect potentially infinite for-lops in javascript editor
+
 0.0.19:                                                                   (November 15 2018)
     feature: Javascript mode!
 
