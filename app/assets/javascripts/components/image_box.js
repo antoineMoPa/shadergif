@@ -61,6 +61,8 @@ Vue.component(
             <a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.mp4'">Video (mp4)</a> -
             <a v-bind:href="'/gifs/generated/' + gif.image_filename + '-vid.ogv'">Video (ogv)</a> - 
             <a v-bind:href="'/gifs/generated/' + gif.image_filename + '-preview.png'">Preview (png)</a>
+            <br>
+            language: {{ gif.lang }}
             <br><br>
         </p>
     </div>

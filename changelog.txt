@@ -1,3 +1,6 @@
+next:
+		feature: show language in image_box
+
 0.0.20:                                                                   (November 18 2018)
     feature: Language selector page
     feature: Detect potentially infinite for-lops in javascript editor
