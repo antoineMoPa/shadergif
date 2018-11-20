@@ -1,5 +1,6 @@
 next:
-		feature: show language in image_box
+		feature: Show language in image_box
+    feature: Add button to retrieve last code
 
 0.0.20:                                                                   (November 18 2018)
     feature: Language selector page
