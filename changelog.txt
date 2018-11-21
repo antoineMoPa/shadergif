@@ -1,4 +1,4 @@
-next:
+0.0.21:                                                                   (November 20 2018)
     feature: Show language in image_box
     feature: Add button to retrieve last code
     feature: Night mode

@@ -717,7 +717,7 @@ var app = new Vue({
       mode: 'x-shader/x-fragment',
       indentUnit: 4,
       lineWrapping: true,
-      theme: JSON.parse(window.localStorage.night_mode)||false? "twilight": "default"
+      theme: JSON.parse(window.localStorage.night_mode) || false ? 'twilight' : 'default'
     });
 
     // Fetch file and put it in textarea

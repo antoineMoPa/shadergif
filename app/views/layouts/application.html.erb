@@ -70,11 +70,21 @@
 								<img class="feather-icon" src="/icons/feather/help-circle.svg">About
 							</a>
 							<% if user_signed_in? %>
-								<%= link_to 'Gifs&Drafts', user_gifs_and_drafts_path, :class => "navbar-item"  %>
-								<%= link_to 'Account', edit_user_registration_path, :class => "navbar-item"  %>
+								<a class="navbar-item"
+								   href="<%= url_for user_gifs_and_drafts_path %>">
+									<img class="feather-icon" src="/icons/feather/list.svg">Gifs&Drafts
+								</a>
+								<a class="navbar-item"
+								   href="<%= url_for edit_user_registration_path %>">
+									<img class="feather-icon" src="/icons/feather/user.svg">Account
+								</a>
 								<%= link_to 'Logout', destroy_user_session_path, method: :delete, :class => "navbar-item"  %>
 							<% else %>
-								<%= link_to 'Login', new_user_session_path, :class => "navbar-item" %>  
+								<a class="navbar-item"
+								   href="<%= url_for new_user_session_path %>">
+									<img class="feather-icon" src="/icons/feather/user.svg">Login
+								</a>
+								
 							<% end %>
 							<% if @is_editor %>
 								<a class="navbar-item is-active"

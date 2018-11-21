@@ -9,7 +9,7 @@
 //= require ./components/image_mosaic.css
 //= require ./components/shader_player.css
 
-html,body{
+html,body,document,window,.notifications-section{
 	min-height:100%;
 }
 
@@ -118,13 +118,34 @@ body.night-mode{
 	height:100%;
 }
 
+a.navbar-item{
+	padding-right: 2px;
+}
+
 .night-mode {
 
-	.title{
+	.title,
+	.subtitle,
+	.label{
  		color:#e0dfe3;
 	}
+
+	@media all and (max-width: 1024px){
+		#main-mobile-menu{
+			background:#333!important;
+			
+			a.navbar-item,
+			a.navbar-item:hover,
+			a.navbar-item.is-active,
+			a.navbar-link:hover,
+			a.navbar-link.is-active{
+				background:#333!important;
+			}
+		}
+	}
 	
-	.button{
+	.button,
+	a.button{
 		background:#333333;
 		color:#eee;
 		border:none;

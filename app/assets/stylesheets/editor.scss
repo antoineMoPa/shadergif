@@ -280,6 +280,10 @@ hr{
 	color:#f33;
 }
 
+.night-mode label{
+	color: #fff;
+}
+
 /* CODEMIRROR */
 
 .CodeMirror{
@@ -291,6 +295,9 @@ hr{
 .errorline{
 	background:#fdd;
 	color:#f00;
+	.night-mode &{
+		background:#302727;
+	}
 }
 
 /* END CODEMIRROR */

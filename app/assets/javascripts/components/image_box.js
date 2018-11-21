@@ -192,7 +192,7 @@ Vue.component(
 
       const formTemplate = document.querySelectorAll('.comment-form-template')[0];
 
-      if(formTemplate != undefined) {
+      if (formTemplate != undefined) {
         const form = this.$el.querySelectorAll('.comment-form')[0];
         form.innerHTML = formTemplate.innerHTML;
         const input = form.querySelectorAll('input[name=gif_id]')[0];
@@ -200,7 +200,7 @@ Vue.component(
           input.value = this.gif.id;
         }
       }
-      
+
       this.$nextTick(function () {
         /* run umarkdown on gif description */
         umarkdown(
