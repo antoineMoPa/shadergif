@@ -1,6 +1,7 @@
 next:
-		feature: Show language in image_box
+    feature: Show language in image_box
     feature: Add button to retrieve last code
+    feature: Night mode
 
 0.0.20:                                                                   (November 18 2018)
     feature: Language selector page

@@ -35,6 +35,11 @@
 .home-page .news-block,
 .home-page .title{
 	background:#fff;
+
+	.night-mode & {
+		background:#171c1d;
+		color:#eeeeee;
+	}
 }
 
 .home-sidebar{

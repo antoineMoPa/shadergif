@@ -41,7 +41,7 @@
     <p>There are
         <%= User.count() %>
         registered users who shared
-        <%= Gif.count() %> gifs.
+        <%= Gif.where('is_public').count() %> gifs.
     </p>
     <br>
     <p class="has-text-weight-bold">How to upload a gif?</p>

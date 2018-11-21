@@ -9,6 +9,9 @@
 //= require ./components/image_mosaic.css
 //= require ./components/shader_player.css
 
+html,body{
+	min-height:100%;
+}
 
 .navbar{
 	box-shadow: 0 0 3px rgba(0,0,0,0.3);
@@ -29,6 +32,7 @@
 	margin-top:7px;
 	display:inline-block;
 	width:200px;
+	border:none;
 }
 
 .navbar-search-submit{
@@ -105,4 +109,65 @@
 
 .language-box:hover{
 	box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+body.night-mode{
+	background:#262529;
+ 	color:#e0dfe3;
+	background: #141414;
+	height:100%;
+}
+
+.night-mode {
+
+	.title{
+ 		color:#e0dfe3;
+	}
+	
+	.button{
+		background:#333333;
+		color:#eee;
+		border:none;
+	}
+	
+	.button:hover{
+		background:#444444;
+		color:#eee;
+	}
+	
+	.input{
+		background:#222222;
+		color:#ccc;
+	}
+	
+	.navbar-search::placeholder{
+		color:#aaa;
+	}
+	
+	strong, .has-text-weight-bold{
+		color:#ffffff;
+	}
+
+	.navbar-search{
+		background:#111111;
+	}
+
+	.navbar{
+		background:#171c1d;
+		color:#e0dfe3;
+	}
+
+	.navbar a,
+	.navbar a.navbar-item.is-active{
+		color: #e0dfe3;
+	}
+	
+	a.navbar-item:hover{
+		background:#171c1d;
+		color: #e0dfe3;
+	}
+
+	.feather-icon{
+		filter: invert(100%);
+	}
 }

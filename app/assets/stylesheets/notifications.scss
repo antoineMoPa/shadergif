@@ -2,8 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.notification-count{
-	background: #FF4433;
+.notification-count,{
+	background: #FF4433 !important;
 	border-radius:3px;
 	padding-left:4px;
 	padding-right:4px;
@@ -13,8 +13,8 @@
 }
 
 .notification-count.no-notifications{
-	background: #EEEEEE;
-	color: #333;
+	background: #EEEEEE !important;
+	color: #333!important;
 }
 
 .notification{
@@ -23,10 +23,16 @@
 
 .notification-text{
 	text-decoration: none;
+	.night-mode &{
+		color:#333;
+	}
 }
 
 .notification-date{
 	margin-left:auto;
 	margin-right:0;
 	float:right;
+	.night-mode &{
+		color:#333;
+	}
 }

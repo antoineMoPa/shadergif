@@ -56,6 +56,10 @@
 							</form>
 						</div>
 						<div class="navbar-end">
+							<a class="navbar-item is-active night-mode-toggle"
+							   href="#"
+							   onclick="toggle_night_mode()">
+							</a>
 							<a class="navbar-item is-active" href="/">
 								<img class="feather-icon" src="/icons/feather/home.svg">Home
 							</a>
@@ -117,6 +121,7 @@
 				<% end %>
 			</div>
 		<% end %>
+		
 		<%= yield %>
 	</body>
 </html>

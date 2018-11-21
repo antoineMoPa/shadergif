@@ -191,11 +191,16 @@ Vue.component(
       };
 
       const formTemplate = document.querySelectorAll('.comment-form-template')[0];
-      const form = this.$el.querySelectorAll('.comment-form')[0];
-      form.innerHTML = formTemplate.innerHTML;
-      const input = form.querySelectorAll('input[name=gif_id]')[0];
-      input.value = this.gif.id;
 
+      if(formTemplate != undefined) {
+        const form = this.$el.querySelectorAll('.comment-form')[0];
+        form.innerHTML = formTemplate.innerHTML;
+        const input = form.querySelectorAll('input[name=gif_id]')[0];
+        if (input != undefined) {
+          input.value = this.gif.id;
+        }
+      }
+      
       this.$nextTick(function () {
         /* run umarkdown on gif description */
         umarkdown(

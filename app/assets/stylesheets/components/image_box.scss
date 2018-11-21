@@ -18,6 +18,14 @@
 	box-shadow:0 0 4px rgba(0,0,0,0.1);
 	background:#fff;
 	border-radius:3px;
+	
+
+	.night-mode &{
+		background:#171c1d;
+		a{
+			color:#6ebcff;
+		}
+	}
 }
 
 
@@ -38,6 +46,10 @@
 	max-width:540px;
 	white-space: pre-wrap !important;
 	margin:auto;
+
+	.night-mode &{
+		color:#eeeeee;
+	}
 
 	.code{
 		padding:3px;
@@ -88,6 +100,10 @@
 	border-radius:3px;
 	padding:10px;
 	margin-bottom:10px;
+
+	.night-mode &{
+		color:#000;
+	}
 }
 
 .comment-date{

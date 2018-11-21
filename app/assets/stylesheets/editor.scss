@@ -1,5 +1,6 @@
 //= require ./application.css
 //= require lib/codemirror/lib/codemirror.css
+//= require lib/codemirror/theme/twilight.css
 //= require lib/codemirror/addon/dialog/dialog.css
 //= require lib/codemirror/addon/search/matchesonscrollbar.css
 // Todo: remove base.css, legacy editor css library my antoineMoPa
@@ -100,6 +101,10 @@ textarea{
 	color:red;
 	z-index:2000;
 	background:#eee;
+
+	.night-mode &{
+		background:#333;
+	}
 }
 
 .player-message-area{
@@ -110,6 +115,10 @@ textarea{
 	padding:10px;
 	color:#333;
 	background:#eee;
+
+	.night-mode &{
+		background:#333;
+	}
 }
 
 .player-container canvas{
@@ -301,6 +310,10 @@ hr{
 	border-radius:2px;
 	box-shadow:0 0 5px rgba(0,0,0,0.1);
 	cursor:pointer;
+
+	.night-mode &{
+		background:#002b36;
+	}
 }
 
 .foldable-hidden .foldable-content{
@@ -310,6 +323,10 @@ hr{
 .foldable-content{
 	padding-top:10px;
 	padding-bottom:10px;
+
+	.night-mode &{
+		background: #171c1d;
+	}
 }
 
 .result-image{
