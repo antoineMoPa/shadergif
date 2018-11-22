@@ -2,6 +2,7 @@ next:
     feature: Add more comments to 
     delete: Tiny image mosaic in homepage
 	        (was broken in last release anyway + endless scrolling makes it useless)
+	feature: New forloop.js example + improve comments of existing js examples
 
 0.0.21:                                                                   (November 20 2018)
     feature: Show language in image_box
