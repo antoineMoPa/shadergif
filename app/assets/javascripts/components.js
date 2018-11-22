@@ -5,6 +5,5 @@
 //= require components/shader_player.js
 //= require components/image_box.js
 //= require components/image_box_list.js
-//= require components/image_mosaic.js
 //= require components/profile.js
 //= require components/notifications.js

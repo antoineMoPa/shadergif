@@ -64,25 +64,22 @@
     </p>
 </script>
 <script type="text/html" id="home-column-2">
-    <strong>Start Coding:</strong>
+    <strong>Start Coding</strong>
     <br><br>
     <div class="has-text-centered">
-        <a class="button" href="/editor/selector">
-            <img class="feather-icon" src="/icons/feather/code.svg">
-            Launch editor
-        </a>
-        <br><br>
         <a class="button" href="/editor/examples">
             <img class="feather-icon" src="/icons/feather/clipboard.svg">
-            Start with sample code
-        </a>
-        <br><br>
-        <a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
-            <img class="feather-icon" src="/icons/feather/github.svg">
-            View on github
+            Examples
         </a>
     </div>
-    <br>
+	<br>
+    <strong>Contribute/Star</strong>
+    <br><br>
+    <a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
+        <img class="feather-icon" src="/icons/feather/github.svg">
+        View on github
+    </a>
+    <br><br>
     <% if !user_signed_in? %>
         <div class="has-text-centered">
             <p class="has-text-weight-bold">Don't have an account yet?</p>
@@ -94,12 +91,6 @@
             </a>
         </div>
     <% end %>
-    <br>
-    <div class="has-text-centered">
-        <p class="has-text-weight-bold">Last gifs</p>
-        <br>
-        <image-mosaic v-bind:gifs="mosaic_gifs"></image-mosaic>
-    </div>
     <br>
     <p class="has-text-weight-bold">Bridge tutorial</p>
     <p>
