@@ -415,7 +415,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 								<% if user_signed_in? %>
 									<p class="has-text-weight-bold">Submit to front page</p>
 									<p>Please include licensing information in
-										the code if needed.</p>
+										the code if needed. </p>
+									<p>The code that is published for this gif is not modified after gif generation.</p>
+									<p>If you need, after posting, you can update code, title and description.</p>
 									
 									<%= form_tag("/gifs/new", method: "post") do %>
 										<input type="hidden"

@@ -354,8 +354,8 @@ var app = new Vue({
       const tempCanvas = document.createElement('canvas');
       const canvas = tempCanvas;
 
-      canvas.width = app.player.canvas.width;
-      canvas.height = app.player.canvas.height;
+      canvas.width = app.width;
+      canvas.height = app.height;
 
       if (options.stack) {
         canvas.height = app.player.canvas.height * app.player.frames;
