@@ -368,6 +368,9 @@ var app = new Vue({
       const app = this;
 
       app.player.rendering_gif = true;
+      if (app.player.pause_anim) {
+        app.player.pause_anim();
+      }
       app.rendering_gif = true;
       app.status = 'Rendering Gif';
 
@@ -474,11 +477,17 @@ var app = new Vue({
             app.status = '';
             app.export_gif(to_export);
             app.player.rendering_gif = false;
+            if (app.player.resume_anim) {
+              app.player.resume_anim();
+            }
             app.rendering_gif = false;
           } else if (options.stack) {
             app.status = '';
             image_data = canvas.toDataURL();
             app.player.rendering_gif = false;
+            if (app.player.resume_anim) {
+              app.player.resume_anim();
+            }
             app.rendering_gif = false;
 
             app.images.unshift({
@@ -489,6 +498,9 @@ var app = new Vue({
           } else if (options.zip) {
             const zip = window.shadergif_zip;
             app.player.rendering_gif = false;
+            if (app.player.resume_anim) {
+              app.player.resume_anim();
+            }
             app.rendering_gif = false;
             app.status = '';
             zip.generateAsync({ type: 'blob' })

@@ -83,6 +83,7 @@ window.onerror = (message, source, lineno) => {
 
     const appendedCode = `
 let looksInfinite = ${this.looksInfinite};
+let rendering_gif = ${this.rendering_gif};
 let frame = 0;
 let canvas = document.querySelectorAll('canvas')[0];
 let ctx = canvas.getContext('2d');
@@ -96,23 +97,15 @@ if(!looksInfinite){
 }
 
 window.addEventListener('message',(event) => {
-    let data = event.data;
-    if(data.width) {
-        canvas.width = data.width;
-    }
-    if(data.height) {
-        canvas.height = data.height;
-    }
-    if(data.render) {
-        render(canvas, data.render.time);
-    }
+    
+
 });
 let player_frames = ${this.frames};
 let anim_delay = Math.floor(1000/${this.fps});
 
 function animate() {
     frame %= (player_frames);
-    if(play_animation && !looksInfinite) {
+    if(play_animation && !looksInfinite && !rendering_gif) {
         render(canvas, (frame + 1) / player_frames);
     }
     setTimeout(() => {window.requestAnimationFrame(animate)}, anim_delay);
@@ -122,9 +115,24 @@ function animate() {
 window.requestAnimationFrame(animate);
 
 window.onmessage = (event) => {
-    if(event.data.render) {
+    let data = event.data;
+    if(data.width) {
+        canvas.width = data.width;
+    }
+    if(data.height) {
+        canvas.height = data.height;
+    }
+    if(data.rendering_gif !== undefined){
+        if(data.rendering_gif){
+            // Hack: reset frame count since we are
+            // starting gif
+            frame = 0;
+        }
+        rendering_gif = data.rendering_gif;
+    }
+    if(data.render) {
         play_animation = false;
-        render(canvas, event.data.render.time);
+        render(canvas, data.render.time);
         play_animation = true;
         parent.postMessage({
             time: event.time,
@@ -278,6 +286,14 @@ window.onmessage = (event) => {
   set_on_error_listener(callback) {
     // Call this on error
     this.on_error_listener = callback;
+  }
+
+  pause_anim() {
+    this.iframe.contentWindow.postMessage({ rendering_gif: true }, '*');
+  }
+
+  resume_anim() {
+    this.iframe.contentWindow.postMessage({ rendering_gif: false }, '*');
   }
 
   dispose() {
