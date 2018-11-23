@@ -1,5 +1,6 @@
 class ShaderPlayerWebGL1 {
   constructor() {
+    this.fps = 10;
     this.compiled = false;
     this.canvas = document.createElement('canvas');
     this.gl = null;
@@ -13,7 +14,7 @@ class ShaderPlayerWebGL1 {
     this.passes_defined_in_code = false;
     this.frames_defined_in_code = false;
     this.window_focused = true;
-    this.anim_interval = null;
+    this.anim_timeout = null;
 
     // TODO: synchronize with vue
     this.width = 540;
@@ -86,6 +87,11 @@ class ShaderPlayerWebGL1 {
     this.update();
   }
 
+  set_fps(fps) {
+    this.fps = fps;
+    this.update();
+  }
+
   /* callback receives a canvas element */
   render(time, callback) {
     callback = callback || function () {};
@@ -99,8 +105,8 @@ class ShaderPlayerWebGL1 {
   }
 
   dispose() {
-    if (this.anim_interval != null) {
-      clearInterval(this.anim_interval);
+    if (this.anim_timeout != null) {
+      window.clearTimeout(this.anim_timeout);
     }
   }
 
@@ -482,7 +488,7 @@ class ShaderPlayerWebGL1 {
       gl.uniform1f(soundTimeAttribute, this.lastChunk);
 
       // Set time attribute
-      const tot_time = this.frames * this.anim_delay;
+      const tot_time = this.frames * this.fps;
 
       const timeAttribute = gl.getUniformLocation(gl.program, 'time');
       gl.uniform1f(timeAttribute, time);
@@ -522,7 +528,6 @@ class ShaderPlayerWebGL1 {
   animate() {
     const player = this;
     let frame = 0;
-    const anim_delay = 100;
 
     // Update width/height
     this.canvas.width = this.width;
@@ -534,20 +539,24 @@ class ShaderPlayerWebGL1 {
 
     this.anim_already_started = true;
 
-    this.anim_interval = setInterval(
-      () => {
-        frame++;
-        frame %= (player.frames);
+    function _animate() {
+      const anim_delay = Math.floor(1000 / this.fps);
 
-        window.requestAnimationFrame(() => {
-          // When rendering gif, draw is done elsewhere
-          if (!player.rendering_gif && player.window_focused) {
-            player.draw_gl((frame + 1) / player.frames);
-          }
-        });
-      },
-      anim_delay
-    );
+      frame %= (this.frames);
+
+      // When rendering gif, draw is done elsewhere
+      if (!player.rendering_gif && player.window_focused) {
+        player.draw_gl((frame + 1) / player.frames);
+      }
+
+      this.anim_timeout = window.setTimeout(() => {
+        window.requestAnimationFrame(_animate.bind(this));
+      }, anim_delay);
+
+      frame++;
+    }
+
+    window.requestAnimationFrame(_animate.bind(this));
   }
 
   manage_passes() {

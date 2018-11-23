@@ -3,6 +3,9 @@ next:
     delete: Tiny image mosaic in homepage
 	        (was broken in last release anyway + endless scrolling makes it useless)
 	feature: New forloop.js example + improve comments of existing js examples
+	bugfix: The frame input button was not working properly because there was
+			a transparent div over it sometimes.
+	feature: Frame per second is now a setting
 
 0.0.21:                                                                   (November 20 2018)
     feature: Show language in image_box

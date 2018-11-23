@@ -2,10 +2,15 @@
 	<label class="label">
 		Dimensions
 	</label>
-	<div class="settings has-text-centered">
+	<form class="settings dimensions has-text-centered">
 		<p>
 			w:<input type="number" name="width" v-model.number="width">
 			h:<input type="number" name="height" v-model.number="height">
+			fps:<input type="number"
+					   min="1"
+					   max="100"
+					   title="between 1 and 100"
+					   v-model.number="fps">
 			frames:<input type="number"
 						  name="frames"
 						  v-if="!frames_defined_in_code"
@@ -14,6 +19,8 @@
 				  title="(defined in code)">
 				{{ frames }}
 			</span>
+			<!-- br fixes an issue with save button having transparent part over buttons -->
+			<br><br>
 		</p>
-	</div>
+	</form>
 </div>

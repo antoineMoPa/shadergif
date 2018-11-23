@@ -101,6 +101,20 @@ function default_frame_count_policy() {
   return 10;
 }
 
+function default_fps_policy() {
+  if (start_gif != null) {
+    if (start_gif.fps != null) {
+      return parseInt(start_gif.fps);
+    }
+  }
+
+  if (typeof (window.localStorage.fps) !== 'undefined') {
+    return parseInt(window.localStorage.fps);
+  }
+
+  return 10;
+}
+
 function default_width_policy() {
   if (start_gif != null) {
     if (start_gif.width != null) {
@@ -149,7 +163,7 @@ var app = new Vue({
     width: default_width_policy(),
     height: default_height_policy(),
     frames: default_frame_count_policy(),
-    anim_delay: 100,
+    fps: default_fps_policy(),
     rendering_gif: false,
     has_zip: false,
     zip_url: '',
@@ -178,6 +192,11 @@ var app = new Vue({
     },
     frames(f) {
       this.update_player();
+      window.localStorage.frames = f;
+    },
+    fps(fps) {
+      this.update_player();
+      window.localStorage.fps = fps;
     },
     lang(t) {
       window.localStorage.lang = this.lang;
@@ -210,6 +229,14 @@ var app = new Vue({
       this.player.set_code(this.code);
       this.player.set_width(this.width);
       this.player.set_height(this.height);
+
+      if (this.player.set_fps !== undefined) {
+        this.player.set_fps(this.fps);
+      }
+
+      if (this.player.set_frames !== undefined) {
+        this.player.set_frames(this.frames);
+      }
 
       if (!this.player.frames_defined_in_code) {
         app.player.frames = this.frames;
@@ -347,7 +374,7 @@ var app = new Vue({
       const to_export = {};
 
       if (options.gif) {
-        to_export.delay = app.anim_delay;
+        to_export.delay = Math.floor(1000 / app.fps);
         to_export.data = [];
       }
 
@@ -789,46 +816,3 @@ var app = new Vue({
     });
   }
 });
-
-/* Electron specific code */
-function init_electron() {
-  const { ipcRenderer } = require('electron');
-  ipcRenderer.on('code-request', (event, filePath) => {
-    ipcRenderer.send('code-return', app.code, filePath);
-  });
-  ipcRenderer.on('code-set', (event, content) => {
-    app.f_editor.setValue(content);
-  });
-
-  ipcRenderer.on('shadergif-file-request', (event, filePath) => {
-    let file = {
-      code: app.code,
-      textures: app.textures,
-      lang: app.lang,
-      width: app.width,
-      height: app.height,
-      frames: app.frames
-    };
-    file = JSON.stringify(file);
-    ipcRenderer.send('code-return', file, filePath);
-  });
-
-  ipcRenderer.on('shadergif-file-set', (event, file) => {
-    file = JSON.parse(file);
-    alert('setting!');
-    app.code = file.code;
-    app.textures.splice(0);
-    for (let i = 0; i < file.textures.length; i++) {
-      app.textures.push(
-        file.textures[i]
-      );
-      app.player.add_texture(file.textures[i].data);
-    }
-    app.lang = file.lang;
-    app.width = file.width;
-    app.height = file.height;
-    app.frames = file.frames;
-
-    app.f_editor.setValue(app.code);
-  });
-}

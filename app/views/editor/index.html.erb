@@ -14,7 +14,7 @@
 					<p>To find a base webgl1 shader:
 						<a href="/editor/?file=examples/circle_webgl1.glsl?v=3">circle_webgl1.glsl</a>
 					</p>
-					
+
 				</div>
 			</div>
 			<pre class="error-pre">{{ error_msg }}</pre>
@@ -70,26 +70,10 @@
 										   name="lang"
 										   v-model="gif.lang">
 
-									<div class="text-center">
-										<div class="settings inline-block">
-											<p>
-												w:<input type="number" name="width" v-model.number="width">
-												h:<input type="number" name="height" v-model.number="height">
-												frames:<input type="number"
-															  name="frames"
-															  v-if="!frames_defined_in_code"
-															  v-model.lazy.number="frames">
-												<span v-if="frames_defined_in_code"
-													  title="(defined in code)">
-													{{ frames }}
-												</span>
-											</p>
-										</div>
-									</div>
-									<br>
-									
+									<%= render :partial => 'dimensions_form_part' %>
+
 									<div class="columns">
-										
+
 										<div class="column">
 											<a v-if="gif.is_public"
 											   class="button is-link"
@@ -144,28 +128,26 @@
 					<% end %>
 				</div>
 			</div>
-			<% if not Rails.env.electron? %>
-				<div class="foldable foldable-hidden" v-if="is_current_users_gif">
-					<div class="foldable-header">
-						<img class="feather-icon" src="/icons/feather/trash.svg">
-						Delete Gif Zone
-					</div>
-					<div class="foldable-content">					
-						<div class="has-text-center">
-							<p class="has-text-weight-bold">Danger</p>
-							<div class="text-center">
-								<form method="post" v-bind:action="'/gifs/' + gif.id + '/delete'">
-									<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
-									<input type="hidden"
-										   name="gif_id"
-										   v-bind:value="gif.id">
-									<%= submit_tag "Delete gif", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this gif?' } %>
-								</form>
-							</div>
+			<div class="foldable foldable-hidden" v-if="is_current_users_gif">
+				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/trash.svg">
+					Delete Gif Zone
+				</div>
+				<div class="foldable-content">
+					<div class="has-text-center">
+						<p class="has-text-weight-bold">Danger</p>
+						<div class="text-center">
+							<form method="post" v-bind:action="'/gifs/' + gif.id + '/delete'">
+								<%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
+								<input type="hidden"
+									   name="gif_id"
+									   v-bind:value="gif.id">
+								<%= submit_tag "Delete gif", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this gif?' } %>
+							</form>
 						</div>
 					</div>
 				</div>
-			<% end %>
+			</div>
 			<div class="foldable">
 				<div class="foldable-header">
 					<img class="feather-icon" src="/icons/feather/sliders.svg">
@@ -186,7 +168,7 @@
 									Rendering...
 								</button>
 							</template>
-							
+
 							<button name="make-png" v-on:click="make_png" class="inline-block">
 								<img class="feather-icon" src="/icons/feather/image.svg">
 								Create stacked png
@@ -395,12 +377,12 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 						</div>
 					</div>
 				</div>
-			</div>				
-			
+			</div>
+
 			<div class="text-center">
 				<h3>Gifs results</h3>
 			</div>
-			
+
 			<div class="result-images">
 				<div v-for="(image, index) in images"
 					 class="container is-fluid">
@@ -410,7 +392,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 						   v-on:click="images.splice(index, 1)">[close]</p>
 						<p v-if="image.size" class="text-center">Size:{{ image.size }} kb</p>
 						<img v-bind:src="image.src">
-						<% if not Rails.env.electron? %>
+						<div>
 							<template v-if="image.type == 'gif'">
 								<% if user_signed_in? %>
 									<p class="has-text-weight-bold">Submit to front page</p>
@@ -418,7 +400,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 										the code if needed. </p>
 									<p>The code that is published for this gif is not modified after gif generation.</p>
 									<p>If you need, after posting, you can update code, title and description.</p>
-									
+
 									<%= form_tag("/gifs/new", method: "post") do %>
 										<input type="hidden"
 											   name="image"
@@ -458,7 +440,7 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 												></textarea>
 											</div>
 										</div>
-										
+
 										<div class="has-text-right">
 											<%= submit_tag "Publish", :class => "button is-primary", 'v-on:click' => "on_submit" %>
 										</div>
@@ -469,19 +451,11 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 									</div>
 								<% end %>
 							</template>
-						<% else %>
-						<div class="has-text-right">
-							<a class="button"
-							   v-bind:href="image.src"
-							   download="anim.gif">
-								Save
-							</a>
 						</div>
-						<% end %>
 					</div>
 				</div>
 			</div>
-			
+
 			<br>
 		</div>
 	</div>

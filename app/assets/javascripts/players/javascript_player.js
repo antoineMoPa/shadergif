@@ -24,10 +24,8 @@ class JavascriptPlayer {
     window.onmessage = this.onIframeMessage.bind(this);
 
     this.frames = 10;
-    this.anim_delay = 100;
 
     this.canvas = document.createElement('canvas');
-    this.frames_defined_in_code = false;
     this.window_focused = true;
     this.code = '';
     this.anim_interval = null;
@@ -110,12 +108,11 @@ window.addEventListener('message',(event) => {
     }
 });
 let player_frames = ${this.frames};
-let anim_delay = ${this.anim_delay};
+let anim_delay = Math.floor(1000/${this.fps});
 
 function animate() {
     frame %= (player_frames);
     if(play_animation && !looksInfinite) {
-        const now = new Date().getTime();
         render(canvas, (frame + 1) / player_frames);
     }
     setTimeout(() => {window.requestAnimationFrame(animate)}, anim_delay);
@@ -243,6 +240,16 @@ window.onmessage = (event) => {
   set_height(h) {
     this.height = h;
     this.iframe.height = h;
+    this.update();
+  }
+
+  set_fps(fps) {
+    this.fps = fps;
+    this.update();
+  }
+
+  set_frames(frames) {
+    this.frames = frames;
     this.update();
   }
 
