@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180828151431) do
+ActiveRecord::Schema.define(version: 20181123162907) do
 
   create_table "comments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.text "content"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20180828151431) do
     t.integer "frames"
     t.integer "width"
     t.integer "height"
+    t.integer "fps"
     t.index ["forked_from"], name: "fk_rails_99e24f4b85"
     t.index ["user_id"], name: "index_gifs_on_user_id"
   end

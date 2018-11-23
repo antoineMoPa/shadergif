@@ -21,7 +21,11 @@
 
   */
 
-const is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.(glsl|example\.js)?(\?v=[0-9]+))/);
+let is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.(glsl|example\.js)?(\?v=[0-9]+))/);
+
+if (is_example == null) {
+  is_example = false;
+}
 
 const DEFAULT_WIDTH = 540;
 const DEFAULT_HEIGHT = 540;
@@ -78,6 +82,7 @@ function default_lang_policy() {
       return start_gif.lang;
     }
   }
+
   if (typeof (window.localStorage.lang) !== 'undefined') {
     if (available_langs.includes(window.localStorage.lang)) {
       return window.localStorage.lang;
@@ -132,6 +137,15 @@ function default_width_policy() {
   return 540;
 }
 
+function is_editing_gif() {
+  return /\/editor\/[0-9a-zA-Z]+\/edit/.test(window.location.href);
+}
+
+function is_editing_draft() {
+  return /\/editor\/drafts\/[0-9a-zA-Z]+/.test(window.location.href);
+}
+
+
 function default_height_policy() {
   if (start_gif != null) {
     if (start_gif.height != null) {
@@ -175,7 +189,11 @@ var app = new Vue({
     },
     autocompile: true,
     images: [],
-    error_msg: ''
+    error_msg: '',
+    has_modifications: false,
+    is_example,
+    is_editing_gif: is_editing_gif(),
+    is_editing_draft: is_editing_draft()
   },
   watch: {
     'gifjs.dithering': function (d) {
@@ -209,7 +227,10 @@ var app = new Vue({
     code_change() {
       const app = this;
       window.localStorage.code = app.code;
-
+      window.localStorage.lang = app.lang;
+      window.localStorage.fps = app.fps;
+      window.localStorage.frames = app.frames;
+      app.has_modifications = true;
       if (app.autocompile) {
         app.$nextTick(() => {
           app.update_player();
@@ -343,7 +364,8 @@ var app = new Vue({
                 src: URL.createObjectURL(blob),
                 code,
                 textures: app.textures,
-                frames: app.frames
+                frames: app.frames,
+                fps: app.fps
               });
 
               app.status = 'Done!';
@@ -696,6 +718,18 @@ var app = new Vue({
     },
     on_submit(e) {
       this.status = 'Be patient while gif is uploading!';
+    },
+    on_save_button() {
+      const form = this.$el.querySelectorAll('form[action="/gifs/save"]')[0];
+      window.onbeforeunload = null;
+      form.submit();
+    },
+    on_reload(e) {
+      if (app.has_modifications && (app.is_example || is_editing_gif() || is_editing_draft())) {
+        console.log(app.is_example, is_editing_gif(), is_editing_draft());
+        e.preventDefault();
+      }
+      return null;
     }
   },
   computed: {
@@ -727,6 +761,8 @@ var app = new Vue({
       }
     }
 
+    window.onbeforeunload = app.on_reload;
+
     this.set_player();
     this.load_start_textures();
 
@@ -734,9 +770,8 @@ var app = new Vue({
 
     let filename = '';
 
-    if (is_example != null) {
+    if (is_example != false) {
       filename = is_example[1] || '';
-
       if (this.gif == null || this.gif.lang == null) {
         if (filename.match(/_webgl1/)) {
           this.lang = 'shader_webgl1';
@@ -776,6 +811,8 @@ var app = new Vue({
               'ShaderGif',
               window.location.href.replace(/\?.*$/, '', '')
             );
+
+            app.is_example = false;
           }
         };
         xhr.setRequestHeader('Content-type', 'text/plain');

@@ -376,3 +376,18 @@ button .feather-icon{
 }
 
 /* END UI*/
+
+.editor-copy-box{
+	width:100%;
+	background:#444;
+	padding:20px;
+	margin-bottom:30px;
+	z-index:1000;
+	line-height:34px;
+	color:#fff;
+	
+	.button{
+		float:right;
+		margin-left:5px;
+	}
+}

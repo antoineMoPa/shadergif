@@ -48,6 +48,7 @@ class GifsController < ApplicationController
     @gif.description = params[:description]
     @gif.code = params[:code]
     @gif.frames = params[:frames]
+    @gif.fps = params[:fps]
     @gif.lang = params[:lang]
     
     image = params[:image]
@@ -128,7 +129,8 @@ class GifsController < ApplicationController
     @gif.width = params[:width]
     @gif.height = params[:height]
     @gif.frames = params[:frames]
-
+    @gif.fps = params[:fps]
+    
     @gif.save()
     
     redirect_to "/editor/drafts/" + @gif.id.to_s
@@ -178,6 +180,7 @@ class GifsController < ApplicationController
     gif.description = params[:description]
     gif.code = params[:code]
     gif.frames = params[:frames]
+    gif.fps = params[:fps]
     gif.width = params[:width]
     gif.height = params[:height]
     gif.lang = params[:lang]

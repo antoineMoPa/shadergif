@@ -18,6 +18,20 @@
 				</div>
 			</div>
 			<pre class="error-pre">{{ error_msg }}</pre>
+			<div class="editor-copy-box"
+				 v-if="(is_example || is_editing_draft || is_editing_gif) && has_modifications">
+				<p>
+					Reloading will erase gif
+					<button v-if="is_current_users_gif"
+							class="button is-primary"
+							v-on:click="on_save_button">
+						Save
+					</button>
+					<a href="/editor" target="_blank" class="button is-link">
+						Open a copy
+					</a>
+				</p>
+			</div>
 			<div class="foldable">
 				<div class="foldable-header">
 					<img class="feather-icon" src="/icons/feather/edit.svg">
@@ -38,16 +52,8 @@
 											</div>
 										</div>
 										<div class="column">
-											<div class="field">
-												<label class="label">
-													Language
-												</label>
-												<div class="control select">
-													<select v-model="lang" name="lang" class="inline-block">
-														<option v-for="available_lang in available_langs">{{ available_lang }}</option>
-													</select>
-												</div>
-											</div>
+											<%= render :partial => 'language_form_part', locals: local_assigns %>
+
 										</div>
 									</div>
 									<div class="field" v-if="gif.is_public">
@@ -66,11 +72,8 @@
 									<input type="hidden"
 										   name="id"
 										   v-model="gif.id">
-									<input type="hidden"
-										   name="lang"
-										   v-model="gif.lang">
-
-									<%= render :partial => 'dimensions_form_part' %>
+									
+									<%= render :partial => 'dimensions_form_part', locals: local_assigns %>
 
 									<div class="columns">
 
@@ -115,11 +118,13 @@
 								<% end %>
 							</template>
 							<template v-else>
-								<div class="text-center">
-									Create an account or login to save gifs drafts
-								</div>
-								<%= render :partial => 'dimensions_form_part' %>
-								<%= render :partial => 'language_form_part' %>
+								<form>
+									<div class="text-center">
+										Create an account or login to save gifs drafts
+									</div>
+									<%= render :partial => 'dimensions_form_part' %>
+									<%= render :partial => 'language_form_part' %>
+								</form>
 							</template>
 						</div>
 					<% else %>
@@ -414,6 +419,9 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
 										<input type="hidden"
 											   name="frames"
 											   v-bind:value="image.frames">
+										<input type="hidden"
+											   name="fps"
+											   v-bind:value="image.fps">
 										<!-- All the textures as form elements -->
 										<template v-for="(texture, index) in textures">
 											<input type="hidden"
