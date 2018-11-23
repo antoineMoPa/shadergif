@@ -6,12 +6,12 @@
 			<p>
 				You published:
 				<span class="has-text-weight-bold">
-					<%= Gif.where('is_public').where('user_id','=',current_user.id).count() %>
+					<%= Gif.where('is_public').where(['user_id','=',current_user.id]).count() %>
 					gifs
 				</span>
 				and created
 				<span class="has-text-weight-bold">
-					<%= Gif.where.not('is_public').where('user_id','=',current_user.id).count() %> drafts.
+					<%= Gif.where.not('is_public').where(['user_id','=',current_user.id]).count() %> drafts.
 				</span>
 			</p>
 		<% else %>
@@ -26,7 +26,10 @@
 		<h2 class="subtitle">ShaderGif Community stats</h2>
 		<h3 class="subtitle">Active users</h3>
 		<p>There are
-			<span class="has-text-weight-bold"><%= User.joins(:gifs).where('gifs.user_id','=','user.id').where('is_public').group('user_id').count().first[0] %> active users</span>
+			<span class="has-text-weight-bold">
+				<%= ActiveRecord::Base.connection.execute(
+					'select count(*) from (select users.id, (select COUNT(gifs.id) from gifs where gifs.user_id = users.id and is_public = 1) as num_per_user from users) t where num_per_user > 0;'
+				).first[0] %> active users</span>
 			registered users who shared
 			<span class="has-text-weight-bold">
 				<%= Gif.where('is_public').count() %> gifs
