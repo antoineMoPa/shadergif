@@ -112,8 +112,15 @@ html,body,document,window,.notifications-section{
 	box-shadow:0 0 10px rgba(0,0,0,0.3);
 }
 
+html{
+	background:#141414;
+}
+
+body{
+	background:#fff;
+}
+
 body.night-mode{
-	background:#262529;
  	color:#e0dfe3;
 	background: #141414;
 	height:100%;

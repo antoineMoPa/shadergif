@@ -3,21 +3,15 @@
 		<h1 class="title">About ShaderGif</h1>
 		
 		<p>
-			ShaderGif is a free and open source home for GLSL shader development.
+			ShaderGif is a free and open source home for <span class="has-text-weight-bold">art made with code</span>.
 		</p>
-
-		<h2 class="subtitle">Why is ShaderGif better than ShaderToy</h2>
-		<p>
-			First let me clarify that ShaderToy is an awesome community and I highly respect the skills of the creators and site owners. I owe a lot the the things I learned to @iq (like raymarching). 
-		</p>
-		<p>However ShaderToy has some deep problems. It renders shaders directly in the visitor's GPU. Old laptop users and phones users have trouble browsing the site. In fact, any visitor who does not purchase an expensive graphics card is likely to experience bugs, black screens, or something else than what the shader coder was seeing when coding.
-		</p>
-		<p>
-			Many developers would like to help ShaderToy, but it is closed source. Promised features take years to happen.
-		</p>
-		<p>
-			ShaderGif is young and some features like VR and Soundcloud do not exist yet, but at least anybody who can code and read stackoverflow can potentially add these features if they deeply want it.
-		</p>
+		
+		<h1 class="title">Stats</h1>
+		<div class="has-text-centered">
+			<a class="button is-big" href="/stats">
+				View ShaderGif stats page!
+			</a>
+		</div>
 		
 		<h2 class="subtitle">What is a GLSL shader?</h2>
 
@@ -60,7 +54,7 @@
 			</ul>
 		</p>
 
-		<h2>LocalStorage Backup</h2>
+		<h2 class="subtitle">LocalStorage Backup</h2>
 		<p>When you hit CTRL+R in the editor (/editor/ or /shader-editor/), you don't lose the code,<br> unless you where browsing an URL like /editor/316/edit.
 			<br>
 			Be careful in this case because the original shader will be loaded.
@@ -130,7 +124,6 @@
 				Start with sample code
 			</a>
 		</p>
-		
 		<br>
 		<% if !user_signed_in? %>
 			<div class="has-text-centered">
@@ -142,6 +135,7 @@
 					Sign up!
 				</a>
 			</div>
+			
 		<% end %>
 	</section>
 </div>

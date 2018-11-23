@@ -1,0 +1,56 @@
+<div class="content about-page">
+	<section class="section">
+
+		<% if user_signed_in? %>
+			<h1 class="title">Your stats</h1>
+			<p>
+				You published:
+				<span class="has-text-weight-bold">
+					<%= Gif.where('is_public').where('user_id','=',current_user.id).count() %>
+					gifs
+				</span>
+				and created
+				<span class="has-text-weight-bold">
+					<%= Gif.where.not('is_public').where('user_id','=',current_user.id).count() %> drafts.
+				</span>
+			</p>
+		<% else %>
+			<p>
+				Login to view your stats.
+			</p>
+		<% end %>
+		<p>
+
+		</p>
+
+		<h2 class="subtitle">ShaderGif Community stats</h2>
+		<h3 class="subtitle">Active users</h3>
+		<p>There are
+			<span class="has-text-weight-bold"><%= User.joins(:gifs).where('gifs.user_id','=','user.id').where('is_public').group('user_id').count().first[0] %> active users</span>
+			registered users who shared
+			<span class="has-text-weight-bold">
+				<%= Gif.where('is_public').count() %> gifs
+			</span>.
+		</p>
+		<p>
+			Active user means that user posted a public gif at least one time.
+		</p>
+		<h3 class="subtitle">Active+Drafts users</h3>
+		<p>
+			If we also include users with at least one draft, in total, there are
+			<span class="has-text-weight-bold">
+				<%= ActiveRecord::Base.connection.execute(
+					'select count(*) from (select users.id, (select COUNT(gifs.id) from gifs where gifs.user_id = users.id) as num_per_user from users) t where num_per_user > 0;'
+				).first[0] %> active users
+			</span>.
+		</p>
+
+		<h3 class="subtitle">Registered Users</h3>
+		<p>
+			Please note that this stat is not very representative, since there are many bots that sign up everywhere on the internet.
+		</p>
+		<p>
+			There are <span class="has-text-weight-bold"><%= User.count() %> registered users.</span>
+		</p>
+	</section>
+</div>

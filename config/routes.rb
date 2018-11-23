@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   
   get 'search' => 'home#search'
   get 'profile' => 'user#profile'
+
+  get 'stats' => 'home#stats'
   
   # Legacy paths that should be deleted one day
   # (shader-editor)

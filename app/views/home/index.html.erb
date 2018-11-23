@@ -36,13 +36,6 @@
     <p class="has-text-weight-bold">Version</p>
     <p>You are browsing shadergif version:</p>
     <p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
-    <br><br>
-    <p class="has-text-weight-bold">Community Status</p>
-    <p>There are
-        <%= User.count() %>
-        registered users who shared
-        <%= Gif.where('is_public').count() %> gifs.
-    </p>
     <br>
     <p class="has-text-weight-bold">How to upload a gif?</p>
     <p>
