@@ -6,12 +6,12 @@
 			<p>
 				You published:
 				<span class="has-text-weight-bold">
-					<%= Gif.where('is_public').where(['user_id','=',current_user.id]).count() %>
+					<%= Gif.where('is_public').where('user_id = ?', current_user.id).count() %>
 					gifs
 				</span>
 				and created
 				<span class="has-text-weight-bold">
-					<%= Gif.where.not('is_public').where(['user_id','=',current_user.id]).count() %> drafts.
+					<%= Gif.where.not('is_public').where('user_id = ?',current_user.id).count() %> drafts.
 				</span>
 			</p>
 		<% else %>
