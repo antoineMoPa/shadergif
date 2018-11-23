@@ -23,9 +23,9 @@ function update_night_mode(is_night_mode) {
 }
 
 function toggle_night_mode() {
-  update_night_mode(!JSON.parse(window.localStorage.night_mode || 'false'));
+  update_night_mode(!JSON.parse(window.localStorage.night_mode || 'true'));
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-  update_night_mode(JSON.parse(window.localStorage.night_mode || 'false') || false);
+  update_night_mode(JSON.parse(window.localStorage.night_mode || 'true') || false);
 });
