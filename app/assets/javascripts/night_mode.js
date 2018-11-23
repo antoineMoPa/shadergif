@@ -12,7 +12,7 @@ function update_night_mode(is_night_mode) {
   }
 
   if (window.app != undefined) {
-    if (app.f_editor !== undefined) {
+    if (app.f_editor !== undefined && app.f_editor != null) {
       if (is_night_mode) {
         app.f_editor.setOption('theme', 'twilight');
       } else {
