@@ -44,14 +44,21 @@
 					:class => "input is-large" %>
 			</div>
 		</div>
-		
 		<div class="actions">
 			<%= f.submit "Sign up", :class => "button is-primary" %>
 		</div>
+		<br>
+		<p>
+			Note: We reserve the right to delete inactive accounts.
+		</p>
 		<% end %>
 
 		<br>
-		
+
+		<p>
+			Already have an account?
+		</p>
+		<br>
 		<%= render "devise/shared/links" %>
 	</div>
 </section>

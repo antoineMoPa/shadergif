@@ -72,8 +72,15 @@ window.onload = function () {
         var load_more_button = this.$el.querySelectorAll('.load-more-button')[0];
         window.scroll_load_more_element = load_more_button;
 
-        this.column_1 = document.getElementById('home-column-1').innerHTML;
-        this.column_2 = document.getElementById('home-column-2').innerHTML;
+        let col1 = document.getElementById('home-column-1');
+        let col2 = document.getElementById('home-column-2');
+
+        if(col1) {
+          this.column_1 = col1.innerHTML;
+        }
+        if(col2) {
+          this.column_2 = col2.innerHTML;
+        }
       },
       methods: {
         receive_more(req) {
