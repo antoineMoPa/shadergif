@@ -147,7 +147,7 @@
 								<input type="hidden"
 									   name="gif_id"
 									   v-bind:value="gif.id">
-								<%= submit_tag "Delete gif", :class => "button is-danger", data: { :confirm => 'Do you really want to delete this gif?' } %>
+								<%= submit_tag "Delete gif", :class => "button is-danger", 'v-on:click' => 'window.onbeforeunload = null', data: { :confirm => 'Do you really want to delete this gif?' } %>
 							</form>
 						</div>
 					</div>

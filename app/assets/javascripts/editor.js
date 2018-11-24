@@ -717,6 +717,7 @@ var app = new Vue({
       window.open(src, name);
     },
     on_submit(e) {
+      window.onbeforeunload = null;
       this.status = 'Be patient while gif is uploading!';
     },
     on_save_button() {
@@ -726,7 +727,6 @@ var app = new Vue({
     },
     on_reload(e) {
       if (app.has_modifications && (app.is_example || is_editing_gif() || is_editing_draft())) {
-        console.log(app.is_example, is_editing_gif(), is_editing_draft());
         e.preventDefault();
       }
       return null;
