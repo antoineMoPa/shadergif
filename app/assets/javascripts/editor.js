@@ -730,6 +730,10 @@ var app = new Vue({
         e.preventDefault();
       }
       return null;
+    },
+    on_open_copy() {
+      window.onbeforeunload = null;
+      window.location.href = "/editor";
     }
   },
   computed: {
