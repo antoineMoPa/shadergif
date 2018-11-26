@@ -23,7 +23,7 @@ void main(void){
 	// Distance of current point to center of circle
 	float d = distance(p, center);
 
-	if(d < 0.3){
+	if(d < 0.3 + 0.01 * cos(time * 3.1416 * 2.0)){
 		col.rgba = vec4(0.4, 0.5, 0.6, 1.0);
 	}
 

@@ -13,6 +13,8 @@ void main(void){
     
     vec4 col = vec4(0.0);
 
+    pos.x += 0.02 * time;
+
     if(pos.x > 0.3 && pos.x < 0.7){
         if(pos.y < 0.7 && pos.y > 0.3){
             col.rgba = vec4(0.4, 0.5, 0.6, 1.0);
