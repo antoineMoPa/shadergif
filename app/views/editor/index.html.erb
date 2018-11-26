@@ -87,7 +87,12 @@
 										</div>
 										<div class="column">
 											<div class="has-text-right pull-right">
-												<%= submit_tag "Save", :class => "button is-primary" %>
+												<input type="submit"
+													   name="commit"
+													   value="Save"
+													   v-on:click="on_save_button"
+													   data-disable-with="Save"
+													   class="button is-primary">
 											</div>
 										</div>
 									</div>
