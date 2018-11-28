@@ -21,7 +21,7 @@
 
   */
 
-let is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.(glsl|example\.js)?(\?v=[0-9]+))/);
+let is_example = window.location.href.match(/\?file\=([_a-zA-Z0-9\/]+\.(glsl|example\.(p5)?js)?(\?v=[0-9]+))/);
 
 if (is_example == null) {
   is_example = false;
@@ -36,7 +36,8 @@ const lang_players_assoc = {
   mathjs: MathjsPlayer,
   shader_webgl1: ShaderPlayerWebGL1,
   shader_webgl2: ShaderPlayerWebGL2,
-  javascript: JavascriptPlayer
+  javascript: JavascriptPlayer,
+  p5js: P5JSPlayer
 };
 
 var available_langs = [];
@@ -733,7 +734,7 @@ var app = new Vue({
     },
     on_open_copy() {
       window.onbeforeunload = null;
-      window.location.href = "/editor";
+      window.location.href = '/editor';
     }
   },
   computed: {
@@ -781,6 +782,8 @@ var app = new Vue({
           this.lang = 'shader_webgl1';
         } else if (filename.match(/\.example\.js/)) {
           this.lang = 'javascript';
+        } else if (filename.match(/\.example\.p5js/)) {
+          this.lang = 'p5js';
         } else {
           this.lang = 'shader_webgl2';
         }

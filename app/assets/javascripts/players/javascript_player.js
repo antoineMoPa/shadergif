@@ -1,12 +1,3 @@
-/*
-function render(can, time) {
-    const ctx = can.getContext("2d");
-    ctx.clearRect(0,0,can.width,can.height);
-    ctx.fillRect(0,0, 40+ (30.0 * Math.cos(time * 0.001)), 40);
-    ctx.font="30px Verdana";
-    ctx.fillText(time, 10, 100);
-}
-*/
 
 class JavascriptPlayer {
   constructor() {
@@ -14,6 +5,7 @@ class JavascriptPlayer {
     this.mathjs_processing = false;
     this.compiled = false;
     this.looksInfinite = false;
+    this.libraries = [];
 
     /*
       The sandboxed iframe allows us to run scripts while minimizing client-side
@@ -72,6 +64,12 @@ class JavascriptPlayer {
 
     content += `<canvas width='${this.width}' height='${this.height}'></canvas>`;
 
+    for (const i in this.libraries) {
+      content += '<script type="text/javascript">';
+      content += this.libraries[i];
+      content += '</script>';
+    }
+
     content += `
 <script type='text/javascript'>
 window.onerror = (message, source, lineno) => {
@@ -96,10 +94,6 @@ if(!looksInfinite){
     render(canvas, 0.0);
 }
 
-window.addEventListener('message',(event) => {
-    
-
-});
 let player_frames = ${this.frames};
 let anim_delay = Math.floor(1000/${this.fps});
 
@@ -161,10 +155,28 @@ window.onmessage = (event) => {
       }
     }
 
+    if (data.sendCode) {
+      this.iframe.contentWindow.postMessage({ code: this.code }, '*');
+    }
+
     if (data.error) {
       const message = data.error;
       const lineno = data.lineno;
       this.setError(`Error at line ${lineno + 1}: ${message}`, lineno);
+      this.hasError = true;
+    }
+
+    // P5JS sets width and height in the code
+    if (data.width) {
+      // Hack: I store the app in a global
+      // But I save the enormous overhead
+      // of a state manager
+      // I hate state overhead caused by state managers
+      window.app.width = data.width;
+    }
+
+    if (data.height) {
+      window.app.height = data.height;
     }
   }
 
@@ -215,6 +227,7 @@ window.onmessage = (event) => {
       if (!/(<|>|==|!=)+/.test(param1)) {
         this.setError('Rendering prevented because a for loop looks infinite.');
         this.looksInfinite = true;
+        this.iframe.contentWindow.postMessage({ looksInfinite: true }, '*');
         return;
       }
 
@@ -223,6 +236,7 @@ window.onmessage = (event) => {
       if (!/(\-\-|\+\+|\+=|\-=)+/.test(param2)) {
         this.setError('Rendering prevented because a for loop looks infinite.');
         this.looksInfinite = true;
+        this.iframe.contentWindow.postMessage({ looksInfinite: true }, '*');
         return;
       }
 
@@ -230,6 +244,7 @@ window.onmessage = (event) => {
       // the iteration matches in param1 and param2
     } while (position != -1);
 
+    this.iframe.contentWindow.postMessage({ looksInfinite: false }, '*');
     this.looksInfinite = false;
   }
 
@@ -300,9 +315,25 @@ window.onmessage = (event) => {
     // Nothing to do
   }
 
+  /*
+    Used by p5 mode to fetch p5
+   */
+  fetchLibrary(path) {
+    const _ = this;
+    const url = `/editor/public_libs/${path}`;
+
+    window.fetch(url).then((data) => {
+      data.text().then((text) => {
+        _.libraries.push(text);
+        _.update();
+      });
+    });
+  }
+
   /* Mathjs specific functions */
 
   update() {
+    this.hasError = false;
     const now = new Date().getTime();
     this.iframe.contentWindow.postMessage({ code: this.code }, '*');
     this.iframe.contentWindow.postMessage({ width: this.width, height: this.height }, '*');

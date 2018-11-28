@@ -1,0 +1,22 @@
+/*
+
+    For more information about all p5.js functions go to:
+
+    https://p5js.org/reference/
+	
+    Note: P5-dom and examples that use it are not supported.
+          It would be difficult to support it, since it renders things
+          outside the canvas, which is used to render the gif.
+
+*/
+	
+function setup() {
+	createCanvas(540, 540);
+}
+
+function draw(time) {
+    background(255);
+    var millisecond = millis();
+    let size = 200 + 30 * Math.cos(millisecond / 1000 * 3.1416 * 2);
+    ellipse(540/2, 540/2, size, size);
+}
