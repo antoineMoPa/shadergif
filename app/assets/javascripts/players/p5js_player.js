@@ -101,7 +101,7 @@ window.onmessage = (event) => {
     if (this.looksInfinite) {
       return;
     }
-    if ((!this.htmlWritten)
+    if ((!this.htmlWritten || this.hasError == true)
         && this.libraries.length == this.libraryCount) {
       this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc())}`;
       this.htmlWritten = true;
