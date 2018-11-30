@@ -47,6 +47,8 @@ window.onerror = (message, source, lineno) => {
 
     const appendedCode = `;
 var looksInfinite = false;
+window.fps = 10;
+window.frames = 20;
 
 window.onmessage = (event) => {
     let data = event.data;
@@ -56,19 +58,28 @@ window.onmessage = (event) => {
         canvas = canvas[0];
     }
     if(data.render) {
-        /* 
-           P5JS does not allow rendering at arbitrary time 
-           So we just always record 10 frames dumbly at fixed
-           interval. (30 fps for 2 second)
-        */
-        for(let i = 0; i < 20; i++){
-            setTimeout(() => {
-                parent.postMessage({
-                    time: event.time,
-                    canvas: canvas.toDataURL() 
-                }, '*');
-            },1000/30);
-        }
+        // Override p5js millis() time functions
+        let _old_millis = window.millis;
+        let _old_draw = window.draw;
+        window.millis = () => {return data.render.time * 1000;};
+        // We dont want preview to override anim
+        window.draw = () => {};
+
+        setup();
+        _old_draw();
+        parent.postMessage({
+            time: event.time,
+            canvas: canvas.toDataURL() 
+        }, '*');
+
+        window.millis = _old_millis;
+        window.draw = _old_draw;
+    }
+    if(data.fps) {
+        window.fps = data.fps;
+    }
+    if(data.frames) {
+        window.frames = data.frames;
     }
     if(data._looksInfinite) {
         looksInfinite = _looksInfinite; 
@@ -107,7 +118,7 @@ window.onmessage = (event) => {
       this.htmlWritten = true;
       this.hasError = false;
     } else {
-      this.iframe.contentWindow.postMessage({ code: this.code }, '*');
+      this.iframe.contentWindow.postMessage({ code: this.code, fps: this.fps, frames: this.frames }, '*');
     }
   }
 }

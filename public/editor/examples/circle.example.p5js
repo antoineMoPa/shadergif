@@ -14,7 +14,7 @@ function setup() {
 	createCanvas(540, 540);
 }
 
-function draw(time) {
+function draw() {
     background(255);
     var millisecond = millis();
     let size = 200 + 30 * Math.cos(millisecond / 1000 * 3.1416 * 2);

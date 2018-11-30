@@ -1,12 +1,17 @@
 <div>
 	<div class="settings dimensions has-text-centered">
-		<div v-if="lang != 'p5js'">
-			<label class="label">
-				Dimensions
-			</label>
-			<p>
+		<label class="label">
+			Dimensions
+		</label>
+		<p>
+			<span v-if="lang != 'p5js'">
 				w:<input type="number" name="width" v-model.number="width">
-			h:<input type="number" name="height" v-model.number="height">
+				h:<input type="number" name="height" v-model.number="height">
+			</span>
+			<span v-else>
+				<input type="hidden" name="width" v-model="width">
+				<input type="hidden" name="height" v-model="height">
+			</span>
 			fps:<input type="number"
 					   min="1"
 					   max="100"
@@ -23,13 +28,6 @@
 			</span>
 			<!-- br fixes an issue with save button having transparent part over buttons -->
 			<br><br>
-			</p>
-		</div>
-		<div v-else>
-			<input type="hidden" name="width" v-model="width">
-			<input type="hidden" name="height" v-model="height">
-			<input type="hidden" name="fps" v-model.number="fps">
-			<input type="hidden" name="frames" v-model.number="frames">
-		</div>
+		</p>
 	</div>
 </div>
