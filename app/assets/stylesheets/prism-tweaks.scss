@@ -6,3 +6,7 @@
 body{
 	tab-size:4;
 }
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string{
+	background:none;
+}
