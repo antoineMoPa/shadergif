@@ -65,7 +65,6 @@ window.onmessage = (event) => {
         // We dont want preview to override anim
         window.draw = () => {};
 
-        setup();
         _old_draw();
         parent.postMessage({
             time: event.time,
