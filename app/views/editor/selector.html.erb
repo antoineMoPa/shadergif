@@ -1,36 +1,6 @@
 <div class="selector-page">
     <section class="section">
         <div class="container">
-			<div class="columns" id="retrieve-code" style="display:none;">
-				<div class="column">
-					<h1 class="title">Retrieve code from last session</h1>
-					<div class="has-text-centered">
-						<p>It looks like some code is already in your browser's memory.</p>
-						<div style="height:40px;"></div>
-						<a class="button" style="font-size:30px;" href="/editor">load last code</a>
-						<div style="height:40px;"></div>
-						<p>Using the buttons bellow will load sample code, erasing your browser's memory of the last session.</p>
-						<div style="height:40px;"></div>
-						<div style="font-size:80%;">
-							<p>More info about this feature:</p>
-							<p>
-								Browsing and modifying any other gif overrides last session. Use drafts and/or copy your files elsewhere to avoid losing them.
-							</p>
-						</div>
-						<div style="height:40px;"></div>
-					</div>
-				</div>
-			</div>
-			<script type="text/javascript">
-			 {
-				 let retrieve_code_div = document.querySelectorAll("#retrieve-code")[0];
-				 if(window.localStorage.code != undefined){
-					 if(window.localStorage.code != ""){
-						 retrieve_code_div.style.display = "block";
-					 }
-				 }
-			 }
-			</script>
             <div class="columns">
                 <div class="column">
 					<h1 class="title">Select Language</h1>
@@ -70,6 +40,37 @@
 					</a>
 				</div>
             </div>
+			<br>
+			<div class="columns" id="retrieve-code" style="display:none;">
+				<div class="column">
+					<h1 class="title">Retrieve code from last session</h1>
+					<div class="has-text-centered">
+						<p>It looks like some code is already in your browser's memory.</p>
+						<div style="height:40px;"></div>
+						<a class="button" style="font-size:30px;" href="/editor">load last code</a>
+						<div style="height:40px;"></div>
+						<p>Using the other buttons will load sample code, erasing your browser's memory of the last session.</p>
+						<div style="height:40px;"></div>
+						<div style="font-size:80%;">
+							<p>More info about this feature:</p>
+							<p>
+								Browsing and modifying any other gif overrides last session. Use drafts and/or copy your files elsewhere to avoid losing them.
+							</p>
+						</div>
+						<div style="height:40px;"></div>
+					</div>
+				</div>
+			</div>
+			<script type="text/javascript">
+			 {
+				 let retrieve_code_div = document.querySelectorAll("#retrieve-code")[0];
+				 if(window.localStorage.code != undefined){
+					 if(window.localStorage.code != ""){
+						 retrieve_code_div.style.display = "block";
+					 }
+				 }
+			 }
+			</script>
         </div>
     </section>
 </div>
