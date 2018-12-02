@@ -74,6 +74,10 @@ p,pre,ul{
 	margin-left:10px;
 }
 
+.remove-left-margin{
+	margin-left:0;
+}
+
 .inline-block{
 	display:inline-block;
 	vertical-align:top;
@@ -350,7 +354,7 @@ hr{
 	margin:10px; 
 }
 
-.draft-management{
+.settings-section{
 	padding: 10px;
 }
 
@@ -381,4 +385,11 @@ button .feather-icon{
 		float:right;
 		margin-left:5px;
 	}
+}
+
+.compile-and-run-button{
+	position:absolute;
+	top:60px;
+	left:10px;
+	z-index:1000;
 }

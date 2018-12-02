@@ -39,22 +39,22 @@
 				</div>
 				<div class="foldable-content">
 					<% if not Rails.env.electron? %>
-						<div class="draft-management">
+						<div class="settings-section">
 							<template v-if="is_current_users_gif">
 								<%= form_tag("/gifs/save", method: "post") do %>
 									<div class="columns">
-										<div class="column">
-											<div class="field">
-												<label class="label">Title</label>
-												<div class="control">
-													<input type="text" name="title" placeholder="Give this a name" v-model="gif.title">
-												</div>
+									<div class="column">
+										<div class="field">
+											<label class="label">Title</label>
+											<div class="control">
+												<input type="text" name="title" placeholder="Give this a name" v-model="gif.title">
 											</div>
 										</div>
-										<div class="column">
-											<%= render :partial => 'language_form_part', locals: local_assigns %>
+									</div>
+									<div class="column">
+										<%= render :partial => 'language_form_part', locals: local_assigns %>
 
-										</div>
+									</div>
 									</div>
 									<div class="field" v-if="gif.is_public">
 										<label class="label">Description</label>
@@ -104,10 +104,10 @@
 							<template v-else-if="user != null">
 								<%= form_tag("/gifs/save_draft", method: "post") do %>
 									<div class="field">
-										<label class="label">Save code as a new draft</label>
-										<div class="control">
-											<input type="text" name="title" placeholder="Give this a name" value="">
-										</div>
+									<label class="label">Save code as a new draft</label>
+									<div class="control">
+										<input type="text" name="title" placeholder="Give this a name" value="">
+									</div>
 									</div>
 									<input type="hidden"
 										   name="code"
@@ -116,7 +116,6 @@
 										   name="draft_id"
 										   value="">
 									<%= render :partial => 'dimensions_form_part' %>
-									<%= render :partial => 'language_form_part' %>
 									<div class="has-text-right pull-right">
 										<%= submit_tag "Save draft", :class => "button is-primary"%>
 									</div>
@@ -124,17 +123,16 @@
 							</template>
 							<template v-else>
 								<form>
-									<div class="text-center">
-										Create an account or login to save gifs drafts
-									</div>
-									<%= render :partial => 'dimensions_form_part' %>
-									<%= render :partial => 'language_form_part' %>
+								<div class="text-center">
+									Create an account or login to save gifs drafts
+								</div>
+								<%= render :partial => 'dimensions_form_part' %>
 								</form>
 							</template>
 						</div>
 					<% else %>
 						<%= render :partial => 'dimensions_form_part' %>
-						<%= render :partial => 'language_form_part' %>
+						
 					<% end %>
 				</div>
 			</div>
@@ -210,7 +208,22 @@
 							<input type="text" v-model="watermark">
 						</p>
 					</div>
-					<div class="text-center">
+				</div>
+			</div>
+			<div class="foldable foldable-hidden">
+				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/sliders.svg">
+					Language Settings
+				</div>
+				
+				<div class="foldable-content">
+					<div class="settings-section">
+						<%= render :partial => 'language_form_part' %>
+						<p>
+							Generally, you'll want to switch language using the
+							<a href="/editor/selector">selector page</a> or the 
+							<a href="/editor/examples">example page</a>.
+						</p>
 						<p>
 							<label for="autocompile">
 								Automatically recompile while typing
@@ -220,7 +233,8 @@
 						<br>
 						<p v-if="!autocompile">
 							<button name="recompile"
-									v-on:click="recompile">
+										  class="compile-and-run-button"
+										  v-on:click="recompile">
 								Compile and run
 							</button>
 							<br>

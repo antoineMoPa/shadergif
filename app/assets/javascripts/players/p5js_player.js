@@ -9,7 +9,7 @@ class P5JSPlayer extends JavascriptPlayer {
     this.fetchLibrary('p5.min.js');
   }
 
-  getIframeSrc() {
+  getIframeSrc(standalone) {
     // Libraries ready?
     if (this.libraries.length != 1) {
       return '';
@@ -96,11 +96,15 @@ window.onmessage = (event) => {
     }
 };
 `;
-    content += "<script type='text/javascript'>";
-    // Keep code and try on first line to keep line numbers right in error messages
-    content += appendedCode;
-    content += 'parent.postMessage({sendCode: true}, "*");';
-    content += '</script>';
+    if(standalone) {
+      content += "<script type='text/javascript' src='sketch.js'></script>";
+    } else {
+      content += "<script type='text/javascript'>";
+      // Keep code and try on first line to keep line numbers right in error messages
+      content += appendedCode;
+      content += 'parent.postMessage({sendCode: true}, "*");';
+      content += '</script>';
+    }
     content += '</body>';
     content += '</html>';
 
@@ -113,11 +117,21 @@ window.onmessage = (event) => {
     }
     if ((!this.htmlWritten || this.hasError == true)
         && this.libraries.length == this.libraryCount) {
-      this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc())}`;
+      this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc(false))}`;
       this.htmlWritten = true;
       this.hasError = false;
     } else {
       this.iframe.contentWindow.postMessage({ code: this.code, fps: this.fps, frames: this.frames }, '*');
     }
+  }
+
+  standalone_files() {
+    let index = encodeURIComponent(this.getIframeSrc(true));
+    let sketch = this.code;
+    
+    return {
+      "index.html": index,
+      "sketch.js": sketch
+    };
   }
 }
