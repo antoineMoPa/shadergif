@@ -126,7 +126,7 @@ window.onmessage = (event) => {
   }
 
   standalone_files() {
-    let index = encodeURIComponent(this.getIframeSrc(true));
+    let index = this.getIframeSrc(true);
     let sketch = this.code;
     
     return {

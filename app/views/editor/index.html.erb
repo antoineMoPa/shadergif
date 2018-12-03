@@ -210,6 +210,32 @@
 					</div>
 				</div>
 			</div>
+			<div class="foldable">
+				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/wifi-off.svg">
+					Offline Editing
+				</div>
+				<div class="foldable-content">
+					<div class="text-center">
+						<p>
+							<button
+								v-if="!has_offline_version_zip"
+								v-on:click="download_standalone" class="inline-block">
+								<img class="feather-icon" src="/icons/feather/plus.svg">
+								prepare .zip for offline editing
+							</button>
+							<a v-if="has_offline_version_zip"
+							   v-bind:href="offline_version_zip_url"
+							   download="sketch.zip"
+							   class="inline-block">
+								<button>
+									Save offline editing .zip
+								</button>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
 					<img class="feather-icon" src="/icons/feather/sliders.svg">

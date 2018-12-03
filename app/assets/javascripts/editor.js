@@ -182,6 +182,8 @@ var app = new Vue({
     rendering_gif: false,
     has_zip: false,
     zip_url: '',
+    has_offline_version_zip: false,
+    offline_version_zip_url: '',
     watermark: 'shadergif.com',
     textures: [],
     gifjs: {
@@ -561,21 +563,39 @@ var app = new Vue({
         gif: false
       });
     },
-    make_zip() {
-      const app = this;
-      // Lazy-load gif.js
+    load_jszip(callback) {
+      // Lazy-load jszip
       const script = document.createElement('script');
       script.src = '/assets/lib/jszip.min.js';
-      script.onload = function () {
+      script.onload = callback;
+      document.body.appendChild(script);
+    },
+    make_zip() {
+      const app = this;
+      app.load_jszip(() => {
         const zip = window.shadergif_zip = new JSZip();
-
         app.render({
           zip: true,
           stack: false,
           gif: false
         });
-      };
-      document.body.appendChild(script);
+      });      
+    },
+    download_standalone() {
+      const app = this;
+      app.load_jszip(() => {
+        const zip = new JSZip();
+        let files = app.player.standalone_files();
+
+        for(let i in files){
+          zip.file(i, files[i]);
+        }
+
+        zip.generateAsync({type:"blob"}).then((content) => {
+          app.has_offline_version_zip = true;
+          app.offline_version_zip_url = URL.createObjectURL(content);
+        });
+      });
     },
     new_texture() {
       const app = this;

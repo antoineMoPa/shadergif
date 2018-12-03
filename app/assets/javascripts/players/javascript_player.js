@@ -50,7 +50,7 @@ class JavascriptPlayer {
     }
   }
 
-  getIframeSrc() {
+  getIframeSrc(standalone) {
     let content = '';
 
     content += '<!DOCTYPE html>';
@@ -135,11 +135,21 @@ window.onmessage = (event) => {
     }
 };
 `;
-    content += "<script type='text/javascript'>";
-    // Keep code and try on first line to keep line numbers right in error messages
-    content += `${this.code};`;
-    content += appendedCode;
-    content += '</script>';
+    
+
+    if(standalone) {
+      content += "<script type='text/javascript' src='sketch.js'></script>";
+      content += "<script type='text/javascript'>";
+      content += appendedCode;
+      content += '</script>';
+    } else {
+      // Keep code and try on first line to keep line numbers right in error messages
+      content += "<script type='text/javascript'>";
+      content += `${this.code};`;
+      content += appendedCode;
+      content += '</script>';
+    }
+    
     content += '</body>';
     content += '</html>';
 
@@ -337,10 +347,20 @@ window.onmessage = (event) => {
     const now = new Date().getTime();
     this.iframe.contentWindow.postMessage({ code: this.code }, '*');
     this.iframe.contentWindow.postMessage({ width: this.width, height: this.height }, '*');
-    this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc())}`;
+    this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc(false))}`;
   }
 
   setError(message, lineno) {
     this.on_error_listener(message, lineno);
+  }
+
+  standalone_files() {
+    let index = this.getIframeSrc(true);
+    let sketch = this.code;
+    
+    return {
+      "index.html": index,
+      "sketch.js": sketch
+    };
   }
 }
