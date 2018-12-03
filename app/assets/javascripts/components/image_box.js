@@ -76,15 +76,9 @@ Vue.component(
     </button>
     <a v-bind:href="'/editor/' + gif.id + '/edit'">
         <button class="button">
-            <img class="feather-icon" src="/icons/feather/code.svg">
-            Use in editor
+            <img class="feather-icon" src="/icons/feather/play.svg">
+            Launch in editor
         </button>
-    </a>
-    <a v-bind:href="'/gifs/' + gif.id + '/play'"
-       v-if="gif.lang != 'mathjs'"
-       class="button">
-        <img class="feather-icon" src="/icons/feather/play.svg">
-        Run Shader
     </a>
     <!--
         Note the ugly tag closing design to avoid whitespace
