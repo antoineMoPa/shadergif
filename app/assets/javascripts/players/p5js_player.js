@@ -96,7 +96,7 @@ window.onmessage = (event) => {
     }
 };
 `;
-    if(standalone) {
+    if (standalone) {
       content += "<script type='text/javascript' src='sketch.js'></script>";
     } else {
       content += "<script type='text/javascript'>";
@@ -126,12 +126,12 @@ window.onmessage = (event) => {
   }
 
   standalone_files() {
-    let index = this.getIframeSrc(true);
-    let sketch = this.code;
-    
+    const index = this.getIframeSrc(true);
+    const sketch = this.code;
+
     return {
-      "index.html": index,
-      "sketch.js": sketch
+      'index.html': index,
+      'sketch.js': sketch
     };
   }
 }

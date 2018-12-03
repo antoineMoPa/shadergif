@@ -579,19 +579,19 @@ var app = new Vue({
           stack: false,
           gif: false
         });
-      });      
+      });
     },
     download_standalone() {
       const app = this;
       app.load_jszip(() => {
         const zip = new JSZip();
-        let files = app.player.standalone_files();
+        const files = app.player.standalone_files();
 
-        for(let i in files){
+        for (const i in files) {
           zip.file(i, files[i]);
         }
 
-        zip.generateAsync({type:"blob"}).then((content) => {
+        zip.generateAsync({ type: 'blob' }).then((content) => {
           app.has_offline_version_zip = true;
           app.offline_version_zip_url = URL.createObjectURL(content);
         });
