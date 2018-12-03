@@ -212,44 +212,6 @@
 			</div>
 			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
-					<img class="feather-icon" src="/icons/feather/wifi-off.svg">
-					Offline Editing
-				</div>
-				<div class="foldable-content">
-					<div class="text-center">
-						<p class="text-left">
-							Want to edit your code with your own editor?<br>
-							start a new project? Make a game?<br>
-							Code away from the internet?
-						</p>
-						<br>
-						<p>
-							<button
-								v-if="!has_offline_version_zip"
-								v-on:click="download_standalone" class="inline-block">
-								<img class="feather-icon" src="/icons/feather/plus.svg">
-								prepare .zip for offline editing
-							</button>
-							<a v-if="has_offline_version_zip"
-							   v-bind:href="offline_version_zip_url"
-							   download="sketch.zip"
-							   class="inline-block">
-								<button>
-									Save offline editing .zip
-								</button>
-							</a>
-						</p>
-						
-						<p class="text-left">
-							<label class="label text-left">Instructions</label>
-							Once downloaded, simply extract the archive and launch index.html in your browser. <br>
-							You can edit the code and reload the browser (CTRL+R).
-						</p>
-					</div>
-				</div>
-			</div>
-			<div class="foldable foldable-hidden">
-				<div class="foldable-header">
 					<img class="feather-icon" src="/icons/feather/sliders.svg">
 					Language Settings
 				</div>
@@ -271,11 +233,50 @@
 						<br>
 						<p v-if="!autocompile">
 							<button name="recompile"
-										  class="compile-and-run-button"
-										  v-on:click="recompile">
+									class="compile-and-run-button"
+									v-on:click="recompile">
 								Compile and run
 							</button>
 							<br>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div class="foldable foldable-hidden" v-if="lang != 'mathjs'">
+				<div class="foldable-header">
+					<img class="feather-icon" src="/icons/feather/wifi-off.svg">
+					Offline Editing
+				</div>
+				<div class="foldable-content">
+					<div class="text-center">
+						<p class="text-left">
+							Want to edit your code with your own editor?<br>
+							Want to start a new project? Make a game?<br>
+							Code away from the internet?
+						</p>
+						<br>
+						<p>
+							<button
+								v-if="!has_offline_version_zip"
+									  v-on:click="download_standalone" class="inline-block">
+								<img class="feather-icon" src="/icons/feather/plus.svg">
+								prepare .zip for offline editing
+							</button>
+							<a v-if="has_offline_version_zip"
+							   v-bind:href="offline_version_zip_url"
+							   download="sketch.zip"
+							   class="inline-block">
+								<button>
+									Save offline editing .zip
+								</button>
+							</a>
+						</p>
+						
+						<p class="text-left">
+							<label class="label text-left">Instructions</label>
+							Once downloaded, simply extract the archive and launch index.html in your browser. <br>
+							You can edit the code and reload the browser (CTRL+R) to see the changes.<br>
+							Use the browser inspection tools (F12) to debug.
 						</p>
 					</div>
 				</div>

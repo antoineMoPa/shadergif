@@ -56,6 +56,7 @@ class JavascriptPlayer {
     content += '<!DOCTYPE html>';
     content += '<html>';
     content += '<head>';
+    content += '<meta charset="utf-8">';
     content += '<style>';
     content += '*{margin:0;padding:0;overflow:hidden;}';
     content += '</style>';

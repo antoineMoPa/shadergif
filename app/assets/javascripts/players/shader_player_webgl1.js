@@ -326,9 +326,9 @@ class ShaderPlayerWebGL1 {
 
     gl.program = gl.createProgram();
 
-    const vertex_shader =      add_shader(gl.VERTEX_SHADER, this.vertex_shader);
+    const vertex_shader = add_shader(gl.VERTEX_SHADER, this.vertex_shader);
 
-    const fragment_shader =      add_shader(gl.FRAGMENT_SHADER, this.fragment_shader);
+    const fragment_shader = add_shader(gl.FRAGMENT_SHADER, this.fragment_shader);
 
     this.fragment_shader_object = fragment_shader;
     this.vertex_shader_object = vertex_shader;
@@ -587,5 +587,48 @@ class ShaderPlayerWebGL1 {
         this.frames = qty;
       }
     }
+  }
+
+  getStandaloneHTML() {
+    let content = '';
+
+    content += '<!DOCTYPE html>';
+    content += '<html>';
+    content += '<head>';
+    content += '<meta charset="utf-8">';
+    content += '<style>';
+    content += '*{margin:0;padding:0;overflow:hidden;}';
+    content += '</style>';
+    content += '</head>';
+    content += '<body>';
+    content += '<script type="text/javascript" src="ShaderPlayerWebGL1.js"></script>\n';
+    content += '<script type="text/javascript">\n';
+    content += 'player = new ShaderPlayerWebGL1();\n';
+    content += 'player.set_container(document.body);\n';
+    content += 'fetch("vertex_shader.glsl").then((response) => \n';
+    content += '{response.text().then((text) => {\n';
+    content += '    player.set_vertex_shader(text);\n';
+    content += '})});\n';
+    content += 'fetch("sketch.glsl").then((response) => \n';
+    content += '{response.text().then((text) => {\n';
+    content += '    player.set_code(text);\n';
+    content += '})});\n';
+    content += '</script>';
+    content += '</body>';
+    content += '</html>';
+
+    return content;
+  }
+
+  standalone_files() {
+    const index = this.getStandaloneHTML();
+    const sketch = this.fragment_shader;
+
+    return {
+      'index.html': index,
+      'sketch.glsl': sketch,
+      'vertex_shader.glsl': this.vertex_shader,
+      'ShaderPlayerWebGL1.js': ShaderPlayerWebGL1.toSource()
+    };
   }
 }
