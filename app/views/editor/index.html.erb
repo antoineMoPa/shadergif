@@ -210,13 +210,19 @@
 					</div>
 				</div>
 			</div>
-			<div class="foldable">
+			<div class="foldable foldable-hidden">
 				<div class="foldable-header">
 					<img class="feather-icon" src="/icons/feather/wifi-off.svg">
 					Offline Editing
 				</div>
 				<div class="foldable-content">
 					<div class="text-center">
+						<p class="text-left">
+							Want to edit your code with your own editor?<br>
+							start a new project? Make a game?<br>
+							Code away from the internet?
+						</p>
+						<br>
 						<p>
 							<button
 								v-if="!has_offline_version_zip"
@@ -232,6 +238,12 @@
 									Save offline editing .zip
 								</button>
 							</a>
+						</p>
+						
+						<p class="text-left">
+							<label class="label text-left">Instructions</label>
+							Once downloaded, simply extract the archive and launch index.html in your browser. <br>
+							You can edit the code and reload the browser (CTRL+R).
 						</p>
 					</div>
 				</div>
