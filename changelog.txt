@@ -1,6 +1,10 @@
+next:
+    feature: Add "Download .gif" button in case you
+	         don't know that "right-click, save-as" is a thing.
+
 0.0.24:                                                                    (December 3 2018)
     feature: Set FPS and frames in p5js mode for gif export
-	feature: Download zip folder for offline modifications
+    feature: Download zip folder for offline modifications
 
 0.0.23:                                                                   (November 28 2018)
     feature: Add p5.js mode
