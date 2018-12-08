@@ -17,8 +17,8 @@ You can make gifs with shaders (glsl) and Javascript (either with raw canvas or 
 
 # Features
 
- * Upload textures
- * Download frames as a png zip
+ * Upload textures (For Shaders)
+ * Download frames as a .png zip folder (To make gifs with your favorite software)
  * Write and receive comments
  * Gif previews - (Easy on visitor GPU, when compared to ShaderToy)
 
