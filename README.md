@@ -7,7 +7,7 @@
 
 You can make gifs with shaders (glsl) and Javascript (either with raw canvas or with  the coder-friendly p5.js library).
 
-![screenshot](public/screenshot.png)
+![screenshot](public/screenshot.png?v=1)
 
 # Mission
 
