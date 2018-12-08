@@ -34,6 +34,7 @@ Shadergif is licenced under the terms of the GNU General Public License v3.0 or 
 
 Run:
 
+	docker pull antoinemopa/shadergif-dev
 	docker run -p 3000:3000 -it antoinemopa/shadergif-dev
 	
 Then, inside the container:
