@@ -1,18 +1,20 @@
 site_name: Shadergif Documentation
 theme: 'material'
 pages:
-- Home: 'index.md'
-- Manual:
-    - 'Uniforms': 'manual/uniforms.md'
-    - 'GLSL Tips & Code Snippets': 'manual/glsl-tips-and-snippets.md'
-    - 'Making small gifs': 'manual/making-small-gifs.md'
-    - 'ImageMagick Tips': 'manual/imagemagick.md'
-- Techniques:
-    - 'Two triangles': 'techniques/two-triangles.md'
-- Tutorials:
-    - 'Building a bridge': 'tutorials/building-a-bridge.md'
-- Development:
-    - 'Generating the documentation': 'Development/Doc/doc.md'
+- 'Home': 'index.md'
+- 'Shaders':
+    - Manual:
+        - 'Uniforms': 'manual/uniforms.md'
+        - 'GLSL Tips & Code Snippets': 'manual/glsl-tips-and-snippets.md'
+        - 'Making small gifs': 'manual/making-small-gifs.md'
+        
+    - Techniques:
+        - 'Two triangles': 'techniques/two-triangles.md'
+    - Tutorials:
+        - 'Building a bridge': 'tutorials/building-a-bridge.md'
+- 'ImageMagick Tips': 'manual/imagemagick.md'
+- 'Shadergif Development':
     - 'Player Kernels': 'Development/Players.md'
+    - 'Generating the documentation': 'Development/Doc/doc.md'
     - 'Server':
         - 'Running the server': 'Development/Server.md'

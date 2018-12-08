@@ -1,69 +1,54 @@
+<style>
+a button{
+	background:#3f51b5;
+	color:#fff!important;
+	padding:10px;
+	border-radius:2px!important;
+	box-shadow:0 0 8px rgba(0,0,0,0.4);
+	transition:all 0.3s;
+	cursor:pointer;
+}
+a button:active, a button:hover{
+	box-shadow:0 0 4px rgba(0,0,0,0.3);
+}
+</style>
+
 # Introduction
 
-## Introduction to shaders
+ShaderGif is a platform created to help you make art with code.
 
-A shader is a piece of code that runs in the GPU. **Fragment** shaders are used to render surfaces in video games and to do post-processing (applying filters, lens-distortion, etc.).  **Vertex** shaders manipulate 3D and 2D objects in order to place them in the screen, before handling the result to fragment shaders.
+Currently, there are 2 main languages supported: Javascript and GLSL (Shaders).
 
-Shadergif is mostly about **Fragment** shaders, because it has a vertex shader running in the backend with generates a square which fills the screen. This allows shader programmers to use various 2D and 3D techniques. See some techniques [here](techniques/two-triangles).
+# Supported platforms
 
-There are many shader languages (GLSL, HLSL, etc.). Shadergif works with GLSL. GLSL is a c-like language with bonus types like `vec2`, `mat2` and others. It also comes with many functions that do not come directly with C, such as math functions like `sin`, `cos`, `atan`, `length` (to measure the length of a vector), `distance` (measure a distance between 2 vector coordinates).
+## Javascript
 
-To get started with the GLSL language :
+Javascript allows many types of creative 2D works: particles, fractals, games, etc. It is probably the most popular language worldwide, since it powers almost all of the web pages you browse everyday.
 
-* [The Book Of Shaders](https://thebookofshaders.com/00/)
+If you are familiar with Javascript, you can go to the editor and use the &lt;canvas&gt; API to render creative animations by selecting **Javascript** in the editor selector: <a href="https://shadergif.com/editor/selector" target="_blank">shadergif.com/editor/selector</a>
 
+If you are not already familiar with Javascript*, you might prefer starting with p5.js, which is a library integrated as a ShaderGif platform. In this case, go to the next section. 
 
-You will enjoy writing shaders if you have had a linear algebra class or if you have at least some vector math background.
+*Note: Even if you are a Javascript expert, p5.js will give you even more power! 
 
-* Here is an example of a really quick introduction: (http://blog.wolfire.com/2009/07/linear-algebra-for-game-developers-part-1/)
-* Here is a longer one: [http://immersivemath.com/ila/index.html)
+The Javascript rendering in ShaderGif works by calling your `render(canvas, time)` function at every frame. You can then write `ctx = canvas.getContext("2d");` and perform any operation with `ctx`. The `time` argument loops constantly from 0 to 1. When time is 1, it would be the end of your gif recording.
 
+To learn how you can use the canvas context, I suggest you start with the MDN guide&nbsp;: <a href="https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D" target="_blank">CanvasRenderingContext2D</a>
 
-## Getting started with Shadergif
+<a href="https://shadergif.com/editor/selector" target="_blank"><button>Get Started!</button></a>
 
-When running the Shadergif editor, you will have a canvas on the left which constantly renders the code you type at the right. Don't hesitate to click `examples` in the top bar.
+## Javascript with p5.js
 
-Here is a commented version of the circle example:
+p5.js is a library with useful functions to draw objects. To launch ShaderGif in p5.js mode, head to <a href="https://shadergif.com/editor/selector" target="_blank">shadergif.com/editor/selector</a> and select **p5.js**. Take time to read the provided code at the right.
 
-    // Just always put that line to avoid warnings and errors
-    precision highp float;
-    
-	// This will give you information on the current pixel you are rendering
-    varying vec2 UV;
-	// Screen ration (1 if you are using the default 540x540 size)
-    uniform float ratio;
-    
-	// Main code which renders a circle.
-	// This function is called for every pixel in the screen
-	// by the GPU.
-	// You will get different values of UV.x and UV.y.
-	// The final color will be set in gl_FragColor,
-	// which the GPU will put on the screen.
-	// 
-	// To draw a circle, you will have to find the distance
-	// of the current point (pixel) to the center of the screen.
-	// If it is smaller than your radius (0.3 here), you can set 
-	// a certain color.
-    void main(void){
-		// At first, we set the color to black
-        vec4 col = vec4(0.0);									// vec4(0.0) is equivalent to vec4(0.0, 0.0, 0.0, 0.0)
-    
-		// Create a variable containing the position of the center of the circle
-		// (in this case, the middle of the screen)
-        vec2 center = vec2(0.5,0.5);
-		
-		// distance is a GLSL function that returns... The distance!
-        float distance_from_center = distance(pos, center);
-    
-		// If we are closer to the center than our radius
-        if(distance_from_center < 0.3){
-			// Fill the pixel with this color
-            col.rgba = vec4(0.4, 0.5, 0.6, 1.0);
-        }
-		
-		// Set the opacity to 1 so we'll actually see something
-        col.a = 1.0;
-        
-		// Pass the pixel color back to OpenGL
-        gl_FragColor = col;
-    }
+You will see the `setup()` and `draw()` functions which are present in all p5.js sketches.
+
+Take time to read the header and comments. From there, I suggest you look at the 5.js <a href="https://p5js.org/reference/" target="_blank">Reference</a> for a list of available functions with documentation. Also, have a look at their <a href="https://p5js.org/examples/" target="_blank">Examples</a> to help you get started.
+
+## Using the GPU with GLSL
+
+GLSL is a Shading language that runs in your GPU. It can be used to create epic visual effects.
+
+If you have never coded with shaders, I suggest you read [coding with shaders](coding-with-shaders.md).
+
+<a href="https://shadergif.com/editor/selector" target="_blank"><button>Get Started!</button></a>

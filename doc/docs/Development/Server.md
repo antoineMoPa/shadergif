@@ -1,10 +1,19 @@
 # With Docker
 
-    git clone https://github.com/antoineMoPa/shadergif.git # (You can also clone with ssh)
-    cd shadergif
+Run:
 
-    docker build -t shadergif .
-	docker run -p 3000:3000 -v $(pwd):/editable/shadergif -it shadergif
+	docker pull antoinemopa/shadergif-dev
+	docker run -p 3000:3000 -it antoinemopa/shadergif-dev
+	
+Then, inside the container:
+
+	rails start
+	
+
+If you want to bind-mount and have access to the code from outside the docker:
+
+    git clone https://github.com/antoineMoPa/shadergif.git
+	docker run -p 3000:3000 -v $(pwd):/editable-shadergif -it antoinemopa/shadergif-dev
 
 Note: Docker has many problems with files, symlinks, shared folders and usability in general on Windows.
 I'd recommend to install Ubuntu or Debian in a VirtualBox VM to avoid most problems.
