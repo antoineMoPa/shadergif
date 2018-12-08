@@ -49,6 +49,6 @@ Take time to read the header and comments. From there, I suggest you look at the
 
 GLSL is a Shading language that runs in your GPU. It can be used to create epic visual effects.
 
-If you have never coded with shaders, I suggest you read [coding with shaders](coding-with-shaders.md).
+If you have never coded with shaders, I suggest you read [coding with shaders](manual/coding-with-shaders/).
 
 <a href="https://shadergif.com/editor/selector" target="_blank"><button>Get Started!</button></a>

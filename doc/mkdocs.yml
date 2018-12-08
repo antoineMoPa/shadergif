@@ -4,6 +4,7 @@ pages:
 - 'Home': 'index.md'
 - 'Shaders':
     - Manual:
+        - 'Coding with Shaders': 'manual/coding-with-shaders/'
         - 'Uniforms': 'manual/uniforms.md'
         - 'GLSL Tips & Code Snippets': 'manual/glsl-tips-and-snippets.md'
         - 'Making small gifs': 'manual/making-small-gifs.md'
