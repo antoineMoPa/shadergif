@@ -1,3 +1,6 @@
+ [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
+ [![CircleCI](https://img.shields.io/circleci/project/github/antoineMoPa/shadergif.svg)](https://circleci.com/gh/antoineMoPa/shadergif/tree/master) 
+
 # ShaderGif
 
 [ShaderGif](https://shadergif.com) is a platform for art made with code.
