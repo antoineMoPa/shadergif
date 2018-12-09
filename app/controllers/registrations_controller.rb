@@ -1,5 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
   private
+  invisible_captcha only: :create
   
   def sign_up_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)

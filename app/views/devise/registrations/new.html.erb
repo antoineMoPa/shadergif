@@ -6,6 +6,7 @@
         </p>
 		<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 			<%= devise_error_messages! %>
+			<%= invisible_captcha %>
 		<div class="field">
 			<%= f.label :email, :class => "label" %>
             <p>For email recovery and account confirmation.</p>
