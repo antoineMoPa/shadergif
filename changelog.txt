@@ -1,6 +1,7 @@
 next:
     feature: Add "Download .gif" button in case you
 	         don't know that "right-click, save-as" is a thing.
+    feature: Add invisible_captcha to prevent some spam sign-ups
 
 0.0.24:                                                                    (December 3 2018)
     feature: Set FPS and frames in p5js mode for gif export
