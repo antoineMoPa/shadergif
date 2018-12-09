@@ -61,7 +61,8 @@
 	}
 }
 
-.about-page{
+.about-page,
+.pricing-page{
 	max-width:1000px;
 	margin:auto;
 
@@ -76,5 +77,34 @@
 
 	.smaller-screenshot{
 		max-width:700px;
+	}
+}
+
+
+.pricing-page{
+	.pricing-box{
+		margin:auto;
+		max-width:400px;
+		color:#000;
+		overflow:hidden;
+		
+		.pricing-row{
+			padding:10px;
+			background:#fff;
+			border-top:20px solid #fff;
+			border-bottom:20px solid #fff;
+
+			&:nth-child(1){
+				background:#eee;
+				border-top:20px solid transparent;
+				border-bottom:20px solid transparent;
+			}
+		}
+
+		.pricing-row-title{
+			font-size:150%;
+			font-weight:700;
+			text-align:center;
+		}
 	}
 }

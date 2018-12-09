@@ -66,9 +66,14 @@
 							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
 								<img class="feather-icon" src="/icons/feather/book.svg">Doc
 							</a>
-							<a class="navbar-item" href="/about" title="about">
-								<img class="feather-icon" src="/icons/feather/help-circle.svg">About
-							</a>
+							<% if not @is_editor %>
+								<a class="navbar-item" href="/about" title="about">
+									<img class="feather-icon" src="/icons/feather/help-circle.svg">About
+								</a>
+								<a class="navbar-item" href="/pricing" title="pricing">
+									<img class="feather-icon" src="/icons/feather/dollar-sign.svg">Pricing
+								</a>
+							<% end %>
 							<% if user_signed_in? %>
 								<a class="navbar-item"
 								   href="<%= url_for user_gifs_and_drafts_path %>">
@@ -90,6 +95,7 @@
 								<a class="navbar-item is-active"
 								   href="/editor/examples"
 								   target="_blank">
+									<img class="feather-icon" src="/icons/feather/clipboard.svg">
 									Examples
 								</a>
 							<% else %>
