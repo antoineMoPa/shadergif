@@ -64,4 +64,17 @@
 .about-page{
 	max-width:1000px;
 	margin:auto;
+
+	img{
+		border-radius:4px;
+		box-shadow:0 0 15px rgba(255,255,255,0.2);
+	}
+
+	.video-container{
+		text-align:center;
+	}
+
+	.smaller-screenshot{
+		max-width:700px;
+	}
 }

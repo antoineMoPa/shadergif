@@ -9,8 +9,18 @@
 			ShaderGif is a free and open source home for <span class="has-text-weight-bold">art made with code</span>.
 		</p>
 
+		<h2 class="title">The editor</h2>
+		<p>The ShaderGif editor is simple a web coding tool divided in 2 columns.<br><br>
+			Left: a visual preview and tools to generate gifs.<br>
+			Right: a text editor where you type code (Javascript or GLSL, depending on selected language).
+			<br><br>
+		</p>
+		<img src="screenshot.png"></img>
+		
 		<h2 class="title">Languages and platforms</h2>
-		Currently, ShaderGifs allows you to make gifs using:
+		<p>
+			Currently, ShaderGifs allows you to make gifs using:
+		</p>
 		<ul>
 			<li>GLSL, with support for WebGL1 and WebGL2 shaders</li>
 			<li>Javascript, using &lt;canvas&gt;</li>
@@ -37,17 +47,43 @@
 			A shader is a tiny piece of code that runs in your GPU to generate all the epic visuals you see in today's games, movies, etc.
 		</p>
 		<p>
+			A shader is a tiny piece of code that runs in your GPU to generate all the epic visuals you see in today's games, movies, etc.
+		</p>
+		<p>
 			<a href="https://en.wikipedia.org/wiki/OpenGL_Shading_Language">GLSL</a> (Open GL Shading Language) is a shading language that looks like <a href="https://en.wikipedia.org/wiki/C_(programming_language)">C</a> code.
 			<br><br>
 			Shaders are very exiting to code, look at ShaderGif's <a href="/editor/examples">examples</a>, in the GLSL section, and try adding your artistic touch to these!
 		</p>
+
+		<h2 class="subtitle">Why register?</h2>
+		<p>Registering allows you to publish gifs on the homepage and save drafts for later.</p>
+		<div class="has-text-centered">
+			<img src="screenshot-account.png" class="smaller-screenshot"></img>
+		</div>
 		
-		<h2 class="subtitle">Why Gifs?</h2>
+		<h2 class="subtitle">Why play gifs on the homepage instead of running the code?</h2>
 		<p>
-			Instead of trying to support all graphics cards, like some other sites do (ShaderToy), ShaderGif renders gifs and preview videos.
-			Gifs can be shared easily on the internet, which makes them an awesome medium. Of course, gifs have some problems (artifacts, big size), but the big size
+			<ol>
+				<li>You don't have to maintain the code ever.</li>
+				<li>Browsers don't need to compute your gif again.</li>
+			</ol>
+		</p>
+		<p>
+			Instead of trying to support all graphics cards, CPU, browser, etc. ShaderGif works with gifs and preview videos. Gifs just work. They work everywhere.
+			Also, gifs can be shared easily on the internet, which makes them an awesome medium. Of course, gifs have some problems (artifacts, big size), but the big size
 			is compensated by the generation of video previews and the artifacts actually give gifs their beauty.
 		</p>
+		<p>
+			For the details, we actually play video versions of the gifs to reduce size.
+		</p>
+		<p>The following image is an example of a video version of a gif(0.5MB). Here is the original gif link&nbsp;: <a target="_blank" href="https://shadergif.com/gifs/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif">gif</a> (2.12MB). If you compare, you will see that the video saves a lot of network and is quite similar visually.</p>
+		<div class="video-container">
+			<video loop="loop" poster="https://shadergif.com/gifs/generated/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif-preview.jpg" preload="none" autoplay controls>
+				<source src="https://shadergif.com/gifs/generated/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif-vid.webm" type="video/webm">
+				<source src="https://shadergif.com/gifs/generated/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif-vid.mp4" type="video/mp4">
+				<source src="https://shadergif.com/gifs/generated/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif-vid.ogv" type="video/ogg">
+			</video>
+		</div>
 		
 		<h2 class="subtitle">How to use the editor?</h2>
 		<p>
@@ -144,11 +180,13 @@
 			If you have never used shaders before, you will get more pointers in the documentation (<a href="https://doc.shadergif.com/">doc.shadergif.com</a>)
 			<br><br>
 			
-			Or just try it:<br><br>
-			<a class="button" href="/editor/examples">
-				<img class="feather-icon" src="/icons/feather/clipboard.svg">
-				Start with sample code
-			</a>
+			Or just try it, if you don't feel like reading now:<br><br>
+			<div class="has-text-centered">
+				<a class="button is-large" href="/editor/selector">
+					<img class="feather-icon" src="/icons/feather/code.svg">
+					Launch the Editor
+				</a>
+			</div>
 		</p>
 		<br>
 		<% if !user_signed_in? %>
@@ -156,7 +194,7 @@
 				<p class="has-text-weight-bold">Don't have an account yet?</p>
 				<p>With an account, you can post public gifs and save drafts.</p>
 				<br>
-				<a class="button" href="/users/sign_up">
+				<a class="button is-large" href="/users/sign_up">
 					<img class="feather-icon" src="/icons/feather/user-plus.svg">
 					Sign up!
 				</a>
