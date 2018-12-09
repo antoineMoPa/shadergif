@@ -89,7 +89,10 @@
 								   href="<%= url_for new_user_session_path %>">
 									<img class="feather-icon" src="/icons/feather/user.svg">Login
 								</a>
-								
+								<a class="navbar-item"
+								   href="/users/sign_up">
+									<img class="feather-icon" src="/icons/feather/user-plus.svg">Sign up!
+								</a>
 							<% end %>
 							<% if @is_editor %>
 								<a class="navbar-item is-active"

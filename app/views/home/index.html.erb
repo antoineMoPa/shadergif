@@ -37,24 +37,6 @@
     <p>You are browsing shadergif version:</p>
     <p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
     <br>
-    <p class="has-text-weight-bold">How to upload a gif?</p>
-    <p>
-        First you need to <a href="/users/sign_up">register</a>.
-        <br>
-        Then, in the shader editor, click the "Create gif" button.
-        <br>
-        The encoding will take a few seconds.
-        <br>
-        Once it's ready, the gif will appear at
-        the bottom of the page.
-        <br>
-        If you wish, you can add a title and post it.
-        It will be shown on the front page.
-        <br>
-        The uploading will take a few seconds, it's normal. (
-        The server is rendering a video preview of the gif for the
-        homepage)
-    </p>
 </script>
 <script type="text/html" id="home-column-2">
     <strong>Start Coding</strong>
@@ -73,17 +55,6 @@
         View on github
     </a>
     <br><br>
-    <% if !user_signed_in? %>
-        <div class="has-text-centered">
-            <p class="has-text-weight-bold">Don't have an account yet?</p>
-            <p>With an account, you can post public gifs and save drafts.</p>
-            <br>
-            <a class="button" href="/users/sign_up">
-                <img class="feather-icon" src="/icons/feather/user-plus.svg">
-                Sign up!
-            </a>
-        </div>
-    <% end %>
     <br>
     <p class="has-text-weight-bold">Bridge tutorial</p>
     <p>
