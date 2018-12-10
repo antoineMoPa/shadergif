@@ -13,6 +13,9 @@
 								Title
 							</th>
 							<th>
+								Platform
+							</th>
+							<th>
 								Creation date
 							</th>
 							<th>
@@ -25,8 +28,11 @@
 						<tr v-for="draft in data.drafts">
 							<td>
 								<a v-bind:href="'/editor/drafts/' + draft.id">
-									{{ draft.title }}
+									{{ draft.title == ""? "no title": draft.title }}
 								</a>
+							</td>
+							<td>
+								{{ draft.lang }}
 							</td>
 							<td>
 								{{ new Date(draft.created_at).toDateString() }}
@@ -57,6 +63,9 @@
 								Title
 							</th>
 							<th>
+								Platform
+							</th>
+							<th>
 								Creation date
 							</th>
 							<th>
@@ -72,8 +81,11 @@
 							</td>
 							<td>
 								<a v-bind:href="'/gifs/' + gif.id">
-									{{ gif.title }}
+									{{ gif.title == ""? "no title": gif.title }}
 								</a>
+							</td>
+							<td>
+								{{ gif.platform }}
 							</td>
 							<td>
 								{{ new Date(gif.created_at).toDateString() }}
