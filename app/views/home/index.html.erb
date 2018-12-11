@@ -25,6 +25,23 @@
 			<br><br>
 		</p>
 		<img src="screenshot.png"></img>
+
+		<h2 class="subtitle">Features</h2>
+		<p>
+			<ul>
+				<li><strong>Texture uploads</strong> (for Shaders only)</li>
+				<li><strong>Private drafts</strong></li>
+				<li><strong>localStorage backup</strong> (useful when you crash your browser/tab, you can then CTRL+R)</li>
+				<li><strong>Comments and notifications</strong> when somebody comments your gif</li>
+				<li><strong>PNG .zip</strong> - Download all frames in zip to create videos with external software - works with 100s of frames</li>
+				<li><strong>Use your favorite editor</strong> - Download standalone offline copy to edit with your favorite <span title="vi, emacs, gedit, notepad++">editor</span>.</li>
+			</ul>
+		</p>
+
+		<h2 class="subtitle">Supported browsers</h2>
+		<p>
+			Editor supports <strong>Chrome</strong> and <strong>Firefox</strong>. (Other browsers might experience problems)
+		</p>
 		
 		<h2 class="title">See the possibilities!</h2>
 		<p>Scroll through the feed to get an idea of the possibilities&nbsp;:<br><br>
@@ -37,12 +54,21 @@
 		</p>
 
 		<h2 class="title">Pricing</h2>
+
+		<p>Everything that can be done in your browser is <strong>free</strong>.</p>
+		<p>In the <strong>future</strong>, we might introduce <strong>paid plans</strong> for&nbsp;:</p>
+		<ul>
+			<li><strong>Video export</strong> using our servers</li>
+			<li><strong>Running code</strong> in our containers</li>
+		</ul>
 		
 		<div class="has-text-centered">
 			<a href="/pricing" class="button">
 				<img class="feather-icon" src="/icons/feather/dollar-sign.svg">View pricing page
 			</a>
 		</div>
+		<br>
+		<p>Since ShaderGif is open source, you can always download the code and run it on your own hardware.</p>
 
 		<h2 class="subtitle">Why register?</h2>
 		<p>Registering allows you to publish gifs on the feed and save drafts for later.</p>
@@ -71,12 +97,16 @@
 					Start with sample code
 				</a>
 			</div>
-			Getting all frames as png&nbsp;:<br>
-			Click the "Create .zip file" button.<br>
-			Once ready, click the "Save Zip" button that appears<br>
-			
 		</p>
 
+		<h2 class="subtitle">How to get all frames as png?</h2>
+		<p>
+			<ul>
+				<li>Click the "Create .zip file" button.</li>
+				<li>Once ready, click the "Save Zip" button that appears</li>
+			</ul>
+		</p>
+		
 		<h2 class="subtitle">How to upload a gif?</h2>
 		<p>
 			<ol>
@@ -92,24 +122,13 @@
 			</ol>
 		</p>
 		
-		<h2 class="subtitle">Features</h2>
-		<p>
-			<ul>
-				<li>Texture uploads (for Shaders only)</li>
-				<li>Private drafts</li>
-				<li>Shaders are backed up to localStorage (useful when you crash your browser/tab, you can then CTRL+R)</li>
-				<li>Comments and notifications when somebody comments your gif</li>
-				<li>Download all frames in zip (Hundreds of frames do work, unlike with gifs) to create videos with external software</li>
-				<li>Download standalone offline copy to edit with your favorite <span title="vi, emacs, gedit, notepad++">editor</span>.</li>
-				<li>Editor supports Chrome and Firefox. (Other browsers might have problems)</li>
-			</ul>
-		</p>
+		
 
 		<h1 class="title">Stats</h1>
 		<div class="has-text-centered">
-			<p>There are <span class="has-text-weight-bold"><%= User.count() %> registered users.</span> who shared
+			<p>There are <span class="has-text-weight-bold"><%= User.count() %> registered users</span> and a total of 
 				<span class="has-text-weight-bold">
-					<%= Gif.where('is_public').count() %> gifs
+					<%= Gif.where('is_public').count() %> shared gifs
 				</span>.
 			</p>
 			<p>For more details&nbsp;:</p>
