@@ -1,51 +1,5 @@
 <div class="content about-page">
 	<section class="section">
-		<p>
-			Everyone can be a programmer, and every programmer can be an artist!
-		</p>
-		<h1 class="title">About ShaderGif</h1>
-		
-		<p>
-			ShaderGif is a free and open source home for <span class="has-text-weight-bold">art made with code</span>.
-		</p>
-
-		<h2 class="title">The editor</h2>
-		<p>The ShaderGif editor is a simple web coding tool divided in 2 columns.<br><br>
-			Left: a visual preview + tools to generate gifs.<br>
-			Right: a text editor where you type code (Javascript or GLSL, depending on selected language).
-			<br><br>
-		</p>
-		<img src="screenshot.png"></img>
-		
-		<h2 class="title">Languages and platforms</h2>
-		<p>
-			Currently, ShaderGifs allows you to make gifs using:
-		</p>
-		<ul>
-			<li>GLSL, with support for WebGL1 and WebGL2 shaders</li>
-			<li>Javascript, using &lt;canvas&gt;</li>
-			<li>Javascript, with p5.JS</li>
-		</ul>
-
-		<h2 class="subtitle">What is javascript?</h2>
-		<p>
-			Javascript is a very popular programming language. It powers most of the websites you use everyday. You can use it to make gifs with ShaderGif, without any CSS or HTML knowledge.
-			<br><br>
-			We suggest you try the examples in ShaderGif and search the web for <a href="https://google.com/?q=canvas javascript" target="_blank">&ltcanvas&gt; javascript</a> to discover all the methods that you can use!
-		</p>
-		
-		<h2 class="subtitle">What is p5.js?</h2>
-		<p>
-			p5.js is a Javascript library created by Lauren McCarthy inspired by the processing language.
-			<br>
-			You can find more information about it <a href="https://p5js.org" target="_blank">here</a>. Come back with code samples and try them in ShaderGif!
-		</p>	
-
-		<h2 class="title">Pricing</h2>
-		<a href="/pricing" class="button">
-			<img class="feather-icon" src="/icons/feather/dollar-sign.svg">View pricing page
-		</a>
-		
 		<h2 class="subtitle">What is a GLSL shader?</h2>
 
 		<p>
@@ -60,12 +14,20 @@
 			Shaders are very exiting to code, look at ShaderGif's <a href="/editor/examples">examples</a>, in the GLSL section, and try adding your artistic touch to these!
 		</p>
 
-		<h2 class="subtitle">Why register?</h2>
-		<p>Registering allows you to publish gifs on the homepage and save drafts for later.</p>
-		<div class="has-text-centered">
-			<img src="screenshot-account.png" class="smaller-screenshot"></img>
-		</div>
+		<h2 class="subtitle">What is Javascript?</h2>
+		<p>
+			Javascript is a very popular programming language. It powers most of the websites you use everyday. You can use it to make gifs with ShaderGif, without any CSS or HTML knowledge.
+			<br><br>
+			We suggest you try the examples in ShaderGif and search the web for <a href="https://google.com/?q=canvas javascript" target="_blank">&ltcanvas&gt; javascript</a> to discover all the methods that you can use!
+		</p>
 		
+		<h2 class="subtitle">What is p5.js?</h2>
+		<p>
+			p5.js is a Javascript library created by Lauren McCarthy inspired by the processing language.
+			<br>
+			You can find more information about it <a href="https://p5js.org" target="_blank">here</a>. Come back with code samples and try them in ShaderGif!
+		</p>	
+
 		<h2 class="subtitle">Why play gifs on the homepage instead of running the code?</h2>
 		<p>
 			<ol>
@@ -89,42 +51,6 @@
 				<source src="https://shadergif.com/gifs/generated/udeP4Pod8Y9ycaEp2017-12-05-23h30m.gif-vid.ogv" type="video/ogg">
 			</video>
 		</div>
-		
-		<h2 class="subtitle">How to use the editor?</h2>
-		<p>
-			The editor contains a preview at the left and the code at the right.<br>
-			The various panels at the left can be collapsed by clicking on the blue title bar.<br>
-			To create gifs, there is a "+ Create gif" button. Be patient, since this process takes some times.<br>
-			<br>
-			I frequently start from the "circle.glsl" example and build up from there:<br><br>
-			<a class="button" href="/editor/examples">
-				<img class="feather-icon" src="/icons/feather/clipboard.svg">
-				Start with sample code
-			</a>
-		</p>
-
-		<h2 class="subtitle">How to upload a gif?</h2>
-		<p>
-			First you need to <a href="/users/sign_up">register</a>.
-			Then, in the shader editor, click the "Create gif" button.<br>
-			The encoding will take a few seconds.<br>
-			Once it's ready, the gif will appear at the bottom of the page.<br>
-			If you wish, you can add a title and post it.<br>
-			It will be shown on the front page.<br>
-			The uploading will take a few seconds, it's normal.<br>
-			The server is rendering a video preview of the gif for the homepage.
-		</p>
-		
-		<h2 class="subtitle">What are some of your nice features?</h2>
-		<p>
-			<ul>
-				<li>Texture uploads</li>
-				<li>Private drafts</li>
-				<li>Shaders are backed up to localStorage (useful when you crash your browser/tab)</li>
-				<li>Comments and notifications</li>
-				<li>Download all frames in zip (Hundreds of frames do work, unlike with gifs) to create videos with external software</li>
-			</ul>
-		</p>
 
 		<h2 class="subtitle">LocalStorage Backup</h2>
 		<p>When you hit CTRL+R in the editor (/editor/ or /shader-editor/), you don't lose the code,<br> unless you where browsing an URL like /editor/316/edit.
@@ -148,13 +74,7 @@
 			</ul>
 			For current stats, look bellow.
 		</p>
-		
-		<h1 class="title">Stats</h1>
-		<div class="has-text-centered">
-			<a class="button is-big" href="/stats">
-				View ShaderGif stats page!
-			</a>
-		</div>
+
 		<h2 class="subtitle">What are some considerations when making gifs?</h2>
 		<p>
 			The ShaderGif editor shows the size of your gifs in kilobytes.<br>
@@ -167,43 +87,5 @@
 			If you need hundreds of frames of a shader you just coded (because you want to share it outside of ShaderGif),
 			it is better to download the zip and make a video with an external software.
 		</p>
-
-		<h2 class="subtitle">Contributing and sending feedback</h2>
-		<p>To create github issues <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
-		</p>
-
-		<p>
-			To contribute to the code and documentation:
-			<a href="https://github.com/antoineMoPa/shadergif">
-				github.com/antoineMoPa/shadergif
-			</a>
-		</p>
-		
-		<h2 class="subtitle">Start Coding</h2>
-		<p>
-			If you have never used shaders before, you will get more pointers in the documentation (<a href="https://doc.shadergif.com/">doc.shadergif.com</a>)
-			<br><br>
-			
-			Or just try it, if you don't feel like reading now:<br><br>
-			<div class="has-text-centered">
-				<a class="button is-large" href="/editor/selector">
-					<img class="feather-icon" src="/icons/feather/code.svg">
-					Launch the Editor
-				</a>
-			</div>
-		</p>
-		<br>
-		<% if !user_signed_in? %>
-			<div class="has-text-centered">
-				<p class="has-text-weight-bold">Don't have an account yet?</p>
-				<p>With an account, you can post public gifs and save drafts.</p>
-				<br>
-				<a class="button is-large" href="/users/sign_up">
-					<img class="feather-icon" src="/icons/feather/user-plus.svg">
-					Sign up!
-				</a>
-			</div>
-		<% end %>
 	</section>
 </div>
-

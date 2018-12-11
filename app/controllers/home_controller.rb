@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
-  def index
+  def feed
     ActiveSupport.escape_html_entities_in_json = true
 
     # Small preview gifs

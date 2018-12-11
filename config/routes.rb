@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root 'home#index'
 
   get 'about' => 'home#about'
+  get 'feed' => 'home#feed'
   get 'pricing' => 'home#pricing'
   
   get 'user/gifs-and-drafts', to: 'user#gifs_and_drafts', as: 'user_gifs_and_drafts'

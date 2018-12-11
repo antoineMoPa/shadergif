@@ -18,6 +18,22 @@
 	}
 }
 
+
+.home-big-text{
+	font-size:120%;
+	line-height:400px;
+	height:400px;
+	text-align:center;
+	background: url(/images/banner.jpg);
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+	
+	.home-big-text-span{
+		background:#000;
+		padding:30px;
+	}
+}
+	
 @media all and (min-width:1000px){
 
 	.home-sidebar,

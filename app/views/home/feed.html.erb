@@ -1,0 +1,122 @@
+<script type="application/json" id="main-gifs-json">
+ <%= raw(@gifs) %> 
+</script>
+<script type="application/json" id="mosaic-gifs-json">
+ <%= raw(@mosaic_gifs) %> 
+</script>
+<script type="text/html" id="home-column-1">
+    <p class="has-text-weight-bold">About</p>
+    <p>
+        ShaderGif is a free and open source home for shader art.<br>
+        <br>
+        <a class="button" href="/about"><img class="feather-icon" src="/icons/feather/book.svg">Read more</a>
+    </p>
+    <br>
+    <p class="has-text-weight-bold">Documentation</p>
+    <p>
+        Want to get started with shaders in GLSL?<br>
+        Start with:
+        <a href="https://doc.shadergif.com/">
+            doc.shadergif.com
+        </a>
+    </p>
+    <br>
+    <br>
+    <p class="has-text-weight-bold">Project</p>
+    <p>
+		Github&nbsp;:<br>
+        <a href="https://github.com/antoineMoPa/shadergif">
+            <strong>antoineMoPa/shadergif</strong>
+        </a>
+        <br>
+    </p>
+    <br><br>
+    <p class="has-text-weight-bold">Version</p>
+    <p>You are browsing shadergif version:</p>
+    <p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
+    <br>
+</script>
+<script type="text/html" id="home-column-2">
+    <strong>Start Coding</strong>
+    <br><br>
+    <div class="has-text-centered">
+        <a class="button" href="/editor/examples">
+            <img class="feather-icon" src="/icons/feather/clipboard.svg">
+            Examples
+        </a>
+    </div>
+	<br>
+    <strong>Contribute/Star</strong>
+    <br><br>
+    <a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
+        <img class="feather-icon" src="/icons/feather/github.svg">
+        View on github
+    </a>
+    <br><br>
+    <br>
+    <p class="has-text-weight-bold">Bridge tutorial</p>
+    <p>
+        View the very first shadergif tutorial:
+    </p>
+    <br>
+    <p class="has-text-centered">
+        <a href="https://doc.shadergif.com/tutorials/building-a-bridge/">
+            <img alt="bridge" src="/images/tutorials/bridge.png">
+            <br>        
+            <span class="button">view</span>
+        </a>
+    </p>
+    <br>
+    <p>Send feedback to <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
+    </p>
+    <br>
+    <br>
+    <strong>Search Topics</strong>
+    <p>Lack inpsiration?<br>
+        Browse these:<br>
+        <a href="/search?search=raymarch">Raymarch</a><br>
+        <a href="/search?search=integer">Integer</a><br>
+        <a href="/search?search=texture">Texture</a><br>
+        <a href="/search?search=fractal">Fractal</a><br>
+        <a href="/search?search=automata">Automata</a><br>
+        <a href="/search?search=voronoi">Voronoi</a><br>
+    </p>
+</script>
+<div id="main-app" class="home-page">
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-one-fifth home-sidebar is-hidden-touch"
+							v-html="column_1">
+                </div>
+                <div class="column home-news">
+                    <image-box-list v-bind:gifs="gifs"></image-box-list>
+                    <br>
+                </div>
+                <div class="column home-sidebar is-one-fifth">
+                    <div v-html="column_2"></div>
+					<div class="is-hidden-desktop">
+						<br><br>
+						<div v-html="column_1"></div>
+					</div>
+                </div>
+            </div>
+            <div class="is-hidden-desktop">
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="has-text-centered view-more-container">
+                <button v-if="has_more"
+                        v-on:click="load_more"
+                        class="button load-more-button is-large"
+                >
+                    view more gifs
+                </button>
+                <div v-else>
+                    No more gifs to load!
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
