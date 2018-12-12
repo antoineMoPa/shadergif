@@ -2,6 +2,8 @@ class HomeController < ApplicationController
   def feed
     ActiveSupport.escape_html_entities_in_json = true
 
+    @is_feed = true
+    
     # Small preview gifs
     @mosaic_gifs =
       Gif

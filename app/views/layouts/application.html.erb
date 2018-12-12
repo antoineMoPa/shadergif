@@ -60,9 +60,15 @@
 							   href="#"
 							   onclick="toggle_night_mode()">
 							</a>
-							<a class="navbar-item is-active" href="/">
-								<img class="feather-icon" src="/icons/feather/home.svg">Home
-							</a>
+							<% if @is_feed %>
+								<a class="navbar-item is-active" href="/">
+									<img class="feather-icon" src="/icons/feather/home.svg">Home
+								</a>
+							<% else %>
+								<a class="navbar-item is-active" href="/feed">
+									<img class="feather-icon" src="/icons/feather/layers.svg">Feed
+								</a>
+							<% end %>
 							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
 								<img class="feather-icon" src="/icons/feather/book.svg">Doc
 							</a>
@@ -77,7 +83,7 @@
 							<% if user_signed_in? %>
 								<a class="navbar-item"
 								   href="<%= url_for user_gifs_and_drafts_path %>">
-									<img class="feather-icon" src="/icons/feather/list.svg">Gifs&Drafts
+									<img class="feather-icon" src="/icons/feather/list.svg">Gifs
 								</a>
 								<a class="navbar-item"
 								   href="<%= url_for edit_user_registration_path %>">
