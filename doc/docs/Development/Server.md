@@ -1,3 +1,15 @@
+# Getting the server
+
+If you want to run your own version of ShaderGif or contribute to the development, you will need to
+setup a server.
+
+There are 2 options:
+
+ * Install a fully-fledged Linux server in a VM or in your laptop
+ * Install from docker
+ 
+I frequently use both options.
+
 # With Docker
 
 Run:
@@ -9,11 +21,18 @@ Then, inside the container:
 
 	rails start
 	
+There you go, if you visit http://127.0.0.1:3000, you should see a version of ShaderGif. (it might be an old version, the docker image is not updated often)
 
-If you want to bind-mount and have access to the code from outside the docker:
+Generally, however, you'll want to bind-mount and have access to the code from outside the docker:
 
-    git clone https://github.com/antoineMoPa/shadergif.git
+	# Get the very last version
+	git clone https://github.com/antoineMoPa/shadergif.git
 	docker run -p 3000:3000 -v $(pwd):/editable-shadergif -it antoinemopa/shadergif-dev
+	
+Then, inside the container:
+
+    bundle update # There might have been changes since last docker version
+	rails start
 
 Note: Docker has many problems with files, symlinks, shared folders and usability in general on Windows.
 I'd recommend to install Ubuntu or Debian in a VirtualBox VM to avoid most problems.
