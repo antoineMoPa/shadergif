@@ -37,7 +37,8 @@ const lang_players_assoc = {
   shader_webgl1: ShaderPlayerWebGL1,
   shader_webgl2: ShaderPlayerWebGL2,
   javascript: JavascriptPlayer,
-  p5js: P5JSPlayer
+  p5js: P5JSPlayer,
+  python: PythonPlayer
 };
 
 var available_langs = [];
@@ -804,6 +805,8 @@ var app = new Vue({
           this.lang = 'javascript';
         } else if (filename.match(/\.example\.p5js/)) {
           this.lang = 'p5js';
+        } else if (filename.match(/\.py/)) {
+          this.lang = 'python';
         } else {
           this.lang = 'shader_webgl2';
         }
