@@ -10,14 +10,6 @@ Vue.component(
                     {{ gif.title }}
                 </a>
             </strong>
-            <span class="profile-box">
-                <a v-bind:href="'/user/' + gif.username" class="profile-username">
-                    {{ gif.username }}
-                    <img v-if="gif.profile_picture"
-                        class="profile-picture"
-                        v-bind:src="'/profile_pictures/' + gif.profile_picture">
-                </a>
-            </span>
         </div>
         <div v-on:click="show_video = true"
              class="image-container">
@@ -44,7 +36,7 @@ Vue.component(
         </div>
         <br>
         <div class="clearfix"></div>
-        <pre class="has-text-left gif-description">{{ gif.description }}</pre>
+        <p>By <a v-bind:href="'/user/' + gif.username">{{ gif.username }}</a></p>
         <div>
             <a v-bind:href="'/gifs/' + gif.id">
                 {{ (new Date(gif.created_at)).toDateString() }}
