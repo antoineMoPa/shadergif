@@ -100,9 +100,7 @@ window.onload = function () {
           if (window.innerWidth > 768) {
             // Desktop-tablet: just add gifs
             // Add gifs
-            let app = this;
-            resp.map((gif) => { app.gifs.push(gif); });
-
+            this.gifs = this.gifs.concat(resp);
           } else {
             // Mobile: remove gifs, scroll to top, add new gifs
             this.gifs.splice(0);
