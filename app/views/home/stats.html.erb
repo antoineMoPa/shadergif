@@ -30,7 +30,7 @@
 				<%= ActiveRecord::Base.connection.execute(
 					'select count(*) from (select users.id, (select COUNT(gifs.id) from gifs where gifs.user_id = users.id and is_public = 1) as num_per_user from users) t where num_per_user > 0;'
 				).first[0] %> active users</span>
-			registered users who shared
+			who shared
 			<span class="has-text-weight-bold">
 				<%= Gif.where('is_public').count() %> gifs
 			</span>.
