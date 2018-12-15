@@ -2,7 +2,7 @@ Vue.component(
   'image-box-light',
   {
     template: `
-<div class="image-box image-box-light content has-text-centered">
+<div class="image-box image-box-light content has-text-centered" v-bind:key="gif.id">
     <div>
         <div class="title-box">
             <strong class="subtitle gif-subtitle">
