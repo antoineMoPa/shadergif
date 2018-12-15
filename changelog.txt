@@ -1,3 +1,6 @@
+0.0.26:                                                                   (December 15 2018)
+    layout: Feed is now a grid
+
 0.0.25:                                                                   (December 10 2018)
     feature: Add "Download .gif" button in case you
 	         don't know that "right-click, save-as" is a thing.

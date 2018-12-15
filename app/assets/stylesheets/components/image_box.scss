@@ -4,6 +4,30 @@
 	}
 }
 
+@media all and (min-width:768px){
+	.image-box-list .image-box-light{
+		display:inline-block;
+		max-width:33%;
+		max-width:calc(33% - 20px);
+		margin-right:20px;
+		vertical-align:top;
+	}
+}
+
+.image-box-light{
+	padding-bottom:20px;
+	button{
+		margin-top:10px;
+	}
+	.gif-description{
+		margin-bottom:0!important;
+	}
+}
+
+.image-box-list .image-box .image-container{
+	max-width:100%;
+}
+
 @media all and (max-width:540px){
 	.image-container{
 		width:100%;

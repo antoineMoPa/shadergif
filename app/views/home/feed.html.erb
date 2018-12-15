@@ -86,14 +86,12 @@
     <section class="section">
         <div class="container">
             <div class="columns">
-                <div class="column is-one-fifth home-sidebar is-hidden-touch"
-							v-html="column_1">
-                </div>
                 <div class="column home-news">
-                    <image-box-list v-bind:gifs="gifs"></image-box-list>
+                    <image-box-list v-bind:gifs="gifs" light="true"></image-box-list>
                     <br>
                 </div>
                 <div class="column home-sidebar is-one-fifth">
+					<div v-html="column_1"></div>
                     <div v-html="column_2"></div>
 					<div class="is-hidden-desktop">
 						<br><br>
