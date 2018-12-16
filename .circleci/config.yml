@@ -29,5 +29,4 @@ jobs:
           name: run tests
           command: |
             service mysql start
-            bundle
-            rake test
+            bundle exec rake test
