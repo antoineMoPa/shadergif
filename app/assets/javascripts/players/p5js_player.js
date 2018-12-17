@@ -59,21 +59,23 @@ window.onmessage = (event) => {
         canvas = canvas[0];
     }
     if(data.render) {
+        noLoop();
+        
         // Override p5js millis() time functions
         let _old_millis = window.millis;
-        let _old_draw = window.draw;
+
         window.millis = () => {return data.render.time * 1000;};
         // We dont want preview to override anim
-        window.draw = () => {};
 
-        _old_draw();
+        redraw(1);
+        
         parent.postMessage({
             time: event.time,
             canvas: canvas.toDataURL() 
         }, '*');
 
         window.millis = _old_millis;
-        window.draw = _old_draw;
+        loop();
     }
     if(data.fps) {
         window.fps = data.fps;
