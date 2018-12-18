@@ -25,3 +25,11 @@ RUN sh -c 'cd shadergif; \
 	rails db:seed;'
 
 ENTRYPOINT sh -c 'service mysql start; cd shadergif; bundle install; rails db:migrate; /bin/bash'
+
+# To use this container:
+#     docker run -p 3000:3000 -v -it antoinemopa/shadergif-dev
+#
+# Bonus: to use this with the repo from outside (bind mount with current folder)
+#     docker run -p 3000:3000 -v $(pwd):/shadergif -it antoinemopa/shadergif-dev
+#
+# After starting, run 'rails start'
