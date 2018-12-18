@@ -39,7 +39,7 @@ Run:
 	
 Then, inside the container:
 
-	rails start
+	rails s
 
 ## Running ESLint
 

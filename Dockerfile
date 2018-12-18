@@ -32,4 +32,4 @@ ENTRYPOINT sh -c 'service mysql start; cd shadergif; bundle install; rails db:mi
 # Bonus: to use this with the repo from outside (bind mount with current folder)
 #     docker run -p 3000:3000 -v $(pwd):/shadergif -it antoinemopa/shadergif-dev
 #
-# After starting, run 'rails start'
+# After starting, run 'rails s'

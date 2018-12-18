@@ -19,7 +19,7 @@ Run:
 	
 Then, inside the container:
 
-	rails start
+	rails s
 	
 There you go, if you visit http://127.0.0.1:3000, you should see a version of ShaderGif. (it might be an old version, the docker image is not updated often)
 
