@@ -37,6 +37,12 @@ Then, inside the container:
 Note: Docker has many problems with files, symlinks, shared folders and usability in general on Windows.
 I'd recommend to install Ubuntu or Debian in a VirtualBox VM to avoid most problems.
 
+# Side note: Generating the docker image
+
+In the ShaderGif repo's root:
+
+    docker build -t antoinemopa/editvm .
+
 # Without Docker: Installing and running the dev server
 
 Shadergif is a rails app. The instructions here are for Debian-like operating systems.

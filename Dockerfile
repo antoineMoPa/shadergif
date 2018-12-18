@@ -11,8 +11,11 @@ RUN sh -c "service mysql start;\
 	echo \"GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';\" |  mariadb;\
 	echo \"GRANT ALL PRIVILEGES ON shadergif_test.* TO 'shadergif_development'@'localhost';\" |  mariadb"
 
-COPY . shadergif
+# Install node
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+RUN apt-get install -y nodejs
 
+RUN git clone https://github.com/antoineMoPa/shadergif.git shadergif
 RUN sh -c 'cd shadergif; bundle install;'
 
 RUN sh -c 'cd shadergif; \
@@ -21,4 +24,4 @@ RUN sh -c 'cd shadergif; \
 	rails db:migrate;\
 	rails db:seed;'
 
-ENTRYPOINT sh -c 'service mysql start; cd shadergif; /bin/bash'
+ENTRYPOINT sh -c 'service mysql start; cd shadergif; bundle install; rails db:migrate; /bin/bash'
