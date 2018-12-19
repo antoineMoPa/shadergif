@@ -190,13 +190,14 @@ var app = new Vue({
       quality: 8,
       dithering: 'FloydSteinberg'
     },
+    room_sync: null,
     autocompile: true,
     images: [],
     error_msg: '',
     has_modifications: false,
     is_example,
     is_editing_gif: is_editing_gif(),
-    is_editing_draft: is_editing_draft()
+    is_editing_draft: is_editing_draft()    
   },
   watch: {
     'gifjs.dithering': function (d) {
@@ -234,6 +235,7 @@ var app = new Vue({
       window.localStorage.fps = app.fps;
       window.localStorage.frames = app.frames;
       app.has_modifications = true;
+      
       if (app.autocompile) {
         app.$nextTick(() => {
           app.update_player();
@@ -292,7 +294,15 @@ var app = new Vue({
         app.player.currentSource.stop();
       }
     },
-    enable_sound_mode() {
+    set_room_sync(rs){
+      let app = this;
+      this.room_sync = rs;
+      
+      rs.set_updater((new_content) => {
+        app.player.set_code(new_content);
+        app.f_editor.setValue(new_content);
+      });
+    },enable_sound_mode() {
       this.sound_mode = true;
       this.width = 256;
       this.height = 256;
@@ -860,6 +870,12 @@ var app = new Vue({
           app.code = app.f_editor.getValue();
           app.code_change();
           change_timeout = null;
+
+          // Are we in a live synced room?
+          if(app.room_sync != null){
+            // Then inform the server of our changes
+            app.room_sync.send_update(app.code);
+          }
         }, 300);
       }
     }

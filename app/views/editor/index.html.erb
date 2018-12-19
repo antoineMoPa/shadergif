@@ -8,6 +8,9 @@
 			<div class="text-center">
 				<div class="player-container">
 				</div>
+				<div v-if="room_sync != null">
+					{{ room_sync.users_count }} users in the room
+				</div>
 				<div v-if="lang =='shader_webgl2' && webgl2_init_error == true" class="webgl-error">
 					<p>Sorry, your graphics card does not seem to support WebGL2.</p>
 					<p>You can try switching to webgl1 and <a target="_blank" href="https://gist.github.com/antoineMoPa/892aee51e0fa8e8a6fe212c384e66866">downgrading</a> the shader.</p>
@@ -52,7 +55,7 @@
 										</div>
 									</div>
 									<div class="column">
-										<%= render :partial => 'language_form_part', locals: local_assigns %>
+										<%= render :partial => 'editor/language_form_part', locals: local_assigns %>
 
 									</div>
 									</div>
@@ -73,7 +76,7 @@
 										   name="id"
 										   v-model="gif.id">
 									
-									<%= render :partial => 'dimensions_form_part', locals: local_assigns %>
+									<%= render :partial => 'editor/dimensions_form_part', locals: local_assigns %>
 
 									<div class="columns">
 
@@ -115,7 +118,7 @@
 									<input type="hidden"
 										   name="draft_id"
 										   value="">
-									<%= render :partial => 'dimensions_form_part' %>
+									<%= render :partial => 'editor/dimensions_form_part' %>
 									<div class="has-text-right pull-right">
 										<%= submit_tag "Save draft", :class => "button is-primary"%>
 									</div>
@@ -126,12 +129,12 @@
 								<div class="text-center">
 									Create an account or login to save gifs drafts
 								</div>
-								<%= render :partial => 'dimensions_form_part' %>
+								<%= render :partial => 'editor/dimensions_form_part' %>
 								</form>
 							</template>
 						</div>
 					<% else %>
-						<%= render :partial => 'dimensions_form_part' %>
+						<%= render :partial => 'editor/dimensions_form_part' %>
 						
 					<% end %>
 				</div>
@@ -218,7 +221,7 @@
 				
 				<div class="foldable-content">
 					<div class="settings-section">
-						<%= render :partial => 'language_form_part' %>
+						<%= render :partial => 'editor/language_form_part' %>
 						<p>
 							Generally, you'll want to switch language using the
 							<a href="/editor/selector">selector page</a> or the 
@@ -546,8 +549,12 @@ col += texture2D(texture0,  UV * vec2(1.0, -1.0) + vec2(0.0, 1.0));</pre>
  <% end %>
 </script>
 
-<%= render :partial => 'default_shader_scripts' %>
+<%= render :partial => 'editor/default_shader_scripts' %>
 <%= javascript_include_tag 'editor' %>
+<% if defined? @room_id %>
+	<%= javascript_include_tag 'RoomsSync' %>
+<% end %>
+
 <% if Rails.env.electron? %>
 	<script>
 	 try{

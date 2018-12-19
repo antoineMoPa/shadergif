@@ -1,0 +1,19 @@
+{
+  "name": "shadergif-rooms",
+  "private": true,
+  "scripts": {
+    "lint": "eslint",
+    "lint-fix": "eslint --fix ."
+  },
+  "dependencies": {
+    "diff": "^3.5.0",
+    "diff-match-patch": "^1.0.4",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.1",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0"
+  }
+}

@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   get 'editor/:gif_id/edit' => 'editor#edit'
   get 'editor/examples' => 'editor#examples'
 
+  get 'rooms' => 'rooms#index'
+  get 'rooms/:room_id' => 'rooms#show'
+  
   post 'gifs/save' => 'gifs#save'
   post 'gifs/save_draft' => 'gifs#new_draft'
   post 'comments/new' => 'comments#new'
