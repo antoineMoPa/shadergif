@@ -1,4 +1,5 @@
 app/assets/javascripts/lib/**
 public/**
 electron/**
+rooms/**
 cable.js

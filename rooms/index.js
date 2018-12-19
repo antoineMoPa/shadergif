@@ -6,23 +6,23 @@ io.set('transports', ['websocket']);
 
 const rooms = {};
 
-app.get('/list', function(req, res){
-  res.send(JSON.stringify['default']);
+app.get('/list', (req, res) => {
+  res.send(JSON.stringify.default);
 });
 
 
-app.get('/', function(req, res){
+app.get('/', (req, res) => {
   res.send('');
 });
 
 
-function join_room(socket, room_id, content){
+function join_room(socket, room_id, content) {
   let count;
-  
-  if(rooms[room_id] == undefined){
+
+  if (rooms[room_id] == undefined) {
     rooms[room_id] = {
       users_count: 1,
-      content: ""
+      content: ''
     };
     count = 1;
   } else {
@@ -33,28 +33,27 @@ function join_room(socket, room_id, content){
   io.to(room_id).emit('users-count', count);
 }
 
-io.on('connection', function(socket){
+io.on('connection', (socket) => {
   let room_id = null;
 
-  socket.on("join", (data) => {
+  socket.on('join', (data) => {
     room_id = data.room_id;
     join_room(socket, room_id, data.content);
   });
 
-  socket.on('disconnect', function () {
-    if(room_id != null){
+  socket.on('disconnect', () => {
+    if (room_id != null) {
       rooms[room_id].users_count--;
     }
   });
 
-  socket.on('content', function(content){
+  socket.on('content', (content) => {
     rooms[room_id].content = content;
     // Diffuse content except to sender
     socket.broadcast.to(room_id).emit('content', content);
   });
-  
 });
 
-http.listen(3005, function(){
+http.listen(3005, () => {
   console.log('listening on *:3005');
 });
