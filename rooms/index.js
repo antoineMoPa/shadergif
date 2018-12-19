@@ -2,6 +2,8 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
+io.set('transports', ['websocket']);
+
 const rooms = {};
 
 app.get('/list', function(req, res){

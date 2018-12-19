@@ -34,7 +34,7 @@ class RoomsSync{
         ":3005";
 
     window._socket_ready = () => {
-      let socket = io(socket_io_url);
+      let socket = io(socket_io_url, {transports: ['websocket']});
       rs.socket = socket;
       rs.bind_socket_events.bind(this)(socket);
     };
