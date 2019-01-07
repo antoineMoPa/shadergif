@@ -244,7 +244,7 @@ window.onmessage = (event) => {
 
       // No incrementation / decremention?
       // This looks like an infinite loop...
-      if (!/(\-\-|\+\+|\+=|\-=)+/.test(param2)) {
+      if (!/(\-\-|\+\+|\+=|\-=|\*=|\/=)+/.test(param2)) {
         this.setError('Rendering prevented because a for loop looks infinite.');
         this.looksInfinite = true;
         this.iframe.contentWindow.postMessage({ looksInfinite: true }, '*');
