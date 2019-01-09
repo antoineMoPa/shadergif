@@ -506,7 +506,7 @@ var app = new Vue({
             }
 
             temp_img.src = image_data;
-          });
+          }, curr);
         } else {
           // Final step
           if (options.gif) {

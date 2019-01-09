@@ -4,7 +4,6 @@ class JavascriptPlayer {
     this.mathjs_worker = null;
     this.mathjs_processing = false;
     this.compiled = false;
-    this.looksInfinite = false;
     this.libraries = [];
 
     /*
@@ -81,7 +80,6 @@ window.onerror = (message, source, lineno) => {
 `;
 
     const appendedCode = `
-let looksInfinite = ${this.looksInfinite};
 let rendering_gif = ${this.rendering_gif};
 let frame = 0;
 let canvas = document.querySelectorAll('canvas')[0];
@@ -91,17 +89,15 @@ let ctx = canvas.getContext('2d');
 /* With regular preview animation */
 let play_animation = true;
 
-if(!looksInfinite){
-    render(canvas, 0.0);
-}
+render(canvas, 0.0);
 
 let player_frames = ${this.frames};
 let anim_delay = Math.floor(1000/${this.fps});
 
 function animate() {
     frame %= (player_frames);
-    if(play_animation && !looksInfinite && !rendering_gif) {
-        render(canvas, (frame + 1) / player_frames);
+    if(play_animation && !rendering_gif) {
+        render(canvas, (frame + 1) / player_frames, frame);
     }
     setTimeout(() => {window.requestAnimationFrame(animate)}, anim_delay);
     frame++;
@@ -127,7 +123,7 @@ window.onmessage = (event) => {
     }
     if(data.render) {
         play_animation = false;
-        render(canvas, data.render.time);
+        render(canvas, data.render.time, data.frame);
         play_animation = true;
         parent.postMessage({
             time: event.time,
@@ -184,10 +180,12 @@ window.onmessage = (event) => {
       // of a state manager
       // I hate state overhead caused by state managers
       window.app.width = data.width;
+      this.iframe.setAttribute('width', data.width);
     }
 
     if (data.height) {
       window.app.height = data.height;
+      this.iframe.setAttribute('height', data.height);
     }
   }
 
@@ -199,68 +197,7 @@ window.onmessage = (event) => {
     div.appendChild(this.iframe);
   }
 
-  /*
-    Infinite loop detector
-   */
-  preventInfinite(_code) {
-    const index = 0;
-    let code = _code;
-    let position = code.indexOf('for');
-
-    do {
-      position = code.indexOf('for');
-      if (position == -1) {
-        break;
-      }
-
-      code = code.substr(position + 3, code.length);
-
-      const untilClosingParens = code.substr(code.indexOf('(') + 1, code.indexOf(')') - 1);
-
-      // If there is no closing parens, the string will be 0
-
-      if (untilClosingParens == '') {
-        break;
-      }
-
-      const forParameters = untilClosingParens.split(';');
-
-      if (forParameters.length != 3) {
-        break;
-      }
-
-      const param0 = forParameters[0].trim();
-      const param1 = forParameters[1].trim();
-      const param2 = forParameters[2].trim();
-
-      // No condition in for loop?
-      // It will probably be infinite
-      if (!/(<|>|==|!=)+/.test(param1)) {
-        this.setError('Rendering prevented because a for loop looks infinite.');
-        this.looksInfinite = true;
-        this.iframe.contentWindow.postMessage({ looksInfinite: true }, '*');
-        return;
-      }
-
-      // No incrementation / decremention?
-      // This looks like an infinite loop...
-      if (!/(\-\-|\+\+|\+=|\-=|\*=|\/=)+/.test(param2)) {
-        this.setError('Rendering prevented because a for loop looks infinite.');
-        this.looksInfinite = true;
-        this.iframe.contentWindow.postMessage({ looksInfinite: true }, '*');
-        return;
-      }
-
-      // Improvement idea: look to see if the side of
-      // the iteration matches in param1 and param2
-    } while (position != -1);
-
-    this.iframe.contentWindow.postMessage({ looksInfinite: false }, '*');
-    this.looksInfinite = false;
-  }
-
   set_code(code) {
-    this.preventInfinite(code);
     this.code = code;
     this.update();
   }
@@ -288,12 +225,13 @@ window.onmessage = (event) => {
   }
 
   /* callback receives a canvas element */
-  render(time, callback) {
+  render(time, callback, frame) {
     const canvas = this.canvas;
 
     this.iframe.contentWindow.postMessage({
       render: {
-        time
+        time,
+        frame
       }
     }, '*');
 

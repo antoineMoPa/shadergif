@@ -27,27 +27,34 @@ class P5JSPlayer extends JavascriptPlayer {
     content += '</head>';
     content += '<body>';
 
+    content += '<script type="text/javascript">';
+      
     for (const i in this.libraries) {
-      content += '<script type="text/javascript">';
       content += this.libraries[i];
-      content += '</script>';
     }
 
     content += `
-<script type='text/javascript'>
 // An initial setup is required at page load
+
 window.setup = () => {createCanvas(540, 540)};
-window.draw = () => {createCanvas(540, 540)};
+window.draw = () => {};
 window.onerror = (message, source, lineno) => {
-    
     parent.postMessage({error: message, lineno: lineno - 1}, "*");
     return true;
 };
-</script>
 `;
+    
+    if(!standalone){
+      content += `
+// Ugly polling to adapt iframe size
+setInterval(function(){
+  let canvas = document.querySelectorAll('canvas')[0];
+  parent.postMessage({width: canvas.width, height: canvas.height}, "*");
+}, 2500);`;
+    }
 
+    content += '</script>';
     const appendedCode = `;
-var looksInfinite = false;
 window.fps = 10;
 window.frames = 20;
 
@@ -63,6 +70,10 @@ window.onmessage = (event) => {
         
         // Override p5js millis() time functions
         let _old_millis = window.millis;
+        console.log(data.render.frame);
+        if(data.render.frame == 0){
+            setup();
+        }
 
         window.millis = () => {return data.render.time * 1000;};
         // We dont want preview to override anim
@@ -83,13 +94,7 @@ window.onmessage = (event) => {
     if(data.frames) {
         window.frames = data.frames;
     }
-    if(data._looksInfinite) {
-        looksInfinite = _looksInfinite; 
-        if(looksInfinite){
-            window.draw = () => {};
-        }
-    }
-    if(data.code && !looksInfinite) {
+    if(data.code) {
         let script = document.createElement("script");
         script.innerHTML = data.code;
         document.body.appendChild(script);
@@ -115,9 +120,6 @@ window.onmessage = (event) => {
   }
 
   update() {
-    if (this.looksInfinite) {
-      return;
-    }
     if ((!this.htmlWritten || this.hasError == true)
         && this.libraries.length == this.libraryCount) {
       this.iframe.src = `data:text/html;charset=utf-8,${encodeURIComponent(this.getIframeSrc(false))}`;
