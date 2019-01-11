@@ -28,7 +28,7 @@ class P5JSPlayer extends JavascriptPlayer {
     content += '<body>';
 
     content += '<script type="text/javascript">';
-      
+
     for (const i in this.libraries) {
       content += this.libraries[i];
     }
@@ -43,8 +43,8 @@ window.onerror = (message, source, lineno) => {
     return true;
 };
 `;
-    
-    if(!standalone){
+
+    if (!standalone) {
       content += `
 // Ugly polling to adapt iframe size
 setInterval(function(){

@@ -45,11 +45,31 @@
 				<div class="column">
 					<h1 class="title">Retrieve code from last session</h1>
 					<div class="has-text-centered">
-						<p>It looks like some code is already in your browser's memory.</p>
+					  <p>It looks like some code is already in your browser's memory.</p>
 						<div style="height:40px;"></div>
-						<a class="button" style="font-size:30px;" href="/editor">load last code</a>
+						<p>In case you did not post or save it:</p>
 						<div style="height:40px;"></div>
-						<p>Using the other buttons will load sample code, erasing your browser's memory of the last session.</p>
+						
+						<div>
+						  <pre class="has-text-left" id="last-code-pre" contenteditable></pre>
+						  <script>
+							{
+							let pre = document.getElementById("last-code-pre");
+							pre.addEventListener("keyup", function(){
+							  window.localStorage.code = pre.innerText;
+							});
+							if(window.localStorage.code != undefined){
+							  pre.innerText = window.localStorage.code;
+							}
+							}
+						  </script>
+						</div>
+						<div style="height:40px;"></div>
+						<p>
+						  You can edit the code before launching. You should change the code if it crashed your tab.
+						</p>
+						<div style="height:40px;"></div>
+						<a class="button" style="font-size:30px;" href="/editor">Load this code</a>
 						<div style="height:40px;"></div>
 						<div style="font-size:80%;">
 							<p>More info about this feature:</p>
@@ -58,6 +78,7 @@
 							</p>
 						</div>
 						<div style="height:40px;"></div>
+						
 					</div>
 				</div>
 			</div>
@@ -71,6 +92,6 @@
 				 }
 			 }
 			</script>
-        </div>
-    </section>
+		</div>
+	</section>
 </div>
