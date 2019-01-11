@@ -41,7 +41,7 @@ I'd recommend to install Ubuntu or Debian in a VirtualBox VM to avoid most probl
 
 In the ShaderGif repo's root:
 
-    docker build -t antoinemopa/editvm .
+    docker build -t antoinemopa/shadergif-dev .
 
 # Without Docker: Installing and running the dev server
 
