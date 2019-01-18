@@ -19,6 +19,7 @@
 /public/images/banner.png
 
 /vendor/bundle
+/public/textures/
 
 .byebug_history
 nohup.out
