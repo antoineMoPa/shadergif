@@ -46,11 +46,17 @@ window.onerror = (message, source, lineno) => {
 
     if (!standalone) {
       content += `
-// Ugly polling to adapt iframe size
-setInterval(function(){
-  let canvas = document.querySelectorAll('canvas')[0];
-  parent.postMessage({width: canvas.width, height: canvas.height}, "*");
-}, 2500);`;
+		// Ugly polling to adapt iframe size
+		let prev_width = 0;
+		let prev_height = 0;
+		setInterval(function(){
+			let canvas = document.querySelectorAll('canvas')[0];
+			if(canvas.width != prev_width || canvas.height != prev_height){
+				prev_width = canvas.width;
+				prev_height = canvas.height;
+				parent.postMessage({width: canvas.width, height: canvas.height}, "*");
+			}
+		}, 2500);`;
     }
 
     content += '</script>';
