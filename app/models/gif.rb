@@ -2,6 +2,14 @@ class Gif < ApplicationRecord
   belongs_to :user
   has_many :comments
   has_many :textures
+  has_many :user_likes
+  
+  def self.with_likes(current_user)
+    id = current_user.id.to_i
+    select(
+      "(select count(user_likes.user_id) as likes from user_likes where user_likes.gif_id = gifs.id) as likes,
+      (select count(user_likes.user_id) as likes from user_likes where user_likes.gif_id = gifs.id and user_id = " + id.to_s + ") as current_user_likes")
+  end
 
   def gen_video_and_thumb
     filename = image_filename

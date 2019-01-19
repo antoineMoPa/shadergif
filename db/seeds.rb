@@ -10,6 +10,7 @@ if Rails.env.development?
     :password => 'password',
     :password_confirmation => 'password'
   )
+  
   user.save!
 
   user = User.new(
@@ -40,5 +41,9 @@ if Rails.env.development?
     gif.image_filename = "dev_env_gif.gif"
     gif.save!()
   end
+
+  ActiveRecord::Base.connection.execute(
+    "insert into user_likes (user_id, gif_id) values (1,768)"
+  )
   
 end

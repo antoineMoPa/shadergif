@@ -42,7 +42,11 @@
 	box-shadow:0 0 4px rgba(0,0,0,0.1);
 	background:#fff;
 	border-radius:3px;
-	
+
+	.like-button{
+		margin-left:10px;
+		cursor:pointer;
+    }
 
 	.night-mode &{
 		background:#171c1d;

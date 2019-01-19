@@ -38,6 +38,7 @@ Rails.application.routes.draw do
   post 'gifs/save_draft' => 'gifs#new_draft'
   post 'comments/new' => 'comments#new'
   
+  get 'gifs/toggle_like/:gif_id' => 'gifs#toggle_like'
   get 'gifs/list' => 'gifs#list'
   get 'gifs/:id' => 'gifs#show'
   get 'gifs/:id/play' => 'gifs#play'

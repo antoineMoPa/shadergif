@@ -11,6 +11,25 @@ class GifsController < ApplicationController
     new
   end
   
+  def toggle_like()
+    if current_user.nil?
+      render :json => {error:"logged out"}
+    else
+      user_like = UserLike.where(user_id: current_user.id, gif_id: params[:gif_id]).first
+      if not user_like.nil?
+        user_like.destroy
+        render :json => {like:"false"}
+      else
+        user_like = UserLike.new
+        user_like.gif_id = params[:gif_id]
+        user_like.user_id = current_user.id
+        user_like.save
+        render :json => {like:"true"}
+      end
+      
+    end
+  end
+
   def new
     if not user_signed_in?
       @error = "You are not logged in!"
@@ -142,6 +161,8 @@ class GifsController < ApplicationController
              .where("is_public = true")
              .find(params[:id])
     
+    @gif.increment!(:views)
+
     @gif_json = @gif.to_json(
       :include =>
 	  {
@@ -197,6 +218,7 @@ class GifsController < ApplicationController
              .select("gifs.*, users.username, users.profile_picture")
              .where("is_public = true")
              .find(params[:id])
+    @gif.increment!(:views)
   end
 
   def list

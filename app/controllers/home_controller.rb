@@ -4,20 +4,12 @@ class HomeController < ApplicationController
 
     @is_feed = true
     
-    # Small preview gifs
-    @mosaic_gifs =
-      Gif
-        .order(created_at: :desc)
-        .select("gifs.title, gifs.image_filename, gifs.id")
-        .where("is_public = true")
-        .take(30)
-        .to_json
-
-    # Big homepage gifs
+    # homepage gifs
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
            .select("gifs.*, users.username, users.profile_picture")
+           .with_likes(current_user)
            .where("is_public = true")
            .take(8)
            .to_json
@@ -46,6 +38,7 @@ class HomeController < ApplicationController
            .order(created_at: :desc)
            .joins(:user)
            .select("gifs.*, users.username, users.profile_picture")
+           .with_likes(current_user)
            .where("is_public = true ")
            .where('users.username LIKE :search OR ' +
                   'title LIKE :search ' +
