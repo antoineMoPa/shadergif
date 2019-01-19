@@ -91,21 +91,24 @@ Vue.component(
         video.play();
       },
       toggle_like(gif_id) {
-		let app = this;
+      let app = this;
         fetch("/gifs/toggle_like/" + gif_id).then((resp) => {
-			resp.json().then((data) => {
-				let like = data.like == "true";
-				app.gif.current_user_likes = like;
-				if(like) {
-					app.gif.likes++;
-				} else {
-					app.gif.likes--;
-				}
-			});
-		});
-	  }
+        resp.json().then((data) => {
+        if(data.error){
+          return;
+        }
+        let like = data.like == "true";
+        app.gif.current_user_likes = like;
+        if(like) {
+          app.gif.likes++;
+        } else {
+          app.gif.likes--;
+        }
+      });
+    });
+    }
     },
-	
+  
     watch: {
       show_video() {
         if (this.show_video) {
