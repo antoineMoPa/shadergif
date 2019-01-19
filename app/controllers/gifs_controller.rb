@@ -18,8 +18,8 @@ class GifsController < ApplicationController
       user_like = UserLike.where(user_id: current_user.id, gif_id: params[:gif_id]).first
       if not user_like.nil?
         user_like.destroy
-        
         render :json => {like:"false"}
+        delete_previous_like_notifications(nil, params[:gif_id])
       else
         user_like = UserLike.new
         user_like.gif_id = params[:gif_id]
@@ -31,7 +31,21 @@ class GifsController < ApplicationController
       
     end
   end
-
+  
+  def delete_previous_like_notifications(gif_poster_id, gif_id)
+    if current_user.nil?
+      render :json => {error:"logged out"}
+    else
+      if gif_poster_id.nil?
+        gif_poster_id = Gif.find(gif_id).user_id
+      end
+      Notification.where(user_id: gif_poster_id)
+        .where( gif_id: gif_id)
+        .where(other_user_id: current_user.id)
+        .destroy_all
+    end
+  end
+  
   def notify_like(gif_id)
     gif = Gif.find(gif_id)
     if gif.user_id.nil?
@@ -40,9 +54,12 @@ class GifsController < ApplicationController
     gif_poster = User.find(gif.user_id)
     liker = current_user.username
     
+    delete_previous_like_notifications(gif_poster.id, gif.id)
+    
     @notification = Notification.new
     @notification.user_id = gif_poster.id
     @notification.gif_id = gif.id
+    @notification.other_user_id = current_user.id
     @notification.text = "%s liked your link{gif}." % liker
     @notification.link = "/gifs/" + gif.id.to_s
     @notification.is_read = false
