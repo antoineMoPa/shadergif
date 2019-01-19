@@ -61,7 +61,6 @@ window.onload = function () {
       el,
       data: {
         gifs: [],
-        mosaic_gifs: [],
         initial_qty: -1,
         current_offset: -1,
         has_more: true,
@@ -153,16 +152,6 @@ window.onload = function () {
     );
 
     main_app.gifs = gifs;
-
-    const mosaic_el = document.getElementById('mosaic-gifs-json');
-
-    if (typeof (mosaic_el) !== 'undefined' && mosaic_el != null) {
-      const mosaic_gifs = JSON.parse(
-        mosaic_el.innerHTML
-      );
-
-      main_app.mosaic_gifs = mosaic_gifs;
-    }
   }
 
   if (document.getElementById('single-gif-app') != null) {

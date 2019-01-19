@@ -4,7 +4,7 @@ Vue.component(
     template: `
       <div class="notifications">
         <div v-for="notification in notifications"
-           v-bind:class="((!notification.is_read)?'is-primary':'') + ' notification'">
+           v-bind:class="((!notification.is_read)?'is-unread':'') + ' notification'">
           <span class="notification-text" v-html="notif_html(notification)">
           </span>
           <a v-bind:href="notification.link" class="notification-link notification-date">

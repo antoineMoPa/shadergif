@@ -51,13 +51,7 @@ Vue.component(
     </a>
     <div class="clearfix"></div>
     <br>
-    <img class="feather-icon" src="/icons/feather/eye.svg"> {{ gif.views }} views
-    <span class="like-button" v-on:click="toggle_like(gif.id)" v-if="gif.current_user_likes">
-        <img class=" feather-icon" src="/icons/feather/heart-full.svg" > {{ gif.likes }} likes
-    </span>
-    <span class="like-button" v-on:click="toggle_like(gif.id)" v-else>
-        <img class=" feather-icon" src="/icons/feather/heart.svg"> {{ gif.likes }} likes
-    </span>
+    <image-info v-bind:gif="gif"></image-info>
 </div>`,
     props: ['gif'],
     data() {
@@ -90,25 +84,7 @@ Vue.component(
 
         video.play();
       },
-      toggle_like(gif_id) {
-      let app = this;
-        fetch("/gifs/toggle_like/" + gif_id).then((resp) => {
-        resp.json().then((data) => {
-        if(data.error){
-          return;
-        }
-        let like = data.like == "true";
-        app.gif.current_user_likes = like;
-        if(like) {
-          app.gif.likes++;
-        } else {
-          app.gif.likes--;
-        }
-      });
-    });
-    }
     },
-  
     watch: {
       show_video() {
         if (this.show_video) {

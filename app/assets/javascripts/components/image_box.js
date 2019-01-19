@@ -46,6 +46,7 @@ Vue.component(
         </div>
         <br>
         <div class="clearfix"></div>
+        <image-info v-bind:gif="gif"></image-info>
         <pre class="has-text-left gif-description">{{ gif.description }}</pre>
         <div>
             Uploaded on

@@ -4,3 +4,8 @@ one:
   username: testuser
   email: user@testhost.com
   encrypted_password: <%= User.new.send(:password_digest, 'testpassword') %>
+
+two: 
+  username: testuser2
+  email: user2@testhost.com
+  encrypted_password: <%= User.new.send(:password_digest, 'testpassword') %>

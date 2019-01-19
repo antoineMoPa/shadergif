@@ -1,3 +1,6 @@
+0.0.29:                                                                    (January 19 2019)
+    feature: likes and views count!
+
 0.0.28:                                                                    (January 18 2019)
     bugfix: fix annoying slowdown each 2500 ms in p5js player
 

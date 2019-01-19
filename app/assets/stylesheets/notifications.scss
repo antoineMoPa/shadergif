@@ -28,11 +28,17 @@
 	}
 }
 
-.notification-date{
+.notification a.notification-date{
 	margin-left:auto;
 	margin-right:0;
 	float:right;
-	.night-mode &{
-		color:#333;
+	color:#333;
+}
+
+.notification.is-unread{
+	background:#25a4ff;
+	color:#fff;
+	a.notification-date{
+		color:#fff;
 	}
 }

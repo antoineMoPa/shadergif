@@ -18,6 +18,7 @@ class GifsController < ApplicationController
       user_like = UserLike.where(user_id: current_user.id, gif_id: params[:gif_id]).first
       if not user_like.nil?
         user_like.destroy
+        
         render :json => {like:"false"}
       else
         user_like = UserLike.new
@@ -25,11 +26,26 @@ class GifsController < ApplicationController
         user_like.user_id = current_user.id
         user_like.save
         render :json => {like:"true"}
+        notify_like(params[:gif_id])
       end
       
     end
   end
 
+  def notify_like(gif_id)
+    gif = Gif.find(gif_id)
+    gif_poster = User.find(gif.user_id)
+    liker = current_user.username
+    
+    @notification = Notification.new
+    @notification.user_id = gif_poster.id
+    @notification.gif_id = gif.id
+    @notification.text = "%s liked your link{gif}." % liker
+    @notification.link = "/gifs/" + gif.id.to_s
+    @notification.is_read = false
+    @notification.save()
+  end
+  
   def new
     if not user_signed_in?
       @error = "You are not logged in!"
@@ -158,6 +174,7 @@ class GifsController < ApplicationController
   def show
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username, users.profile_picture")
+             .with_likes(current_user)
              .where("is_public = true")
              .find(params[:id])
     
