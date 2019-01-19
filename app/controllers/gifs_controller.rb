@@ -34,6 +34,9 @@ class GifsController < ApplicationController
 
   def notify_like(gif_id)
     gif = Gif.find(gif_id)
+    if gif.user_id.nil?
+      return
+    end
     gif_poster = User.find(gif.user_id)
     liker = current_user.username
     
