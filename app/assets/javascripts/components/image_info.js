@@ -19,21 +19,21 @@ Vue.component(
     methods: {
       toggle_like(gif_id) {
         let app = this;
-		    let token = document.querySelectorAll("meta[name=csrf-token]")[0].content;
-		    let data = {
-			    method: "POST", 
-			    headers: {
-				    'X-CSRF-Token': token
-			    }
-		    };
-		    
-		    fetch("/gifs/toggle_like/" + gif_id, data).then((resp) => {
-			    resp.json().then((data) => {
-				    if(data.error){
-							return;
-				    }
-					let like = data.like == "true";
-					  app.gif.current_user_likes = like;
+        let token = document.querySelectorAll("meta[name=csrf-token]")[0].content;
+        let data = {
+          method: "POST", 
+          headers: {
+            'X-CSRF-Token': token
+          }
+        };
+        
+        fetch("/gifs/toggle_like/" + gif_id, data).then((resp) => {
+          resp.json().then((data) => {
+            if(data.error){
+              return;
+            }
+            let like = data.like == "true";
+            app.gif.current_user_likes = like;
             if(like) {
               app.gif.likes++;
             } else {
