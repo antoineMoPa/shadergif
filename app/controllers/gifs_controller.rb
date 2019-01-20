@@ -269,6 +269,7 @@ class GifsController < ApplicationController
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
+           .with_likes(current_user)
            .select("gifs.*, users.username, users.profile_picture")
            .where("is_public = true")
            .limit(take).offset(params[:skip])
