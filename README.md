@@ -1,5 +1,6 @@
  [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) 
  [![CircleCI](https://img.shields.io/circleci/project/github/antoineMoPa/shadergif.svg)](https://circleci.com/gh/antoineMoPa/shadergif/tree/master) 
+ [![](https://img.shields.io/twitter/follow/shadergif.svg?label=Follow&style=social)](https://twitter.com/ShaderGif)
 
 # ShaderGif
 
