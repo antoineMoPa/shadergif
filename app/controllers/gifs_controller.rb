@@ -10,7 +10,7 @@ class GifsController < ApplicationController
   def create
     new
   end
-  
+
   def toggle_like()
     if current_user.nil?
       render :json => {error:"logged out"}
@@ -28,10 +28,10 @@ class GifsController < ApplicationController
         render :json => {like:"true"}
         notify_like(params[:gif_id])
       end
-      
+
     end
   end
-  
+
   def delete_previous_like_notifications(gif_poster_id, gif_id)
     if current_user.nil?
       render :json => {error:"logged out"}
@@ -45,7 +45,7 @@ class GifsController < ApplicationController
         .destroy_all
     end
   end
-  
+
   def notify_like(gif_id)
     gif = Gif.find(gif_id)
     if gif.user_id.nil?
@@ -53,9 +53,9 @@ class GifsController < ApplicationController
     end
     gif_poster = User.find(gif.user_id)
     liker = current_user.username
-    
+
     delete_previous_like_notifications(gif_poster.id, gif.id)
-    
+
     @notification = Notification.new
     @notification.user_id = gif_poster.id
     @notification.gif_id = gif.id
@@ -65,7 +65,7 @@ class GifsController < ApplicationController
     @notification.is_read = false
     @notification.save()
   end
-  
+
   def new
     if not user_signed_in?
       @error = "You are not logged in!"
@@ -87,47 +87,47 @@ class GifsController < ApplicationController
         end
       end
     end
-    
+
     @gif = Gif.new
     @gif.user_id = current_user.id
 
     @gif.is_public = true
-    
+
     # Generate random id
     rand_id = gen_rand_id
-    
+
     rand_id = rand_id.join
     filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".gif"
-    
+
     @gif.title = params[:title]
     @gif.description = params[:description]
     @gif.code = params[:code]
     @gif.frames = params[:frames]
     @gif.fps = params[:fps]
     @gif.lang = params[:lang]
-    
+
     image = params[:image]
-    
+
     image_normal_begin = "data:image/gif;base64,"
-    
+
     if not image.starts_with? image_normal_begin
       @error = "Image url encoding error"
       @error_long = "There was a weird problem while encoding your gif. You could try again with a smaller gif or a different browser."
       render 'error'
       return
     end
-    
+
     # delete first part
     image = image[image_normal_begin.length..image.length]
-    
+
     File.open("public/gifs/" + filename, 'wb') do|f|
       f.write(Base64.decode64(image))
     end
-    
+
     @gif.image_filename = filename
-    
+
     @gif.save()
-    
+
     # Delete draft if it was a draft
     if not params[:draft_id].nil?
       draft = Gif.find(params[:draft_id])
@@ -141,13 +141,13 @@ class GifsController < ApplicationController
       params[:textures].each do |tex_param|
         rand_id = gen_rand_id.join
         filename = rand_id + Time.now.strftime("%Y-%m-%d-%Hh%Mm") + ".texture"
-        
+
         texture = Texture.new
         texture.name = tex_param[:name]
         texture.gif_id = @gif.id
         texture.filename = filename
         texture.save
-        
+
         File.open("public/textures/" + filename, 'wb') do|f|
           f.write(tex_param[:data])
         end
@@ -155,7 +155,7 @@ class GifsController < ApplicationController
     end
 
     @gif.gen_video_and_thumb
-    
+
     redirect_to "/gifs/" + @gif.id.to_s
   end
 
@@ -167,17 +167,17 @@ class GifsController < ApplicationController
       render 'error'
       return
     end
-    
+
     @gif = Gif.new
     @gif.user_id = current_user.id
 
     @gif.is_public = false
-    
+
     # Generate random id
     rand_id = (1..16).map do |i|
       [*'A'..'Z', *'a'..'z', *0..9][ rand(62) ]
     end
-    
+
     @gif.title = params[:title]
     @gif.code = params[:code]
     @gif.lang = params[:lang]
@@ -185,20 +185,22 @@ class GifsController < ApplicationController
     @gif.height = params[:height]
     @gif.frames = params[:frames]
     @gif.fps = params[:fps]
-    
+
     @gif.save()
-    
+
     redirect_to "/editor/drafts/" + @gif.id.to_s
   end
-  
+
   def show
     @gif = Gif.joins(:user)
              .select("gifs.*, users.username, users.profile_picture")
              .with_likes(current_user)
              .where("is_public = true")
              .find(params[:id])
-    
-    @gif.increment!(:views)
+
+    if @gif.user_id != current_user.id
+      @gif.increment!(:views)
+    end
 
     @gif_json = @gif.to_json(
       :include =>
@@ -212,7 +214,7 @@ class GifsController < ApplicationController
         }
       }
     )
-    
+
   end
 
   # When saving stuff in editor
@@ -224,16 +226,16 @@ class GifsController < ApplicationController
       render 'error'
       return
     end
-    
+
     gif = Gif.find(params[:id])
-    
+
     if gif.nil? or gif.user_id != current_user.id
       @error = "This gif is not available!"
       @error_long = "Sorry!"
       render 'error'
       return
     end
-    
+
     gif.title = params[:title]
     gif.description = params[:description]
     gif.code = params[:code]
@@ -242,20 +244,23 @@ class GifsController < ApplicationController
     gif.width = params[:width]
     gif.height = params[:height]
     gif.lang = params[:lang]
-    
+
     gif.save()
-    
+
     redirect_to "/editor/" + gif.id.to_s + "/edit"
   end
-    
-  
+
+
   def play
     @gif = Gif.joins(:user)
              .left_joins(:textures)
              .select("gifs.*, users.username, users.profile_picture")
              .where("is_public = true")
              .find(params[:id])
-    @gif.increment!(:views)
+
+    if @gif.user_id != current_user.id
+      @gif.increment!(:views)
+    end
   end
 
   def list
@@ -265,7 +270,7 @@ class GifsController < ApplicationController
     if(take > 30)
       take = 30
     end
-    
+
     @gifs = Gif
            .order(created_at: :desc)
            .joins(:user)
@@ -273,17 +278,17 @@ class GifsController < ApplicationController
            .select("gifs.*, users.username, users.profile_picture")
            .where("is_public = true")
            .limit(take).offset(params[:skip])
-    
+
     render :json => @gifs
   end
-  
+
   def delete
     # Eventual todo (if ever needed):
     # delete actual files from filesystem
-    # or write a file garbage collector 
-    
+    # or write a file garbage collector
+
     gif = Gif.find(params[:gif_id])
-    
+
     if gif.user_id != current_user.id
       @error = "Yo that's not your gif, you can't delete it"
       @error_long = "Sorry!"
@@ -292,9 +297,9 @@ class GifsController < ApplicationController
     end
 
     Texture.where(gif_id: gif.id).destroy_all
-    
+
     gif.destroy
-    
+
     redirect_to "/user/gifs-and-drafts"
   end
 

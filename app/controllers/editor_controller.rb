@@ -9,7 +9,9 @@ class EditorController < ApplicationController
     gif = Gif.left_joins(:textures)
             .find(params[:gif_id])
     
-    gif.increment!(:views)
+    if gif.user_id != current_user.id
+      gif.increment!(:views)
+    end
 
     if not gif.is_public
       if gif.user_id != current_user.id
