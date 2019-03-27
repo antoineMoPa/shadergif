@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20190119231001) do
     t.index ["gif_id"], name: "index_textures_on_gif_id"
   end
 
-  create_table "user_likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "user_likes", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.bigint "gif_id", null: false
     t.bigint "user_id", null: false
   end
