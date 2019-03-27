@@ -9,7 +9,7 @@ class EditorController < ApplicationController
     gif = Gif.left_joins(:textures)
             .find(params[:gif_id])
     
-    if gif.user_id != current_user.id
+    if current_user.nil? or gif.user_id != current_user.id
       gif.increment!(:views)
     end
 

@@ -198,7 +198,7 @@ class GifsController < ApplicationController
              .where("is_public = true")
              .find(params[:id])
 
-    if @gif.user_id != current_user.id
+    if current_user.nil? or @gif.user_id != current_user.id
       @gif.increment!(:views)
     end
 
@@ -258,7 +258,7 @@ class GifsController < ApplicationController
              .where("is_public = true")
              .find(params[:id])
 
-    if @gif.user_id != current_user.id
+    if current_user.nil? or @gif.user_id != current_user.id
       @gif.increment!(:views)
     end
   end
