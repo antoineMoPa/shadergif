@@ -42,7 +42,7 @@ class HomeController < ApplicationController
            .where("is_public = true ")
            .where('users.username LIKE :search OR ' +
                   'title LIKE :search ' +
-                  'OR description LIKE :search', search: "%#{search}%")
+                  'OR description LIKE :search COLLATE utf8mb4_unicode_ci', search: "%#{search}%")
            .limit(take).offset(skip)
            .to_json
 
