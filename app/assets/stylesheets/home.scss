@@ -27,14 +27,14 @@
 	background: url(/images/banner.jpg);
 	background-repeat: no-repeat;
 	background-size: auto 100%;
-	
+
 	.home-big-text-span{
 		background:#000;
 		color:#fff;
 		padding:30px;
 	}
 }
-	
+
 @media all and (min-width:1000px){
 
 	.home-sidebar,
@@ -46,6 +46,17 @@
 		border-radius:3px;
 		margin-bottom:20px;
 	}
+}
+
+.home-page{
+  .title-box{
+    height:70px;
+    max-height:70px;
+  }
+
+  .title-box .gif-subtitle{
+    line-height:30px;
+  }
 }
 
 .home-page .home-sidebar,
@@ -105,7 +116,7 @@
 		max-width:400px;
 		color:#000;
 		overflow:hidden;
-		
+
 		.pricing-row{
 			padding:10px;
 			background:#fff;

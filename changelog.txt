@@ -1,3 +1,6 @@
+0.0.30:                                                                        (May 19 2019)
+    layout: Better display of long titles in feed.
+
 0.0.29:                                                                    (January 19 2019)
     feature: likes and views count!
 
