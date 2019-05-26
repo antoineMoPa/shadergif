@@ -1,3 +1,7 @@
+0.0.31:                                                                        (May 25 2019)
+    feature: Tab key now inserts 4 spaces instead of tabs Shift-Tab unindents.
+    text: Remove bullshit on pricing page that said there could be a paid plan some day.
+
 0.0.30:                                                                        (May 19 2019)
     layout: Better display of long titles in feed.
     feature: Make search case insensitive
