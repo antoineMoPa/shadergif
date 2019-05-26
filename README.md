@@ -10,6 +10,23 @@ You can make gifs with shaders (glsl) and Javascript (either with raw canvas or 
 
 ![screenshot](public/screenshot.png?v=1)
 
+## Dev setup
+
+Docker is the easiest way to get shadergif up and running (It avoids having to manually setup a database, install ruby, python, ffmpeg, etc.)
+
+Run:
+
+	git clone https://github.com/antoineMoPa/shadergif.git
+	cd shadergif
+	docker pull antoinemopa/shadergif-dev
+	docker run -p 3000:3000 -v $(pwd):/shadergif -it antoinemopa/shadergif-dev
+	
+Then, inside the container:
+
+	rails s
+
+Then beware, the code is ugly.
+
 # Mission
 
 * Create the shortest path from code to art
@@ -30,17 +47,6 @@ Currently, Firefox and Chrome (including chromium) are supported.
 # Licence
 
 Shadergif is licenced under the terms of the GNU General Public License v3.0 or later. See LICENCE.txt for the full licence.
-
-## Docker setup
-
-Run:
-
-	docker pull antoinemopa/shadergif-dev
-	docker run -p 3000:3000 -it antoinemopa/shadergif-dev
-	
-Then, inside the container:
-
-	rails s
 
 ## Running ESLint
 
