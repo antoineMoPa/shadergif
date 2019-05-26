@@ -829,7 +829,11 @@ var app = new Vue({
       mode: 'x-shader/x-fragment',
       indentUnit: 4,
       lineWrapping: true,
-      theme: JSON.parse(window.localStorage.night_mode) || false ? 'twilight' : 'default'
+      theme: JSON.parse(window.localStorage.night_mode) || false ? 'twilight' : 'default',
+      extraKeys: {
+        Tab: cm => cm.execCommand('indentMore'),
+        'Shift-Tab': cm => cm.execCommand('indentLess')
+      }
     });
 
     // Fetch file and put it in textarea
