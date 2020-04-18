@@ -1,9 +1,9 @@
 class HomeController < ApplicationController
-  def feed
+  def index
     ActiveSupport.escape_html_entities_in_json = true
 
     @is_feed = true
-    
+
     # homepage gifs
     @gifs = Gif
            .order(created_at: :desc)
@@ -13,13 +13,13 @@ class HomeController < ApplicationController
            .where("is_public = true")
            .take(8)
            .to_json
-    
+
   end
 
   def search
     ActiveSupport.escape_html_entities_in_json = true
     search = params[:search]
-    
+
     if params.has_key?(:take)
       take = params[:take]
     else
@@ -31,8 +31,8 @@ class HomeController < ApplicationController
     else
       skip = 0
     end
-    
-    
+
+
     # Big homepage gifs
     @gifs = Gif
            .order(created_at: :desc)
@@ -50,5 +50,5 @@ class HomeController < ApplicationController
       render :json => @gifs
     end
   end
-  
+
 end

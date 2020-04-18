@@ -2,24 +2,24 @@
 <html>
 	<head>
 		<title>ShaderGif</title>
-		
+
 
 		<meta name="description" content="ShaderGif is an open source home for art made with code. Make gifs with GLSL, Javascript and p5.js."/>
-		
+
 		<meta charset="utf-8">
-		
+
 		<%= csrf_meta_tags %>
-		
+
 		<% if Rails.env.production? %>
 			<%= javascript_include_tag 'application' %>
 		<% else %>
 			<%= javascript_include_tag 'application-dev' %>
 		<% end %>
-		
+
 		<% if content_for?(:head) %>
 			<%= yield(:head) %>
 		<% end %>
-		
+
 		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<% if @is_editor %>
 			<%= stylesheet_link_tag    'editor', media: 'all' %>
@@ -36,12 +36,12 @@
 		<% if not (@is_editor and Rails.env.electron?) %>
 			<header class="navbar">
 				<div class="container">
-					
+
 					<div class="navbar-brand">
 						<a class="navbar-item" title="Version <%= Shadergif::VERSION %>" href="/">
 							<img class="logo" src="/images/logo-shadergif.png" alt="ShaderGif">
 						</a>
-						
+
 						<button class="button navbar-burger" data-target="main-mobile-menu">
 							<span></span>
 							<span></span>
@@ -60,13 +60,9 @@
 							   href="#"
 							   onclick="toggle_night_mode()">
 							</a>
-							<% if @is_feed %>
+							<% if not @is_feed %>
 								<a class="navbar-item is-active" href="/">
 									<img class="feather-icon" src="/icons/feather/home.svg">Home
-								</a>
-							<% else %>
-								<a class="navbar-item is-active" href="/feed">
-									<img class="feather-icon" src="/icons/feather/layers.svg">Feed
 								</a>
 							<% end %>
 							<a class="navbar-item" href="https://doc.shadergif.com" title="documentation">
@@ -129,13 +125,13 @@
 										</a>
 									<% end %>
 								</span>
-							<% end %>	
+							<% end %>
 						</div>
 					</div>
 				</div>
 			</header>
 		<% end %>
-		
+
 		<% if notice or alert %>
 			<div class="container notification-container">
 				<% if notice %>
@@ -146,7 +142,7 @@
 				<% end %>
 			</div>
 		<% end %>
-		
+
 		<%= yield %>
 	</body>
 </html>

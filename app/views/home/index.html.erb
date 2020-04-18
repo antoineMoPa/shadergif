@@ -1,176 +1,112 @@
-<p class="home-big-text is-hidden-touch">
-	<span class="home-big-text-span">ShaderGif is a free and open source home for <span class="has-text-weight-bold">art made with code</span></span>
-</p>
-<div class="content about-page">
-	<section class="section">
-		<p class="is-hidden-desktop">ShaderGif is a free and open source home for <span class="has-text-weight-bold">art made with code</span>
-			<br>
-		</p>
-		<h2 class="title">Languages and platforms</h2>
-		<p>
-			Currently, ShaderGifs allows you to make gifs using&nbsp;:
-		</p>
-		<ul>
-			<li>GLSL - WebGL1</li>
-			<li>GLSL - WebGL2</li>
-			<li>Javascript, using &lt;canvas&gt;</li>
-			<li>Javascript, with p5.js</li>
-		</ul>
-		<p>More languages are coming!</p>
-
-		<h2 class="title">The editor</h2>
-		<p>The editor is a simple web coding tool divided in 2 columns.<br><br>
-			Left: a visual preview + tools to generate gifs.<br>
-			Right: a text editor where you type code (Javascript or GLSL, depending on selected language).
-			<br><br>
-		</p>
-		<img src="screenshot.png"></img>
-
-		<h2 class="subtitle">Features</h2>
-		<p>
-			<ul>
-				<li><strong>Texture uploads</strong> (for Shaders only)</li>
-				<li><strong>Private drafts</strong></li>
-				<li><strong>localStorage backup</strong> (useful when you crash your browser/tab, you can then CTRL+R)</li>
-				<li><strong>Comments and notifications</strong> when somebody comments your gif</li>
-				<li><strong>PNG .zip</strong> - Download all frames in zip to create videos with external software - works with 100s of frames</li>
-				<li><strong>Use your favorite editor</strong> - Download standalone offline copy to edit with your favorite <span title="vi, emacs, gedit, notepad++">editor</span>.</li>
-			</ul>
-		</p>
-
-		<h2 class="subtitle">Supported browsers</h2>
-		<p>
-			Editor supports <strong>Chrome</strong> and <strong>Firefox</strong>. (Other browsers might experience problems)
-		</p>
-		
-		<h2 class="title">See the possibilities!</h2>
-		<p>Scroll through the feed to get an idea of the possibilities&nbsp;:<br><br>
-			<div class="has-text-centered">
-				<a class="button is-large" href="/feed">
-					<img class="feather-icon" src="/icons/feather/layers.svg">
-					View all public gifs
-				</a>
-			</div>
-		</p>
-
-		<h2 class="title">Pricing</h2>
-
-		<p>Everything that can be done in your browser is <strong>free</strong>.</p>
-		<p>In the <strong>future</strong>, we might introduce <strong>paid plans</strong> for&nbsp;:</p>
-		<ul>
-			<li><strong>Video export</strong> using our servers</li>
-			<li><strong>Running code</strong> in our containers</li>
-		</ul>
-		
-		<div class="has-text-centered">
-			<a href="/pricing" class="button">
-				<img class="feather-icon" src="/icons/feather/dollar-sign.svg">View pricing page
-			</a>
-		</div>
-		<br>
-		<p>Since ShaderGif is open source, you can always download the code and run it on your own hardware.</p>
-
-		<h2 class="subtitle">Why register?</h2>
-		<p>Registering allows you to publish gifs on the feed and save drafts for later.</p>
-		<br>
-		<div class="has-text-centered">
-			<img src="screenshot-account.png" class="smaller-screenshot"></img>
-		</div>
-		<br>
-		<div class="has-text-centered">
-			<a class="button is-medium" href="/users/sign_up">
-				<img class="feather-icon" src="/icons/feather/user-plus.svg">
-				Sign up!
-			</a>
-		</div>
-		
-		<h2 class="subtitle">How to use the editor?</h2>
-		<p>
-			The editor contains a preview at the left and the code at the right.<br>
-			Pro tip: The various panels at the left can be collapsed by clicking on the title bar.<br>
-			To create gifs, there is a "+ Create gif" button. Be patient, since this process takes some time.<br>
-			<br>
-			I frequently start from the "circle.glsl" example and build up from there:<br><br>
-			<div class="has-text-centered">
-				<a class="button is-medium" href="/editor/examples">
-					<img class="feather-icon" src="/icons/feather/clipboard.svg">
-					Start with sample code
-				</a>
-			</div>
-		</p>
-
-		<h2 class="subtitle">How to get all frames as png?</h2>
-		<p>
-			<ul>
-				<li>Click the "Create .zip file" button.</li>
-				<li>Once ready, click the "Save Zip" button that appears</li>
-			</ul>
-		</p>
-		
-		<h2 class="subtitle">How to upload a gif?</h2>
-		<p>
-			<ol>
-				<li>First you need to <a href="/users/sign_up">register</a>.</li>
-				<li>Then, in the shader editor, click the "Create gif" button.<br></li>
-				<li>The encoding will take a few seconds.<br></li>
-				<li>Once it's ready, the gif will appear at the bottom of the left division of the screen.<br></li>
-				<li>If you wish, you can add a title and post it. (It will be shown in the <a href="/feed">feed</a>)<br></li>
-				<ul>
-					<li>The uploading will take a few seconds, it's normal.<br></li>
-					<li>The server is rendering a video preview of the gif for the feed.</li>
-				</ul>
-			</ol>
-		</p>
-		
-		
-
-		<h1 class="title">Stats</h1>
-		<div class="has-text-centered">
-			<p>There are <span class="has-text-weight-bold"><%= User.count() %> registered users</span> and a total of 
-				<span class="has-text-weight-bold">
-					<%= Gif.where('is_public').count() %> shared gifs
-				</span>.
-			</p>
-			<p>For more details&nbsp;:</p>
-			<a class="button" href="/stats">View stats page</a><br>
-		</div>
-
-		<h2 class="subtitle">Contributing and sending feedback</h2>
-		<p>To create github issues <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
-		</p>
-
-		<p>
-			To contribute code and documentation:
-			<a href="https://github.com/antoineMoPa/shadergif">
-				github.com/antoineMoPa/shadergif
-			</a>
-		</p>
-		
-		<h2 class="subtitle">Start Coding</h2>
-		<p>
-			For the GLSL modes: If you have never used shaders before, you will get more pointers in the documentation (<a href="https://doc.shadergif.com/">doc.shadergif.com</a>)<br>
-			For the Javascript/P5.js mode, just read the comments, they should guide your journey!
-			<br><br>
-			
-			<div class="has-text-centered">
-				<a class="button is-large" href="/editor/selector">
-					<img class="feather-icon" src="/icons/feather/code.svg">
-					Launch the Editor
-				</a>
-			</div>
-		</p>
-		<br>
-		<% if !user_signed_in? %>
-			<div class="has-text-centered">
-				<p class="has-text-weight-bold">Don't have an account yet?</p>
-				<p>With an account, you can post public gifs and save drafts.</p>
-				<br>
-				<a class="button is-large" href="/users/sign_up">
-					<img class="feather-icon" src="/icons/feather/user-plus.svg">
-					Sign up!
-				</a>
-			</div>
-		<% end %>
-	</section>
+<script type="application/json" id="main-gifs-json">
+ <%= raw(@gifs) %>
+</script>
+<script type="text/html" id="home-column-1">
+    <p class="has-text-weight-bold">About</p>
+    <br>
+    <p class="has-text-weight-bold">Documentation</p>
+    <p>
+        Want to get started with shaders in GLSL?<br>
+        Start with:
+        <a href="https://doc.shadergif.com/">
+            doc.shadergif.com
+        </a>
+    </p>
+    <br>
+    <br>
+    <p class="has-text-weight-bold">Project</p>
+    <p>
+		Github&nbsp;:<br>
+        <a href="https://github.com/antoineMoPa/shadergif">
+            <strong>antoineMoPa/shadergif</strong>
+        </a>
+        <br>
+    </p>
+    <br><br>
+    <p class="has-text-weight-bold">Version</p>
+    <p>You are browsing shadergif version:</p>
+    <p><%= Shadergif::VERSION %> <a href="/changelog.txt">changelog.txt</a></p>
+    <br>
+</script>
+<script type="text/html" id="home-column-2">
+    <strong>Start Coding</strong>
+    <br><br>
+    <div class="has-text-centered">
+        <a class="button" href="/editor/examples">
+            <img class="feather-icon" src="/icons/feather/clipboard.svg">
+            Examples
+        </a>
+    </div>
+	<br>
+    <strong>Contribute/Star</strong>
+    <br><br>
+    <a class="button" target="_blank" href="https://github.com/antoineMoPa/shadergif/">
+        <img class="feather-icon" src="/icons/feather/github.svg">
+        View on github
+    </a>
+    <br><br>
+    <br>
+    <p class="has-text-weight-bold">Bridge tutorial</p>
+    <p>
+        View the very first shadergif tutorial:
+    </p>
+    <br>
+    <p class="has-text-centered">
+        <a href="https://doc.shadergif.com/tutorials/building-a-bridge/">
+            <img alt="bridge" src="/images/tutorials/bridge.png">
+            <br>
+            <span class="button">view</span>
+        </a>
+    </p>
+    <br>
+    <p>Send feedback to <a href="https://github.com/antoineMoPa/shadergif/issues/new">github.com/antoineMoPa/shadergif/issues</a><br>
+    </p>
+    <br>
+    <br>
+    <strong>Search Topics</strong>
+    <p>Lack inpsiration?<br>
+        Browse these:<br>
+        <a href="/search?search=raymarch">Raymarch</a><br>
+        <a href="/search?search=integer">Integer</a><br>
+        <a href="/search?search=texture">Texture</a><br>
+        <a href="/search?search=fractal">Fractal</a><br>
+        <a href="/search?search=automata">Automata</a><br>
+        <a href="/search?search=voronoi">Voronoi</a><br>
+    </p>
+</script>
+<div id="main-app" class="home-page">
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column home-news">
+                    <image-box-list v-bind:gifs="gifs" light="true"></image-box-list>
+                    <br>
+                </div>
+                <div class="column home-sidebar is-one-fifth">
+					<div v-html="column_1"></div>
+                    <div v-html="column_2"></div>
+					<div class="is-hidden-desktop">
+						<br><br>
+						<div v-html="column_1"></div>
+					</div>
+                </div>
+            </div>
+            <div class="is-hidden-desktop">
+                <br>
+                <br>
+                <br>
+            </div>
+            <div class="has-text-centered view-more-container">
+                <button v-if="has_more"
+                        v-on:click="load_more"
+                        class="button load-more-button is-large"
+                >
+                    view more gifs
+                </button>
+                <div v-else>
+                    No more gifs to load!
+                </div>
+            </div>
+        </div>
+    </section>
 </div>
-
