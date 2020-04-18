@@ -1,3 +1,6 @@
+0.0.32:                                                                      (April 17 2020)
+    feature: Homepage is now the gif feed. Old homepage is gone.
+
 0.0.31:                                                                        (May 25 2019)
     feature: Tab key now inserts 4 spaces instead of tabs Shift-Tab unindents.
     text: Remove bullshit on pricing page that said there could be a paid plan some day.
@@ -13,7 +16,7 @@
     bugfix: fix annoying slowdown each 2500 ms in p5js player
 
 0.0.27:                                                                    (January 10 2019)
-    feature removed: Infinite loop detector removed as experience showed 
+    feature removed: Infinite loop detector removed as experience showed
                      it was more annoying and very difficult to make good enough.
     feature: p5js gif rendering now triggers setup() at first frame.
              This will allow more control over gifs.
@@ -34,8 +37,8 @@
 
 0.0.23:                                                                   (November 28 2018)
     feature: Add p5.js mode
-    feature: Download 
-    
+    feature: Download
+
 0.0.22:                                                                   (November 22 2018)
     feature: Add more comments to javascript examples
     delete: Delete tiny image mosaic in homepage
@@ -77,7 +80,7 @@
 
 0.0.14:                                                                     (August 28 2018)
     feature: Very basic notification system for post comments
-    
+
 0.0.13:                                                                     (August 26 2018)
     bugfix: Video conversion frame were sometimes dropped
     feature: Frame count, width, height is now saved and can be modified
@@ -94,7 +97,7 @@
 0.0.10:                                                                        (May 21 2018)
     feature: New electron app with very initial features
              (Saving gifs,pngs does not work yet)
- 
+
 0.0.9:                                                                         (May 10 2018)
     feature: Update info text for webgl2 texture
 
