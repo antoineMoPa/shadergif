@@ -1,10 +1,10 @@
-//= require ./application.css
-//= require lib/codemirror/lib/codemirror.css
-//= require lib/codemirror/theme/twilight.css
-//= require lib/codemirror/addon/dialog/dialog.css
-//= require lib/codemirror/addon/search/matchesonscrollbar.css
+//= require ./application
+//= require lib/codemirror/lib/codemirror
+//= require lib/codemirror/theme/twilight
+//= require lib/codemirror/addon/dialog/dialog
+//= require lib/codemirror/addon/search/matchesonscrollbar
 // Todo: remove base.css, legacy editor css library my antoineMoPa
-//= require base.css
+//= require base
 
 body{
 	padding:0;
@@ -51,7 +51,7 @@ h1,h2,h3{
 	margin-top:20px;
 	margin-bottom:20px;
 	font-weight:300;
-}	
+}
 
 h1{
 	font-size:20px;
@@ -242,11 +242,11 @@ hr{
 .textures-list{
 	margin-right: 10px;
 	width:100%;
-		
+
 	input{
 		width:auto;
 	}
-	
+
 	th{
 		font-weight:normal;
 	}
@@ -262,7 +262,7 @@ hr{
 }
 
 .settings input[type=number]{
-	min-width:60px;	
+	min-width:60px;
 	height:30px;
 }
 
@@ -335,7 +335,7 @@ hr{
 	box-shadow:0 0 3px rgba(0, 0, 0, 0.3);
 	padding:20px;
 	position:relative;
-	
+
 	.close-result-button{
 		position:absolute;
 		top:8px;
@@ -351,7 +351,7 @@ hr{
 }
 
 .result-images form{
-	margin:10px; 
+	margin:10px;
 }
 
 .settings-section{
@@ -380,7 +380,7 @@ button .feather-icon{
 	z-index:1000;
 	line-height:34px;
 	color:#fff;
-	
+
 	.button{
 		float:right;
 		margin-left:5px;

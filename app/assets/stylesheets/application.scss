@@ -1,14 +1,14 @@
 
-//= require ./bulma/css/bulma.css
-//= require ./devise.scss
-//= require ./gif.scss
-//= require ./home.scss
-//= require ./notifications.scss
-//= require lib/prism/prism.css
-//= require ./components/image_box.css
-//= require ./components/image_mosaic.css
-//= require ./components/shader_player.css
-//= require ./prism-tweaks.scss
+//= require ./bulma/css/bulma
+//= require ./devise
+//= require ./gif
+//= require ./home
+//= require ./notifications
+//= require lib/prism/prism
+//= require ./components/image_box
+//= require ./components/image_mosaic
+//= require ./components/shader_player
+//= require ./prism-tweaks
 
 html,body,document,window,.notifications-section{
 	min-height:100%;
@@ -142,7 +142,7 @@ a.navbar-item{
 	@media all and (max-width: 1024px){
 		#main-mobile-menu{
 			background:#333!important;
-			
+
 			a.navbar-item,
 			a.navbar-item:hover,
 			a.navbar-item.is-active,
@@ -152,28 +152,28 @@ a.navbar-item{
 			}
 		}
 	}
-	
+
 	.button,
 	a.button{
 		background:#333333;
 		color:#eee;
 		border:none;
 	}
-	
+
 	.button:hover{
 		background:#444444;
 		color:#eee;
 	}
-	
+
 	.input{
 		background:#222222;
 		color:#ccc;
 	}
-	
+
 	.navbar-search::placeholder{
 		color:#aaa;
 	}
-	
+
 	strong, .has-text-weight-bold{
 		color:#ffffff;
 	}
@@ -191,7 +191,7 @@ a.navbar-item{
 	.navbar a.navbar-item.is-active{
 		color: #e0dfe3;
 	}
-	
+
 	a.navbar-item:hover{
 		background:#171c1d;
 		color: #e0dfe3;
@@ -211,4 +211,3 @@ a.navbar-item{
 	max-width:1100px;
 	margin:auto;
 }
-
