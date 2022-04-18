@@ -1,4 +1,4 @@
-# antoinemopa/shadergif-dev
+# antoinemopa/shadergif-podman
 #
 # VERSION               0.1
 
@@ -24,12 +24,15 @@ RUN sh -c 'cd shadergif; \
 	rails db:migrate;\
 	rails db:seed;'
 
-ENTRYPOINT sh -c 'service mariadb start; cd shadergif; bundle install; rails db:migrate; /bin/bash'
+ENTRYPOINT sh -c 'cd shadergif; bash entrypoint.sh'
 
-# To use this container:
-#     docker run -p 3000:3000 -v -it antoinemopa/shadergif-dev
+# To initialize podman:
+#     podman machine init -v $HOME:$HOME
+#     podman machine start # stop to save battery with podman machine stop
 #
-# Bonus: to use this with the repo from outside (bind mount with current folder)
-#     docker run -p 3000:3000 -v $(pwd):/shadergif -it antoinemopa/shadergif-dev
+# To build this container:
+#     podman build . -t shadergif-podman
 #
-# After starting, run 'rails s'
+# To run:
+#     podman run -v $(pwd):/shadergif -p 3000:3000/tcp -it shadergif-podman
+#
