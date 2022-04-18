@@ -6,7 +6,7 @@ FROM ruby
 
 RUN apt-get update
 
-RUN apt-get install -y git mariadb-client mariadb-server-10.5 libmariadb-dev ffmpeg imagemagick
+RUN apt-get install -y mariadb-client mariadb-server-10.5 libmariadb-dev ffmpeg imagemagick
 RUN sh -c "service mariadb start;\
 	echo \"CREATE USER 'shadergif_development'@'localhost' IDENTIFIED BY 'shadergif_dev_password';\" |  mariadb;\
 	echo \"GRANT ALL PRIVILEGES ON shadergif_development.* TO 'shadergif_development'@'localhost';\" |  mariadb;\
