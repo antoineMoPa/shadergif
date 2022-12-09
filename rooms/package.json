@@ -8,7 +8,7 @@
   "dependencies": {
     "diff": "^3.5.0",
     "diff-match-patch": "^1.0.4",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "socket.io": "^2.4.0"
   },
   "devDependencies": {
